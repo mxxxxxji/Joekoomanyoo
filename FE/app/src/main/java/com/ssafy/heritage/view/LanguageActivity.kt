@@ -1,12 +1,13 @@
 package com.ssafy.heritage.view
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.ssafy.heritage.R
+import com.ssafy.heritage.base.BaseActivity
+import com.ssafy.heritage.databinding.ActivityLanguageBinding
 
-class LanguageActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_language)
+private const val TAG = "LanguageActivity__"
+
+class LanguageActivity : BaseActivity<ActivityLanguageBinding>(R.layout.activity_language) {
+    override fun init() {
+        TODO("Not yet implemented")
     }
 }
