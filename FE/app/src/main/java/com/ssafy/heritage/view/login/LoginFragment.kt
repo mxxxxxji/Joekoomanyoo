@@ -2,6 +2,7 @@ package com.ssafy.heritage.view.login
 
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentLoginBinding
@@ -33,12 +34,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     }
 
     private fun initClickListener() = with(binding) {
+
         // 회원가입 버튼 클릭
         btnJoin.setOnClickListener {
-            parentFragmentManager
-                .beginTransaction()
-                .replace(R.id.nav_host_login, JoinFragment())
-                .commit()
+            val navController = findNavController()
+            navController.navigate(R.id.action_loginFragment_to_joinFragment)
+        }
+
+        // 로그인 버튼 클릭
+        btnLogin.setOnClickListener {
+
+            // 로그인 성공했을 경우
+            if (loginViewModel.login()) {
+                // 홈 화면으로 이동
+            }
         }
     }
 
