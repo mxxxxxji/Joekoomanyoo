@@ -4,9 +4,10 @@ import com.project.common.dto.UserDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Builder
@@ -68,4 +69,7 @@ public class UserEntity {
     private String userLat;
 
 
+    public void encodePassword(PasswordEncoder passwordEncoder){
+        this.userPassword = passwordEncoder.encode(this.userPassword);
+    }
 }

@@ -15,52 +15,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 // customUserDetailsService 생성자 주입을 위한 lombok
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final JwtTokenProvider jwtTokenProvider;
-    private final CustomAccessDeniedHandler customAccessDeniedHandler;
-    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
-    // 암호화에 필요한 PasswordEncoder Bean 등록
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
-    // authenticationManager Bean 등록
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.
-                httpBasic().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
-                .accessDeniedHandler(customAccessDeniedHandler)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/front/**").hasRole("MEMBER")
-                .antMatchers("/**").permitAll()
-                .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
-                        UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/front/auth/**")
-                .antMatchers("/favicon.ico")
-                .antMatchers("/swagger-ui.html")
-                .antMatchers("/css/**")
-                .antMatchers("/fonts/**")
-                .antMatchers("/images/**")
-                .antMatchers("/js/**");
+    // 초기에 나오는 인증화면 풀기
+    protected void configure(HttpSecurity http) throws Exception{
+        http
+                .csrf()
+                .disable();
+        http
+                .headers()
+                .frameOptions()
+                .disable();
     }
 }
