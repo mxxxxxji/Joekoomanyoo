@@ -12,9 +12,6 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
     private val joinViewModel by activityViewModels<JoinViewModel>()
 
-    private fun initView() = with(binding) {
-    }
-
     override fun init() = with(binding) {
         joinVM = joinViewModel
     }

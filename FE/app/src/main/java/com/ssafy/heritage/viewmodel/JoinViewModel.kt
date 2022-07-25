@@ -30,8 +30,51 @@ class JoinViewModel : ViewModel() {
 
     val login_type = MutableLiveData<String>()
 
+    // id 이메일 인증번호 전송 클릭했는지 여부
+    var isSendedCode = MutableLiveData<Boolean>().apply { value = false }
+
+    // id 이메일 인증 & 중복검사 통과 여부
+    var isIdChecked = MutableLiveData<Boolean>().apply { value = false }
+
+
+    // id 이메일 인증번호 전송하기 (클릭)
+    fun SendIdVeroficationCode() {
+
+        // 이메일 형식 유효성 통과
+
+        // 서버로 인증 요청 전송
+
+        // 요청 인증이 성공했을 경우
+        isSendedCode.value = true
+    }
+
+    // id 이메일 인증하기 (클릭)
+    fun idVerify() {
+
+        // 서버로 인증번호 보내고 맞게 입력했는지 검사
+
+        // 인증번호 통과했을 경우
+        isIdChecked.value = true
+    }
+
+    // 성별 선택할 때마다 실행
     fun genderTypeChanged(selected: Char) {
         gender.value = selected
+    }
+
+    // 첫번째 패스워드와 두번쨰 패스워드가 일치하는지 여부
+    fun isSamePw() {
+
+    }
+
+    // 유효성 검사 통과 했는지 여부 (id 유효성 검사 제외)
+    fun isValidated() {
+
+    }
+
+    // id 유효성 검사 통과했는지 여부
+    fun isIdValidated() {
+
     }
 
     fun join() {
