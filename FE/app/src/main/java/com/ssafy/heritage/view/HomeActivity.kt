@@ -8,7 +8,7 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseActivity
 import com.ssafy.heritage.databinding.ActivityHomeBinding
 
-private const val TAG = "MainActivity___"
+private const val TAG = "HomeActivity___"
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
@@ -19,11 +19,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     // 네비게이션 연결
-    private fun initNavigation() {
+    private fun initNavigation() = with(binding) {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container_main) as NavHostFragment
         navController = navHostFragment.findNavController()
-        binding.bottomNavigation.setupWithNavController(navController)
+        bottomNavigation.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             // 바텀 네비게이션이 표시되는 Fragment
             //if(destination.id == R.id.homeFragment)

@@ -1,7 +1,5 @@
 package com.ssafy.heritage.viewmodel
 
-import android.util.Log
-import android.widget.RadioGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

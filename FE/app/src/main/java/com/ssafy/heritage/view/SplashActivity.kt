@@ -1,12 +1,13 @@
 package com.ssafy.heritage.view
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.ssafy.heritage.R
+import com.ssafy.heritage.base.BaseActivity
+import com.ssafy.heritage.databinding.ActivitySplashBinding
 
-class SplashActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+private const val TAG = "SplashActivity__"
+
+class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
+    override fun init() {
+        TODO("Not yet implemented")
     }
 }
