@@ -148,15 +148,6 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
     private fun initView() = with(binding) {
 
-        // 나이 선택 범위 지정
-        npYear.apply {
-            val birthList = (9..100).toList().map { it.toString() }
-            minValue = 9
-            maxValue = birthList.size - 1
-            wrapSelectorWheel = false
-            displayedValues = birthList.toTypedArray()
-        }
-
         // 소셜 로그인인 경우
         if (type.equals("social")) {
             tilPw.visibility = View.GONE

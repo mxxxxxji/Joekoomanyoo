@@ -147,6 +147,12 @@ class JoinViewModel : ViewModel() {
         return true
     }
 
+    // 출생 년도 선택할 때마다 실행
+    fun birthYearChanged(selected: String) {
+        Log.d(TAG, "birthYearChanged: $selected")
+        birth.value = selected.toInt()
+    }
+
     // 성별 선택할 때마다 실행
     fun genderTypeChanged(selected: Char) {
         gender.value = selected

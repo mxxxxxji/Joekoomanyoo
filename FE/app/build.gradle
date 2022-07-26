@@ -69,4 +69,7 @@ dependencies {
 
     // Google 로그인
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
+
+    // PowerSpinner https://github.com/skydoves/PowerSpinner
+    implementation "com.github.skydoves:powerspinner:1.2.3"
 }
