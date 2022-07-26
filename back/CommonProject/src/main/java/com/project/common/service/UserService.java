@@ -5,5 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService{
 
-    UserEntity saveOrUpdateUser(UserEntity userEntity);
+    boolean saveOrUpdateUser(UserEntity userEntity) throws Exception;
+
+    void resignUser(int userSeq) throws Exception;
 }

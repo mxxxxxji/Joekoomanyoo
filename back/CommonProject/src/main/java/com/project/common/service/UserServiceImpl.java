@@ -13,11 +13,19 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // 패스워스 바꿔서 변경
-    public UserEntity saveOrUpdateUser(UserEntity userEntity){
+    public boolean saveOrUpdateUser(UserEntity userEntity){
+        // 패스워스 바꿔서 변경
         userEntity.encodePassword(this.passwordEncoder);
-        
-        return this.userRepository.save(userEntity);
+
+        if(userRepository.save(userEntity) != null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
+    @Override
+    public void resignUser(int userSeq) throws Exception {
+        userRepository.deleteById(userSeq);
+    }
 }

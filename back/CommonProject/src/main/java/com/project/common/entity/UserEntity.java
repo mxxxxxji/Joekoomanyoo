@@ -1,6 +1,5 @@
 package com.project.common.entity;
 
-import com.project.common.dto.UserDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
