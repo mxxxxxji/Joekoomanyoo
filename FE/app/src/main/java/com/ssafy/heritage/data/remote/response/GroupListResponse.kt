@@ -1,4 +1,4 @@
-package com.ssafy.heritage.data.response
+package com.ssafy.heritage.data.remote.response
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
