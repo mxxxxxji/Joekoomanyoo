@@ -1,36 +1,40 @@
 package com.ssafy.heritage.adpter
 
-import android.view.View
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.heritage.data.response.GroupListResponse
+import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.ItemGroupBinding
 
-class GroupListAdapter(
-    private val listener: AdapterView.OnItemClickListener,
-    private val checkListener: View.OnClickListener
-) {
+class GroupListAdapter : ListAdapter<GroupListResponse, GroupListAdapter.ViewHolder>(DiffCallback()){
 
-//    private var groupList = mutableListOf<GroupListResponse>()
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupListViewHolder {
-//    }
-//
-//    override fun onBindViewHolder(holder: GroupListViewHolder, position: Int) {
-//    }
-//
-//    override fun getItemCount(): Int {
-//    }
-//
-//
-//    inner class GroupListViewHolder(private val binding: ItemGroupBinding) {
-//        init {
-//
-//        }
-//
-//        fun bind(position: Int) {
-//
-//        }
-//    }
+    inner class ViewHolder(private val binding: ItemGroupBinding) : RecyclerView.ViewHolder(binding.root){
+            fun bind(data: GroupListResponse) = with(binding){
+
+            }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(ItemGroupBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+    class DiffCallback : DiffUtil.ItemCallback<GroupListResponse>() {
+        override fun areItemsTheSame(oldItem: GroupListResponse, newItem: GroupListResponse): Boolean {
+            return oldItem.hashCode() == newItem.hashCode()
+        }
+
+        @SuppressLint("DiffUtilEquals")
+        override fun areContentsTheSame(oldItem: GroupListResponse, newItem: GroupListResponse): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
 }
