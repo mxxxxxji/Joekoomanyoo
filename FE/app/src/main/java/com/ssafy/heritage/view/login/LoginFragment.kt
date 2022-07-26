@@ -111,14 +111,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
             if (account.email != null) {
                 // id 중복이 아닌 경우
-                if (loginViewModel.checkSoㅇcialId(account.id.toString())) {
+                if (loginViewModel.checkId(account.id.toString())) {
                     // 회원가입
                     val bundle = Bundle().apply { putString("type", "social") }
                     findNavController().navigate(R.id.action_loginFragment_to_joinFragment, bundle)
                 }
                 // id 중복인 경우 (기존 소셜 회원가입 이력이 있는 경우)
                 else {
-                    // 토큰가지고 홈 화면 진입
+                    // 홈 화면 진입
                 }
             }
         } catch (e: ApiException) {
@@ -128,17 +128,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         }
     }
 
+    // 소셜 로그아웃
     private fun signOut() {
         mGoogleSignInClient.signOut()
             // 로그아웃 성공시
             .addOnSuccessListener {
 
             }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        signOut()
     }
 
     private fun makeToast(msg: String) {

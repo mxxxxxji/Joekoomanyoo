@@ -42,13 +42,19 @@ class JoinViewModel : ViewModel() {
         val pattern: Pattern = Patterns.EMAIL_ADDRESS
         // 이메일 형식이 맞을 경우
         if (!id.value.isNullOrBlank() && pattern.matcher(id.value).matches()) {
-            // 서버로 인증 요청 전송
 
-            // 요청 전송 성공시 true 리턴
+            // 이메일 중복 검사
+            if (checkId(id.value!!)) {
+                //// 중복검사 통과시
+                //// 서버로 인증 요청 전송
 
-            // 실패시 false 리턴 (이메일 중복)
-            // makeToast("중복된 이메일입니다")
-            // makeTextInputLayoutError(textInputLayout,"중복된 이메일입니다")
+                ////// 요청 전송 성공시 true 리턴
+            } else {
+                //// 중복검사 실패시
+                ////// makeToast("중복된 이메일입니다")
+                ////// makeTextInputLayoutError(textInputLayout,"중복된 이메일입니다")
+                ////// return false
+            }
         } else {
             makeTextInputLayoutError(textInputLayout, "이메일 형식이 올바르지 않습니다")
             makeToast("이메일 형식이 올바르지 않습니다")
@@ -59,15 +65,27 @@ class JoinViewModel : ViewModel() {
         return true
     }
 
+    // 아이디 중복검사
+    fun checkId(id: String): Boolean {
+        // 서버에서 아이디 중복여부 요청
+        return true// 테스트용
+
+        //// 중복일 경우
+        ////return false
+
+        //// 중복이 아닐 경우
+        ////return true
+    }
+
     // id 이메일 인증하기 (클릭)
     fun idVerify(textInputLayout: TextInputLayout): Boolean {
 
         // 서버로 인증번호 보내고 맞게 입력했는지 검사
 
-        // 인증번호 통과했을 경우
+        //// 인증번호 통과했을 경우
         return true
 
-        // 실패했을 경우
+        //// 실패했을 경우
         makeTextInputLayoutError(textInputLayout, "인증번호가 틀렸습니다")
 //            return false
     }
@@ -77,12 +95,12 @@ class JoinViewModel : ViewModel() {
 
         // 서버에 닉네임 중복검사 요청 보냄
 
-        // 중복이 아닐경우
+        //// 중복이 아닐경우
         isCheckedNickname.value = true
         makeToast("사용 가능한 닉네임입니다")
         return true
 
-        // 중복일 경우
+        //// 중복일 경우
         makeTextInputLayoutError(textInputLayout, "중복된 닉네임입니다")
         makeToast("중복된 닉네임입니다")
         return true// 테스트용
@@ -129,23 +147,18 @@ class JoinViewModel : ViewModel() {
         return true
     }
 
-    // 유효성 검사 통과 했는지 여부 (id 유효성 검사 제외)
-    fun isValidated() {
-
-    }
-
     // 성별 선택할 때마다 실행
     fun genderTypeChanged(selected: Char) {
         gender.value = selected
     }
 
-    fun join():Boolean {
+    fun join(): Boolean {
         // 서버에 회원가입 요청
 
-        // 회원가입 성공 시
+        //// 회원가입 성공 시
         return true
 
-        // 회원가입 실패 시
+        //// 회원가입 실패 시
     }
 
     fun makeToast(msg: String) {
