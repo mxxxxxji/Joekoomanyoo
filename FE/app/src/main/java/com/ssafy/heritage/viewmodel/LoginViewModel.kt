@@ -18,6 +18,7 @@ class LoginViewModel : ViewModel() {
 
     val pw = MutableLiveData<String>()
 
+    // 일반로그인
     fun login(): Boolean {
 
         // id나 pw가 입력되지 않았을 때
@@ -35,6 +36,18 @@ class LoginViewModel : ViewModel() {
         makeToast("아이디나 비밀번호를 확인해주세요")
         return false
     }
+
+    // 아이디 검사 (소셜로그인 할때)
+    fun checkSoㅇcialId(id: String): Boolean {
+        // 서버에서 이메일이 중복여부 요청
+        return true// 테스트용
+        // 중복일 경우 - 로그인 시킴
+        // 토근도 반환받음
+        return false
+        // 중복이 아닐 경우 - 회원가입 시킴
+        return true
+    }
+
 
     fun makeToast(msg: String) {
         _message.value = Event(msg)

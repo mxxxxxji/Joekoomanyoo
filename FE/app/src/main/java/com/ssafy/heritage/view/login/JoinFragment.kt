@@ -1,10 +1,10 @@
 package com.ssafy.heritage.view.login
 
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
@@ -15,18 +15,21 @@ private const val TAG = "JoinFragment___"
 
 class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
-    private val joinViewModel by activityViewModels<JoinViewModel>()
+    private val joinViewModel by viewModels<JoinViewModel>()
+
+    // 소셜로그인인지 아닌지 확인
+    private val type by lazy { arguments?.getString("type") ?: "" }
 
     override fun init(): Unit = with(binding) {
         joinVM = joinViewModel
 
         initObserver()
 
+        initView()
+
         initClickListener()
 
         setTextChangedListener()
-
-        initView()
     }
 
     private fun initObserver() {
@@ -75,7 +78,6 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
         // 회원가입 클릭시
         btnJoin.setOnClickListener {
-            Log.d(TAG, "initClickListener: ${joinViewModel.gender.value}")
 
             // 닉네임 중복검사 했는지 확인
             if (joinViewModel.isCheckedNickname.value == false) {
@@ -84,8 +86,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                 return@setOnClickListener
             }
 
-            // 비밀번호 유효성 검사 했는지 확인
-            if (!joinViewModel.validatePw(tilPw, tilPwCheck)) {
+            // 비밀번호 유효성 검사 했는지 확인 (소셜 회원가입이 아닌 경우)
+            if (!type.equals("social") && !joinViewModel.validatePw(tilPw, tilPwCheck)) {
                 return@setOnClickListener
             }
 
@@ -100,7 +102,16 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             // 유효성 검사 다 통과하면 회원가입 요청
             // 회원가입 성공시
             if (joinViewModel.join()) {
-                // 로그인 화면으로 이동
+
+                // 소셜 회원가입시 홈으로 바로이동
+                if (type.equals("social")) {
+                    makeToast("회원가입성공")
+                }
+                // 일반 회원가입시 로그인 화면으로 이동
+                else {
+                    findNavController().navigate(R.id.action_joinFragment_to_loginFragment)
+                }
+
             } else {
 
             }
@@ -144,6 +155,13 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             maxValue = birthList.size - 1
             wrapSelectorWheel = false
             displayedValues = birthList.toTypedArray()
+        }
+
+        // 소셜 로그인인 경우
+        if (type.equals("social")) {
+            tilPw.visibility = View.GONE
+            tilPwCheck.visibility = View.GONE
+            motionlayout.transitionToEnd()
         }
     }
 
