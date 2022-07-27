@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDto {
+public class UserSignupDto {
     private int userSeq;
     private String userId;
     private String userNickname;
@@ -26,27 +26,24 @@ public class UserDto {
     private Date userRegistedAt;
     private Date userUpdatedAt;
     private char isDeleted;
-    private String userLng;
-    private String userLat;
 
     // DTO -> Entity
     public UserEntity toEntity(){
         UserEntity userEntity = UserEntity.builder()
-                .userSeq(userSeq)
+                .userSeq(0)
                 .userId(userId)
                 .userNickname(userNickname)
                 .userPassword(userPassword)
                 .userBirth(userBirth)
                 .socialLoginType(socialLoginType)
                 .userGender(userGender)
-                .profileImgUrl(profileImgUrl)
+                .profileImgUrl("")
                 .jwtToken(jwtToken)
                 .fcmToken(fcmToken)
                 .userRegistedAt(userRegistedAt)
                 .userUpdatedAt(userUpdatedAt)
-                .isDeleted(isDeleted)
-                .userLng(userLng)
-                .userLat(userLat).build();
+                .isDeleted('N')
+                .build();
 
         return userEntity;
     }
