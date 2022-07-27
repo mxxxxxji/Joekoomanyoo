@@ -79,6 +79,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         // 회원가입 클릭시
         btnJoin.setOnClickListener {
 
+            //
+
             // 닉네임 중복검사 했는지 확인
             if (joinViewModel.isCheckedNickname.value == false) {
                 makeTextInputLayoutError(tilNickname, "닉네임 중복검사를 해주세요")

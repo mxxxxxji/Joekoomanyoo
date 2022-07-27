@@ -158,10 +158,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
+            android:fillViewport="true"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:fillViewport="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gl_header"
             tools:visibility="visible">
@@ -358,46 +358,78 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:text="성별 선택"
+                    android:text="성별"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/gl_verti_50"
-                    app:layout_constraintTop_toBottomOf="@id/spinner_year" />
+                    app:layout_constraintTop_toTopOf="@id/header_birth" />
 
-                <RadioGroup
-                    android:id="@+id/rg_gender"
-                    android:layout_width="wrap_content"
+                <com.skydoves.powerspinner.PowerSpinnerView
+                    android:id="@+id/spinner_gender"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/button_vertify"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:hint="선택"
+                    android:padding="10dp"
+                    android:textColor="@color/bombay"
+                    android:textColorHint="@color/bombay"
+                    android:textSize="14.5sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/gl_verti_50"
-                    app:layout_constraintTop_toBottomOf="@id/header_gender">
+                    app:layout_constraintTop_toBottomOf="@id/header_birth"
+                    app:spinner_arrow_gravity="end"
+                    app:spinner_arrow_padding="8dp"
+                    app:spinner_arrow_show="true"
+                    app:spinner_arrow_tint="@color/bombay"
+                    app:spinner_divider_color="@color/white"
+                    app:spinner_divider_show="true"
+                    app:spinner_divider_size="1dp"
+                    app:spinner_item_array="@array/gender"
+                    app:spinner_popup_animation="dropdown"
+                    app:spinner_popup_background="@drawable/background_spinner"
+                    app:spinner_popup_elevation="14dp"
+                    tools:ignore="HardcodedText,UnusedAttribute" />
 
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/gender_f"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="@{() -> joinVM.genderTypeChanged('M')}"
-                        android:text="남자"
-                        android:value="F" />
+                <!--                <RadioGroup-->
+                <!--                    android:id="@+id/rg_gender"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:orientation="horizontal"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="@id/gl_verti_50"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/header_gender">-->
 
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/gender_m"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="@{() -> joinVM.genderTypeChanged('F')}"
-                        android:text="여자"
-                        android:value="M" />
-                </RadioGroup>
+                <!--                    <androidx.appcompat.widget.AppCompatRadioButton-->
+                <!--                        android:id="@+id/gender_f"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:onClick="@{() -> joinVM.genderTypeChanged('M')}"-->
+                <!--                        android:text="남자"-->
+                <!--                        android:value="F" />-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatRadioButton-->
+                <!--                        android:id="@+id/gender_m"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:onClick="@{() -> joinVM.genderTypeChanged('F')}"-->
+                <!--                        android:text="여자"-->
+                <!--                        android:value="M" />-->
+                <!--                </RadioGroup>-->
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_join"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/button_join"
                     android:text="회원가입"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rg_gender" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
