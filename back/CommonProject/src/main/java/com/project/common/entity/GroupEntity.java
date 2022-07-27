@@ -17,7 +17,6 @@ public class GroupEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long groupSeq;
     
-    @OneToMany
     @JoinColumn(name="group_seq")
 	private String attachSeq;
     
@@ -37,7 +36,6 @@ public class GroupEntity {
     @Column(name= "group_description", nullable=false)
     private String groupDescription;
     
-    @Enumerated(EnumType.STRING)
     @Column(name="group_status",nullable=false)
     private String groupStatus;
     

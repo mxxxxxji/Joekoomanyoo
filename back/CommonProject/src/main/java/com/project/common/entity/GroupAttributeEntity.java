@@ -17,7 +17,7 @@ public class GroupAttributeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long gaSeq;
     
-    @OneToOne
+
     @JoinColumn(name="group_seq",nullable=false)
 	private Long groupSeq;
 
