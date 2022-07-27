@@ -1,5 +1,6 @@
 package com.ssafy.heritage.view.login
 
+import androidx.navigation.fragment.NavHostFragment
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseActivity
 import com.ssafy.heritage.databinding.ActivityLoginBinding
@@ -10,10 +11,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     override fun init() {
 
-        // 시작시 LoginFragment 띄움
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.nav_host_login, LoginFragment())
-            .commit()
+        val navHostFragment =
+            supportFragmentManager
+                .findFragmentById(R.id.nav_host_login) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.setGraph(R.navigation.login_graph)
     }
 }
