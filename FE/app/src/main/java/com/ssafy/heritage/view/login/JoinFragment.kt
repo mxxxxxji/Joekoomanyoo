@@ -1,5 +1,6 @@
 package com.ssafy.heritage.view.login
 
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -30,6 +31,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         initClickListener()
 
         setTextChangedListener()
+
+        setItemSelectedListener()
     }
 
     private fun initObserver() {
@@ -145,6 +148,20 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         // 비밀번호 재확인 입력창 에러 비활성화
         tilPwCheck.editText?.addTextChangedListener {
             tilPwCheck.isErrorEnabled = false
+        }
+    }
+
+    private fun setItemSelectedListener() = with(binding) {
+
+        // 스피너 선택 리스너 설정
+        spinnerYear.setOnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
+            Log.d(TAG, "setItemSelectedListener: $newItem")
+            joinViewModel.birthYearChanged(newItem)
+        }
+
+        spinnerGender.setOnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
+            Log.d(TAG, "setItemSelectedListener: $newItem")
+            joinViewModel.genderTypeChanged(newItem)
         }
     }
 

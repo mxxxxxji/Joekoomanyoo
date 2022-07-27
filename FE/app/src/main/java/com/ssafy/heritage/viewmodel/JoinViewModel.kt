@@ -28,7 +28,7 @@ class JoinViewModel : ViewModel() {
 
     val pw_check = MutableLiveData<String>()
 
-    val birth = MutableLiveData<Int>().apply { value = 20 }
+    val birth = MutableLiveData<String>()
 
     val gender = MutableLiveData<Char>()
 
@@ -149,13 +149,15 @@ class JoinViewModel : ViewModel() {
 
     // 출생 년도 선택할 때마다 실행
     fun birthYearChanged(selected: String) {
-        Log.d(TAG, "birthYearChanged: $selected")
-        birth.value = selected.toInt()
+        birth.value = selected
     }
 
     // 성별 선택할 때마다 실행
-    fun genderTypeChanged(selected: Char) {
-        gender.value = selected
+    fun genderTypeChanged(selected: String) {
+        when (selected) {
+            "남자" -> gender.value = 'M'
+            "여자" -> gender.value = 'F'
+        }
     }
 
     fun join(): Boolean {

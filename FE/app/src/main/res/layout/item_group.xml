@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="group"
-            type="com.ssafy.heritage.data.dto.Group" />
+            name="groupListResponse"
+            type="com.ssafy.heritage.data.remote.response.GroupListResponse"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             tools:text="방장 닉네임"
+            android:text="@{groupListResponse.groupMaker}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
         <TextView
@@ -25,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             tools:text="설명-같이 경주가실 분~"
+            android:text="@{groupListResponse.groupIntro}"
             app:layout_constraintTop_toBottomOf="@id/tv_leader_nickname"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -33,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:text="@{groupListResponse.gaStartDate}"
             tools:text="2022.07.31"
             app:layout_constraintTop_toBottomOf="@id/tv_group_content"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -51,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:text="@{groupListResponse.gaEndDate}"
             tools:text="2022.08.01"
             app:layout_constraintStart_toEndOf="@id/header_from"
             app:layout_constraintTop_toTopOf="@id/tv_start_date"
@@ -61,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="공개"
+            android:text="@{groupListResponse.groupAccessType}"
             tools:text="공개/비공개"
             android:textColor="@color/white"
             android:background="@color/material_dynamic_neutral50"
