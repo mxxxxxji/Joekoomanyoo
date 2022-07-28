@@ -2,7 +2,7 @@ package com.project.common.dto;
 
 import java.util.List;
 
-public interface Mapper<D,E>{
+public interface StructMapper<D,E>{
 	E toEntity(final D dto);
 	D toDto(final E entity);
 	

@@ -17,7 +17,7 @@ import com.project.common.repository.GroupRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional(readOnly=true)
+@Transactional
 @RequiredArgsConstructor
 public class GroupService{
 	private final GroupRepository groupRepository;
@@ -36,24 +36,48 @@ public class GroupService{
 
 	//모임 기본 정보 수정
 	public GroupDto updateGroup(Long groupSeq,GroupDto groupDto) {
-		GroupEntity groupUpdated =groupRepository.findById(groupSeq).orElse(null);
+		GroupEntity oldGroup =groupRepository.findById(groupSeq).orElse(null);
+		GroupDto updateGroup=new GroupDto();
+		if(oldGroup != null) {
+			updateGroup.setGroupSeq(oldGroup.getGroupSeq());
+			updateGroup.setGroupName(groupDto.getGroupName());
+			updateGroup.setAttachSeq(groupDto.getAttachSeq());
+			updateGroup.setGroupMaker(groupDto.getGroupMaker());
+			updateGroup.setGroupDescription(groupDto.getGroupDescription());
+			updateGroup.setGroupMaxCount(groupDto.getGroupMaxCount());
+			updateGroup.setGroupAccessType(groupDto.getGroupAccessType());
+			updateGroup.setGroupPassword(groupDto.getGroupPassword());
+			updateGroup.setGroupStatus(groupDto.getGroupStatus());
+			updateGroup.setGroupIsActive(groupDto.getGroupIsActive());
+			updateGroup.setGroupCreatedAt(oldGroup.getGroupCreatedAt());
+		}else
+			updateGroup=groupDto;
 		
-		if(groupUpdated != null) {
-			groupUpdated=groupDto.toEntity();
-			groupRepository.save(groupUpdated);
-		}
-		return GroupMapper.MAPPER.toDto(groupUpdated);
+		groupRepository.save(updateGroup.toEntity());
+		
+		return updateGroup;
 	}
-	
+
 	//모임 상세 정보 수정
 	public GroupAttributeDto updateGroupAttribute(Long groupSeq,GroupAttributeDto groupAttributeDto) {
-		GroupAttributeEntity groupAttributeUpdated = groupAttributeRepository.findById(groupSeq).orElse(null);
+		GroupAttributeEntity oldAttr = groupAttributeRepository.findById(groupSeq).orElse(null);
 		
-		if(groupAttributeUpdated != null) {
-			groupAttributeUpdated = groupAttributeDto.toEntity();
-			groupAttributeRepository.save(groupAttributeUpdated);
-		}
-		return GroupAttributeMapper.MAPPER.toDto(groupAttributeUpdated);
+		GroupAttributeDto updateAttr=new GroupAttributeDto();
+		if(oldAttr != null) {
+			updateAttr.setGroupSeq(oldAttr.getGroupSeq());
+			updateAttr.setGaRegion(groupAttributeDto.getGaRegion());
+			updateAttr.setGaStartDate(groupAttributeDto.getGaStartDate());
+			updateAttr.setGaEndDate(groupAttributeDto.getGaEndDate());
+			updateAttr.setGaChildJoin(groupAttributeDto.getGaChildJoin());
+			updateAttr.setGaGlobalJoin(groupAttributeDto.getGaGlobalJoin());
+			updateAttr.setGaAge(groupAttributeDto.getGaAge());
+			updateAttr.setGaCreatedAt(oldAttr.getGaCreatedAt());
+		}else
+			updateAttr=groupAttributeDto;
+		
+		groupAttributeRepository.save(updateAttr.toEntity());
+		
+		return updateAttr;
 	}
 	
 	//모임 기본정보 보기

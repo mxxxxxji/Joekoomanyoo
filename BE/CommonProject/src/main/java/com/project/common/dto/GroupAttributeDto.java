@@ -46,7 +46,6 @@ public class GroupAttributeDto {
 	
     public GroupAttributeEntity toEntity(){
         return GroupAttributeEntity.builder()
-                .gaSeq(gaSeq)
                 .groupSeq(groupSeq)
                 .gaRegion(gaRegion)
                 .gaStartDate(gaStartDate)

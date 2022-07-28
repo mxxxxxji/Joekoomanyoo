@@ -13,10 +13,8 @@ import java.util.Date;
 @Table(name="tb_group_attribute")
 public class GroupAttributeEntity {
 
+  
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long gaSeq;
-    
     @JoinColumn(name="group_seq",nullable=false)
 	private Long groupSeq;
 
@@ -26,7 +24,7 @@ public class GroupAttributeEntity {
     @Column(name="ga_start_date",nullable=false)
 	private int gaStartDate;
 
-    @Column(name="ga_end_datet",nullable=false)
+    @Column(name="ga_end_date",nullable=false)
 	private int gaEndDate;
 	
 	@Column(name="ga_child_join",length = 1, nullable = false)
@@ -47,9 +45,8 @@ public class GroupAttributeEntity {
 	private Date gaUpdatedAt;
 
 	@Builder
-	public GroupAttributeEntity(Long gaSeq, Long groupSeq, String gaRegion, int gaStartDate, int gaEndDate,
+	public GroupAttributeEntity(Long groupSeq, String gaRegion, int gaStartDate, int gaEndDate,
 			char gaChildJoin, char gaGlobalJoin, int gaAge, Date gaCreatedAt, Date gaUpdatedAt) {
-		this.gaSeq = gaSeq;
 		this.groupSeq = groupSeq;
 		this.gaRegion = gaRegion;
 		this.gaStartDate = gaStartDate;
