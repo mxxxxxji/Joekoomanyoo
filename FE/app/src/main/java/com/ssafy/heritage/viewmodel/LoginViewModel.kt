@@ -1,13 +1,19 @@
 package com.ssafy.heritage.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.event.Event
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 private const val TAG = "LoginViewModel___"
 
 class LoginViewModel : ViewModel() {
+
+    private val repository = Repository.get()
 
     // viewModel에서 Toast 메시지 띄우기 위한 Event
     private val _message = MutableLiveData<Event<String>>()
@@ -19,22 +25,32 @@ class LoginViewModel : ViewModel() {
     val pw = MutableLiveData<String>()
 
     // 일반로그인
-    fun login(): Boolean {
+    suspend fun login() = withContext(Dispatchers.Main) {
 
         // id나 pw가 입력되지 않았을 때
         if (id.value.isNullOrBlank() || pw.value.isNullOrBlank()) {
             makeToast("아이디와 비밀번호를 입력해주세요")
-            return false
+            return@withContext false
         }
 
         // 서버에 로그인 요청
-
-        //// 로그인 성공했을 경우
-        return true
-
-        //// 로그인 실패했을 경우
-        makeToast("아이디나 비밀번호를 확인해주세요")
-        return false
+        val map = HashMap<String, String>()
+        map.put("userId", id.value!!)
+        map.put("userPassword", pw.value!!)
+        repository.login(map).let { response ->
+            // 로그인 성공했을 경우
+            if (response.isSuccessful) {
+                // 토큰 SharedPreference에 저장
+                Log.d(TAG, "login: ${response.body()}")
+                true
+            }
+            // 로그인 실패했을 경우
+            else {
+                Log.d(TAG, "${response.code()}")
+                makeToast("아이디, 비밀번호를 확인해주세요")
+                false
+            }
+        }
     }
 
     // 아이디 중복검사 (소셜용)
