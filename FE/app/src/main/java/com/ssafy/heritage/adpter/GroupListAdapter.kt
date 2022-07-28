@@ -8,10 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.ItemGroupBinding
 
-class GroupListAdapter : ListAdapter<GroupListResponse, GroupListAdapter.ViewHolder>(DiffCallback()){
+class GroupListAdapter(private val listener: OnItemClickListener) : ListAdapter<GroupListResponse, GroupListAdapter.ViewHolder>(DiffCallback()){
 
     inner class ViewHolder(private val binding: ItemGroupBinding) :
         RecyclerView.ViewHolder(binding.root){
+
+        init {
+            binding.root.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
+        }
+
         fun bind(data: GroupListResponse) = with(binding){
             binding.apply {
                 groupListResponse = data
