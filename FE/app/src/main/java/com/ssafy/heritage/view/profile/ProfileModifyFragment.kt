@@ -4,11 +4,9 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.ImageDecoder
-import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
@@ -20,23 +18,17 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
-import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.FragmentProfileModifyBinding
-import com.ssafy.heritage.viewmodel.JoinViewModel
 import com.ssafy.heritage.viewmodel.ProfileViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 private const val TAG = "ProfileModifyFragment___"
-private val PERMISSONS_REQUEST_CODE = 1
 private val PERMISSIONS_REQUIRED = arrayOf(
-    Manifest.permission.READ_EXTERNAL_STORAGE,
-    Manifest.permission.WRITE_EXTERNAL_STORAGE
+    Manifest.permission.READ_EXTERNAL_STORAGE
 )
 
 class ProfileModifyFragment :
@@ -78,11 +70,9 @@ class ProfileModifyFragment :
         btnChangeProfile.setOnClickListener {
 
             if (!hasPermissions()) {
-                requestMultiplePermissions.launch(PERMISSIONS_REQUIRED)
+                requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             } else {
-                val intent = Intent(Intent.ACTION_GET_CONTENT)
-                intent.type = "image/*"
-                filterActivityLauncher.launch(intent)
+                pick()
             }
         }
 
@@ -104,8 +94,16 @@ class ProfileModifyFragment :
                 // 유효성 검사 통과하면 회원정보 수정
                 makeToast("수정 완료")
                 profileViewModel.modify()
+                // 수정완료후 마이페이지로 이동
             }
         }
+    }
+
+    // 사진 선택
+    private fun pick() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        filterActivityLauncher.launch(intent)
     }
 
     // 사진 골라서 가져온 결과
@@ -142,12 +140,18 @@ class ProfileModifyFragment :
             }
         }
 
-    val requestMultiplePermissions = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        permissions.entries.forEach {
+    val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            // PERMISSION GRANTED
+            pick()
+        } else {
+            // PERMISSION NOT GRANTED
+            makeToast("권한이 거부됨")
         }
     }
+
 
     private fun setTextChangedListener() = with(binding) {
 

@@ -1,7 +1,6 @@
 package com.ssafy.heritage.viewmodel
 
 import android.util.Log
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -133,6 +132,11 @@ class ProfileViewModel : ViewModel() {
 //            }
 //        }
         true
+    }
+
+    // 프로필 사진 등록 요청 보냄
+    suspend fun uploadPhoto() {
+
     }
 
     fun makeToast(msg: String) {
