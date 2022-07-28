@@ -18,6 +18,9 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentLoginBinding
 import com.ssafy.heritage.viewmodel.LoginViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 private const val TAG = "LoginFragment___"
@@ -78,10 +81,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         // 로그인 버튼 클릭
         btnLogin.setOnClickListener {
 
-            // 로그인 성공했을 경우
-            if (loginViewModel.login()) {
-                // 홈 화면으로 이동
+            CoroutineScope(Dispatchers.Main).launch {
+
+                // 로그인 성공했을 경우
+                if (loginViewModel.login()) {
+                    // 홈 화면으로 이동
+                    makeToast("로그인 성공")
+                }
+
             }
+
         }
 
         // 소셜 로그인 버튼 클릭

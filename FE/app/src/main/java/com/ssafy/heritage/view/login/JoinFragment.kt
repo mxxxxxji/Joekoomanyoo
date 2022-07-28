@@ -11,6 +11,9 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentJoinBinding
 import com.ssafy.heritage.viewmodel.JoinViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val TAG = "JoinFragment___"
 
@@ -50,13 +53,18 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         // 인증번호전송 클릭시
         btnRequestIdVertification.setOnClickListener {
 
-            // 인증번호 요청 성공시
-            if (joinViewModel.sendIdVeroficationCode(tilId)) {
-                tilIdVertification.visibility = View.VISIBLE
-                btnIdVertify.visibility = View.VISIBLE
-            } else {
+            CoroutineScope(Dispatchers.Main).launch {
+
+                // 인증번호 요청 성공시
+                if (joinViewModel.sendIdVeroficationCode(tilId)) {
+                    tilIdVertification.visibility = View.VISIBLE
+                    btnIdVertify.visibility = View.VISIBLE
+                } else {
+
+                }
 
             }
+
         }
 
         // 인증하기 클릭시
@@ -76,13 +84,19 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
         // 닉네임 중복검사 클릭시
         btnRequestNicknameVertification.setOnClickListener {
-            joinViewModel.nicknameVerify(tilNickname)
+
+            CoroutineScope(Dispatchers.Main).launch {
+
+                // 중복된 닉네임 없는 경우
+                if (joinViewModel.nicknameVerify(tilNickname)) {
+                    // 사용 가능한 닉네임이라고 표시
+                }
+            }
         }
 
         // 회원가입 클릭시
         btnJoin.setOnClickListener {
 
-            //
 
             // 닉네임 중복검사 했는지 확인
             if (joinViewModel.isCheckedNickname.value == false) {
@@ -97,6 +111,10 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             }
 
             // 생년월일 선택했는지 확인
+            if (joinViewModel.birth.value == null) {
+                makeToast("출생 년도를 선택해주세요")
+                return@setOnClickListener
+            }
 
             // 성별 선택했는지 확인인
             if (joinViewModel.gender.value == null) {
@@ -105,20 +123,22 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             }
 
             // 유효성 검사 다 통과하면 회원가입 요청
-            // 회원가입 성공시
-            if (joinViewModel.join()) {
+            CoroutineScope(Dispatchers.Main).launch {
+                // 회원가입 성공시
+                if (joinViewModel.join()) {
 
-                // 소셜 회원가입시 홈으로 바로이동
-                if (type.equals("social")) {
-                    makeToast("회원가입성공")
+                    // 소셜 회원가입시 홈으로 바로이동
+                    if (type.equals("social")) {
+                        makeToast("회원가입성공")
+                    }
+                    // 일반 회원가입시 로그인 화면으로 이동
+                    else {
+                        findNavController().navigate(R.id.action_joinFragment_to_loginFragment)
+                    }
+
+                } else {
+
                 }
-                // 일반 회원가입시 로그인 화면으로 이동
-                else {
-                    findNavController().navigate(R.id.action_joinFragment_to_loginFragment)
-                }
-
-            } else {
-
             }
         }
     }

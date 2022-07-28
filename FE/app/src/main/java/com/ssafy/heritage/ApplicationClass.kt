@@ -5,11 +5,13 @@ import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.SharedPreferencesUtil
 
 class ApplicationClass : Application() {
-    companion object{
+    companion object {
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
+
         // 주소
-        const val BASE_URL=""
+        const val BASE_URL = "http://192.168.0.3:8080"   // 태웅
     }
+
     override fun onCreate() {
         super.onCreate()
 
@@ -18,7 +20,8 @@ class ApplicationClass : Application() {
         // shared preference 초기화
         sharedPreferencesUtil = SharedPreferencesUtil(this)
     }
-    private fun initRepository(){
+
+    private fun initRepository() {
         Repository.initialize(this)
     }
 }

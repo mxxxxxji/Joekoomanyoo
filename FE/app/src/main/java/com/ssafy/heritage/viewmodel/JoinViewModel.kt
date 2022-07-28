@@ -6,12 +6,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.textfield.TextInputLayout
+import com.ssafy.heritage.data.dto.User
+import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.event.Event
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
 
 private const val TAG = "JoinViewModel___"
 
 class JoinViewModel : ViewModel() {
+
+    private val repository = Repository.get()
 
     // viewModel에서 Toast 메시지 띄우기 위한 Event
     private val _message = MutableLiveData<Event<String>>()
@@ -34,48 +40,55 @@ class JoinViewModel : ViewModel() {
 
     val login_type = MutableLiveData<String>()
 
-    var isCheckedNickname = MutableLiveData<Boolean>().apply { value = false }
+    val isCheckedNickname = MutableLiveData<Boolean>().apply { value = false }
 
     // id 이메일 인증번호 전송하기 (클릭)
-    fun sendIdVeroficationCode(textInputLayout: TextInputLayout): Boolean {
+    suspend fun sendIdVeroficationCode(textInputLayout: TextInputLayout) =
+        withContext(Dispatchers.Main) {
 
-        val pattern: Pattern = Patterns.EMAIL_ADDRESS
-        // 이메일 형식이 맞을 경우
-        if (!id.value.isNullOrBlank() && pattern.matcher(id.value).matches()) {
+            val pattern: Pattern = Patterns.EMAIL_ADDRESS
+            // 이메일 형식이 맞을 경우
+            if (!id.value.isNullOrBlank() && pattern.matcher(id.value).matches()) {
 
-            // 이메일 중복 검사
-            if (checkId(id.value!!)) {
-                //// 중복검사 통과시
-                //// 서버로 인증 요청 전송
+                // 이메일 중복 검사
+                val res = checkId(id.value!!, textInputLayout)
 
-                ////// 요청 전송 성공시 true 리턴
+                // 중복검사 통과시
+                if (res) {
+                    // 서버로 인증 요청 전송
+
+                    ////// 요청 전송 성공시 true 리턴
+                    true
+                } else {
+                    // 중복검사 실패시
+                    makeToast("중복된 이메일입니다")
+                    makeTextInputLayoutError(textInputLayout, "중복된 이메일입니다")
+                    false
+                }
             } else {
-                //// 중복검사 실패시
-                ////// makeToast("중복된 이메일입니다")
-                ////// makeTextInputLayoutError(textInputLayout,"중복된 이메일입니다")
-                ////// return false
+                makeTextInputLayoutError(textInputLayout, "이메일 형식이 올바르지 않습니다")
+                makeToast("이메일 형식이 올바르지 않습니다")
+                false
             }
-        } else {
-            makeTextInputLayoutError(textInputLayout, "이메일 형식이 올바르지 않습니다")
-            makeToast("이메일 형식이 올바르지 않습니다")
-            return true // 테스트용
-//            return false
         }
 
-        return true
-    }
-
     // 아이디 중복검사
-    fun checkId(id: String): Boolean {
-        // 서버에서 아이디 중복여부 요청
-        return true// 테스트용
+    suspend fun checkId(id: String, textInputLayout: TextInputLayout) =
+        withContext(Dispatchers.Main) {
+            // 서버에서 아이디 중복여부 요청
 
-        //// 중복일 경우
-        ////return false
-
-        //// 중복이 아닐 경우
-        ////return true
-    }
+            repository.checkEmail(id).let { response ->
+                // 중복된 아이디가 없는 경우
+                if (response.isSuccessful) {
+                    true
+                } else {
+                    Log.d(TAG, "${response.code()}")
+                    makeTextInputLayoutError(textInputLayout, "중복된 이메일입니다")
+                    makeToast("중복된 이메일입니다")
+                    false
+                }
+            }
+        }
 
     // id 이메일 인증하기 (클릭)
     fun idVerify(textInputLayout: TextInputLayout): Boolean {
@@ -91,30 +104,30 @@ class JoinViewModel : ViewModel() {
     }
 
     // 닉네임 중복확인 (클릭)
-    fun nicknameVerify(textInputLayout: TextInputLayout): Boolean {
+    suspend fun nicknameVerify(textInputLayout: TextInputLayout) = withContext(Dispatchers.Main) {
 
         // 서버에 닉네임 중복검사 요청 보냄
 
-        //// 중복이 아닐경우
-        isCheckedNickname.value = true
-        makeToast("사용 가능한 닉네임입니다")
-        return true
-
-        //// 중복일 경우
-        makeTextInputLayoutError(textInputLayout, "중복된 닉네임입니다")
-        makeToast("중복된 닉네임입니다")
-        return true// 테스트용
-//        isCheckedNickname.value = false
-//        return false
+        repository.checkNickname(nickname.value!!).let { response ->
+            // 중복된 닉네임 없는 경우
+            if (response.isSuccessful) {
+                isCheckedNickname.value = true
+                makeToast("사용 가능한 닉네임입니다")
+                true
+            } else {
+                Log.d(TAG, "${response.code()}")
+                makeTextInputLayoutError(textInputLayout, "중복된 이메일입니다")
+                makeToast("중복된 이메일입니다")
+                false
+            }
+        }
     }
 
     // 비밀번호 유효성 검사 실행
     fun validatePw(tilPw: TextInputLayout, tilPwCheck: TextInputLayout): Boolean {
-        Log.d(TAG, "validatePw: validatePw")
 
         // 비밀번호를 입력했는지 검사
         if (pw.value.isNullOrBlank()) {
-            Log.d(TAG, "validatePw: ")
             makeTextInputLayoutError(tilPw, "비밀번호를 입력해주세요")
             makeToast("비밀번호를 입력해주세요")
             return false
@@ -142,7 +155,6 @@ class JoinViewModel : ViewModel() {
             return false
         }
 
-        Log.d(TAG, "validatePw: ")
         // 유효성 검사를 다 통과한 경우
         return true
     }
@@ -160,13 +172,35 @@ class JoinViewModel : ViewModel() {
         }
     }
 
-    fun join(): Boolean {
+    suspend fun join() = withContext(Dispatchers.Main) {
         // 서버에 회원가입 요청
-
-        //// 회원가입 성공 시
-        return true
-
-        //// 회원가입 실패 시
+        val user = User(
+            null,
+            null,
+            id.value!!,
+            nickname.value!!,
+            pw.value!!,
+            birth.value!!,
+            "normal",
+            gender.value!!,
+            "",
+            "",
+            "",
+            "",
+            "",
+            'N'
+        )
+        repository.signup(user).let { response ->
+            // 회원가입 성공 시
+            if (response.isSuccessful) {
+                true
+            }
+            // 회원가입 실패 시
+            else {
+                Log.d(TAG, "${response.code()}")
+                false
+            }
+        }
     }
 
     fun makeToast(msg: String) {
