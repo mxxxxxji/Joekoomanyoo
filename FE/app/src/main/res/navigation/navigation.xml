@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_homeFragment_to_feedDetailFragment"
             app:destination="@id/feedDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_passwordRequestFragment"
+            app:destination="@id/passwordRequestFragment" />
     </fragment>
     <fragment
         android:id="@+id/heritageHostFragment"
@@ -51,4 +54,20 @@
         android:id="@+id/feedDetailFragment"
         android:name="com.ssafy.heritage.view.feed.FeedDetailFragment"
         android:label="fragment_feed_detail"/>
+    <fragment
+        android:id="@+id/passwordRequestFragment"
+        android:name="com.ssafy.heritage.view.profile.PasswordRequestFragment"
+        android:label="PasswordRequestFragment" >
+        <action
+            android:id="@+id/action_passwordRequestFragment_to_profileModifyFragment"
+            app:destination="@id/profileModifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileModifyFragment"
+        android:name="com.ssafy.heritage.view.profile.ProfileModifyFragment"
+        android:label="ProfileModifyFragment" >
+        <argument
+            android:name="user"
+            app:argType="com.ssafy.heritage.data.dto.User"/>
+    </fragment>
 </navigation>

@@ -1,5 +1,9 @@
 package com.ssafy.heritage.data.dto
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class User(
     val userSeq: Int?,              // 사용자 번호, 기본키
     val attachSeq: Int?,             // 첨부파일 번호
@@ -15,5 +19,5 @@ data class User(
     var userRegisteredAt: String,   // 가입 시간
     var userUpdatedAt: String,      // 수정 시간
     var isDeleted: Char,            // 회원 탈퇴 여부(N,Y)
-) {
+) : Parcelable {
 }

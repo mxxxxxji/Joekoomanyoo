@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="@{groupListResponse.gaStartDate}"
+            android:text=" "
             tools:text="2022.07.31"
             app:layout_constraintTop_toBottomOf="@id/tv_group_content"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="@{groupListResponse.gaEndDate}"
+            android:text=" "
             tools:text="2022.08.01"
             app:layout_constraintStart_toEndOf="@id/header_from"
             app:layout_constraintTop_toTopOf="@id/tv_start_date"

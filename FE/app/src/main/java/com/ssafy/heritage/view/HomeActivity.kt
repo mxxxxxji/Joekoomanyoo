@@ -30,5 +30,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             // 바텀 네비게이션이 표시되지 않는 Fragment
 
         }
+
+        navController.navigate(R.id.action_homeFragment_to_passwordRequestFragment)
     }
 }
