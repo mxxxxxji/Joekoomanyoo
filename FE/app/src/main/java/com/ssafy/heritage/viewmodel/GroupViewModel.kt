@@ -25,7 +25,7 @@ class GroupViewModel: ViewModel() {
             repository.selectAllGroups().let { response ->
                 if(response.isSuccessful){
                     var list = response.body()!! as MutableList<GroupListResponse>
-                    list.sortBy { it.groupCreatedAt } // 최신순 정렬
+                   // list.sortBy { it.groupCreatedAt } // 최신순 정렬
                     _groupList.postValue(list)
                 }else{
                     Log.d(TAG, "${response.code()}")

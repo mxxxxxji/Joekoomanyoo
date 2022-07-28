@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             tools:text="방장 닉네임"
-            android:text="@{groupListResponse.groupMaker}"
+            android:text="@{String.valueOf(groupListResponse.groupMaker)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             tools:text="설명-같이 경주가실 분~"
-            android:text="@{groupListResponse.groupIntro}"
+            android:text=""
             app:layout_constraintTop_toBottomOf="@id/tv_leader_nickname"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="@{groupListResponse.gaStartDate}"
+            android:text=""
             tools:text="2022.07.31"
             app:layout_constraintTop_toBottomOf="@id/tv_group_content"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text=" ~ "
+            android:text="@{groupListResponse.groupCreatedAt}"
             tools:text=" ~ "
             app:layout_constraintTop_toTopOf="@id/tv_start_date"
             app:layout_constraintBottom_toBottomOf="@id/tv_start_date"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="@{groupListResponse.gaEndDate}"
+            android:text=""
             tools:text="2022.08.01"
             app:layout_constraintStart_toEndOf="@id/header_from"
             app:layout_constraintTop_toTopOf="@id/tv_start_date"
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="@{groupListResponse.groupAccessType}"
+            android:text="@{String.valueOf(groupListResponse.groupAccessType)}"
             tools:text="공개/비공개"
             android:textColor="@color/white"
             android:background="@color/material_dynamic_neutral50"

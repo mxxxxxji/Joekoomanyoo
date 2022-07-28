@@ -9,12 +9,6 @@
         android:name="com.ssafy.heritage.view.HomeFragment"
         android:label="fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_heritageHostFragment"
-            app:destination="@id/heritageHostFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_feedHostFragment"
-            app:destination="@id/feedHostFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_groupListFragment"
             app:destination="@id/groupListFragment" />
         <action
@@ -27,14 +21,6 @@
             android:id="@+id/action_homeFragment_to_feedDetailFragment"
             app:destination="@id/feedDetailFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/heritageHostFragment"
-        android:name="com.ssafy.heritage.view.heritage.HeritageHostFragment"
-        android:label="fragment_heritage_host"></fragment>
-    <fragment
-        android:id="@+id/feedHostFragment"
-        android:name="com.ssafy.heritage.view.feed.FeedHostFragment"
-        android:label="fragment_feed_host"/>
     <fragment
         android:id="@+id/groupListFragment"
         android:name="com.ssafy.heritage.view.group.GroupListFragment"
