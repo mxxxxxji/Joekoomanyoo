@@ -54,7 +54,7 @@ public class GroupController {
     //모임 기본정보 보기
 
     @ApiOperation(value = "모임 정보 보기, 모임 정보(GroupDto) 반환")
-    @GetMapping("{groupSeq}/get")
+    @GetMapping("{groupSeq}")
     public ResponseEntity<GroupDto> getGroupInfo(@PathVariable("groupSeq") Long groupSeq){
     	return new ResponseEntity<>(groupService.getGroupInfo(groupSeq),HttpStatus.OK);
     }
@@ -62,7 +62,7 @@ public class GroupController {
     //모임 상세정보 보기
 
     @ApiOperation(value = "모임 상세 정보 보기, 모임 상세 정보(GroupAttributeDto) 반환")
-    @GetMapping("{groupSeq}/get-attribute")
+    @GetMapping("{groupSeq}/attribute")
     public ResponseEntity<GroupAttributeDto> getGroupAttribute(@PathVariable("groupSeq") Long groupSeq){
     	return new ResponseEntity<>(groupService.getGroupAttribute(groupSeq),HttpStatus.OK);
     }
