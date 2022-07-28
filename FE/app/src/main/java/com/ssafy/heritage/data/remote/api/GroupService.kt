@@ -13,7 +13,7 @@ interface GroupService {
     suspend fun insertGroup(@Body body: GroupListResponse): Response<Boolean>
 
     // 모임 목록을 조회한다
-    @GET("/api/group")
+    @GET("/api/group/list")
     suspend fun selectAllGroups(): Response<List<GroupListResponse>>
 
     // 모임을 삭제한다

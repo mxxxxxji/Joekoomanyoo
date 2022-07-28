@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".view.login.LoginActivity"
+            android:name=".view.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,11 +30,11 @@
         <activity
             android:name=".view.SplashActivity"
             android:exported="false" />
-        <activity
-            android:name=".view.HomeActivity"
-            android:exported="true">
+<!--        <activity-->
+<!--            android:name=".view.HomeActivity"-->
+<!--            android:exported="true">-->
 
-        </activity>
+<!--        </activity>-->
     </application>
 
 </manifest>
