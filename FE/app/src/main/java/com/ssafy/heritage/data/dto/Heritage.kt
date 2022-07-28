@@ -1,5 +1,10 @@
 package com.ssafy.heritage.data.dto
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import java.io.Serializable
+
+@Parcelize
 data class Heritage(
     val heritageSeq: Int,           // 문화유산 번호
     val heritageName: String,       // 문화유산 이름
@@ -13,4 +18,6 @@ data class Heritage(
     val heritageVoice: String,      // 문화유산 나레이션
     val stampExist: Char,           // 문화유산 스탬프 유무(Y,N)
     val heritageClass: String,      // 문화유산 종목명
-)
+    val heritageScrapCnt: Int,      // 문화유산 스크랩수
+    val heritageReviewCnt: Int      // 문화유산 리뷰수
+) : Parcelable, Serializable

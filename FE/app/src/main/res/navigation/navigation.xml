@@ -9,11 +9,11 @@
         android:name="com.ssafy.heritage.view.HomeFragment"
         android:label="fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_heritageHostFragment"
-            app:destination="@id/heritageHostFragment" />
+            android:id="@+id/action_homeFragment_to_heritageListFragment"
+            app:destination="@id/heritageListFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_feedHostFragment"
-            app:destination="@id/feedHostFragment" />
+            android:id="@+id/action_homeFragment_to_feedListFragment"
+            app:destination="@id/feedListFragment" />
         <action
             android:id="@+id/action_homeFragment_to_groupListFragment"
             app:destination="@id/groupListFragment" />
@@ -27,37 +27,60 @@
             android:id="@+id/action_homeFragment_to_feedDetailFragment"
             app:destination="@id/feedDetailFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_passwordRequestFragment"
-            app:destination="@id/passwordRequestFragment" />
+            android:id="@+id/action_homeFragment_to_heritageListFragment2"
+            app:destination="@id/heritageListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_feedListFragment2"
+            app:destination="@id/feedListFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/heritageHostFragment"
-        android:name="com.ssafy.heritage.view.heritage.HeritageHostFragment"
-        android:label="fragment_heritage_host"></fragment>
-    <fragment
-        android:id="@+id/feedHostFragment"
-        android:name="com.ssafy.heritage.view.feed.FeedHostFragment"
-        android:label="fragment_feed_host"/>
+
+    <!--group-->
     <fragment
         android:id="@+id/groupListFragment"
         android:name="com.ssafy.heritage.view.group.GroupListFragment"
         android:label="fragment_group_list" />
+
+    <!--heritage-->
+    <fragment
+        android:id="@+id/heritageListFragment"
+        android:name="com.ssafy.heritage.view.heritage.HeritageListFragment"
+        android:label="fragment_heritage_host">
+        <action
+            android:id="@+id/action_heritageListFragment_to_heritageDetailFragment"
+            app:destination="@id/heritageDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/heritageDetailFragment"
+        android:name="com.ssafy.heritage.view.heritage.HeritageDetailFragment"
+        android:label="fragment_heritage_detail">
+        <argument
+            android:name="heritage"
+            app:argType="com.ssafy.heritage.data.dto.Heritage" />
+    </fragment>
+
+    <!--feed-->
+    <fragment
+        android:id="@+id/feedListFragment"
+        android:name="com.ssafy.heritage.view.feed.FeedListFragment"
+        android:label="fragment_feed_host">
+        <action
+            android:id="@+id/action_feedListFragment_to_feedDetailFragment"
+            app:destination="@id/feedDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/feedDetailFragment"
+        android:name="com.ssafy.heritage.view.feed.FeedDetailFragment"
+        android:label="fragment_feed_detail" />
+
+    <!--profile-->
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.ssafy.heritage.view.profile.ProfileFragment"
         android:label="fragment_profile" />
     <fragment
-        android:id="@+id/heritageDetailFragment"
-        android:name="com.ssafy.heritage.view.heritage.HeritageDetailFragment"
-        android:label="fragment_heritage_detail"/>
-    <fragment
-        android:id="@+id/feedDetailFragment"
-        android:name="com.ssafy.heritage.view.feed.FeedDetailFragment"
-        android:label="fragment_feed_detail"/>
-    <fragment
         android:id="@+id/passwordRequestFragment"
         android:name="com.ssafy.heritage.view.profile.PasswordRequestFragment"
-        android:label="PasswordRequestFragment" >
+        android:label="PasswordRequestFragment">
         <action
             android:id="@+id/action_passwordRequestFragment_to_profileModifyFragment"
             app:destination="@id/profileModifyFragment" />
@@ -65,9 +88,9 @@
     <fragment
         android:id="@+id/profileModifyFragment"
         android:name="com.ssafy.heritage.view.profile.ProfileModifyFragment"
-        android:label="ProfileModifyFragment" >
+        android:label="ProfileModifyFragment">
         <argument
             android:name="user"
-            app:argType="com.ssafy.heritage.data.dto.User"/>
+            app:argType="com.ssafy.heritage.data.dto.User" />
     </fragment>
 </navigation>

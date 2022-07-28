@@ -31,6 +31,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
         }
 
-        navController.navigate(R.id.action_homeFragment_to_passwordRequestFragment)
+        navController.navigate(R.id.action_homeFragment_to_heritageListFragment)
     }
 }

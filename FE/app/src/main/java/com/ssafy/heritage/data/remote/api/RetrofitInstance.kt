@@ -41,4 +41,8 @@ object RetrofitInstance {
     val userApi: UserService by lazy {
         retrofit.create(UserService::class.java)
     }
+
+    val heritageApi: HeritageService by lazy {
+        retrofit.create(HeritageService::class.java)
+    }
 }

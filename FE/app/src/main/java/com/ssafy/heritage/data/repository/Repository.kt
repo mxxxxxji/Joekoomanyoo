@@ -1,8 +1,10 @@
 package com.ssafy.heritage.data.repository
 
 import android.content.Context
+import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
+import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import retrofit2.Response
@@ -23,6 +25,9 @@ class Repository constructor(context: Context) {
 
     suspend fun signup(user: User): Response<String> = userApi.signup(user)
     suspend fun login(map: HashMap<String, String>): Response<String> = userApi.login(map)
+
+    // heritage
+    suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()
 
     companion object {
         private var INSTANCE: Repository? = null

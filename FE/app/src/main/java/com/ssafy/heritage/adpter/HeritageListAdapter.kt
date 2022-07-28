@@ -7,13 +7,20 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.databinding.ItemHeritageBinding
+import com.ssafy.heritage.listener.HeritageListClickListener
 
 class HeritageListAdapter : ListAdapter<Heritage, HeritageListAdapter.ViewHolder>(DiffCallback()) {
+
+    lateinit var heritageListClickListener: HeritageListClickListener
 
     inner class ViewHolder(private val binding: ItemHeritageBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Heritage) = with(binding) {
+            heritage = data
 
+            itemView.setOnClickListener {
+                heritageListClickListener.onClick(bindingAdapterPosition, data, ivHeritage)
+            }
         }
     }
 
