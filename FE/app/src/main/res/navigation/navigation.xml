@@ -46,7 +46,7 @@
         android:name="com.ssafy.heritage.view.group.GroupInfoFragment"
         android:label="GroupInfoFragment" >
         <argument
-            android:name="GroupListResponse"
-            app:argType="com.ssafy.heritage.data.remote.response.GroupListResponse"/>
+            android:name="groupInfo"
+            app:argType="com.ssafy.heritage.data.remote.response.GroupListResponse" />
     </fragment>
 </navigation>
