@@ -17,12 +17,14 @@ pipeline {
 
   stages {
     stage('============ Build Docker Image =============') {
-        // when { expression { return params.BUILD_DOCKER_IMAGE } }
-        // steps {
+         when { expression { return params.BUILD_DOCKER_IMAGE } }
+         steps {
         //     dir("${env.WORKSPACE}/CommonProject") {
         //          sh 'docker build -t $repository:latest .'
         //      }
-        // }
+        
+                echo "Docker build success!"
+         }
         post {
             always{
                 echo "Docker build success!"
