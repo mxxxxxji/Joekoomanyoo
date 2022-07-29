@@ -4,18 +4,16 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import android.view.View
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.heritage.R
-import com.ssafy.heritage.adpter.HeritageListAdapter
 import com.ssafy.heritage.base.BaseFragment
-import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.databinding.FragmentHeritageMapBinding
-import com.ssafy.heritage.listener.HeritageListClickListener
+import com.ssafy.heritage.databinding.ItemHeritageBinding
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -28,7 +26,8 @@ private val PERMISSIONS_REQUIRED = Manifest.permission.ACCESS_FINE_LOCATION
 
 
 class HeritageMapFragment :
-    BaseFragment<FragmentHeritageMapBinding>(R.layout.fragment_heritage_map) {
+    BaseFragment<FragmentHeritageMapBinding>(R.layout.fragment_heritage_map),
+    MapView.POIItemEventListener {
 
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
 
@@ -52,6 +51,12 @@ class HeritageMapFragment :
 
     private fun initMap() = with(binding) {
         mapView = MapView(requireContext())
+
+        // 마커 클릭 리스너 설정
+        mapView.setPOIItemEventListener(
+            this@HeritageMapFragment
+        )
+
         map.addView(mapView)
         requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
     }
@@ -76,6 +81,7 @@ class HeritageMapFragment :
 
                 // 마커 찍기
                 makeMarker()
+
             } else {
                 // PERMISSION NOT GRANTED
                 makeToast("위치 권한이 필요합니다")
@@ -134,22 +140,65 @@ class HeritageMapFragment :
 
     private fun makeMarker() {
 
-        heritageViewModel.heritageList.value?.forEach {
-            val marker = MapPOIItem()
-            marker.itemName = "Default Marker"
-            marker.mapPoint =
-                MapPoint.mapPointWithGeoCoord(it.heritageLat.toDouble(), it.heritageLng.toDouble())
-            marker.markerType = MapPOIItem.MarkerType.BluePin // 기본으로 제공하는 BluePin 마커 모양.
+        heritageViewModel.heritageList.value?.forEachIndexed { index, heritage ->
+            MapPOIItem().apply {
+                itemName = heritageViewModel.heritageList.value?.get(index)?.heritageName
+                mapPoint =
+                    MapPoint.mapPointWithGeoCoord(
+                        heritage.heritageLat.toDouble(),
+                        heritage.heritageLng.toDouble()
+                    )
+                markerType = MapPOIItem.MarkerType.BluePin // 기본으로 제공하는 BluePin 마커 모양.
+                selectedMarkerType =
+                    MapPOIItem.MarkerType.RedPin // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                showAnimationType = MapPOIItem.ShowAnimationType.SpringFromGround
+                tag = index
 
-            marker.selectedMarkerType =
-                MapPOIItem.MarkerType.RedPin // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-
-
-            mapView.addPOIItem(marker)
+                mapView.addPOIItem(this)
+            }
         }
     }
 
     private fun makeToast(msg: String) {
         Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onPOIItemSelected(p0: MapView?, poiItem: MapPOIItem?) {
+        // 마커 클릭 시
+
+        val data = poiItem?.tag?.let { heritageViewModel.heritageList.value?.get(it) }
+
+        binding.frame.removeAllViews()
+        val inflater = LayoutInflater.from(context)
+        val cardBinding: ItemHeritageBinding =
+            DataBindingUtil.inflate(inflater, R.layout.item_heritage, binding.frame, true)
+        cardBinding.root.background =
+            resources.getDrawable(R.drawable.background_heritage_map_item, null)
+        cardBinding.heritage = data
+
+        cardBinding.root.setOnClickListener {
+            parentFragmentManager
+                .beginTransaction()
+                .addSharedElement(cardBinding.ivHeritage, "heritage")
+                .addToBackStack(null)
+                .replace(
+                    R.id.fragment_container_main,
+                    HeritageDetailFragment.newInstance(data!!)
+                )
+                .commit()
+        }
+    }
+
+    override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
+    }
+
+    override fun onCalloutBalloonOfPOIItemTouched(
+        p0: MapView?,
+        p1: MapPOIItem?,
+        p2: MapPOIItem.CalloutBalloonButtonType?
+    ) {
+    }
+
+    override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
     }
 }

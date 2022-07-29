@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.heritage.R
@@ -133,8 +132,8 @@ private val list = arrayListOf<Heritage>(
         "조선 태조 7년(1398)",
         "서울 중구 세종대로 40 (남대문로4가)",
         "유적건조물",
-        "126.975312652739",
-        "37.559975221378",
+        "128.4216653",
+        "36.1003893",
         "http://www.cha.go.kr/unisearch/images/national_treasure/2685609.jpg",
         "조선시대 한양도성의 정문으로",
         "",
@@ -149,8 +148,8 @@ private val list = arrayListOf<Heritage>(
         "조선시대 초기 15세기",
         "서울 종로구 종로 99 (종로2가) / (지번)서울 종로구 종로2가 38-2번지 탑골공원",
         "유적건조물",
-        "126.988207994364",
-        "37.5715461695449",
+        "128.4216653",
+        "36.1103893",
         "http://www.cha.go.kr/unisearch/images/national_treasure/1611449.jpg",
         "원각사는 지금의 탑골공원 자리에 있었던 절로, 조선 세조 11년(1465)에 세웠다. 조선시대의 숭유억불정책 속에서도 중요한 사찰로 보호되어 오다가 1504년 연산군이 이 절을 ‘연방원(聯芳院)’이라는 이름의 기생집으로 만들어 승려들을 내보냄으로써 절은 없어지게 되었다.",
         "",
