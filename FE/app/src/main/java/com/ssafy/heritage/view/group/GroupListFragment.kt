@@ -22,6 +22,7 @@ class GroupListFragment :
         groupViewModel.getGroupList()
         initAdapter()
         initObserver()
+        initClickListener()
     }
     private fun initAdapter() = with(binding) {
         recyclerviewGroupList.adapter = groupListAdapter
@@ -33,6 +34,13 @@ class GroupListFragment :
         }
     }
 
+    private fun initClickListener() {
+        binding.apply {
+            fabCreateGroup.setOnClickListener {
+                findNavController().navigate(R.id.action_groupListFragment_to_groupModifyFragment)
+            }
+        }
+    }
     override fun onItemClick(position: Int) {
         Log.d(TAG, groupListAdapter.currentList[position].toString())
 

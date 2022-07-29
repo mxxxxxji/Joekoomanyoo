@@ -9,6 +9,6 @@ private const val TAG = "GroupModifyFragment___"
 class GroupModifyFragment :
     BaseFragment<FragmentGroupModifyBinding>(R.layout.fragment_group_modify) {
     override fun init() {
-        TODO("Not yet implemented")
+
     }
 }

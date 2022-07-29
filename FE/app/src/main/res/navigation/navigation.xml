@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_groupListFragment_to_groupInfoFragment"
             app:destination="@id/groupInfoFragment" />
+        <action
+            android:id="@+id/action_groupListFragment_to_groupModifyFragment"
+            app:destination="@id/groupModifyFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -49,4 +52,8 @@
             android:name="groupInfo"
             app:argType="com.ssafy.heritage.data.remote.response.GroupListResponse" />
     </fragment>
+    <fragment
+        android:id="@+id/groupModifyFragment"
+        android:name="com.ssafy.heritage.view.group.GroupModifyFragment"
+        android:label="GroupModifyFragment" />
 </navigation>
