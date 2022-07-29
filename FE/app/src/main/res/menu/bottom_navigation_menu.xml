@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_launcher_foreground"
         android:title="모임"/>
     <item
-        android:id="@+id/heritageHostFragment"
+        android:id="@+id/heritageListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="문화유산"/>
@@ -18,15 +18,15 @@
         android:title="홈"/>
 
     <item
-        android:id="@+id/feedHostFragment"
+        android:id="@+id/feedListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="피드"/>
 
-<!--    <item-->
-<!--        android:id="@+id/artampFragment"-->
-<!--        android:enabled="true"-->
-<!--        android:icon="@drawable/ic_launcher_foreground"-->
-<!--        android:title="스탬프"/>-->
+    <item
+        android:id="@+id/ARFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="AR"/>
 
 </menu>

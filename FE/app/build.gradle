@@ -80,12 +80,14 @@ dependencies {
     // PowerSpinner https://github.com/skydoves/PowerSpinner
     implementation "com.github.skydoves:powerspinner:1.2.3"
 
-    // Glide https://github.com/bumptech/glide
-    implementation 'com.github.bumptech.glide:glide:4.13.2'
-
     // CircleImageView https://github.com/hdodenhof/CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // kako map
     implementation files('libs/libDaumMapAndroid.jar')
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
+
+
 }

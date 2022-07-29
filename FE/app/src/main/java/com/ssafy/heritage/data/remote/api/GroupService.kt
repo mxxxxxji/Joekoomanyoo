@@ -13,7 +13,7 @@ interface GroupService {
     suspend fun insertGroup(@Body body: GroupListResponse): Response<Boolean>
 
     // 모임 목록을 조회한다
-    @GET("/api/group")
+    @GET("/api/group/list")
     suspend fun selectAllGroups(): Response<List<GroupListResponse>>
 
     // 모임을 삭제한다
@@ -24,9 +24,9 @@ interface GroupService {
     @PUT("/api/group/{groupSeq}/active")
     suspend fun changeGroupActiveState(@Body body: Int): Response<Boolean>
 
-    // 모임 상세정보를 조회한다 -> 모임 목록 조회와 차이?
-    //@GET("/api/group/{groupSeq}/attribute")
-    //suspend fun selectGroupDetail(): Response<List<>>
+    // 모임 상세정보를 조회한다
+    @GET("/api/group/{groupSeq}/get-attribute")
+    suspend fun selectGroupDetail(@Path("groupSeq") groupSeq: Int): Response<GroupAttribute>
 
     // 모임 정보를 수정한다
     @PUT("/api/group/{groupSeq}/modify")

@@ -8,6 +8,5 @@ private const val TAG = "FeedListFragment___"
 
 class FeedListFragment : BaseFragment<FragmentFeedListBinding>(R.layout.fragment_feed_list) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 }
