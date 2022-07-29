@@ -1,5 +1,6 @@
 package com.ssafy.heritage.view.group
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.heritage.R
@@ -33,6 +34,8 @@ class GroupListFragment :
     }
 
     override fun onItemClick(position: Int) {
+        Log.d(TAG, groupListAdapter.currentList[position].toString())
+
         val action = GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(groupListAdapter.currentList[position])
         findNavController().navigate(action)
     }
