@@ -11,8 +11,8 @@ pipeline {
 
   environment {
     REGION = "ap-northeast-2"
-    repository = "eejh22/test"  //docker hub id와 repository 이름
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub-jenkins') // jenkins에 등록해 놓은 docker hub credentials 이름
+    repository = "eejh22/d102"  //docker hub id와 repository 이름
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub') // jenkins에 등록해 놓은 docker hub credentials 이름
   }
 
   stages {
