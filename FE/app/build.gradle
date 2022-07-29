@@ -86,6 +86,6 @@ dependencies {
     // CircleImageView https://github.com/hdodenhof/CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    // TedPermission
-    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
+    // kako map
+    implementation files('libs/libDaumMapAndroid.jar')
 }

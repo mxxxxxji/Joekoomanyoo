@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_heritageListFragment_to_heritageDetailFragment"
             app:destination="@id/heritageDetailFragment" />
+        <action
+            android:id="@+id/action_heritageListFragment_to_heritageMapFragment"
+            app:destination="@id/heritageMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/heritageDetailFragment"
@@ -92,5 +95,16 @@
         <argument
             android:name="user"
             app:argType="com.ssafy.heritage.data.dto.User" />
+    </fragment>
+    <fragment
+        android:id="@+id/heritageMapFragment"
+        android:name="com.ssafy.heritage.view.heritage.HeritageMapFragment"
+        android:label="HeritageMapFragment" >
+        <action
+            android:id="@+id/action_heritageMapFragment_to_heritageListFragment"
+            app:destination="@id/heritageListFragment" />
+        <action
+            android:id="@+id/action_heritageMapFragment_to_heritageDetailFragment"
+            app:destination="@id/heritageDetailFragment" />
     </fragment>
 </navigation>

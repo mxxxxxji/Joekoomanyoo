@@ -2,9 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ssafy.heritage">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".ApplicationClass"
@@ -16,10 +20,13 @@
         android:theme="@style/Theme.Heritage"
         android:usesCleartextTraffic="true">
 
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="0607bb73defb9929b0cba1665924cc77" />
+
         <activity
             android:name=".view.login.LoginActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
 
         <activity
             android:name=".view.LanguageActivity"

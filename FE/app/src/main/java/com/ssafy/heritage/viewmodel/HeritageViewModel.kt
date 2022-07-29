@@ -35,4 +35,9 @@ class HeritageViewModel : ViewModel() {
             }
         }
     }
+
+    // 더미 테스트용
+    fun test(list: List<Heritage>) {
+        _heritageList.value = list
+    }
 }
