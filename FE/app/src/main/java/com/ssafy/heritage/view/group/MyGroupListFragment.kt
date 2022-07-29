@@ -9,6 +9,5 @@ private const val TAG = "MyGroupListFragment___"
 class MyGroupListFragment :
     BaseFragment<FragmentMyGroupListBinding>(R.layout.fragment_my_group_list) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 }
