@@ -51,7 +51,7 @@ public class GroupAttributeMapperImpl implements GroupAttributeMapper {
         GroupAttributeEntityBuilder groupAttributeEntity = GroupAttributeEntity.builder();
 
       
-        groupAttributeEntity.groupSeq( dto.getGroupSeq() );
+      //  groupAttributeEntity.groupSeq( dto.getGroupSeq() );
         groupAttributeEntity.gaRegion( dto.getGaRegion() );
         groupAttributeEntity.gaStartDate( dto.getGaStartDate() );
         groupAttributeEntity.gaEndDate( dto.getGaEndDate() );
@@ -72,7 +72,7 @@ public class GroupAttributeMapperImpl implements GroupAttributeMapper {
 
         GroupAttributeDtoBuilder groupAttributeDto = GroupAttributeDto.builder();
 
-        groupAttributeDto.groupSeq( entity.getGroupSeq() );
+ //       groupAttributeDto.groupSeq( entity.getGroupSeq() );
         groupAttributeDto.gaRegion( entity.getGaRegion() );
         groupAttributeDto.gaStartDate( entity.getGaStartDate() );
         groupAttributeDto.gaEndDate( entity.getGaEndDate() );
