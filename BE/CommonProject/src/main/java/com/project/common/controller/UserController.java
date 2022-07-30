@@ -26,10 +26,8 @@ public class UserController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
     private final UserServiceImpl userService;
-
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
 
 
@@ -83,7 +81,6 @@ public class UserController {
         }
 
         String token = jwtTokenProvider.createToken(loginUser.getUsername());
-
 
         return ResponseEntity.ok(token);
     }

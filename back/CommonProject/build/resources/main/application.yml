@@ -2,7 +2,7 @@ spring:
   # mysql DB 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://i7d102.p.ssafy.io:7102/withculture?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/withculture?serverTimezone=Asia/Seoul
     username: root
     password: 1234
   # jpa 설정
@@ -15,3 +15,5 @@ spring:
     properties:
       hibernate:
         format_sql: true  # 로깅에 표시되는 sql을 보기 좋게 해준다
+
+        
