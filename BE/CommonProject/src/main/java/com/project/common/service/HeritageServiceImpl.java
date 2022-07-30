@@ -1,5 +1,7 @@
 package com.project.common.service;
 
+import com.project.common.dto.HeritageDto;
+import com.project.common.dto.HeritageMapper;
 import com.project.common.entity.HeritageEntity;
 import com.project.common.repository.HeritageRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +18,13 @@ public class HeritageServiceImpl implements HeritageService{
 
     private final HeritageRepository heritageRepository;
 
+
     @Transactional
     @Override
-    public List<HeritageEntity> listInfo() throws Exception{
-        List<HeritageEntity> list = new ArrayList<>();
+    public List<HeritageDto> listInfo() throws Exception{
+        List<HeritageDto> list = new ArrayList<>();
         for(HeritageEntity entity : heritageRepository.findAll()){
-            list.add(entity);
+            list.add(HeritageMapper.MAPPER.toDto(entity));
         }
         return list;
     }

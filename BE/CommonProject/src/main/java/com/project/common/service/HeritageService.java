@@ -1,11 +1,11 @@
 package com.project.common.service;
 
-import com.project.common.entity.HeritageEntity;
+import com.project.common.dto.HeritageDto;
 
 import java.util.List;
 
 public interface HeritageService {
 
-    List<HeritageEntity> listInfo() throws Exception;
+    List<HeritageDto> listInfo() throws Exception;
 
 }

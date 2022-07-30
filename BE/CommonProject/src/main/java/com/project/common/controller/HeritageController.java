@@ -1,5 +1,6 @@
 package com.project.common.controller;
 
+import com.project.common.dto.HeritageDto;
 import com.project.common.entity.HeritageEntity;
 import com.project.common.service.HeritageServiceImpl;
 import io.swagger.annotations.Api;
@@ -23,9 +24,8 @@ public class HeritageController {
 
     @ApiOperation(value="문화 유산 상세 정보 불러오기, 문화유산 번호를 통해 상세정보를 불러온다.", response = List.class)
     @GetMapping("/list")
-    public ResponseEntity<List<HeritageEntity>> listInfo() throws Exception {
-        return new ResponseEntity<List<HeritageEntity>>(heritageService.listInfo(), HttpStatus.OK);
+    public ResponseEntity<List<HeritageDto>> listInfo() throws Exception {
+        return new ResponseEntity<List<HeritageDto>>(heritageService.listInfo(), HttpStatus.OK);
     }
-
 
 }

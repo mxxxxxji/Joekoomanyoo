@@ -2,6 +2,7 @@ package com.project.common.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,7 +48,7 @@ public class UserEntity implements UserDetails{
     @Column(length = 100)
     private String profileImgUrl;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String jwtToken;
 
     @Column(length = 50)

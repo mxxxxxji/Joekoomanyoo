@@ -1,7 +1,8 @@
 package com.project.common.controller;
 
 import com.project.common.config.auth.JwtTokenProvider;
-import com.project.common.dto.UserSignupDto;
+import com.project.common.dto.UserDto;
+import com.project.common.dto.UserMapper;
 import com.project.common.entity.UserEntity;
 import com.project.common.repository.UserRepository;
 import com.project.common.service.UserServiceImpl;
@@ -31,19 +32,22 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
 
+
     @ApiOperation(value = "일반 회원가입, 입력을 성공하면 'success'를  실패하면 'fail'을 반환", response = String.class)
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@ApiParam(value="userId, password, userNickname, userBirth, socialLoginType, userGender, profileImgUrl, jwtToken, fcmToken, userRegistedAt, userUpdatedAt, isDeleted 받습니다.") @RequestBody UserSignupDto userSignupDto, BindingResult bindingResult) {
+    public ResponseEntity<String> signup(@ApiParam(value="userId, password, userNickname, userBirth, socialLoginType, userGender, profileImgUrl, jwtToken, fcmToken, userRegistedAt, userUpdatedAt, isDeleted 받습니다.") @RequestBody UserDto userDto, BindingResult bindingResult) {
 
         // validation
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
 
+        // 초기 설정값
+        userDto.setIsDeleted('N');
         // DTO에 저장된 값을 Entity 값을 바꾸기
         // Service와 Controller 이동은 DTO
         // Controller와 DB 이동은 Entity
-        if (userService.saveOrUpdateUser(userSignupDto.toEntity())) {
+        if (userService.saveOrUpdateUser(UserMapper.MAPPER.toEntity(userDto))) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         } else {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
@@ -108,6 +112,7 @@ public class UserController {
     }
 
 
+
     @GetMapping("/tokenvalidate")
     @ApiOperation(value = "사용자의 jwt token이 유효한지 체크")
     public ResponseEntity<?> checkTokenValidate(HttpServletRequest request){
@@ -121,6 +126,7 @@ public class UserController {
 
         return ResponseEntity.ok().body(null);
     }
+
 
 }
 
