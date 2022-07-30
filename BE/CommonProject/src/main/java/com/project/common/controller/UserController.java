@@ -31,9 +31,13 @@ public class UserController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * 일반 회원 가입
+     * @param userDto
+     * @return success / fail
+     */
 
-
-    @ApiOperation(value = "일반 회원가입, 입력을 성공하면 'success'를  실패하면 'fail'을 반환", response = String.class)
+    @ApiOperation(value = "일반 회원가입", response = String.class)
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@ApiParam(value="userId, password, userNickname, userBirth, socialLoginType, userGender, profileImgUrl, jwtToken, fcmToken, userRegistedAt, userUpdatedAt, isDeleted 받습니다.") @RequestBody UserDto userDto, BindingResult bindingResult) {
 
@@ -54,9 +58,14 @@ public class UserController {
         }
     }
 
+    /**
+     * 회원 탈퇴 기능
+     * @param userId
+     * @return success / fail
+     */
 
     @DeleteMapping("/resign/{userId}")
-    @ApiOperation(value = "회원탈퇴기능, 회원탈퇴가 되면 true, 안되면 false", response = String.class)
+    @ApiOperation(value = "회원탈퇴기능", response = String.class)
     public ResponseEntity<String> resign(@ApiParam(value="사용자 ID ( Email )", required = true) @PathVariable("userId") String userId){
         // 회원이 존재하지 X -> 삭제 불가
         if(!userService.resignUser(userId)){
@@ -69,7 +78,13 @@ public class UserController {
 
     }
 
-    @ApiOperation(value = "일반 로그인, JWT 발급, 입력을 성공하면 'success'를  실패하면 'fail'을 반환", response = String.class)
+    /**
+     * 일반 로그인, JWT 발급
+     * @param userInfo
+     * @return token
+     */
+    
+    @ApiOperation(value = "일반 로그인", response = String.class)
     @PostMapping("/login")
     public ResponseEntity<String> login(@ApiParam(value="userId, userPassword", required = true) @RequestBody Map<String, String> userInfo) {
         UserEntity loginUser = userRepository.findByUserId(userInfo.get("userId"));
@@ -90,9 +105,14 @@ public class UserController {
     }
 
 
+    /**
+     * 이메일 중복 검사
+     * @param userId
+     * @return success / fail
+     */
 
     @GetMapping("/check/email/{userId}")
-    @ApiOperation(value = "이메일 중복 검사, 이미 값이 있으면 false, 중복된 것이 없으면 true", response = String.class)
+    @ApiOperation(value = "이메일 중복 검사", response = String.class)
     public ResponseEntity<?> checkEmail(@ApiParam(value="사용자 ID ( Email )", required = true)@PathVariable("userId") String userId){
         if(userService.checkEmail(userId)){
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
@@ -101,8 +121,14 @@ public class UserController {
         }
     }
 
+    /**
+     * 닉네임 중복 검사
+     * @param userNickname
+     * @return success / fail
+     */
+
     @GetMapping("/check/nickname/{userNickname}")
-    @ApiOperation(value = "닉네임 중복 검사, 이미 값이 있으면 false, 중복된 것이 없으면 true", response = String.class)
+    @ApiOperation(value = "닉네임 중복 검사", response = String.class)
     public ResponseEntity<?> checkNickname(@ApiParam(value="사용자 닉네임 ( Nickname )", required = true)@PathVariable("userNickname") String userNickname){
         if(userService.checkNickname(userNickname)){
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

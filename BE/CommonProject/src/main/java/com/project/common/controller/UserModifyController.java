@@ -1,6 +1,7 @@
 package com.project.common.controller;
 
 import com.project.common.dto.UserDto;
+import com.project.common.service.UserModifyServiceImpl;
 import com.project.common.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,12 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/modify")
 public class UserModifyController {
 
-    private UserService userService;
+    private UserModifyServiceImpl userModifyService;
 
+    /**
+     * 사용자 정보 불러오기
+     * @param userSeq
+     * @return userDto
+     */
+    
     @GetMapping("/{userSeq}")
-    @ApiOperation(value = "사용자 정보 불러오기 , 사용자 정보 반환해줌", response = UserDto.class)
+    @ApiOperation(value = "사용자 정보 불러오기", response = UserDto.class)
     public ResponseEntity<UserDto> userInfo(@ApiParam(value="사용자 번호 ( userSeq ) ") @PathVariable("userSeq") int userSeq){
-        return new ResponseEntity<UserDto>(userService.userInfo(userSeq), HttpStatus.OK);
+        return new ResponseEntity<UserDto>(userModifyService.userInfo(userSeq), HttpStatus.OK);
     }
+
 
 }

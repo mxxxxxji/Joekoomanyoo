@@ -13,5 +13,5 @@ public interface UserService{
 
     boolean checkNickname(String userNickname) throws Exception;
 
-    UserDto userInfo(int userSeq);
+
 }

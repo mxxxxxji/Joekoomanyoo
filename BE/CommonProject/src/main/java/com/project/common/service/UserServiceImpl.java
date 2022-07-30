@@ -67,12 +67,5 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    @Override
-    @Transactional
-    public UserDto userInfo(int userSeq) {
-        // 사용자 번호로 사용자 찾기
-        UserEntity userEntity = userRepository.findByUserSeq(userSeq);
-        // Dto로 변환해서 전달
-        return UserMapper.MAPPER.toDto(userEntity);
-    }
+
 }
