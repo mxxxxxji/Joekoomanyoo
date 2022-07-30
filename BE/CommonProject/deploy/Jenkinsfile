@@ -16,7 +16,7 @@ pipeline {
   }
 
   stages {
-    stage('============ Build Docker Image =============') {
+    stage('============= Build Docker Image ==============') {
          when { expression { return params.BUILD_DOCKER_IMAGE } }
          steps {
             dir("${env.WORKSPACE}/BE/CommonProject") {
