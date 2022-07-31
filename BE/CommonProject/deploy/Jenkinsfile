@@ -24,7 +24,7 @@ pipeline {
          steps {
             dir("${env.WORKSPACE}/BE/CommonProject/") {
                 sh 'chmod +x ./gradlew'
-                 sh 'sudo ./gradlew clean bootJar'
+                 sh './gradlew clean bootJar'
              }
          }
         post {
