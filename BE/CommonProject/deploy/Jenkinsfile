@@ -23,7 +23,7 @@ pipeline {
          when { expression { return params.BUILD_GRADLE_BUILD } }
          steps {
             dir("${env.WORKSPACE}/BE/CommonProject/") {
-                 sh './gradlew clean bootJar'
+                 sh 'sudo ./gradlew clean bootJar'
              }
          }
         post {
