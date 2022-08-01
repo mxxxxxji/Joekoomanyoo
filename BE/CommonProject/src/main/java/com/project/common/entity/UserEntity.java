@@ -1,13 +1,30 @@
 package com.project.common.entity;
 
-import lombok.*;
+import java.util.Collection;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Collection;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Builder
@@ -17,6 +34,8 @@ import java.util.Collection;
 @NoArgsConstructor
 // 모든 필드 값을 파라미터로 받는 생성자 생성
 @AllArgsConstructor
+@Getter
+@Setter
 @Table(name = "tb_user")
 // UserDetails는 시큐리티가 관리하는 객체
 public class UserEntity implements UserDetails{
@@ -45,17 +64,19 @@ public class UserEntity implements UserDetails{
     @Column(length = 100)
     private String profileImgUrl;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String jwtToken;
 
     @Column(length = 50)
     private String fcmToken;
 
-    @Column
-    private LocalDateTime userRegistedAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date userRegistedAt;
 
-    @Column
-    private LocalDateTime userUpdatedAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
+    private Date userUpdatedAt;
 
     @Column(length = 1, nullable = false)
     private char isDeleted;

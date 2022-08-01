@@ -1,15 +1,17 @@
 package com.project.common.dto;
 
-import lombok.*;
+import com.project.common.entity.UserEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Setter
-@Getter
 public class UserDto {
     private int userSeq;
     private String userId;
@@ -21,7 +23,29 @@ public class UserDto {
     private String profileImgUrl;
     private String jwtToken;
     private String fcmToken;
-    private LocalDateTime userRegistedAt;
-    private LocalDateTime userUpdatedAt;
+    private Date userRegistedAt;
+    private Date userUpdatedAt;
     private char isDeleted;
+
+    // DTO -> Entity
+    public UserEntity toEntity(){
+        UserEntity userEntity = UserEntity.builder()
+                .userSeq(0)
+                .userId(userId)
+                .userNickname(userNickname)
+                .userPassword(userPassword)
+                .userBirth(userBirth)
+                .socialLoginType(socialLoginType)
+                .userGender(userGender)
+                .profileImgUrl("")
+                .jwtToken(jwtToken)
+                .fcmToken(fcmToken)
+                .userRegistedAt(userRegistedAt)
+                .userUpdatedAt(userUpdatedAt)
+                .isDeleted('N')
+                .build();
+
+        return userEntity;
+    }
+
 }

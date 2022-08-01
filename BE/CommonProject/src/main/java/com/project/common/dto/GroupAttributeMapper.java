@@ -5,17 +5,14 @@ import org.mapstruct.factory.Mappers;
 
 import com.project.common.entity.GroupAttributeEntity;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface GroupAttributeMapper extends StructMapper<GroupAttributeDto,GroupAttributeEntity>{
 	GroupAttributeMapper MAPPER = Mappers.getMapper(GroupAttributeMapper.class);
 	
-	@Override
-	GroupAttributeEntity toEntity(final GroupAttributeDto dto);
-	
+
 	@Override
 	GroupAttributeDto toDto(final GroupAttributeEntity entity);
 	
-
 	
 	
 }

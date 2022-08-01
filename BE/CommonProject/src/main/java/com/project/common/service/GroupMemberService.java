@@ -7,6 +7,7 @@ import com.project.common.dto.UserDto;
 import com.project.common.repository.GroupAttributeRepository;
 import com.project.common.repository.GroupMemberRepository;
 import com.project.common.repository.GroupRepository;
+import com.project.common.service.exception.GroupMemberNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,8 +21,8 @@ public class GroupMemberService{
 	private final UserService userService;
 	
 	@Transactional
-    public void withdrawGroup(long groupSeq, UserDto userDto) {
-        long userSeq = userDto.getUserSeq();
+    public void withdrawGroup(long groupSeq, UserDto userSignupDto) {
+        long userSeq = userSignupDto.getUserSeq();
 
     //    groupMemberRepository.findByGroupIdAndMemberId(groupSeq, userSeq)
   //              .orElseThrow(GroupMemberNotFoundException::new);
