@@ -1,7 +1,7 @@
 package com.project.common.controller;
 
 import com.project.common.config.auth.JwtTokenProvider;
-import com.project.common.dto.UserSignupDto;
+import com.project.common.dto.UserDto;
 import com.project.common.entity.UserEntity;
 import com.project.common.repository.UserRepository;
 import com.project.common.service.UserServiceImpl;
@@ -35,7 +35,7 @@ public class UserController {
 
     @ApiOperation(value = "일반 회원가입, 입력을 성공하면 'success'를  실패하면 'fail'을 반환", response = String.class)
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@ApiParam(value="userId, password, userNickname, userBirth, socialLoginType, userGender, profileImgUrl, jwtToken, fcmToken, userRegistedAt, userUpdatedAt, isDeleted 받습니다.") @RequestBody UserSignupDto userSignupDto, BindingResult bindingResult) {
+    public ResponseEntity<String> signup(@ApiParam(value="userId, password, userNickname, userBirth, socialLoginType, userGender, profileImgUrl, jwtToken, fcmToken, userRegistedAt, userUpdatedAt, isDeleted 받습니다.") @RequestBody UserDto userSignupDto, BindingResult bindingResult) {
 
         // validation
         if (bindingResult.hasErrors()) {
