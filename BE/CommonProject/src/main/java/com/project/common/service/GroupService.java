@@ -106,7 +106,9 @@ public class GroupService{
 	//모임 기본정보 보기
 	public GroupDto getGroupInfo(Long groupSeq) {
 		GroupEntity groupInfo=groupRepository.findById(groupSeq).orElse(null);
-		return GroupMapper.MAPPER.toDto(groupInfo);
+		GroupDto groupInfoDto=GroupMapper.MAPPER.toDto(groupInfo);
+		groupInfoDto.setGroupAttributeDto(GroupAttributeMapper.MAPPER.toDto(groupInfo.getGroupAttributeEntity()));
+		return groupInfoDto;
 	}
 	
 	//모임 상세정보 보기

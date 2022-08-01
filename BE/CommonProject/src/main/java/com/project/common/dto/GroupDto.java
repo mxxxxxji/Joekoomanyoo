@@ -21,7 +21,7 @@ public class GroupDto {
 	private long groupSeq;
 	private String groupName;
 	private String attachSeq;
-	private long groupMaker;
+	private UserSignupDto groupMaker;
 	private String groupDescription;
 	private int groupMaxCount;
 	private char groupAccessType;
@@ -31,13 +31,13 @@ public class GroupDto {
 	private Date groupCreatedAt;
 	private Date groupUpdatedAt;
 
-    private GroupAttributeEntity groupAttributeEntity;
+    private GroupAttributeDto groupAttributeDto;
 	
 
 	@Builder
-	public GroupDto(long groupSeq, String groupName, String attachSeq, long groupMaker, String groupDescription,
+	public GroupDto(long groupSeq, String groupName, String attachSeq, UserSignupDto groupMaker, String groupDescription,
 			int groupMaxCount, char groupAccessType, String groupPassword, String groupStatus, char groupIsActive,
-			Date groupCreatedAt, Date groupUpdatedAt, GroupAttributeEntity groupAttributeEntity) {
+			Date groupCreatedAt, Date groupUpdatedAt, GroupAttributeDto groupAttributeDto) {
 		super();
 		this.groupSeq = groupSeq;
 		this.groupName = groupName;
@@ -51,7 +51,7 @@ public class GroupDto {
 		this.groupIsActive = groupIsActive;
 		this.groupCreatedAt = groupCreatedAt;
 		this.groupUpdatedAt = groupUpdatedAt;
-		this.groupAttributeEntity = groupAttributeEntity;
+		this.groupAttributeDto = groupAttributeDto;
 	}
 	
 
@@ -61,7 +61,6 @@ public class GroupDto {
                 .groupSeq(groupSeq)
                 .groupName(groupName)
                 .attachSeq(attachSeq)
-                .groupMaker(groupMaker)
                 .groupDescription(groupDescription)
                 .groupMaxCount(groupMaxCount)
                 .groupAccessType(groupAccessType)
@@ -72,6 +71,7 @@ public class GroupDto {
                 .groupUpdatedAt(groupUpdatedAt).build();
 
     }
+
 
 
 
