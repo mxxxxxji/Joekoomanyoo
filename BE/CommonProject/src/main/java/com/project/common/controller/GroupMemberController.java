@@ -3,7 +3,7 @@ package com.project.common.controller;
 
 import com.project.common.dto.GroupAttributeDto;
 import com.project.common.dto.GroupDto;
-import com.project.common.dto.UserSignupDto;
+import com.project.common.dto.UserDto;
 import com.project.common.service.GroupMemberService;
 import com.project.common.service.GroupService;
 
@@ -34,7 +34,7 @@ public class GroupMemberController {
     // 그륩 탈퇴
     @ApiOperation(value = "모임 전체 목록 조회, 모임 정보(GroupDto) 반환")
     @DeleteMapping("/withdraw")
-    public ResponseEntity<Void> withdrawGroup(@PathVariable long groupSeq, @RequestBody UserSignupDto userSignupDto) throws Exception{
+    public ResponseEntity<Void> withdrawGroup(@PathVariable long groupSeq, @RequestBody UserDto userSignupDto) throws Exception{
     	groupMemberService.withdrawGroup(groupSeq,userSignupDto);
     	return new ResponseEntity<>(HttpStatus.OK);
     }
