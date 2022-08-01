@@ -63,7 +63,6 @@ public class GroupService{
 			updateGroup.setGroupSeq(oldGroup.getGroupSeq());
 			updateGroup.setGroupName(groupDto.getGroupName());
 			updateGroup.setAttachSeq(groupDto.getAttachSeq());
-			updateGroup.setGroupMaker(groupDto.getGroupMaker());
 			updateGroup.setGroupDescription(groupDto.getGroupDescription());
 			updateGroup.setGroupMaxCount(groupDto.getGroupMaxCount());
 			updateGroup.setGroupAccessType(groupDto.getGroupAccessType());

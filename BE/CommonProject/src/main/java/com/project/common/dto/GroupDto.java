@@ -21,7 +21,7 @@ public class GroupDto {
 	private long groupSeq;
 	private String groupName;
 	private String attachSeq;
-	private UserSignupDto groupMaker;
+	private UserDto groupMaker;
 	private String groupDescription;
 	private int groupMaxCount;
 	private char groupAccessType;
@@ -35,7 +35,7 @@ public class GroupDto {
 	
 
 	@Builder
-	public GroupDto(long groupSeq, String groupName, String attachSeq, UserSignupDto groupMaker, String groupDescription,
+	public GroupDto(long groupSeq, String groupName, String attachSeq, UserDto groupMaker, String groupDescription,
 			int groupMaxCount, char groupAccessType, String groupPassword, String groupStatus, char groupIsActive,
 			Date groupCreatedAt, Date groupUpdatedAt, GroupAttributeDto groupAttributeDto) {
 		super();
