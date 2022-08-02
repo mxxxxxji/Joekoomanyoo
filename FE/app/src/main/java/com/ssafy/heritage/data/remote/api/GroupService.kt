@@ -9,7 +9,7 @@ import retrofit2.http.*
 interface GroupService {
 
     // 새로운 모임을 개설한다
-    @POST("/api/group")
+    @POST("/api/group/add")
     suspend fun insertGroup(@Body body: GroupListResponse): Response<GroupListResponse>
 
     // 모임 목록을 조회한다

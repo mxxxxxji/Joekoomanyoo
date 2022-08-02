@@ -18,8 +18,8 @@ data class GroupListResponse(
     @SerializedName("groupPassword") val groupPwd: String?="",                  // 비밀번호
     @SerializedName("groupIsActive") val groupIsActive: Char = 'Y',             // 그룹 활성화 여부 (N, Y), default = Y
     @SerializedName("groupStatus") val groupStatus: Char,                       // 그룹 상태 (R:모집중, O:모임시작 ,F:모임종료)
-    //@SerializedName("groupCreatedAt") val groupCreatedAt: String = "",               // 생성 시간
-   // @SerializedName("groupUpdatedAt") val groupUpdatedAt: String = "",               // 수정 시간
+    @SerializedName("groupCreatedAt") val groupCreatedAt: String = "",               // 생성 시간
+    @SerializedName("groupUpdatedAt") val groupUpdatedAt: String = "",               // 수정 시간
     @SerializedName("groupMaxCount") val groupMaxCount: Int,
     @SerializedName("region") var region: String,
     @SerializedName("age") var age: Int,
