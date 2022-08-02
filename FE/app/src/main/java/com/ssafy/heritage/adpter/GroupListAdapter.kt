@@ -1,6 +1,7 @@
 package com.ssafy.heritage.adpter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -22,6 +23,15 @@ class GroupListAdapter(private val listener: OnItemClickListener) : ListAdapter<
         fun bind(data: GroupListResponse) = with(binding){
             binding.apply {
                 groupListResponse = data
+                if(data.groupAccessType == '1'){
+                    ivLockOn.visibility = View.GONE
+                }
+                if(data.childJoin == 'N'){
+                    tvKidsCheck.visibility = View.GONE
+                }
+                if(data.globalJoin == 'N'){
+                    tvGlobalCheck.visibility = View.GONE
+                }
             }
         }
     }

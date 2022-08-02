@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/groupListFragment"
         android:name="com.ssafy.heritage.view.group.GroupListFragment"
-        android:label="fragment_group_list" >
+        android:label="fragment_group_list">
         <action
             android:id="@+id/action_groupListFragment_to_groupInfoFragment"
             app:destination="@id/groupInfoFragment" />
@@ -86,7 +86,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.ssafy.heritage.view.profile.ProfileFragment"
-        android:label="fragment_profile" >
+        android:label="fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
@@ -110,7 +110,7 @@
     <fragment
         android:id="@+id/heritageMapFragment"
         android:name="com.ssafy.heritage.view.heritage.HeritageMapFragment"
-        android:label="HeritageMapFragment" >
+        android:label="HeritageMapFragment">
         <action
             android:id="@+id/action_heritageMapFragment_to_heritageDetailFragment"
             app:destination="@id/heritageDetailFragment" />
@@ -118,7 +118,7 @@
     <fragment
         android:id="@+id/groupInfoFragment"
         android:name="com.ssafy.heritage.view.group.GroupInfoFragment"
-        android:label="GroupInfoFragment" >
+        android:label="GroupInfoFragment">
         <argument
             android:name="groupInfo"
             app:argType="com.ssafy.heritage.data.remote.response.GroupListResponse" />
@@ -126,7 +126,11 @@
     <fragment
         android:id="@+id/groupModifyFragment"
         android:name="com.ssafy.heritage.view.group.GroupModifyFragment"
-        android:label="GroupModifyFragment" />
+        android:label="GroupModifyFragment">
+        <action
+            android:id="@+id/action_groupModifyFragment_to_groupInfoFragment"
+            app:destination="@id/groupInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/ARFragment"
         android:name="com.ssafy.heritage.view.ar.ARFragment"
@@ -139,4 +143,12 @@
         android:id="@+id/settingFragment"
         android:name="com.ssafy.heritage.view.setting.SettingFragment"
         android:label="SettingFragment" />
+    <fragment
+        android:id="@+id/groupMapFragment"
+        android:name="com.ssafy.heritage.view.group.GroupMapFragment"
+        android:label="GroupMapFragment">
+        <action
+            android:id="@+id/action_groupMapFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

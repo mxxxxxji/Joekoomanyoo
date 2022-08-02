@@ -7,8 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <!--100% 투명도 white-->
     <color name="white_100">#00FFFFFF</color>
+    <!--80% 투명도 white-->
+    <color name="white_80">#CCFFFFFF</color>
+    <!--50% 투명도 white-->
+    <color name="white_50">#80FFFFFF</color>
+    <!--20% 투명도 white-->
+    <color name="white_20">#33FFFFFF</color>
 
     <color name="gray">#FF808080</color>
 

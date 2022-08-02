@@ -10,7 +10,7 @@ class SharedPreferencesUtil(context: Context) {
         context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
     // 정보 저장
-    fun save(){}
+    fun save(user: User){}
 
     // 정보 불러오기
     fun get(){}

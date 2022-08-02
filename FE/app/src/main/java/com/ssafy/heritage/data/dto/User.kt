@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class User(
     val userSeq: Int?,              // 사용자 번호, 기본키
-    val attachSeq: Int?,             // 첨부파일 번호
+    val attachSeq: Int? = 0,             // 첨부파일 번호
     val userId: String,             // 아이디(이메일 형식)
     var userNickname: String,       // 닉네임
     var userPassword: String?,      // 비밀번호

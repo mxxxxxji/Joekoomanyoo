@@ -8,6 +8,5 @@ private const val TAG = "GroupChatFragment___"
 
 class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragment_group_chat) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 }

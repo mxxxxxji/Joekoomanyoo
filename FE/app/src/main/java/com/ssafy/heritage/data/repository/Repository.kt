@@ -13,18 +13,16 @@ import retrofit2.Response
 class Repository constructor(context: Context) {
 
     // group
-    suspend fun insertGroup(body: GroupListResponse): Response<Boolean> = groupApi.insertGroup(body)
+    suspend fun insertGroup(body: GroupListResponse): Response<GroupListResponse> = groupApi.insertGroup(body)
     suspend fun selectAllGroups(): Response<List<GroupListResponse>> = groupApi.selectAllGroups()
     suspend fun deleteGroup(groupSeq: Int): Response<Boolean> = groupApi.deleteGroup(groupSeq)
     suspend fun changeGroupActiveState(body: Int): Response<Boolean> = groupApi.changeGroupActiveState(body)
     suspend fun selectGroupMembers(groupSeq: Int): Response<List<User>> = groupApi.selectGroupMembers(groupSeq)
+    suspend fun selectGroupDetail(groupSeq: Int): Response<GroupListResponse> = groupApi.selectGroupDetail(groupSeq)
 
-    suspend fun selectGroupDetail(groupSeq: Int): Response<GroupAttribute> = groupApi.selectGroupDetail(groupSeq)
     // user
     suspend fun checkEmail(userId: String): Response<String> = userApi.checkEmail(userId)
-    suspend fun checkNickname(userNickname: String): Response<String> =
-        userApi.checkNickname(userNickname)
-
+    suspend fun checkNickname(userNickname: String): Response<String> = userApi.checkNickname(userNickname)
     suspend fun signup(user: User): Response<String> = userApi.signup(user)
     suspend fun login(map: HashMap<String, String>): Response<String> = userApi.login(map)
 

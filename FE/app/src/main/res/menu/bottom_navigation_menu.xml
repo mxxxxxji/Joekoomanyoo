@@ -24,7 +24,7 @@
         android:title="피드" />
 
     <item
-        android:id="@+id/ARFragment"
+        android:id="@+id/groupMapFragment"
         android:enabled="true"
         android:icon="@drawable/ic_nav_ar"
         android:title="AR" />

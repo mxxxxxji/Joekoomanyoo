@@ -27,6 +27,10 @@ class GroupViewModel: ViewModel() {
     private val _groupMemberList = SingleLiveEvent<MutableList<User>>()
     val groupMemberList: LiveData<MutableList<User>> get() = _groupMemberList
 
+    private val _insertGroupInfo = SingleLiveEvent<GroupListResponse>()
+    val insertGroupInfo: LiveData<GroupListResponse> get() = _insertGroupInfo
+
+
     fun getGroupList() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectAllGroups().let { response ->
@@ -61,6 +65,19 @@ class GroupViewModel: ViewModel() {
                 if(response.isSuccessful) {
                     var list = response.body()!! as MutableList<User>
                     _groupMemberList.postValue(list)
+                }else{
+                    Log.d(TAG, "${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun insertGroup(groupInfo: GroupListResponse) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertGroup(groupInfo).let { response ->
+                if(response.isSuccessful) {
+                    var info = response.body()!! as GroupListResponse
+                    _insertGroupInfo.postValue(info)
                 }else{
                     Log.d(TAG, "${response.code()}")
                 }

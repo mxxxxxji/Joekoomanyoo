@@ -10,7 +10,7 @@ interface GroupService {
 
     // 새로운 모임을 개설한다
     @POST("/api/group")
-    suspend fun insertGroup(@Body body: GroupListResponse): Response<Boolean>
+    suspend fun insertGroup(@Body body: GroupListResponse): Response<GroupListResponse>
 
     // 모임 목록을 조회한다
     @GET("/api/group/list")
@@ -25,15 +25,15 @@ interface GroupService {
     suspend fun changeGroupActiveState(@Body body: Int): Response<Boolean>
 
     // 모임 상세정보를 조회한다
-    @GET("/api/group/{groupSeq}/get-attribute")
-    suspend fun selectGroupDetail(@Path("groupSeq") groupSeq: Int): Response<GroupAttribute>
+    @GET("/api/group/{groupSeq}/simple")
+    suspend fun selectGroupDetail(@Path("groupSeq") groupSeq: Int): Response<GroupListResponse>
 
     // 모임 정보를 수정한다
     @PUT("/api/group/{groupSeq}/modify")
     suspend fun modifyGroup(@Path("groupSeq") groupSeq: Int, @Body body: GroupAttribute): Response<Boolean>
 
     // 나의 모임 정보만 조회한다
-    //@GET("/api/group/{userSeq}/my")
+    // @GET("/api/group/{userSeq}/my")
     //suspend fun selectMyGroups(@Path("userSeq") userSeq: Int): Response<List<GroupListResponse>>
 
 
