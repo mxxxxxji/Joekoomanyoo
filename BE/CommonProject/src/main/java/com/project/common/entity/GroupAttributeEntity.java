@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Getter @Setter
 @ToString
 @Table(name="tb_group_attribute")
 public class GroupAttributeEntity {

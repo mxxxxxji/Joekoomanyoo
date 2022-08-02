@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.common.dto.UserDto;
-import com.project.common.repository.GroupAttributeRepository;
 import com.project.common.repository.GroupMemberRepository;
 import com.project.common.repository.GroupRepository;
 import com.project.common.service.exception.GroupMemberNotFoundException;
@@ -16,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GroupMemberService{
 	private final GroupRepository groupRepository;
-	private final GroupAttributeRepository groupAttributeRepository;
 	private final GroupMemberRepository groupMemberRepository;
 	private final UserService userService;
 	
