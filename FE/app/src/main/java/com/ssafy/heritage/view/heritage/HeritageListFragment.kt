@@ -18,7 +18,7 @@ class HeritageListFragment :
     }
 
     private fun initAdapter() = with(binding) {
-        recyclerview.adapter = heritageAdapter
+//        recyclerview.adapter = heritageAdapter
 
         // heritageAdapter.submitList(리스트)  // submitList로 리스트 넣어줌
     }

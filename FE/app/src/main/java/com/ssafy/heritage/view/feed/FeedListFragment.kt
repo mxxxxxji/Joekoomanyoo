@@ -1,13 +1,23 @@
 package com.ssafy.heritage.view.feed
 
+import com.ssafy.feed.adpter.FeedListAdapter
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentFeedListBinding
 
 private const val TAG = "FeedListFragment___"
 
-class FeedListFragment : BaseFragment<FragmentFeedListBinding>(R.layout.fragment_feed_list) {
+class FeedListFragment :
+    BaseFragment<FragmentFeedListBinding>(R.layout.fragment_feed_list) {
+
+    private val feedAdapter: FeedListAdapter by lazy { FeedListAdapter() }
+
     override fun init() {
-        TODO("Not yet implemented")
+
+        initAdapter()
+    }
+
+    private fun initAdapter() = with(binding) {
+//        recyclerview.adapter = feedAdapter
     }
 }

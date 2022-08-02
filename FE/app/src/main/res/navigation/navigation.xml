@@ -9,11 +9,11 @@
         android:name="com.ssafy.heritage.view.HomeFragment"
         android:label="fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_heritageHostFragment"
-            app:destination="@id/heritageHostFragment" />
+            android:id="@+id/action_homeFragment_to_heritageListFragment"
+            app:destination="@id/heritageListFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_feedHostFragment"
-            app:destination="@id/feedHostFragment" />
+            android:id="@+id/action_homeFragment_to_feedListFragment"
+            app:destination="@id/feedListFragment" />
         <action
             android:id="@+id/action_homeFragment_to_groupListFragment"
             app:destination="@id/groupListFragment" />
@@ -31,13 +31,13 @@
             app:destination="@id/passwordRequestFragment" />
     </fragment>
     <fragment
-        android:id="@+id/heritageHostFragment"
-        android:name="com.ssafy.heritage.view.heritage.HeritageHostFragment"
-        android:label="fragment_heritage_host"></fragment>
+        android:id="@+id/heritageListFragment"
+        android:name="com.ssafy.heritage.view.heritage.HeritageListFragment"
+        android:label="fragment_heritage_list"></fragment>
     <fragment
-        android:id="@+id/feedHostFragment"
-        android:name="com.ssafy.heritage.view.feed.FeedHostFragment"
-        android:label="fragment_feed_host"/>
+        android:id="@+id/feedListFragment"
+        android:name="com.ssafy.heritage.view.feed.FeedListFragment"
+        android:label="fragment_feed_list"/>
     <fragment
         android:id="@+id/groupListFragment"
         android:name="com.ssafy.heritage.view.group.GroupListFragment"
