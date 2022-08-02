@@ -2,6 +2,7 @@ package com.ssafy.heritage.view.profile
 
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.KeywordListAdapter
@@ -39,6 +40,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = settingListAdapter
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
             settingListAdapter.settingListClickListener = object : SettingListClickListener {
                 override fun onClick(position: Int, view: View) {
