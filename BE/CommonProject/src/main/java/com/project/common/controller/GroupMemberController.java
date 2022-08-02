@@ -1,7 +1,7 @@
 package com.project.common.controller;
 
 
-import com.project.common.dto.GroupAttributeDto;
+
 import com.project.common.dto.GroupDto;
 import com.project.common.dto.UserDto;
 import com.project.common.service.GroupMemberService;
