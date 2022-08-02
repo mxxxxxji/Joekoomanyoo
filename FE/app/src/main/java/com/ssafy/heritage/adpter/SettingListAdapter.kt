@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.databinding.ItemSettingBinding
-import com.ssafy.heritage.listener.RecyclerItemClickListener
+import com.ssafy.heritage.listener.SettingListClickListener
 
 class SettingListAdapter : ListAdapter<String, SettingListAdapter.ViewHolder>(DiffCallback()) {
 
-    lateinit var recyclerItemClickListener: RecyclerItemClickListener
+    lateinit var settingListClickListener: SettingListClickListener
 
     inner class ViewHolder(private val binding: ItemSettingBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -18,7 +18,7 @@ class SettingListAdapter : ListAdapter<String, SettingListAdapter.ViewHolder>(Di
             name = data
 
             itemView.setOnClickListener {
-                recyclerItemClickListener.onClick(bindingAdapterPosition)
+                settingListClickListener.onClick(bindingAdapterPosition, itemView)
             }
         }
     }
