@@ -28,8 +28,7 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
         initAdapter()
         initObserver()
         Log.d(TAG, args.groupInfo.groupName)
-        groupViewModel.add(args.groupInfo)
-        // groupViewModel.getGroupDetailInfo(args.groupInfo.groupSeq) //- 서버 API 수정중 : 서버 오류로 데이터 받아오는지 미확인
+        groupViewModel.getGroupDetailInfo(args.groupInfo.groupSeq) //- 서버 API 수정중 : 서버 오류로 데이터 받아오는지 미확인
         // groupViewModel.selectGroupMembers(args.groupInfo.groupSeq) - 서버 API 미작성 : 회원 이미지,이름 나오는지 확인 필요
     }
 

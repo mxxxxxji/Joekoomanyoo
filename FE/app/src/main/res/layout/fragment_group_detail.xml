@@ -3,11 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="groupDetailInfo"
-            type="com.ssafy.heritage.data.remote.response.GroupListResponse"/>
-    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,26 +26,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:background="@drawable/feed_img_1"/>
-                <Button
-                    android:id="@+id/btn_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="설정"
-                    android:textColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-                <Button
-                    android:id="@+id/btn_change_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="사진변경"
-                    android:textColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_setting"/>
+                    android:background="@drawable/example"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
 
@@ -61,7 +37,7 @@
             android:layout_margin="30dp"
             android:textSize="24sp"
             tools:text="경주여행"
-            android:text="@{groupDetailInfo.groupName}"
+            android:text="경주여행"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/frame_layout_top"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -73,7 +49,7 @@
             android:layout_margin="30dp"
             android:textSize="20sp"
             tools:text="0000.00.00"
-            android:text="@{groupDetailInfo.startDate}"
+            android:text="0000.00.00"
             app:layout_constraintTop_toBottomOf="@id/tv_group_name"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -94,7 +70,7 @@
             android:layout_margin="30dp"
             android:textSize="20sp"
             tools:text="0000.00.00"
-            android:text="@{groupDetailInfo.endDate}"
+            android:text="0000.00.00"
             app:layout_constraintTop_toBottomOf="@id/tv_group_name"
             app:layout_constraintStart_toEndOf="@id/header_from"/>
 
@@ -115,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:textSize="20sp"
-            android:text="@{groupDetailInfo.groupDescription}"
+            android:text="불국사 좋아하는 분들, 같이 여행해요"
             app:layout_constraintTop_toBottomOf="@id/header_group_content"
             app:layout_constraintStart_toStartOf="parent"/>
         <TextView
@@ -129,36 +105,18 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_members"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/header_members"
-            app:layout_constraintStart_toStartOf="parent"/>
-        <TextView
-            android:id="@+id/header_applicant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="신청자"
-            app:layout_constraintTop_toBottomOf="@id/recyclerview_members"
-            app:layout_constraintStart_toStartOf="parent"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_applicant"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/header_applicant"
             app:layout_constraintStart_toStartOf="parent"/>
         <Button
             android:id="@+id/btn_subscription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="가입하기"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <Button
@@ -166,6 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="가입취소"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
         <Button
@@ -173,6 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="탈퇴하기"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

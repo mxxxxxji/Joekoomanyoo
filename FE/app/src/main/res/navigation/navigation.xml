@@ -122,9 +122,6 @@
         <argument
             android:name="groupInfo"
             app:argType="com.ssafy.heritage.data.remote.response.GroupListResponse" />
-        <action
-            android:id="@+id/action_groupInfoFragment_to_groupDetailFragment"
-            app:destination="@id/groupDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupModifyFragment"
@@ -153,13 +150,5 @@
         <action
             android:id="@+id/action_groupMapFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/groupDetailFragment"
-        android:name="com.ssafy.heritage.view.group.GroupDetailFragment"
-        android:label="GroupDetailFragment">
-        <argument
-            android:name="groupInfo"
-            app:argType="com.ssafy.heritage.data.remote.response.GroupListResponse" />
     </fragment>
 </navigation>
