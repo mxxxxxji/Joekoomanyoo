@@ -20,6 +20,10 @@ class HeritageViewModel : ViewModel() {
     val heritageList: LiveData<List<Heritage>>
         get() = _heritageList
 
+    private val _heritage = MutableLiveData<Heritage>()
+    val heritage: LiveData<Heritage>
+        get() = _heritage
+
     // 전체 문화유산 목록 가져옴
     fun getHeritageList() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -34,6 +38,10 @@ class HeritageViewModel : ViewModel() {
 
             }
         }
+    }
+    // private 값을 변경할 수 있는 함수
+    fun setHeritage(heritage: Heritage) {
+        _heritage.postValue(heritage)
     }
 
     // 더미 테스트용

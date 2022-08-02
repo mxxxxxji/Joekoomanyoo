@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="heritage"
+            type="com.ssafy.heritage.data.dto.Heritage" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -11,13 +17,16 @@
         <!-- TODO: Update blank fragment layout -->
 
         <ImageView
+            glide="@{heritage.heritageImgUrl}"
             android:id="@+id/iv_heritage_detail_img"
             android:layout_width="wrap_content"
             android:layout_height="280dp"
             android:scaleType="centerCrop"
             android:src="@drawable/bong"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/resource__" />
-
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -60,7 +69,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="안동 봉정사 극락전"
+            android:text="@{heritage.heritageName}"
+            tools:text="안동 봉정사 극락전"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/btn_back"
             app:layout_constraintStart_toEndOf="@+id/btn_back"
@@ -98,20 +108,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view_heritage_detail_back" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_heritage_info"
-            app:layout_constraintVertical_bias="1.0"
-            tools:listitem="@layout/fragment_heritage_info">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            app:layout_constraintTop_toBottomOf="@id/tv_heritage_info"
+            app:layout_constraintStart_toStartOf="parent">
+        </androidx.fragment.app.FragmentContainerView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
