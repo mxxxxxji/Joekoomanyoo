@@ -3,6 +3,7 @@ package com.project.common.controller;
 
 import com.project.common.dto.GroupAttributeDto;
 import com.project.common.dto.GroupDto;
+import com.project.common.dto.RespGroupDto;
 import com.project.common.service.GroupService;
 
 import io.swagger.annotations.ApiOperation;
@@ -64,7 +65,7 @@ public class GroupController {
 
     @ApiOperation(value = "모임 정보 보기, 모임 정보(GroupDto) 반환")
     @GetMapping("{groupSeq}/get")
-    public ResponseEntity<GroupDto> getGroupInfo(@PathVariable("groupSeq") Long groupSeq){
+    public ResponseEntity<RespGroupDto> getGroupInfo(@PathVariable("groupSeq") Long groupSeq){
     	return new ResponseEntity<>(groupService.getGroupInfo(groupSeq),HttpStatus.OK);
     }
     

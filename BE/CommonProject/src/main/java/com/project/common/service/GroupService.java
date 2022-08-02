@@ -10,6 +10,7 @@ import com.project.common.dto.GroupAttributeDto;
 import com.project.common.dto.GroupAttributeMapper;
 import com.project.common.dto.GroupDto;
 import com.project.common.dto.GroupMapper;
+import com.project.common.dto.RespGroupDto;
 import com.project.common.entity.GroupAttributeEntity;
 import com.project.common.entity.GroupEntity;
 import com.project.common.entity.UserEntity;
@@ -103,10 +104,9 @@ public class GroupService{
 	}
 	
 	//모임 기본정보 보기
-	public GroupDto getGroupInfo(Long groupSeq) {
+	public RespGroupDto getGroupInfo(Long groupSeq) {
 		GroupEntity groupInfo=groupRepository.findById(groupSeq).orElse(null);
-		GroupDto groupInfoDto=GroupMapper.MAPPER.toDto(groupInfo);
-		groupInfoDto.setGroupAttributeDto(GroupAttributeMapper.MAPPER.toDto(groupInfo.getGroupAttributeEntity()));
+		RespGroupDto groupInfoDto=new RespGroupDto(groupInfo);
 		return groupInfoDto;
 	}
 	
