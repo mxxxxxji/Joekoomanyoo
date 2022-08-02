@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_homeFragment_to_ARFragment"
             app:destination="@id/ARFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_notiFragment"
+            app:destination="@id/notiFragment" />
     </fragment>
 
     <!--group-->
@@ -105,9 +108,6 @@
         android:name="com.ssafy.heritage.view.heritage.HeritageMapFragment"
         android:label="HeritageMapFragment" >
         <action
-            android:id="@+id/action_heritageMapFragment_to_heritageListFragment"
-            app:destination="@id/heritageListFragment" />
-        <action
             android:id="@+id/action_heritageMapFragment_to_heritageDetailFragment"
             app:destination="@id/heritageDetailFragment" />
     </fragment>
@@ -127,4 +127,8 @@
         android:id="@+id/ARFragment"
         android:name="com.ssafy.heritage.view.ar.ARFragment"
         android:label="ARFragment" />
+    <fragment
+        android:id="@+id/notiFragment"
+        android:name="com.ssafy.heritage.view.NotiFragment"
+        android:label="NotiFragment" />
 </navigation>
