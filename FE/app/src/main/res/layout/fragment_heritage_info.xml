@@ -264,7 +264,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:text="봉정사(鳳停寺)는 672년(신라 문무왕 12) 능인대사(能仁大師)에 의하여 창건되었다는 전설이 전하는데,<극락전 중수상량문>등 발견된 구체적인 자료를 통해 보면 7세기 후반 능인대사에 의해 창건된 것으로 추정된다."
+        android:text="봉정사(鳳停寺)는 672년(신라 문무왕 12) 능인대사(能仁大師)에 의하여 창건되었다는 전설이 전하는데,&lt;극락전 중수상량문&gt;등 발견된 구체적인 자료를 통해 보면 7세기 후반 능인대사에 의해 창건된 것으로 추정된다."
         app:layout_constraintWidth_max="365dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_heritage_description_title" />

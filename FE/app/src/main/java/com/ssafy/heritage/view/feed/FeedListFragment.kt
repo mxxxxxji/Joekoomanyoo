@@ -9,7 +9,7 @@ private const val TAG = "FeedListFragment___"
 class FeedListFragment :
     BaseFragment<FragmentFeedListBinding>(R.layout.fragment_feed_list) {
 
-    private val feedAdapter: FeedListAdapter by lazy { FeedListAdapter() }
+//    private val feedAdapter: FeedListAdapter by lazy { FeedListAdapter() }
 
     override fun init() {
 
