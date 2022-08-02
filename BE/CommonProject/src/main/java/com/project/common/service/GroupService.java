@@ -43,6 +43,19 @@ public class GroupService{
 		groupRepository.deleteById(groupSeq);
 	}
 	
+	//모임 기본 정보 수정
+		public GroupDto updateGroup(Long groupSeq,GroupDto groupDto) {
+			GroupEntity oldGroup =groupRepository.findById(groupSeq).orElse(null);
+			GroupDto updateGroup=new GroupDto();
+			updateGroup=groupDto;
+			if(oldGroup != null) {
+				updateGroup.setGroupSeq(oldGroup.getGroupSeq());
+				updateGroup.setGroupCreatedAt(oldGroup.getGroupCreatedAt());
+				groupRepository.save(updateGroup.toEntity());
+			}
+			return updateGroup;
+		}
+	
 ////////////////////////////////////////////
 	
 //	//내 목록 조회
@@ -56,18 +69,7 @@ public class GroupService{
 //				.collect(Collectors.toList());
 //	}
 	
-	//모임 기본 정보 수정
-	public GroupDto updateGroup(Long groupSeq,GroupDto groupDto) {
-		GroupEntity oldGroup =groupRepository.findById(groupSeq).orElse(null);
-		GroupDto updateGroup=new GroupDto();
-		updateGroup=groupDto;
-		if(oldGroup != null) {
-			updateGroup.setGroupSeq(oldGroup.getGroupSeq());
-			updateGroup.setGroupCreatedAt(oldGroup.getGroupCreatedAt());
-			groupRepository.save(updateGroup.toEntity());
-		}
-		return updateGroup;
-	}
+	
 	
 //	
 //
