@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.databinding.ItemKeywordBinding
-import com.ssafy.heritage.listener.RecyclerItemClickListener
+import com.ssafy.heritage.listener.SettingListClickListener
 
 class KeywordListAdapter : ListAdapter<String, KeywordListAdapter.ViewHolder>(DiffCallback()) {
 
-    lateinit var recyclerItemClickListener: RecyclerItemClickListener
+    lateinit var settingListClickListener: SettingListClickListener
 
     inner class ViewHolder(private val binding: ItemKeywordBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -18,7 +18,7 @@ class KeywordListAdapter : ListAdapter<String, KeywordListAdapter.ViewHolder>(Di
             name = data
 
             itemView.setOnClickListener {
-                recyclerItemClickListener.onClick(bindingAdapterPosition)
+                settingListClickListener.onClick(bindingAdapterPosition, itemView)
             }
         }
     }
