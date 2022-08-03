@@ -65,4 +65,14 @@ public class HeritageService {
             return false;
         }
     }
+
+    // 개인 scrap 리스트 반환
+    public List<HeritageScrapDto> myScrapList(int userSeq) {
+        List<HeritageScrapEntity> list = heritageScrapRepository.findAllByUserSeq(userSeq);
+        List<HeritageScrapDto> listDto = new ArrayList<>();
+        for(HeritageScrapEntity heritageScrapEntity : list){
+            listDto.add(HeritageScrapMapper.MAPPER.toDto(heritageScrapEntity));
+        }
+        return listDto;
+    }
 }
