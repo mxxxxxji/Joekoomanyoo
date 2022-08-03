@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.common.dto.GroupDto;
+import com.project.common.dto.GroupJoinRequestDto;
 import com.project.common.dto.GroupMapper;
 import com.project.common.dto.GroupMemberDto;
 import com.project.common.dto.GroupMemberMapper;
-import com.project.common.dto.SimpleGroupMemberDto;
+import com.project.common.dto.GroupMemberListDto;
 import com.project.common.dto.UserDto;
 import com.project.common.entity.GroupEntity;
 import com.project.common.entity.GroupMemberEntity;
@@ -33,19 +34,32 @@ public class GroupMemberService{
 	private final GroupRepository groupRepository;
 	private final GroupMemberRepository groupMemberRepository;
 	private final UserService userService;
-	
-	private JPAQueryFactory jpaQueryFactory;
-	
-	EntityManager em;
+
 	//참가자 목록 
-	public List<SimpleGroupMemberDto> getMemberList(long groupSeq){
-		List<SimpleGroupMemberDto> list = new ArrayList<>();
+	public List<GroupMemberListDto> getMemberList(long groupSeq){
+		List<GroupMemberListDto> list = new ArrayList<>();
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
 			if(entity.getGroup().getGroupSeq()==groupSeq) {
-				list.add(new SimpleGroupMemberDto(entity));
+				list.add(new GroupMemberListDto(entity));
 			}
 		}
 		return list;
+	}
+	
+	//모임 참가
+	public GroupMemberDto joinGroup(long groupSeq,GroupJoinRequestDto requestDto) {
+		GroupMemberDto info=new GroupMemberDto();
+		info.setMemberAppeal(requestDto.getMemberAppeal());
+		info.setUserSeq(requestDto.getUserSeq());
+		info.setMemberIsEvaluated('N');
+		
+		GroupEntity group=groupRepository.findById(groupSeq).orElse(null);
+		group.addMember(info.toEntity());
+		
+		GroupMemberEntity saved= groupMemberRepository.save(info.toEntity());
+
+		return GroupMemberMapper.MAPPER.toDto(saved);
+	
 	}
 	
 	//모임 삭제

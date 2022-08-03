@@ -14,7 +14,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class SimpleGroupMemberDto {
+public class GroupMemberListDto {
 
 	private long userNickName;
 	private long groupSeq;
@@ -23,7 +23,7 @@ public class SimpleGroupMemberDto {
 	private char memberIsEvaluated;
 	
 	@Builder
-	public SimpleGroupMemberDto(GroupMemberEntity member) {
+	public GroupMemberListDto(GroupMemberEntity member) {
 		this.userNickName = member.getUserSeq();
 		this.groupSeq = member.getGroup().getGroupSeq();
 		this.memberStatus = member.getMemberStatus();

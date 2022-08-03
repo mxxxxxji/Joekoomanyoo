@@ -4,7 +4,10 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -63,6 +66,13 @@ public class GroupEntity {
     @Column(name="group_age_range",nullable=false)
 	private int groupAgeRange;
     
+    @OneToMany(mappedBy="group")
+    private List<GroupMemberEntity> members = new ArrayList<>();
+    
+    public void addMember(GroupMemberEntity groupMember) {
+    	this.members.add(groupMember);
+    	groupMember.setGroup(this);
+    }
     
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
