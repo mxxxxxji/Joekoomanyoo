@@ -111,7 +111,11 @@ public class GroupEntity {
     }
     
 
-
+    public void removeGroupMember(long	userSeq) {
+     //   memberCount--;
+        members.removeIf(groupMember ->
+                groupMember.getUserSeq()==userSeq);
+    }
     
 
     

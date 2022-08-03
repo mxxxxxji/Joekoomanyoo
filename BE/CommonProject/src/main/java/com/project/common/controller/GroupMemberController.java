@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.common.config.JwtTokenProvider;
 import com.project.common.dto.GroupDto;
 import com.project.common.dto.GroupJoinRequestDto;
+import com.project.common.dto.GroupLeaveRequestDto;
 import com.project.common.dto.GroupMemberDto;
 import com.project.common.dto.GroupMemberListDto;
 import com.project.common.dto.UserDto;
@@ -70,14 +71,23 @@ public class GroupMemberController {
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		}
 	
+//	 //탈퇴
+//	@ApiOperation(value = "그륩 탈퇴, 참가 정보(GroupDto) 반환")
+//	@PostMapping("/leave")
+//	public ResponseEntity<?> leaveGroup(@RequestHeader(value="Authorization") String token, @PathVariable long groupSeq){
+//		String userId = jwtTokenProvider.getUserId(token);
+//		UserDto user = userService.find(userId);
+//	
+//		groupMemberService.leaveGroup(groupSeq,user);
+//	 	return new ResponseEntity<>(HttpStatus.OK);
+//	}
+	
 	 //탈퇴
 	@ApiOperation(value = "그륩 탈퇴, 참가 정보(GroupDto) 반환")
-	@PostMapping("/leave")
-	public ResponseEntity<?> leaveGroup(@RequestHeader(value="Authorization") String token, @PathVariable long groupSeq){
-		String userId = jwtTokenProvider.getUserId(token);
-		UserDto user = userService.find(userId);
+	@DeleteMapping("/leave")
+	public ResponseEntity<?> leaveGroup(@RequestBody GroupLeaveRequestDto groupLeaveRequestDto){
 	
-		groupMemberService.leaveGroup(groupSeq,user);
+		groupMemberService.leaveGroup(groupLeaveRequestDto);
 	 	return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

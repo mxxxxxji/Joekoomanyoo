@@ -11,6 +11,12 @@ import com.project.common.entity.UserEntity;
 
 public interface GroupMemberRepository extends JpaRepository<GroupMemberEntity, Long> {
 
+	GroupMemberEntity findByUserSeq(long userSeq);
+
+	void deleteByUserSeq(long userSeq);
+
+
+
 	//void deleteByGroup(UserEntity user, GroupEntity group);
 
 	
