@@ -2,6 +2,7 @@ package com.ssafy.heritage.util
 
 import android.util.Base64
 import android.util.Log
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.data.dto.User
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
@@ -13,6 +14,7 @@ object JWTUtils {
     @Throws(Exception::class)
     fun decoded(JWTEncoded: String): User? {
         try {
+            Log.d(TAG, "decoded: $JWTEncoded")
             val split = JWTEncoded.split(".").toTypedArray()
             val body = getJson(split[1])
             Log.d(TAG, "decoded: $body")
@@ -37,6 +39,7 @@ object JWTUtils {
             return user
         } catch (e: UnsupportedEncodingException) {
             Log.e(TAG, "decoded: $e")
+            ApplicationClass.sharedPreferencesUtil.deleteToken()
             return null
         }
     }

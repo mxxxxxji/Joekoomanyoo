@@ -16,8 +16,8 @@ class SharedPreferencesUtil(context: Context) {
     }
 
     // 토큰 불러오기
-    fun getToken(): String {
-        val token = preferences.getString("token", null) ?: ""
+    fun getToken(): String? {
+        val token = preferences.getString("token", null)
         return token
     }
 

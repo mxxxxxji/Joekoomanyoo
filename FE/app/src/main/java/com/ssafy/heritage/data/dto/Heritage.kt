@@ -16,7 +16,7 @@ data class Heritage(
     val heritageImgUrl: String,     // 문화유산 이미지 링크
     val heritageMemo: String,       // 문화유산 설명
     val heritageVoice: String,      // 문화유산 나레이션
-    val stampExist: Char,           // 문화유산 스탬프 유무(Y,N)
+    val stampExist: String?,           // 문화유산 스탬프 유무(Y,N)
     val heritageClass: String,      // 문화유산 종목명
     val heritageScrapCnt: Int,      // 문화유산 스크랩수
     val heritageReviewCnt: Int      // 문화유산 리뷰수

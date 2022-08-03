@@ -38,7 +38,10 @@ class Repository constructor(context: Context) {
     suspend fun socialCheckId(userId: String): Response<String> = userApi.socialCheckId(userId)
     suspend fun socialLogin(map: HashMap<String, String>): Response<String> =
         userApi.socialLogin(map)
+
     suspend fun socialSignup(user: User): Response<String> = userApi.socialSignup(user)
+
+    suspend fun resign(userId: String): Response<String> = userApi.resign(userId)
 
     // heritage
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()

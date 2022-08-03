@@ -14,11 +14,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentLoginBinding
 import com.ssafy.heritage.util.JWTUtils
-import com.ssafy.heritage.util.SharedPreferencesUtil
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.LoginViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -86,19 +86,29 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
             CoroutineScope(Dispatchers.Main).launch {
 
+                // id나 pw가 입력되지 않았을 때
+                if (loginViewModel.id.value.isNullOrBlank() || loginViewModel.pw.value.isNullOrBlank()) {
+                    makeToast("아이디와 비밀번호를 입력해주세요")
+                    return@launch
+                }
+
                 // 로그인 성공했을 경우
-                val token = loginViewModel.login() as String
+                val token = loginViewModel.login()?.let { it as String }
+
+                Log.d(TAG, "token: $token")
 
                 if (token != null) {
                     // 홈 화면으로 이동
 
-                    SharedPreferencesUtil(requireContext()).saveToken(token)
+                    ApplicationClass.sharedPreferencesUtil.saveToken(token)
 
                     val user = JWTUtils.decoded(token)
                     Log.d(TAG, "initClickListener: $user")
                     if (user != null) {
                         Intent(requireContext(), HomeActivity::class.java).apply {
+                            putExtra("user", user)
                             startActivity(this)
+                            requireActivity().finish()
                         }
                     } else {
                         makeToast("유저 정보 획득에 실패하였습니다")
@@ -139,6 +149,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 CoroutineScope(Dispatchers.Main).launch {
 
                     val result = loginViewModel.socialCheckId(account.email.toString())
+                    Log.d(TAG, "socialCheckId result: ${result}")
 
                     // id 중복이 아닌 경우
                     if (result == "signup") {
@@ -163,7 +174,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     // 소셜로그인 아이디인 경우
                     else if (result != null) {
                         val token = result
-                        SharedPreferencesUtil(requireContext()).saveToken(token)
+                        ApplicationClass.sharedPreferencesUtil.saveToken(token)
 
                         val user = JWTUtils.decoded(token)
                         if (user != null) {
@@ -181,20 +192,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
         }
-    }
-
-    // 소셜 로그아웃
-    private fun signOut() {
-        mGoogleSignInClient.signOut()
-            // 로그아웃 성공시
-            .addOnSuccessListener {
-
-            }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        signOut()
     }
 
     private fun makeToast(msg: String) {

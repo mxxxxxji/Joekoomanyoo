@@ -10,10 +10,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.ssafy.heritage.ApplicationClass.Companion.sharedPreferencesUtil
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseActivity
+import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.ActivityHomeBinding
 import com.ssafy.heritage.viewmodel.HeritageViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -23,17 +26,29 @@ private const val TAG = "HomeActivity___"
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private val heritageViewModel by viewModels<HeritageViewModel>()
+    private val userViewModel by viewModels<UserViewModel>()
     private lateinit var navController: NavController
     private var backButtonTime = 0L
 
     override fun init() {
+        intent?.getParcelableExtra<User>("user")?.let { userViewModel.setUser(it) }
+
         initNavigation()
+
+        initObserver()
+
         getHashKey()
     }
 
     override fun onStart() {
         super.onStart()
         heritageViewModel.getHeritageList()
+    }
+
+    private fun initObserver() {
+        userViewModel.user.observe(this) {
+            Log.d(TAG, "initObserver: $it")
+        }
     }
 
     private fun getHashKey() {

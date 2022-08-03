@@ -20,6 +20,7 @@ object RetrofitInstance {
     // OKHttpClient에 로깅인터셉터 등록
     val client = OkHttpClient.Builder()
         .addInterceptor(interceptor)
+        .addInterceptor(AuthInterceptor())
         .connectTimeout(CONNECT_TIMEOUT_SEC, TimeUnit.SECONDS)
         .build()
 

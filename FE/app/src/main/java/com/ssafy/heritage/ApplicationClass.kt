@@ -10,6 +10,7 @@ class ApplicationClass : Application() {
 
         // 주소
         const val BASE_URL = "http://i7d102.p.ssafy.io:8081"
+//        const val BASE_URL = "http://192.168.0.3:8080"
     }
 
     override fun onCreate() {

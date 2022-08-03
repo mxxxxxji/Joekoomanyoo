@@ -8,11 +8,11 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentJoinBinding
 import com.ssafy.heritage.util.JWTUtils
-import com.ssafy.heritage.util.SharedPreferencesUtil
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.JoinViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -60,11 +60,12 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             CoroutineScope(Dispatchers.Main).launch {
 
                 // 인증번호 요청 성공시
-                if (joinViewModel.sendIdVeroficationCode(tilId)) {
+                if (joinViewModel.sendIdVeroficationCode(tilId) == true) {
                     tilIdVertification.visibility = View.VISIBLE
                     btnIdVertify.visibility = View.VISIBLE
                 } else {
-
+                    tilIdVertification.visibility = View.GONE
+                    btnIdVertify.visibility = View.GONE
                 }
 
             }
@@ -74,15 +75,18 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         // 인증하기 클릭시
         btnIdVertify.setOnClickListener {
 
-            // 인증번호 인증 성공시
-            if (joinViewModel.idVerify(tilIdVertification)) {
-                tilId.isEnabled = false
-                btnRequestIdVertification.isEnabled = false
-                tilIdVertification.editText?.setText("인증성공")
-                tilIdVertification.isEnabled = false
-                btnIdVertify.isEnabled = false
+            CoroutineScope(Dispatchers.Main).launch {
 
-                motionlayout.transitionToEnd()
+                // 인증번호 인증 성공시
+                if (joinViewModel.idVerify(tilIdVertification)) {
+                    tilId.isEnabled = false
+                    btnRequestIdVertification.isEnabled = false
+                    tilIdVertification.editText?.setText("인증성공")
+                    tilIdVertification.isEnabled = false
+                    btnIdVertify.isEnabled = false
+
+                    motionlayout.transitionToEnd()
+                }
             }
         }
 
@@ -135,9 +139,11 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
                     val token = joinViewModel.socialJoin(id!!)
 
+                    Log.d(TAG, "token: $token")
+
                     // 소셜 회원가입 성공시
                     if (token != null) {
-                        SharedPreferencesUtil(requireContext()).saveToken(token)
+                        ApplicationClass.sharedPreferencesUtil.saveToken(token)
 
                         val user = JWTUtils.decoded(token)
                         if (user != null) {
@@ -150,9 +156,11 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                     }
                     // 회원가입 실패한 경우
                     else {
-
+                        makeToast("회원가입 오류")
                     }
-                } else {
+                }
+                // 일반 회원가입인 경우
+                else {
                     // 일반 회원가입 성공시
                     if (joinViewModel.join()) {
                         findNavController().navigate(R.id.action_joinFragment_to_loginFragment)
