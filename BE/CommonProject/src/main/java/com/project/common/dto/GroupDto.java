@@ -34,7 +34,7 @@ public class GroupDto {
     private String themaImg;
     private String master;
     private String description;
-    private int accessType;
+    private char accessType;
     private String password;
    // private int memberCount = 0;
     private int maxCount;
@@ -42,10 +42,10 @@ public class GroupDto {
    	private int startDate;
    	private int endDate;
    	private int ageRange;
-   	private boolean withChild;
-   	private boolean withGlobal;
-   	private boolean active;
-   	private String status;
+   	private char withChild;
+   	private char withGlobal;
+   	private char active;
+   	private char status;
 	
  // 모임 설정 정보 //
 //   	private boolean recruiting;
@@ -59,9 +59,9 @@ public class GroupDto {
     private LocalDateTime updatedTime;
 
 	@Builder
-	public GroupDto(Long groupSeq, String name, String themaImg, String master, String description, int accessType,
+	public GroupDto(Long groupSeq, String name, String themaImg, String master, String description, char accessType,
 			String password,  int maxCount, String region, int startDate, int endDate, int ageRange,
-			boolean withChild, boolean withGlobal, boolean active, String status, LocalDateTime createdTime,
+			char withChild, char withGlobal, char active, char status, LocalDateTime createdTime,
 			LocalDateTime updatedTime) {
 		super();
 		this.groupSeq = groupSeq;
