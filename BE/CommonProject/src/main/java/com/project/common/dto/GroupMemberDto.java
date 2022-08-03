@@ -26,11 +26,11 @@ public class GroupMemberDto {
 	private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
 	private GroupEntity group;
-    private UserEntity user;
+    private long userSeq;
 	
 	@Builder
 	public GroupMemberDto(long memberSeq, int memberStatus, String memberAppeal, char memberIsEvaluated,
-			Date memberInAt, LocalDateTime createdTime, LocalDateTime updatedTime, GroupEntity group, UserEntity user) {
+			Date memberInAt, LocalDateTime createdTime, LocalDateTime updatedTime, GroupEntity group, long userSeq) {
 		super();
 		this.memberSeq = memberSeq;
 		this.memberStatus = memberStatus;
@@ -40,13 +40,13 @@ public class GroupMemberDto {
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 		this.group = group;
-		this.user = user;
+		this.userSeq = userSeq;
 	}
 	
     public GroupMemberEntity toEntity(){
         return GroupMemberEntity.builder()
                 .memberSeq(memberSeq)
-                .user(user)
+                .userSeq(userSeq)
                 .memberStatus(memberStatus)
                 .memberAppeal(memberAppeal)
                 .memberIsEvaluated(memberIsEvaluated)

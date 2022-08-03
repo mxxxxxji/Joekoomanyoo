@@ -40,16 +40,13 @@ public class GroupMemberService{
 		}
 		return list;
 	}
-//	//모임 참가
-//	@Transactional
-//	public void joinGroup(long groupSeq,String userId) {
-//		GroupEntity group = groupService.findGroup(groupSeq);
-//		UserEntity user = userRepository.findByUserId(userId);
-//		group.addGroupMember(
-//                groupMemberRepository.save(createGroupMember(group,user))
-//        );
-//	
-//	}
+	//모임 참가
+	@Transactional
+	public void joinGroup(long groupSeq, GroupJoinRequestDto groupJoinRequestDto) {
+		GroupEntity group = groupService.findGroup(groupSeq);
+		group.addGroupMember(GroupMemberEntity.builder().memberAppeal(groupJoinRequestDto.getMemberAppeal()).userSeq(groupJoinRequestDto.getUserSeq()).build());
+		groupRepository.save(group);
+	}
 //	//모임 참가
 //	@Transactional
 //	public void joinGroup(long groupSeq,UserDto userDto) {

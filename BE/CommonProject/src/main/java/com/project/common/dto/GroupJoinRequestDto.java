@@ -16,13 +16,13 @@ import lombok.ToString;
 @ToString
 public class GroupJoinRequestDto {
 
-	private long userId;
+	private long userSeq;
 	private String memberAppeal;
 
 	@Builder
-	public GroupJoinRequestDto(long userId, String memberAppeal) {
+	public GroupJoinRequestDto(long userSeq, String memberAppeal) {
 		super();
-		this.userId = userId;
+		this.userSeq = userSeq;
 		this.memberAppeal = memberAppeal;
 	}
 

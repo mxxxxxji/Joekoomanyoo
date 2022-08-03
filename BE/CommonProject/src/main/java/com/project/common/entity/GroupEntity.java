@@ -1,7 +1,9 @@
 package com.project.common.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -96,7 +98,7 @@ public class GroupEntity {
   
     // 관리자 및 참여 멤버 //
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private Set<GroupMemberEntity> members = new HashSet<>();
+    private List<GroupMemberEntity> members = new ArrayList<>();
     
     
     
@@ -104,7 +106,7 @@ public class GroupEntity {
     
     public void addGroupMember(GroupMemberEntity groupMember) {
     //	memberCount++;
-    	this.members.add(groupMember);
+    	members.add(groupMember);
     	groupMember.setGroup(this);
     }
     
