@@ -201,6 +201,57 @@ class JoinViewModel : ViewModel() {
         }
     }
 
+    // 소셜 회원가입
+    suspend fun socialJoin(id: String) = withContext(Dispatchers.Main) {
+        val user = User(
+            0,
+            id,
+            nickname.value!!,
+            "0",
+            birth.value!!,
+            "social",
+            gender.value!!,
+            "",
+            "",
+            "",
+            "",
+            'N'
+        )
+        repository.socialSignup(user).let { response ->
+            // 회원가입 성공 시
+            if (response.isSuccessful) {
+                socialLogin(id)
+            }
+            // 회원가입 실패 시
+            else {
+                Log.d(TAG, "${response.code()}")
+                null
+            }
+        }
+    }
+
+    // 소셜로그인 시킴
+    suspend fun socialLogin(id: String) = withContext(Dispatchers.Main) {
+
+        val map = HashMap<String, String>()
+
+        map.put("userId", id)
+        map.put("userPassword", "0")
+
+        repository.socialLogin(map).let { response ->
+
+            // 로그인 성공한 경우
+            if (response.isSuccessful) {
+                // 토큰값 반환
+                response.body()
+            } else {
+                Log.d(TAG, "${response.code()}")
+                makeToast("소셜 로그인 실패")
+                null
+            }
+        }
+    }
+
     fun makeToast(msg: String) {
         _message.value = Event(msg)
     }

@@ -95,6 +95,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     SharedPreferencesUtil(requireContext()).saveToken(token)
 
                     val user = JWTUtils.decoded(token)
+                    Log.d(TAG, "initClickListener: $user")
                     if (user != null) {
                         Intent(requireContext(), HomeActivity::class.java).apply {
                             startActivity(this)
@@ -122,7 +123,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private val signInClientLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             // 결과를 받으면 처리할 부분
-            Log.d(TAG, "data: ${it.data}")
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(it.data)
             handleSignInResult(task)
 
@@ -133,15 +133,47 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
 
             if (account.email != null) {
-                // id 중복이 아닌 경우
-                if (loginViewModel.checkId(account.id.toString())) {
-                    // 회원가입
-                    val bundle = Bundle().apply { putString("type", "social") }
-                    findNavController().navigate(R.id.action_loginFragment_to_joinFragment, bundle)
-                }
-                // id 중복인 경우 (기존 소셜 회원가입 이력이 있는 경우)
-                else {
-                    // 홈 화면 진입
+
+                Log.d(TAG, "handleSignInResult: ${account.email}")
+
+                CoroutineScope(Dispatchers.Main).launch {
+
+                    val result = loginViewModel.socialCheckId(account.email.toString())
+
+                    // id 중복이 아닌 경우
+                    if (result == "signup") {
+
+                        // 회원가입창으로 이동
+                        val bundle = Bundle().apply {
+                            putString("type", "social")
+                            putString("id", account.email)
+                        }
+
+                        findNavController().navigate(
+                            R.id.action_loginFragment_to_joinFragment,
+                            bundle
+                        )
+                    }
+
+                    // 일반로그인 아이디이거나 실패한 경우
+                    else if (result == "fail") {
+                        // 홈 화면 진입
+                    }
+
+                    // 소셜로그인 아이디인 경우
+                    else if (result != null) {
+                        val token = result
+                        SharedPreferencesUtil(requireContext()).saveToken(token)
+
+                        val user = JWTUtils.decoded(token)
+                        if (user != null) {
+                            Intent(requireContext(), HomeActivity::class.java).apply {
+                                startActivity(this)
+                            }
+                        } else {
+                            makeToast("유저 정보 획득에 실패하였습니다")
+                        }
+                    }
                 }
             }
         } catch (e: ApiException) {
@@ -158,6 +190,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             .addOnSuccessListener {
 
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        signOut()
     }
 
     private fun makeToast(msg: String) {

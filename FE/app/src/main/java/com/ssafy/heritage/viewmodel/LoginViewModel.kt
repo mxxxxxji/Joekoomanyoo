@@ -42,8 +42,7 @@ class LoginViewModel : ViewModel() {
         repository.login(map).let { response ->
             // 로그인 성공했을 경우
             if (response.isSuccessful) {
-                // 토큰 SharedPreference에 저장
-                Log.d(TAG, "login: ${response.body()}")
+                // 토큰값 반환
                 response.body()
             }
             // 로그인 실패했을 경우
@@ -56,18 +55,54 @@ class LoginViewModel : ViewModel() {
     }
 
     // 아이디 중복검사 (소셜용)
-    fun checkId(id: String): Boolean {
+    suspend fun socialCheckId(id: String) = withContext(Dispatchers.Main) {
         // 서버에서 아이디 중복여부 요청
-        return true// 테스트용
-
-        //// 중복일 경우 - 로그인 시킴
-        //// 토근도 반환받음
-
-        return false
-        //// 중복이 아닐 경우 - 회원가입 시킴
-        return true
+        repository.socialCheckId(id).let { response ->
+            Log.d(TAG, "socialCheckId: ${response.body()}")
+            // 중복이 아닐 경우 - 회원가입 시킴
+            if (response.isSuccessful) {
+                "signup"
+            }
+            // 일반로그인 아이디인지, 소셜로그인 아이디인지 판별
+            else {
+                when (response.body()) {
+                    "fail social" -> {
+                        socialLogin(id)
+                    }
+                    "fail none" -> {
+                        makeToast("이미 일반로그인으로 가입한 아이디 입니다")
+                        "fail"
+                    }
+                    else -> {
+                        makeToast("소셜로그인 오류")
+                        "fail"
+                    }
+                }
+            }
+        }
     }
 
+    // 소셜로그인 시킴
+    suspend fun socialLogin(id: String) = withContext(Dispatchers.Main) {
+
+        val map = HashMap<String, String>()
+
+        map.put("userId", id)
+        map.put("userPassword", "0")
+
+        repository.socialLogin(map).let { response ->
+
+            // 로그인 성공한 경우
+            if (response.isSuccessful) {
+                // 토큰값 반환
+                response.body()
+            } else {
+                Log.d(TAG, "${response.code()}")
+                makeToast("소셜 로그인 실패")
+                "fail"
+            }
+        }
+    }
 
     fun makeToast(msg: String) {
         _message.value = Event(msg)

@@ -1,5 +1,6 @@
 package com.ssafy.heritage.view.login
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -10,6 +11,9 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentJoinBinding
+import com.ssafy.heritage.util.JWTUtils
+import com.ssafy.heritage.util.SharedPreferencesUtil
+import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.JoinViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -124,22 +128,39 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
             // 유효성 검사 다 통과하면 회원가입 요청
             CoroutineScope(Dispatchers.Main).launch {
-                // 회원가입 성공시
-                if (joinViewModel.join()) {
 
-                    // 소셜 회원가입시 홈으로 바로이동
-                    if (type.equals("social")) {
-                        makeToast("회원가입성공")
+                // 소셜 회원가입인 경우
+                if (type.equals("social")) {
+                    val id = arguments?.getString("id")
+
+                    val token = joinViewModel.socialJoin(id!!)
+
+                    // 소셜 회원가입 성공시
+                    if (token != null) {
+                        SharedPreferencesUtil(requireContext()).saveToken(token)
+
+                        val user = JWTUtils.decoded(token)
+                        if (user != null) {
+                            Intent(requireContext(), HomeActivity::class.java).apply {
+                                startActivity(this)
+                            }
+                        } else {
+                            makeToast("유저 정보 획득에 실패하였습니다")
+                        }
                     }
-                    // 일반 회원가입시 로그인 화면으로 이동
+                    // 회원가입 실패한 경우
                     else {
+
+                    }
+                } else {
+                    // 일반 회원가입 성공시
+                    if (joinViewModel.join()) {
                         findNavController().navigate(R.id.action_joinFragment_to_loginFragment)
                     }
+                    // 회원가입 실패한 경우
+                    else {
 
-                }
-                // 회원가입 실패한 경우
-                else {
-
+                    }
                 }
             }
         }
@@ -191,6 +212,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
         // 소셜 로그인인 경우
         if (type.equals("social")) {
+            headerPw.visibility = View.GONE
+            headerPwCheck.visibility = View.GONE
             tilPw.visibility = View.GONE
             tilPwCheck.visibility = View.GONE
             motionlayout.transitionToEnd()
