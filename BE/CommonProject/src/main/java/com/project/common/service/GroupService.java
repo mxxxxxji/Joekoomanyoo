@@ -18,6 +18,16 @@ import lombok.RequiredArgsConstructor;
 public class GroupService{
 	private final GroupRepository groupRepository;
 	
+	 public GroupEntity findGroup(long groupSeq) {
+	        GroupEntity findGroup = groupRepository.findByGroupSeq(groupSeq);
+	//	 GroupEntity findGroup=null;
+	        if (findGroup == null) {
+	            throw new IllegalArgumentException("해당하는 스터디가 없습니다.");
+	        }
+
+	        return findGroup;
+	    }
+	
 /////////////////////////////////////////
 	//모임 개설
 	public GroupDto addGroup(GroupDto groupDto) {
@@ -50,7 +60,7 @@ public class GroupService{
 			updateGroup=groupDto;
 			if(oldGroup != null) {
 				updateGroup.setGroupSeq(oldGroup.getGroupSeq());
-				updateGroup.setGroupCreatedAt(oldGroup.getGroupCreatedAt());
+				updateGroup.setCreatedTime(oldGroup.getCreatedTime());
 				groupRepository.save(updateGroup.toEntity());
 			}
 			return updateGroup;

@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 public class GroupMemberListDto {
 
-	private long userNickName;
+	private long memberSeq;
 	private long groupSeq;
 	private int memberStatus;
 	private String memberAppeal;
@@ -24,7 +24,7 @@ public class GroupMemberListDto {
 	
 	@Builder
 	public GroupMemberListDto(GroupMemberEntity member) {
-		this.userNickName = member.getUserSeq();
+		this.memberSeq = member.getMemberSeq();
 		this.groupSeq = member.getGroup().getGroupSeq();
 		this.memberStatus = member.getMemberStatus();
 		this.memberAppeal = member.getMemberAppeal();
@@ -32,7 +32,4 @@ public class GroupMemberListDto {
 		
 	}
 	
-
-	
-
 }

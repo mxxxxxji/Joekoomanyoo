@@ -2,7 +2,16 @@ package com.project.common.dto;
 
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import com.project.common.entity.GroupEntity;
 
@@ -17,73 +26,97 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class GroupDto {
-	private long groupSeq;
-	private String attachSeq;
-	private String groupMaker;
-	private String groupName;
-	private String groupDescription;
-	private char groupAccessType;
-	private String groupPassword;
-	private String groupStatus;
-	private char groupIsActive;
-	private int groupTotalCount;
-	private String groupRegion;
-	private int groupStartDate;
-	private int groupEndDate;
-	private char groupChild;
-	private char groupGlobal;
-	private int groupAgeRange;
-	private Date groupCreatedAt;
-	private Date groupUpdatedAt;
+
+	private Long groupSeq;
+    
+	// 스터디 기본 정보 //
+    private String name;
+    private String themaImg;
+    private String master;
+    private String description;
+    private int accessType;
+    private String password;
+   // private int memberCount = 0;
+    private int maxCount;
+   	private String region;
+   	private int startDate;
+   	private int endDate;
+   	private int ageRange;
+   	private boolean withChild;
+   	private boolean withGlobal;
+   	private boolean active;
+   	private String status;
+	
+ // 모임 설정 정보 //
+//   	private boolean recruiting;
+//   	private boolean published;
+//   	private boolean closed;
+//    private LocalDateTime publishedTime;
+//    private LocalDateTime recruitUpdatedTime;
+//    private LocalDateTime closedTime;
+
+    private LocalDateTime createdTime;
+    private LocalDateTime updatedTime;
 
 	@Builder
-	public GroupDto(long groupSeq, String attachSeq, String groupMaker, String groupName, String groupDescription,
-			char groupAccessType, String groupPassword, String groupStatus, char groupIsActive, int groupTotalCount,
-			String groupRegion, int groupStartDate, int groupEndDate, char groupChild, char groupGlobal,
-			int groupAgeRange, Date groupCreatedAt, Date groupUpdatedAt) {
+	public GroupDto(Long groupSeq, String name, String themaImg, String master, String description, int accessType,
+			String password,  int maxCount, String region, int startDate, int endDate, int ageRange,
+			boolean withChild, boolean withGlobal, boolean active, String status, LocalDateTime createdTime,
+			LocalDateTime updatedTime) {
 		super();
 		this.groupSeq = groupSeq;
-		this.attachSeq = attachSeq;
-		this.groupMaker = groupMaker;
-		this.groupName = groupName;
-		this.groupDescription = groupDescription;
-		this.groupAccessType = groupAccessType;
-		this.groupPassword = groupPassword;
-		this.groupStatus = groupStatus;
-		this.groupIsActive = groupIsActive;
-		this.groupTotalCount = groupTotalCount;
-		this.groupRegion = groupRegion;
-		this.groupStartDate = groupStartDate;
-		this.groupEndDate = groupEndDate;
-		this.groupChild = groupChild;
-		this.groupGlobal = groupGlobal;
-		this.groupAgeRange = groupAgeRange;
-		this.groupCreatedAt = groupCreatedAt;
-		this.groupUpdatedAt = groupUpdatedAt;
+		this.name = name;
+		this.themaImg = themaImg;
+		this.master = master;
+		this.description = description;
+		this.accessType = accessType;
+		this.password = password;
+	//	this.memberCount = memberCount;
+		this.maxCount = maxCount;
+		this.region = region;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.ageRange = ageRange;
+		this.withChild = withChild;
+		this.withGlobal = withGlobal;
+		this.active = active;
+		this.status = status;
+		this.createdTime = createdTime;
+		this.updatedTime = updatedTime;
 	}
+
+	
 
     public GroupEntity toEntity(){
         return GroupEntity.builder()
                 .groupSeq(groupSeq)
-                .attachSeq(attachSeq)
-                .groupMaker(groupMaker)
-                .groupName(groupName)
-                .groupDescription(groupDescription)
-                .groupAccessType(groupAccessType)
-                .groupPassword(groupPassword)
-                .groupStatus(groupStatus)
-                .groupIsActive(groupIsActive)
-                .groupTotalCount(groupTotalCount)
-                .groupRegion(groupRegion)
-                .groupStartDate(groupStartDate)
-                .groupEndDate(groupEndDate)
-                .groupChild(groupChild)
-                .groupGlobal(groupGlobal)
-                .groupAgeRange(groupAgeRange)
-                .groupCreatedAt(groupCreatedAt)
-                .groupUpdatedAt(groupUpdatedAt).build();
+                .name(name)
+                .themaImg(themaImg)
+                .master(master)
+                .description(description)
+                .accessType(accessType)
+                .password(password)
+           //     .memberCount(memberCount)
+                .maxCount(maxCount)
+                .region(region)
+                .startDate(startDate)
+                .endDate(endDate)
+                .ageRange(ageRange)
+                .withChild(withChild)
+                .withGlobal(withGlobal)
+                .active(active)
+                .status(status)
+//                .recruiting(recruiting)
+//                .published(published)
+//                .closed(closed)
+//                .publishedTime(publishedTime)
+//                .recruitUpdatedTime(recruitUpdatedTime)
+//                .closedTime(closedTime)
+                .build();
 
     }
+
+
 
 
 
