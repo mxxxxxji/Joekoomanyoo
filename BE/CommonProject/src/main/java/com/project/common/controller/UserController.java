@@ -3,6 +3,7 @@ package com.project.common.controller;
 import com.project.common.config.JwtTokenProvider;
 import com.project.common.dto.MailDto;
 import com.project.common.dto.UserDto;
+import com.project.common.dto.UserSignDto;
 import com.project.common.entity.UserEntity;
 import com.project.common.repository.UserRepository;
 import com.project.common.service.MailService;
@@ -37,13 +38,13 @@ public class UserController {
 
     /**
      * 일반 회원 가입
-     * @param userDto
+     * @param userSignDto
      * @return success / fail
      */
 
     @ApiOperation(value = "일반 회원가입", response = String.class)
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@ApiParam(value="회원 가입 : 회원정보 ( 아이디, 비밀번호, 닉네임, 성별, 생년월일 ) ", required = true) @RequestBody UserDto userDto, BindingResult bindingResult) {
+    public ResponseEntity<String> signup(@ApiParam(value="회원 가입 : 회원정보 ( 아이디, 비밀번호, 닉네임, 성별, 생년월일 ) ", required = true) @RequestBody UserSignDto userSignDto, BindingResult bindingResult) {
 
         // validation
         if (bindingResult.hasErrors()) {
@@ -52,11 +53,11 @@ public class UserController {
 
         userRepository.save(UserEntity.builder()
                 .userSeq(0)
-                .userId(userDto.getUserId())
-                .userPassword(passwordEncoder.encode(userDto.getUserPassword()))
-                .userBirth(userDto.getUserBirth())
-                .userNickname(userDto.getUserNickname())
-                .userGender(userDto.getUserGender())
+                .userId(userSignDto.getUserId())
+                .userPassword(passwordEncoder.encode(userSignDto.getUserPassword()))
+                .userBirth(userSignDto.getUserBirth())
+                .userNickname(userSignDto.getUserNickname())
+                .userGender(userSignDto.getUserGender())
                 .userRegistedAt(LocalDateTime.now())
                 .userUpdatedAt(LocalDateTime.now())
                 .socialLoginType("none")
@@ -127,10 +128,14 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Map<String, String> userInfo) {
         UserEntity userEntity = userRepository.findByUserId(userInfo.get("userId"));
-        
         // 아이디가 없는 경우
         if(userEntity == null){
             return new ResponseEntity<String>(FAIL+" id", HttpStatus.BAD_REQUEST);
+        }
+
+        // 소셜 아이디 인 경우
+        if(!userEntity.getSocialLoginType().equals("none")){
+            return new ResponseEntity<String>(FAIL +" socialUser", HttpStatus.BAD_REQUEST);
         }
 
         // 비밀번호가 없는 경우
@@ -140,7 +145,6 @@ public class UserController {
 
         // 토큰 생성해서 리턴
         String token = jwtTokenProvider.createToken(userEntity.getUserSeq(),userEntity.getUsername(), userEntity.getRoles());
-        System.out.println(token);
         if(token != null){
             return new ResponseEntity<String>(token, HttpStatus.OK);
         }else{

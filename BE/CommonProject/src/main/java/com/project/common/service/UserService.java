@@ -83,6 +83,4 @@ public class UserService{
         UserEntity userEntity = userRepository.findByUserId(userId);
         return UserMapper.MAPPER.toDto(userEntity);
     }
-
-
 }
