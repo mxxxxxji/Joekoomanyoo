@@ -125,13 +125,27 @@ public class UserController {
 
     @ApiOperation(value = "일반 로그인", response = String.class)
     @PostMapping("/login")
-    public String login(@RequestBody Map<String, String> userInfo) {
+    public ResponseEntity<String> login(@RequestBody Map<String, String> userInfo) {
         UserEntity userEntity = userRepository.findByUserId(userInfo.get("userId"));
-        if (!passwordEncoder.matches(userInfo.get("userPassword"),userEntity.getUserPassword())) {
-            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+        
+        // 아이디가 없는 경우
+        if(userEntity == null){
+            return new ResponseEntity<String>(FAIL+" id", HttpStatus.BAD_REQUEST);
         }
+
+        // 비밀번호가 없는 경우
+        if (!passwordEncoder.matches(userInfo.get("userPassword"),userEntity.getUserPassword())) {
+            return new ResponseEntity<String>(FAIL +" password", HttpStatus.BAD_REQUEST);
+        }
+
         // 토큰 생성해서 리턴
-        return jwtTokenProvider.createToken(userEntity.getUserSeq(),userEntity.getUsername(), userEntity.getRoles());
+        String token = jwtTokenProvider.createToken(userEntity.getUserSeq(),userEntity.getUsername(), userEntity.getRoles());
+        System.out.println(token);
+        if(token != null){
+            return new ResponseEntity<String>(token, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL+" token", HttpStatus.BAD_REQUEST);
+        }
     }
 
 
