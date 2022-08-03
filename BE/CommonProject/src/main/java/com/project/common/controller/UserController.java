@@ -157,7 +157,7 @@ public class UserController {
 
     @GetMapping("/check/email/{userId}")
     @ApiOperation(value = "이메일 중복 검사", response = String.class)
-    public ResponseEntity<?> checkEmail(@ApiParam(value="사용자 ID ( Email )", required = true)@PathVariable("userId") String userId){
+    public ResponseEntity<String> checkEmail(@ApiParam(value="사용자 ID ( Email )", required = true)@PathVariable("userId") String userId){
         if(userService.checkEmail(userId)){
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }else{
@@ -173,7 +173,7 @@ public class UserController {
 
     @GetMapping("/check/nickname/{userNickname}")
     @ApiOperation(value = "닉네임 중복 검사", response = String.class)
-    public ResponseEntity<?> checkNickname(@ApiParam(value="사용자 닉네임 ( Nickname )", required = true)@PathVariable("userNickname") String userNickname){
+    public ResponseEntity<String> checkNickname(@ApiParam(value="사용자 닉네임 ( Nickname )", required = true)@PathVariable("userNickname") String userNickname){
         if(userService.checkNickname(userNickname)){
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }else{

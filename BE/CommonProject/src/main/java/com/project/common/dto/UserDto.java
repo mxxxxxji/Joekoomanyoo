@@ -18,8 +18,8 @@ public class UserDto {
     private String userPassword;
     private String userBirth;
     private char userGender;
-//    private String socialLoginType;
-//    private String profileImgUrl;
+    private String socialLoginType;
+    private String profileImgUrl;
 //    private String fcmToken;
 //    private Date userRegistedAt;
 //    private Date userUpdatedAt;
