@@ -7,10 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,8 +21,14 @@ public class MyPageController {
     private static final String FAIL = "fail";
     private final HeritageService heritageService;
 
+    /**
+     * 내 문화 유산 스크랩 목록 불러오기
+     * @param
+     * @return List
+     */
+
     @GetMapping("/scrap/{userSeq}")
-    @ApiOperation(value = "내 스크랩 불러오기", response = List.class)
+    @ApiOperation(value = "내 문화 유산 스크랩 목록 불러오기", response = List.class)
     public ResponseEntity<?> myScrapList(@PathVariable("userSeq") int userSeq){
          List<HeritageScrapDto> list = heritageService.myScrapList(userSeq);
          if(list == null){
@@ -35,4 +38,19 @@ public class MyPageController {
          }
     }
 
+    /**
+     * 내 문화 유산 스크랩 삭제하기
+     * @param heritageScrapDto
+     * @return List
+     */
+
+    @DeleteMapping("/scrap")
+    @ApiOperation(value = "내 문화 유산 스크랩 삭제하기", response = String.class)
+    public ResponseEntity<String> deleteScrap(@RequestBody HeritageScrapDto heritageScrapDto){
+        if(heritageService.deleteScrap(heritageScrapDto)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

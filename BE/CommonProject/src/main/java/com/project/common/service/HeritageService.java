@@ -4,10 +4,7 @@ import com.project.common.dto.*;
 import com.project.common.entity.HeritageEntity;
 import com.project.common.entity.HeritageReviewEntity;
 import com.project.common.entity.HeritageScrapEntity;
-import com.project.common.repository.HeritageRepository;
-import com.project.common.repository.HeritageReviewRepository;
-import com.project.common.repository.HeritageScrapRepository;
-import com.project.common.repository.UserRepository;
+import com.project.common.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +20,8 @@ public class HeritageService {
     private final HeritageReviewRepository heritageReviewRepository;
     private final HeritageRepository heritageRepository;
     private final HeritageScrapRepository heritageScrapRepository;
+    private final HeritageScrapRepositoryCustom heritageScrapRepositoryCustom;
+
     @Transactional
     public List<HeritageDto> listInfo() throws Exception {
         List<HeritageDto> list = new ArrayList<>();
@@ -66,7 +65,7 @@ public class HeritageService {
         }
     }
 
-    // 개인 scrap 리스트 반환
+    // 유저 scrap 리스트 반환
     public List<HeritageScrapDto> myScrapList(int userSeq) {
         List<HeritageScrapEntity> list = heritageScrapRepository.findAllByUserSeq(userSeq);
         List<HeritageScrapDto> listDto = new ArrayList<>();
@@ -74,5 +73,16 @@ public class HeritageService {
             listDto.add(HeritageScrapMapper.MAPPER.toDto(heritageScrapEntity));
         }
         return listDto;
+    }
+    
+    // 유저 scrap 삭제
+    public boolean deleteScrap(HeritageScrapDto heritageScrapDto) {
+        // 값이 없으면 false
+        if(heritageScrapRepositoryCustom.findByUserSeqAndHeritageSeq(heritageScrapDto.getUserSeq(), heritageScrapDto.getHeritageSeq()) == null){
+            return false;
+        }
+        else{
+            return heritageScrapRepositoryCustom.deleteByUserSeqAndHeritageSeq(heritageScrapDto.getUserSeq(), heritageScrapDto.getHeritageSeq());
+        }
     }
 }
