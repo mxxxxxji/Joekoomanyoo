@@ -51,7 +51,7 @@ pipeline {
         when { expression { return params.RUN_TEST } }
         steps {
              sh 'docker stop server && docker rm server'
-            sh'docker run -d --rm --name server -p 8081:8080 $repository:latest'
+            sh'docker run -d --rm --name server -p 8081:8443 $repository:latest'
             echo "Stage Test!!!!!!"
             sh('docker stop server')
         }
@@ -68,7 +68,7 @@ pipeline {
      stage('============ Deploy ==============') {
         when { expression { return params.DEPLOY } }
         steps {
-           sh 'docker run -d --name server -p 8081:8080 -v /home/ubuntu/docker/volume:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -u root $repository:latest'
+           sh 'docker run -d --name server -p 8081:8443 -v /home/ubuntu/docker/volume:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -u root $repository:latest'
             echo "Deploy"
         }
     }
