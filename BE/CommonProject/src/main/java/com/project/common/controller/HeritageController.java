@@ -1,16 +1,17 @@
 package com.project.common.controller;
 
 import com.project.common.dto.HeritageDto;
+import com.project.common.dto.HeritageReivewDto;
 import com.project.common.service.HeritageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Api("HeritageController")
@@ -18,7 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/heritage")
 public class HeritageController {
-
+    private static final String SUCCESS = "success";
+    private static final String FAIL = "fail";
     private final HeritageService heritageService;
 
     /**
@@ -32,5 +34,42 @@ public class HeritageController {
     public ResponseEntity<List<HeritageDto>> listInfo() throws Exception {
         return new ResponseEntity<List<HeritageDto>>(heritageService.listInfo(), HttpStatus.OK);
     }
+
+    /**
+     * 문화 유산 리뷰 작성
+     * @param  heritageReivewDto
+     * @return String
+     */
+
+    @ApiOperation(value = "문화 유산 리뷰 작성 ", response = String.class)
+    @PostMapping("/review")
+    public ResponseEntity<String> createReview(@ApiParam(value = "회원 번호, 문화 유산 번호", required = true) @RequestBody HeritageReivewDto heritageReivewDto){
+        heritageReivewDto.setHeritageReviewSeq(0);
+        heritageReivewDto.setHeritageReviewRegistedAt(LocalDateTime.now());
+
+        // 성공적으로 입력된다면
+        if(heritageService.createReview(heritageReivewDto)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
+    }
+    /**
+     * 문화 유산 리뷰 목록
+     * @param
+     * @return List
+     */
+
+    @ApiOperation(value = "문화 유산 리뷰 목록", response = List.class)
+    @GetMapping("/reviews")
+    public ResponseEntity<?> reviewList(){
+        List<HeritageReivewDto> list = heritageService.reviewList();
+        if(list == null){
+            return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<>(list,HttpStatus.OK);
+        }
+    }
+
 
 }
