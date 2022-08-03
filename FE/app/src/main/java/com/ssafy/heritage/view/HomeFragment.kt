@@ -17,6 +17,7 @@ import com.ssafy.heritage.view.group.GroupListFragmentDirections
 import com.ssafy.heritage.view.heritage.HeritageDetailFragment
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.HeritageViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 
 private const val TAG = "HomeFragment__"
 
@@ -28,6 +29,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
     private val groupViewModel by activityViewModels<GroupViewModel>()
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
+
 
     override fun init() {
 
@@ -46,6 +49,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
         heritageViewModel.heritageList.observe(viewLifecycleOwner) { list ->
             heritageAdapter.submitList(list.sortedBy { it.heritageScrapCnt })
+        }
+
+        userViewModel.user.observe(viewLifecycleOwner) { user ->
+            Log.d(TAG, "initObserver: $user")
         }
     }
 
