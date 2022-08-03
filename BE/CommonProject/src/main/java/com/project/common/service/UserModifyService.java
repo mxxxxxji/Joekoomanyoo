@@ -49,19 +49,22 @@ public class UserModifyService{
         }
         // 사용자가 있을 경우
         else{
-            UserEntity userEntity = userRepository.findByUserSeq(modifyUserSeq);
-            userEntity.setUserNickname(userModifyDto.getUserNickname());
-            userEntity.setUserPassword(userModifyDto.getUserPassword());
-            userEntity.setUserBirth(userModifyDto.getUserBirth());
-            userEntity.setUserGender(userModifyDto.getUserGender());
-            userEntity.setProfileImgUrl(userModifyDto.getProfileImgUrl());
-            userEntity.setUserUpdatedAt(LocalDateTime.now());
+                UserEntity userEntity = userRepository.findByUserSeq(modifyUserSeq);
+                userEntity.setUserNickname(userModifyDto.getUserNickname());
+                userEntity.setUserBirth(userModifyDto.getUserBirth());
+                userEntity.setUserGender(userModifyDto.getUserGender());
+                userEntity.setProfileImgUrl(userModifyDto.getProfileImgUrl());
+                userEntity.setUserUpdatedAt(LocalDateTime.now());
 
-            // 패스워드 암호화
-            userEntity.encodePassword(this.passwordEncoder);
-
-            userRepository.save(userEntity);
-            return true;
+                // 비밀번호가 바뀐경우
+                // 비밀번호가 안바뀐 경우에는 그냥 통과
+                if(userModifyDto.getUserPassword() != null){
+                    userEntity.setUserPassword(userModifyDto.getUserPassword());
+                    // 패스워드 암호화
+                    userEntity.encodePassword(this.passwordEncoder);
+                }
+                userRepository.save(userEntity);
+                return true;
         }
     }
 

@@ -23,24 +23,24 @@ public class UserModifyController {
     private static final String FAIL ="fail";
     private final UserModifyService userModifyService;
 
-    /**
-     * 사용자 정보 불러오기
-     * @param userSeq
-     * @return userDto
-     */
-
-    @GetMapping("/{userSeq}")
-    @ApiOperation(value = "사용자 정보 불러오기", response = UserDto.class)
-    public ResponseEntity<?> userInfo(@ApiParam(value="사용자 번호 ( userSeq ) ") @PathVariable("userSeq") int userSeq){
-
-        UserDto userDto = userModifyService.userInfo(userSeq);
-        if(userDto == null){
-            return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
-        }else{
-            return new ResponseEntity<>(userDto, HttpStatus.OK);
-        }
-
-    }
+//    /**
+//     * 사용자 정보 불러오기
+//     * @param userSeq
+//     * @return userDto
+//     */
+//
+//    @GetMapping("/{userSeq}")
+//    @ApiOperation(value = "사용자 정보 불러오기", response = UserDto.class)
+//    public ResponseEntity<?> userInfo(@ApiParam(value="사용자 번호 ( userSeq ) ") @PathVariable("userSeq") int userSeq){
+//
+//        UserDto userDto = userModifyService.userInfo(userSeq);
+//        if(userDto == null){
+//            return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
+//        }else{
+//            return new ResponseEntity<>(userDto, HttpStatus.OK);
+//        }
+//
+//    }
 
     /**
      * 사용자 정보 변경하기

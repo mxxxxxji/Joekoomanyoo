@@ -51,6 +51,7 @@ public class UserController {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
 
+
         userRepository.save(UserEntity.builder()
                 .userSeq(0)
                 .userId(userSignDto.getUserId())
@@ -144,7 +145,7 @@ public class UserController {
         }
 
         // 토큰 생성해서 리턴
-        String token = jwtTokenProvider.createToken(userEntity.getUserSeq(),userEntity.getUsername(), userEntity.getRoles());
+        String token = jwtTokenProvider.createToken(userEntity.getUserSeq(),userEntity.getUsername(), userEntity.getUserNickname(), userEntity.getUserGender(), userEntity.getUserBirth(), userEntity.getSocialLoginType(), userEntity.getProfileImgUrl(), userEntity.getRoles());
         if(token != null){
             return new ResponseEntity<String>(token, HttpStatus.OK);
         }else{
@@ -185,16 +186,16 @@ public class UserController {
         }
     }
 
-//    // 토큰에서 사용자 정보 가져오기
-//    @GetMapping("/me")
-//    public UserDto getCurrentUser(HttpServletRequest request) { //(1)
-//            String token = request.getHeader("Authorization");
-//            if(token == null || !jwtTokenProvider.validateToken(token)){
-//                return null;
-//            }else{
-//                String userId = jwtTokenProvider.getUserId(token);
-//                return userService.find(userId);
-//            }
-//    }
+    // 토큰에서 사용자 정보 가져오기
+    @GetMapping("/me")
+    public UserDto getCurrentUser(HttpServletRequest request) { //(1)
+            String token = request.getHeader("Authorization");
+            if(token == null || !jwtTokenProvider.validateToken(token)){
+                return null;
+            }else{
+                String userId = jwtTokenProvider.getUserId(token);
+                return userService.find(userId);
+            }
+    }
 }
 

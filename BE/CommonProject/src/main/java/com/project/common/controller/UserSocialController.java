@@ -130,7 +130,7 @@ public class UserSocialController {
 
 
         // 토큰 생성해서 리턴
-        String token = jwtTokenProvider.createToken(userEntity.getUserSeq(),userEntity.getUsername(), userEntity.getRoles());
+        String token = jwtTokenProvider.createToken(userEntity.getUserSeq(),userEntity.getUsername(), userEntity.getUserNickname(), userEntity.getUserGender(), userEntity.getUserBirth(), userEntity.getSocialLoginType(), userEntity.getProfileImgUrl(), userEntity.getRoles());
         if(token != null){
             return new ResponseEntity<String>(token, HttpStatus.OK);
         }else{

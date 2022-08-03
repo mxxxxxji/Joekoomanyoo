@@ -36,11 +36,16 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createToken(int userSeq,String userId, List<String> roles) {
+    public String createToken(int userSeq,String userId,String userNickname, char userGender, String userBirth, String socialLoginType, String profileImgUrl, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(String.valueOf(userSeq)); // JWT payload 에 저장되는 정보단위
         // 정보 저장  key / value 쌍으로 저장된다.
         claims.put("userSeq",userSeq);
         claims.put("userId", userId);
+        claims.put("userNickname", userNickname);
+        claims.put("userGender", userGender);
+        claims.put("userBirth", userBirth);
+        claims.put("socialLoginType", socialLoginType);
+        claims.put("profileImgUrl", profileImgUrl);
         claims.put("roles", roles);
         Date now = new Date();
         return Jwts.builder()

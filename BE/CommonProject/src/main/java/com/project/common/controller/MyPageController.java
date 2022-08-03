@@ -53,4 +53,7 @@ public class MyPageController {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
     }
+
+
+
 }
