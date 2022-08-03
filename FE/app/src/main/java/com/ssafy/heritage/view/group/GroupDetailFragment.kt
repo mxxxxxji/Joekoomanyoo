@@ -9,26 +9,37 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.ssafy.heritage.R
+import com.ssafy.heritage.adpter.MemberAdapter
+import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.FragmentGroupDetailBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
 
 private const val TAG = " GroupDetailFragment___"
-class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>(R.layout.fragment_group_detail) {
+class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>(R.layout.fragment_group_detail),
+    OnItemClickListener {
 
     private val args by navArgs<GroupDetailFragmentArgs>()
     private val groupViewModel by activityViewModels<GroupViewModel>()
     private val user = User(0,0,"ssafy@naver.com", "잠만보", "1", "970317", "N", 'W', "","","","","",'N')
-
+    private lateinit var memberAdapter:MemberAdapter
 
     override fun init() {
 
+        initAdapter()
         initObserver()
         initView()
 
     }
+    private fun initAdapter(){
+        memberAdapter = MemberAdapter(this)
+        binding.recyclerviewMembers.adapter = memberAdapter
+    }
     private fun initObserver() = with(binding) {
+        groupViewModel.groupMemberList.observe(viewLifecycleOwner){
+            memberAdapter.submit
+        }
         groupViewModel.detailInfo.observe(viewLifecycleOwner){
             Log.d(TAG, it.groupMakerNickname)
             // 현재유저가 방장이면
@@ -62,7 +73,12 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>(R.layout.fr
             // 가입하기 click => 가입 취소버튼
         }
     }
+
     private fun initView() = with(binding){
 
+    }
+
+    override fun onItemClick(position: Int) {
+        TODO("Not yet implemented")
     }
 }

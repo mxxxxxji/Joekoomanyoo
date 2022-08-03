@@ -113,6 +113,9 @@ class GroupModifyFragment :
             //if ()
         }
 
+        btnBack.setOnClickListener{
+            findNavController().popBackStack()
+        }
     }
 
     // 스피너 선택 아이템 선택 시

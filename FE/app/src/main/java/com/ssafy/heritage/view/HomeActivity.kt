@@ -2,6 +2,7 @@ package com.ssafy.heritage.view
 
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -9,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseActivity
 import com.ssafy.heritage.databinding.ActivityHomeBinding
+import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 
 private const val TAG = "HomeActivity___"
@@ -16,6 +18,7 @@ private const val TAG = "HomeActivity___"
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private val heritageViewModel by viewModels<HeritageViewModel>()
+
     private lateinit var navController: NavController
     private var backButtonTime = 0L
 
