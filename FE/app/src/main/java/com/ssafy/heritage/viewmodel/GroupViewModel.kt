@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.heritage.data.dto.GroupAttribute
+import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.repository.Repository
@@ -25,8 +26,8 @@ class GroupViewModel: ViewModel() {
     private val _groupDetailInfo = SingleLiveEvent<GroupAttribute>()
     val groupDetailInfo: LiveData<GroupAttribute> get() = _groupDetailInfo
 
-    private val _groupMemberList = SingleLiveEvent<MutableList<User>>()
-    val groupMemberList: LiveData<MutableList<User>> get() = _groupMemberList
+    private val _groupMemberList = SingleLiveEvent<MutableList<Member>>()
+    val groupMemberList: LiveData<MutableList<Member>> get() = _groupMemberList
 
     private val _insertGroupInfo = SingleLiveEvent<GroupListResponse>()
     val insertGroupInfo: LiveData<GroupListResponse> get() = _insertGroupInfo
@@ -71,7 +72,7 @@ class GroupViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectGroupMembers(groupSeq).let { response ->
                 if(response.isSuccessful) {
-                    var list = response.body()!! as MutableList<User>
+                    var list = response.body()!! as MutableList<Member>
                     _groupMemberList.postValue(list)
                 }else{
                     Log.d(TAG, "${response.code()}")
