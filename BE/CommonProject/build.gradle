@@ -1,6 +1,13 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.6.3'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'java'
 }
 
@@ -24,6 +31,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	
+	//querydsl 추가
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -34,12 +46,32 @@ dependencies {
 	//MapStruct
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-
+	
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6' // 쿼리 파라미터 로그
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'	// 이메일 전송
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+	main.java.srcDir querydslDir
+}
+
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+
