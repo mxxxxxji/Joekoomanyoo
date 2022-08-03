@@ -50,7 +50,7 @@ public class UserModifyController {
         }
         // 수정이 안되었을 경우
         else{
-            return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -68,7 +68,7 @@ public class UserModifyController {
         }
         // 비밀번호가 틀리면
         else{
-            return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
     }
 }

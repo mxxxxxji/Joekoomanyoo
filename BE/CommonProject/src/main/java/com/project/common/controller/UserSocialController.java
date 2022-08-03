@@ -55,9 +55,9 @@ public class UserSocialController {
         }else{
             // 소셜 아이딘지 일반 아이딘지 확인
             if(userDto.getSocialLoginType().equals("social")){
-                return new ResponseEntity<String>(FAIL+" social", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<String>(FAIL+" social", HttpStatus.OK);
             }else if(userDto.getSocialLoginType().equals("none")){
-                return new ResponseEntity<String>(FAIL+" none", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<String>(FAIL+" none", HttpStatus.OK);
             }
             // 둘다 아닌 경우
             else{
@@ -120,12 +120,12 @@ public class UserSocialController {
         
         // 아이디가 없는 경우
         if(userEntity == null){
-            return new ResponseEntity<String>(FAIL+" id", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL+" id", HttpStatus.OK);
         }
 
         // 소셜 사용자가 아닌 경우
         if(!userEntity.getSocialLoginType().equals("social")){
-            return new ResponseEntity<String>(FAIL+" noneUser", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL+" noneUser", HttpStatus.OK);
         }
 
 
@@ -134,7 +134,7 @@ public class UserSocialController {
         if(token != null){
             return new ResponseEntity<String>(token, HttpStatus.OK);
         }else{
-            return new ResponseEntity<String>(FAIL+" token", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL+" token", HttpStatus.OK);
         }
     }
 

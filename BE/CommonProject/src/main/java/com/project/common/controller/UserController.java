@@ -130,17 +130,17 @@ public class UserController {
         UserEntity userEntity = userRepository.findByUserId(userInfo.get("userId"));
         // 아이디가 없는 경우
         if(userEntity == null){
-            return new ResponseEntity<String>(FAIL+" id", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL+" id", HttpStatus.OK);
         }
 
         // 소셜 아이디 인 경우
         if(!userEntity.getSocialLoginType().equals("none")){
-            return new ResponseEntity<String>(FAIL +" socialUser", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL +" socialUser", HttpStatus.OK);
         }
 
         // 비밀번호가 없는 경우
         if (!passwordEncoder.matches(userInfo.get("userPassword"),userEntity.getUserPassword())) {
-            return new ResponseEntity<String>(FAIL +" password", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL +" password", HttpStatus.OK);
         }
 
         // 토큰 생성해서 리턴
@@ -148,7 +148,7 @@ public class UserController {
         if(token != null){
             return new ResponseEntity<String>(token, HttpStatus.OK);
         }else{
-            return new ResponseEntity<String>(FAIL+" token", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL+" token", HttpStatus.OK);
         }
     }
 
