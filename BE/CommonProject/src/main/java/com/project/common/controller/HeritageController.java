@@ -2,6 +2,7 @@ package com.project.common.controller;
 
 import com.project.common.dto.HeritageDto;
 import com.project.common.dto.HeritageReivewDto;
+import com.project.common.dto.HeritageScrapDto;
 import com.project.common.service.HeritageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -71,5 +72,23 @@ public class HeritageController {
         }
     }
 
+    /**
+     * 문화 유산 스크랩 등록
+     * @param heritageScrapDto
+     * @return String
+     */
 
+    @ApiOperation(value = "문화 유산 스크랩 등록", response = String.class)
+    @PostMapping("/scrap")
+    public ResponseEntity<String> createScrap(@RequestBody HeritageScrapDto heritageScrapDto){
+        // 초기값 입력
+        heritageScrapDto.setHeritageScrapSeq(0);
+        heritageScrapDto.setHeritageScrapRegistedAt(LocalDateTime.now());
+        // 성공적으로 입력 되었으면
+        if(heritageService.createScrap(heritageScrapDto)){
+            return new ResponseEntity<String>(SUCCESS,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL,HttpStatus.BAD_REQUEST);
+        }
+    }
 }

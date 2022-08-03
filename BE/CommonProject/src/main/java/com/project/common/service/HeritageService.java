@@ -1,13 +1,12 @@
 package com.project.common.service;
 
-import com.project.common.dto.HeritageDto;
-import com.project.common.dto.HeritageMapper;
-import com.project.common.dto.HeritageReivewDto;
-import com.project.common.dto.HeritageReviewMapper;
+import com.project.common.dto.*;
 import com.project.common.entity.HeritageEntity;
 import com.project.common.entity.HeritageReviewEntity;
+import com.project.common.entity.HeritageScrapEntity;
 import com.project.common.repository.HeritageRepository;
 import com.project.common.repository.HeritageReviewRepository;
+import com.project.common.repository.HeritageScrapRepository;
 import com.project.common.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class HeritageService {
 
     private final HeritageReviewRepository heritageReviewRepository;
     private final HeritageRepository heritageRepository;
-    private final UserRepository userRepository;
+    private final HeritageScrapRepository heritageScrapRepository;
     @Transactional
     public List<HeritageDto> listInfo() throws Exception {
         List<HeritageDto> list = new ArrayList<>();
@@ -52,5 +51,18 @@ public class HeritageService {
             listDto.add(HeritageReviewMapper.MAPPER.toDto(heritageReviewEntity));
         }
         return listDto;
+    }
+
+    // 스크랩 등록
+    public boolean createScrap(HeritageScrapDto heritageScrapDto){
+        HeritageScrapEntity heritageScrapEntity = HeritageScrapMapper.MAPPER.toEntity(heritageScrapDto);
+        heritageScrapRepository.save(heritageScrapEntity);
+
+        // 올바르게 들어갔으면 true
+        if(heritageScrapEntity != null){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
