@@ -24,5 +24,5 @@ data class GroupListResponse(
     @SerializedName("groupAgeRange") var age: Int,
     @SerializedName("groupChild") var childJoin: Char,
     @SerializedName("groupGlobal") var globalJoin: Char,
-
+    @SerializedName("groupSeq") val groupSeq: Int
 ) : Parcelable

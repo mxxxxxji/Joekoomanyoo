@@ -21,12 +21,13 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>(R.layout.fr
     OnItemClickListener {
 
     private val args by navArgs<GroupDetailFragmentArgs>()
+
     private val groupViewModel by activityViewModels<GroupViewModel>()
     private val user = User(0,0,"ssafy@naver.com", "잠만보", "1", "970317", "N", 'W', "","","","","",'N')
     private lateinit var memberAdapter:MemberAdapter
 
     override fun init() {
-
+        groupViewModel.selectGroupMembers(args.groupInfo.groupSeq)
         initAdapter()
         initObserver()
         initView()
@@ -38,7 +39,7 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>(R.layout.fr
     }
     private fun initObserver() = with(binding) {
         groupViewModel.groupMemberList.observe(viewLifecycleOwner){
-            memberAdapter.submit
+            memberAdapter.submitList(it)
         }
         groupViewModel.detailInfo.observe(viewLifecycleOwner){
             Log.d(TAG, it.groupMakerNickname)

@@ -15,6 +15,7 @@ import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentGroupListBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import kotlin.properties.Delegates
 
 private const val TAG = "GroupListFragment___"
 
@@ -23,6 +24,7 @@ class GroupListFragment :
 
     private lateinit var groupListAdapter: GroupListAdapter
     private val groupViewModel by viewModels<GroupViewModel>()
+    private var groupSeq : Int = 0
 
     override fun init() {
 
