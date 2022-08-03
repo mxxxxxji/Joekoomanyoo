@@ -56,7 +56,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
                         }
                         MODIFY_PROFILE -> {
-
+                            findNavController().navigate(R.id.action_profileFragment_to_passwordRequestFragment)
                         }
                         LOGOUT -> {
 

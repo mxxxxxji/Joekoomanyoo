@@ -17,6 +17,9 @@ import com.google.android.gms.tasks.Task
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentLoginBinding
+import com.ssafy.heritage.util.JWTUtils
+import com.ssafy.heritage.util.SharedPreferencesUtil
+import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.LoginViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -84,9 +87,21 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             CoroutineScope(Dispatchers.Main).launch {
 
                 // 로그인 성공했을 경우
-                if (loginViewModel.login()) {
+                val token = loginViewModel.login() as String
+
+                if (token != null) {
                     // 홈 화면으로 이동
-                    makeToast("로그인 성공")
+
+                    SharedPreferencesUtil(requireContext()).saveToken(token)
+
+                    val user = JWTUtils.decoded(token)
+                    if (user != null) {
+                        Intent(requireContext(), HomeActivity::class.java).apply {
+                            startActivity(this)
+                        }
+                    } else {
+                        makeToast("유저 정보 획득에 실패하였습니다")
+                    }
                 }
 
             }
@@ -102,7 +117,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private fun signIn() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         signInClientLauncher.launch(signInIntent)
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     private val signInClientLauncher: ActivityResultLauncher<Intent> =

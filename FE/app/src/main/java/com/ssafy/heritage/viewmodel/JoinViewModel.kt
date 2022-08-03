@@ -115,9 +115,9 @@ class JoinViewModel : ViewModel() {
                 makeToast("사용 가능한 닉네임입니다")
                 true
             } else {
-                Log.d(TAG, "${response.code()}")
-                makeTextInputLayoutError(textInputLayout, "중복된 이메일입니다")
-                makeToast("중복된 이메일입니다")
+                isCheckedNickname.value = false
+                makeTextInputLayoutError(textInputLayout, "중복된 닉네임입니다")
+                makeToast("중복된 닉네임입니다")
                 false
             }
         }
@@ -175,15 +175,13 @@ class JoinViewModel : ViewModel() {
     suspend fun join() = withContext(Dispatchers.Main) {
         // 서버에 회원가입 요청
         val user = User(
-            null,
-            null,
+            0,
             id.value!!,
             nickname.value!!,
             pw.value!!,
             birth.value!!,
-            "normal",
+            "none",
             gender.value!!,
-            "",
             "",
             "",
             "",

@@ -1,5 +1,9 @@
 package com.ssafy.heritage.view
 
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.util.Base64
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -10,6 +14,9 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseActivity
 import com.ssafy.heritage.databinding.ActivityHomeBinding
 import com.ssafy.heritage.viewmodel.HeritageViewModel
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+
 
 private const val TAG = "HomeActivity___"
 
@@ -21,11 +28,31 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     override fun init() {
         initNavigation()
+        getHashKey()
     }
 
     override fun onStart() {
         super.onStart()
         heritageViewModel.getHeritageList()
+    }
+
+    private fun getHashKey() {
+        var packageInfo: PackageInfo? = null
+        try {
+            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        if (packageInfo == null) Log.e("KeyHash", "KeyHash:null")
+        for (signature in packageInfo!!.signatures) {
+            try {
+                val md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+            } catch (e: NoSuchAlgorithmException) {
+                Log.e("KeyHash", "Unable to get MessageDigest. signature=$signature", e)
+            }
+        }
     }
 
     // 네비게이션 연결

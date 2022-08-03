@@ -35,20 +35,22 @@ class LoginViewModel : ViewModel() {
 
         // 서버에 로그인 요청
         val map = HashMap<String, String>()
+
         map.put("userId", id.value!!)
         map.put("userPassword", pw.value!!)
+
         repository.login(map).let { response ->
             // 로그인 성공했을 경우
             if (response.isSuccessful) {
                 // 토큰 SharedPreference에 저장
                 Log.d(TAG, "login: ${response.body()}")
-                true
+                response.body()
             }
             // 로그인 실패했을 경우
             else {
                 Log.d(TAG, "${response.code()}")
                 makeToast("아이디, 비밀번호를 확인해주세요")
-                false
+                null
             }
         }
     }

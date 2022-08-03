@@ -136,7 +136,9 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
                         findNavController().navigate(R.id.action_joinFragment_to_loginFragment)
                     }
 
-                } else {
+                }
+                // 회원가입 실패한 경우
+                else {
 
                 }
             }

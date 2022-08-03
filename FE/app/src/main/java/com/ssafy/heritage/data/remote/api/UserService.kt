@@ -27,4 +27,11 @@ interface UserService {
     // 일반 로그인
     @POST("/api/user/login")
     suspend fun login(@Body map: HashMap<String, String>): Response<String>
+
+    // 소셜 아이디 중복 확인
+
+    // 소셜 로그인
+
+    // 소셜 회원가입
+
 }
