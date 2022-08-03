@@ -118,8 +118,8 @@ public class UserSocialController {
     public ResponseEntity<String> login(@RequestBody Map<String, String> userInfo) {
         UserEntity userEntity = userRepository.findByUserId(userInfo.get("userId"));
         
-        // 아이디가 없는 경우
-        if(userEntity == null){
+        // 아이디가 없는 경우 나 이미 탈퇴한 경우
+        if(userEntity == null || userEntity.getIsDeleted()=='Y'){
             return new ResponseEntity<String>(FAIL+" id", HttpStatus.OK);
         }
 

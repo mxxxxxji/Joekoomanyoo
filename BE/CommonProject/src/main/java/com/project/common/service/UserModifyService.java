@@ -27,6 +27,12 @@ public class UserModifyService{
     public UserDto userInfo(int userSeq) {
         // 사용자 번호로 사용자 찾기
         UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+
+        // 사용자가 없거나 탈퇴된 경우
+        if(userEntity == null || userEntity.getIsDeleted()=='Y'){
+            return null;
+        }
+
         // Dto로 변환해서 전달
         return UserMapper.MAPPER.toDto(userEntity);
     }
@@ -37,8 +43,8 @@ public class UserModifyService{
     public boolean modifyInfo(UserModifyDto userModifyDto){
         // 변경할 사용자 번호
         int modifyUserSeq = userModifyDto.getUserSeq();
-        // 사용자가 없을 경우
-        if(userRepository.findByUserSeq(modifyUserSeq) == null){
+        // 사용자가 없거나 이미 탈퇴한 경우 false
+        if(userRepository.findByUserSeq(modifyUserSeq) == null || userRepository.findByUserSeq(modifyUserSeq).getIsDeleted()=='Y'){
             return false;
         }
         // 사용자가 있을 경우

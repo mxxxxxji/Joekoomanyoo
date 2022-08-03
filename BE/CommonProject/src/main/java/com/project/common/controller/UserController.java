@@ -104,7 +104,7 @@ public class UserController {
      * @return success / fail
      */
 
-    @DeleteMapping("/resign/{userId}")
+    @PutMapping("/resign/{userId}")
     @ApiOperation(value = "회원탈퇴기능", response = String.class)
     public ResponseEntity<String> resign(@ApiParam(value="사용자 ID ( Email )", required = true) @PathVariable("userId") String userId){
         // 회원이 존재하지 X -> 삭제 불가
@@ -128,8 +128,8 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Map<String, String> userInfo) {
         UserEntity userEntity = userRepository.findByUserId(userInfo.get("userId"));
-        // 아이디가 없는 경우
-        if(userEntity == null){
+        // 아이디가 없는 경우 , 아이디가 탈퇴되어 있는 경우
+        if(userEntity == null || userEntity.getIsDeleted() == 'Y'){
             return new ResponseEntity<String>(FAIL+" id", HttpStatus.BAD_REQUEST);
         }
 
@@ -185,16 +185,16 @@ public class UserController {
         }
     }
 
-    // 토큰에서 사용자 정보 가져오기
-    @GetMapping("/me")
-    public UserDto getCurrentUser(HttpServletRequest request) { //(1)
-            String token = request.getHeader("Authorization");
-            if(token == null || !jwtTokenProvider.validateToken(token)){
-                return null;
-            }else{
-                String userId = jwtTokenProvider.getUserId(token);
-                return userService.find(userId);
-            }
-    }
+//    // 토큰에서 사용자 정보 가져오기
+//    @GetMapping("/me")
+//    public UserDto getCurrentUser(HttpServletRequest request) { //(1)
+//            String token = request.getHeader("Authorization");
+//            if(token == null || !jwtTokenProvider.validateToken(token)){
+//                return null;
+//            }else{
+//                String userId = jwtTokenProvider.getUserId(token);
+//                return userService.find(userId);
+//            }
+//    }
 }
 

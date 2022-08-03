@@ -38,12 +38,13 @@ public class UserService{
     // 회원 탈퇴
     @Transactional
     public boolean resignUser(String userId){
-        // 만약 사용자가 존재하지 않는다면
-        if(userRepository.findByUserId(userId) == null){
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        // 만약 사용자가 존재하지 않거나 이미 삭제된 경우
+        if(userEntity == null || userEntity.getIsDeleted()=='Y'){
             return false;
         }else{
-            // 사용자가 존재하면 삭제
-            userRepository.deleteByUserId(userId);
+            // 사용자가 존재하면 삭제표시
+            userEntity.setIsDeleted('Y');
             return true;
         }
     }
@@ -59,8 +60,8 @@ public class UserService{
     // 이메일 중복 검사
     @Transactional
     public boolean checkEmail(String userId){
-        // 만약 중복된 것이 없다면 이메일 생성 가능
-        if(userRepository.findByUserId(userId)==null){
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        if(userEntity==null){
             return true;
         }else{
             return false;

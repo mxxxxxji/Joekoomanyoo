@@ -31,8 +31,15 @@ public class UserModifyController {
 
     @GetMapping("/{userSeq}")
     @ApiOperation(value = "사용자 정보 불러오기", response = UserDto.class)
-    public ResponseEntity<UserDto> userInfo(@ApiParam(value="사용자 번호 ( userSeq ) ") @PathVariable("userSeq") int userSeq){
-        return new ResponseEntity<UserDto>(userModifyService.userInfo(userSeq), HttpStatus.OK);
+    public ResponseEntity<?> userInfo(@ApiParam(value="사용자 번호 ( userSeq ) ") @PathVariable("userSeq") int userSeq){
+
+        UserDto userDto = userModifyService.userInfo(userSeq);
+        if(userDto == null){
+            return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
+        }
+
     }
 
     /**
