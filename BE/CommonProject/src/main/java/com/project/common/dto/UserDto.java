@@ -20,9 +20,9 @@ public class UserDto {
     private char userGender;
     private String socialLoginType;
     private String profileImgUrl;
-//    private String fcmToken;
-//    private Date userRegistedAt;
-//    private Date userUpdatedAt;
-//    private char isDeleted;
+    private String fcmToken;
+    private Date userRegistedAt;
+    private Date userUpdatedAt;
+    private char isDeleted;
 
 }

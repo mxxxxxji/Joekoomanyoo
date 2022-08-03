@@ -6,19 +6,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
+import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Api("회원수정 Dto")
-public class UserModifyDto {
+@Api("회원가입 사용자 정보")
+public class UserSignDto {
     private int userSeq;
+    private String userId;
     private String userNickname;
     private String userPassword;
     private String userBirth;
     private char userGender;
-    private String profileImgUrl;
-    private LocalDateTime userUpdatedAt;
+    private String socialLoginType;
+    private char isDeleted;
 }
