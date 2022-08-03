@@ -17,11 +17,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Getter @Setter
 @ToString
 @Table(name="tb_group_member")
 public class GroupMemberEntity {
@@ -37,17 +38,19 @@ public class GroupMemberEntity {
 	@ManyToOne
 	@JoinColumn(name="group_seq")
 	private GroupEntity group;
+
 	
-	@Column(name = "member_status")
+	
+	@Column(name = "member_status",nullable=false)
 	private int memberStatus;
 	
-	@Column(name = "member_appeal")
+	@Column(name = "member_appeal",nullable=false)
 	private String memberAppeal;
 	
-	@Column(name = "member_is_evaluated")
+	@Column(name = "member_is_evaluated",nullable=false)
 	private char memberIsEvaluated;
 	
-	@Column(name = "member_in_at")
+	@Column(name = "member_in_at",nullable=false)
 	private Date memberInAt;
 	
 	@Column(name = "member_created_at")
@@ -71,6 +74,8 @@ public class GroupMemberEntity {
 		this.memberCreatedAt = memberCreatedAt;
 		this.memberUpdatedAt = memberUpdatedAt;
 	}
+
+	
 	
 	
 
