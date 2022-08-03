@@ -1,9 +1,11 @@
 package com.project.common.controller;
 
 import com.project.common.config.JwtTokenProvider;
+import com.project.common.dto.UserDto;
 import com.project.common.dto.UserSignDto;
 import com.project.common.entity.UserEntity;
 import com.project.common.repository.UserRepository;
+import com.project.common.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -12,10 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -32,9 +31,47 @@ public class UserSocialController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
+    private final UserService userService;
+
     private final JwtTokenProvider jwtTokenProvider;
+
+
     /**
-     * 일반 회원 가입
+     * 소셜 아이디 확인
+     *  
+     * @param userId
+     * @return success / fail
+     */
+    
+    @ApiOperation(value="소셜 아이디 확인", response = String.class)
+    @GetMapping("/checkId/{userId}")
+    public ResponseEntity<String> checkId(@ApiParam(value = "소셜 아이디 확인 : 아이디 ( 이메일 )", required = true) @PathVariable String userId){
+        // 아이디가 있는지 없는지 체크
+        UserDto userDto = userService.find(userId);
+        
+        // 유저 아이디가 없는 경우
+        if(userDto == null){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            // 소셜 아이딘지 일반 아이딘지 확인
+            if(userDto.getSocialLoginType().equals("social")){
+                return new ResponseEntity<String>(FAIL+" social", HttpStatus.BAD_REQUEST);
+            }else if(userDto.getSocialLoginType().equals("none")){
+                return new ResponseEntity<String>(FAIL+" none", HttpStatus.BAD_REQUEST);
+            }
+            // 둘다 아닌 경우
+            else{
+                return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+            }
+        }
+
+
+
+
+    }
+    
+    /**
+     * 소셜 회원 가입
      *
      * @param userSignDto
      * @return success / fail
@@ -88,7 +125,7 @@ public class UserSocialController {
 
         // 소셜 사용자가 아닌 경우
         if(!userEntity.getSocialLoginType().equals("social")){
-            return new ResponseEntity<String>(FAIL+" commonUser", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL+" noneUser", HttpStatus.BAD_REQUEST);
         }
 
 
