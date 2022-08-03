@@ -21,7 +21,6 @@ import com.project.common.entity.GroupEntity;
 import com.project.common.entity.GroupMemberEntity;
 import com.project.common.repository.GroupMemberRepository;
 import com.project.common.repository.GroupRepository;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 
 
 
