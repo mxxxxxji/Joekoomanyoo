@@ -106,8 +106,8 @@ class GroupModifyFragment :
                     groupPwd = etGroupPassword.text.toString()
                 }
                 // groupMaker : 현재 유저 번호로 넣어야함
-                groupInfo = GroupListResponse(0,0,name, "잠만보", content,groupAccessType,groupPwd,'Y', 'R',"","",max,
-                    region,age,child,global,startDate,endDate)
+                groupInfo = GroupListResponse("잠만보", name, content,groupAccessType,groupPwd,'Y', 'R',max,
+                    region,startDate.toInt(),endDate.toInt(),age,child,global)
                 groupViewModel.insertGroup(groupInfo)
             }
             //if ()

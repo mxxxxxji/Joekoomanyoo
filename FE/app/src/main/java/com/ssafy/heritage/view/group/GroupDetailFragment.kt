@@ -49,9 +49,8 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>(R.layout.fr
                 btnSetting.visibility = View.GONE
                 btnChangeImage.visibility =View.GONE
             }
+
             // 현재유저가 방장이면
-
-
             // 그룹상태가 모집중일시 신청자, 구성원이보여야함,
             // 그룹이 시작된 상태면 구성원만
 
