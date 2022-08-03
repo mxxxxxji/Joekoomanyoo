@@ -2,6 +2,7 @@ package com.ssafy.heritage.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.heritage.data.dto.GroupAttribute
@@ -29,6 +30,13 @@ class GroupViewModel: ViewModel() {
 
     private val _insertGroupInfo = SingleLiveEvent<GroupListResponse>()
     val insertGroupInfo: LiveData<GroupListResponse> get() = _insertGroupInfo
+
+    private val _detailInfo = MutableLiveData<GroupListResponse>()
+    val detailInfo : LiveData<GroupListResponse> get() = _detailInfo
+
+    fun add(info : GroupListResponse){
+        _detailInfo.postValue(info)
+    }
 
 
     fun getGroupList() {
