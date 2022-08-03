@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GroupRepository extends JpaRepository<GroupEntity, Long> {
 
+	GroupEntity findByGroupSeq(long groupSeq);
+
 	//List<GroupEntity> findAllByName(String groupName);
 	//List<GroupEntity> findAllById(String groupSeq);
 	

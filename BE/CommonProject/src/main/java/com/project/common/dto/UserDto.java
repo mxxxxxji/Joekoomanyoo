@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import com.project.common.entity.GroupEntity;
+import com.project.common.entity.UserEntity;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +28,14 @@ public class UserDto {
 //    private Date userUpdatedAt;
 //    private char isDeleted;
 
+    
+    public UserEntity toEntity(){
+        return UserEntity.builder()
+                .userSeq(userSeq)
+                .userId(userId)
+                .userNickname(userNickname)
+                .userPassword(userPassword)
+                .userBirth(userBirth).build();
+
+    }
 }

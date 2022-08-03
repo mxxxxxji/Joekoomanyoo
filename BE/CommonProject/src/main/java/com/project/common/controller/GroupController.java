@@ -35,7 +35,7 @@ public class GroupController {
     }
     
     @ApiOperation(value = "모임 정보 보기, 모임 정보(GroupDto) 반환")
-    @GetMapping("{groupSeq}/Info")
+    @GetMapping("{groupSeq}/info")
     public ResponseEntity<GroupDto> getGroupInfo(@PathVariable("groupSeq") Long groupSeq){
     	return new ResponseEntity<>(groupService.getGroupInfo(groupSeq),HttpStatus.OK);
     }
