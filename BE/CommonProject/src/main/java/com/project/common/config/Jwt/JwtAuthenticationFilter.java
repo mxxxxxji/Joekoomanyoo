@@ -1,4 +1,4 @@
-package com.project.common.config;
+package com.project.common.config.Jwt;
 
 
 import lombok.RequiredArgsConstructor;

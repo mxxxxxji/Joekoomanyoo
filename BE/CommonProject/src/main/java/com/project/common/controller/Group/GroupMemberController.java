@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.common.config.JwtTokenProvider;
+import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Group.GroupBasicReqDto;
 import com.project.common.dto.Group.GroupJoinReqDto;
 import com.project.common.dto.Group.GroupMemberListDto;

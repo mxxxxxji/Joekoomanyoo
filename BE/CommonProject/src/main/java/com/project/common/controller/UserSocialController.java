@@ -1,6 +1,6 @@
 package com.project.common.controller;
 
-import com.project.common.config.JwtTokenProvider;
+import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.User.UserDto;
 import com.project.common.dto.User.UserSignDto;
 import com.project.common.entity.User.UserEntity;

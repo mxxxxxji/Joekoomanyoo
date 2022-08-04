@@ -1,4 +1,4 @@
-package com.project.common.repository;
+package com.project.common.repository.My;
 
 import com.project.common.entity.My.MyScheduleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

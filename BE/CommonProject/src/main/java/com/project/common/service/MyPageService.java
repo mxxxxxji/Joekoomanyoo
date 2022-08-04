@@ -4,15 +4,18 @@ import com.project.common.dto.My.MyDailyMemoDto;
 import com.project.common.dto.My.MyDailyMemoMapper;
 import com.project.common.dto.My.MyScheduleDto;
 import com.project.common.dto.My.MyScheduleMapper;
+import com.project.common.dto.User.UserEvalDto;
 import com.project.common.dto.User.UserKeywordDto;
 import com.project.common.dto.User.UserKeywordMapper;
 import com.project.common.entity.My.MyDailyMemoEntity;
 import com.project.common.entity.My.MyScheduleEntity;
+import com.project.common.entity.User.UserEntity;
 import com.project.common.entity.User.UserKeywordEntity;
-import com.project.common.repository.MyDailyMemoRepository;
-import com.project.common.repository.MyDailyMemoRepositoryCustom;
-import com.project.common.repository.MyScheduleRepository;
-import com.project.common.repository.MyScheduleRepositoryCustom;
+import com.project.common.repository.My.MyDailyMemoRepository;
+import com.project.common.repository.My.MyDailyMemoRepositoryCustom;
+import com.project.common.repository.My.MyScheduleRepository;
+import com.project.common.repository.My.MyScheduleRepositoryCustom;
+import com.project.common.repository.User.UserEvalRepository;
 import com.project.common.repository.User.UserKeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,7 @@ import java.util.List;
 @Transactional
 public class MyPageService {
     private final UserKeywordRepository userKeywordRepository;
+    private final UserEvalRepository userEvalRepository;
 
     private final MyDailyMemoRepositoryCustom myDailyMemoRepositoryCustom;
 
@@ -185,6 +189,36 @@ public class MyPageService {
             return false;
         }else{
             myScheduleRepository.deleteByMyScheduleSeq(myScheduleSeq);
+            return true;
+        }
+    }
+
+    public boolean evalMutual(UserEvalDto userEvalDto) {
+        // 만약 평가가 안들어왔다면 false
+        if(userEvalDto == null){
+            return false;
+        }else{
+            // 먼저 사용자 Entity 가져오기 ( 사용자 번호로 )
+            UserEntity userEntity = userEvalRepository.getByUserSeq(userEvalDto.getUserSeq());
+
+            // Entity에 상호평가 값 넣기
+            System.out.println("그전 카운팅 : " + userEntity.getEvalCnt());
+            // 먼저 총 횟수 카운팅
+            int cnt = userEntity.getEvalCnt()+1;
+            System.out.println("카운팅 한 것 " + cnt);
+            userEntity.setEvalCnt(cnt);
+
+            // 리스트 값들 카운팅 해주기
+            // 기존 값 + 이번에 들어온 값
+            userEntity.setEvalList1((userEntity.getEvalList1() + userEvalDto.getEvalList1()));
+            userEntity.setEvalList2((userEntity.getEvalList2() + userEvalDto.getEvalList2()));
+            userEntity.setEvalList3((userEntity.getEvalList3() + userEvalDto.getEvalList3()));
+            userEntity.setEvalList4((userEntity.getEvalList4() + userEvalDto.getEvalList4()));
+            userEntity.setEvalList5((userEntity.getEvalList5() + userEvalDto.getEvalList5()));
+
+            // 시간 등록
+            userEntity.setEvalUpdatedAt(time);
+
             return true;
         }
     }

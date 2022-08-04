@@ -3,6 +3,7 @@ package com.project.common.controller;
 import com.project.common.dto.Heritage.HeritageScrapDto;
 import com.project.common.dto.My.MyDailyMemoDto;
 import com.project.common.dto.My.MyScheduleDto;
+import com.project.common.dto.User.UserEvalDto;
 import com.project.common.dto.User.UserKeywordDto;
 import com.project.common.service.HeritageService;
 import com.project.common.service.MyPageService;
@@ -31,7 +32,7 @@ public class MyPageController {
     // 시간설정
     private static LocalDateTime localDateTime = LocalDateTime.now();
     private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    
+
     /**
      * 내 문화 유산 스크랩 목록 불러오기
      *
@@ -112,11 +113,11 @@ public class MyPageController {
     @ApiOperation(value = "내 키워드 삭제", response = String.class)
     @DeleteMapping("/keyword/list/{myKeywordSeq}")
     public ResponseEntity<String> deleteKeyword(@PathVariable("myKeywordSeq") int myKeywordSeq) {
-       if(myPageService.deleteKeyword(myKeywordSeq)){
-           return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-       }else{
-           return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
-       }
+        if (myPageService.deleteKeyword(myKeywordSeq)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -129,9 +130,9 @@ public class MyPageController {
     @ApiOperation(value = "데일리 메모 생성", response = String.class)
     @PostMapping("/memo")
     public ResponseEntity<String> createDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
-        if(myPageService.createDailyMemo(myDailyMemoDto)){
+        if (myPageService.createDailyMemo(myDailyMemoDto)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
     }
@@ -146,9 +147,9 @@ public class MyPageController {
     @ApiOperation(value = "데일리 메모 수정하기", response = String.class)
     @PutMapping("/memo")
     public ResponseEntity<String> modifyDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
-        if(myPageService.modifyDailyMemo(myDailyMemoDto)){
+        if (myPageService.modifyDailyMemo(myDailyMemoDto)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
     }
@@ -164,9 +165,9 @@ public class MyPageController {
     @PostMapping("/memo/daily")
     public ResponseEntity<?> showDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
         MyDailyMemoDto dto = myPageService.showDailyMemo(myDailyMemoDto);
-        if(dto==null){
-            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
-        }else{
+        if (dto == null) {
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+        } else {
             return new ResponseEntity<MyDailyMemoDto>(dto, HttpStatus.OK);
         }
     }
@@ -181,9 +182,9 @@ public class MyPageController {
     @ApiOperation(value = "데일리 메모 삭제하기", response = String.class)
     @DeleteMapping("/memo/{myDailyMemoSeq}")
     public ResponseEntity<String> deleteDailyMemo(@PathVariable("myDailyMemoSeq") int myDailyMemoSeq) {
-        if(myPageService.deleteDailyMemo(myDailyMemoSeq)) {
-            return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
-        }else{
+        if (myPageService.deleteDailyMemo(myDailyMemoSeq)) {
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        } else {
             return new ResponseEntity<String>("FAIL", HttpStatus.OK);
         }
     }
@@ -198,10 +199,10 @@ public class MyPageController {
     @ApiOperation(value = "내 일정 생성", response = String.class)
     @PostMapping("/schedule")
     public ResponseEntity<String> createSchedule(@RequestBody MyScheduleDto myScheduleDto) {
-        if(myPageService.createSchedule(myScheduleDto)){
-            return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
-        }else{
-            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
+        if (myPageService.createSchedule(myScheduleDto)) {
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -217,10 +218,10 @@ public class MyPageController {
     @PostMapping("/schedule/list")
     public ResponseEntity<?> listSchedule(@RequestBody MyScheduleDto myScheduleDto) {
         List<MyScheduleDto> list = myPageService.listSchedule(myScheduleDto);
-        if(list == null){
-            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
-        }else{
-            return new ResponseEntity<List<MyScheduleDto>>(list,HttpStatus.OK);
+        if (list == null) {
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<List<MyScheduleDto>>(list, HttpStatus.OK);
         }
     }
 
@@ -234,10 +235,10 @@ public class MyPageController {
     @ApiOperation(value = "내 일정 수정", response = String.class)
     @PutMapping("/schedule")
     public ResponseEntity<String> modifySchedule(@RequestBody MyScheduleDto myScheduleDto) {
-        if(myPageService.modifySchedule(myScheduleDto)){
-            return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
-        }else{
-            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
+        if (myPageService.modifySchedule(myScheduleDto)) {
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -252,12 +253,46 @@ public class MyPageController {
     @ApiOperation(value = "내 일정 삭제", response = String.class)
     @DeleteMapping("/schedule/{myScheduleSeq}")
     public ResponseEntity<String> deleteSchedule(@PathVariable("myScheduleSeq") int myScheduleSeq) {
-        if(myPageService.deleteSchedule(myScheduleSeq)){
-            return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
-        }else{
-            return new ResponseEntity<String>("FAIL",HttpStatus
-
-                    .BAD_REQUEST);
+        if (myPageService.deleteSchedule(myScheduleSeq)) {
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * 상호 평가 하기
+     *
+     * @param userEvalDto
+     * @return String
+     */
+
+    @ApiOperation(value = "상호 평가 하기", response = String.class)
+    @PostMapping("/eval")
+    public ResponseEntity<String> evalMutual(@RequestBody UserEvalDto userEvalDto) {
+        if (myPageService.evalMutual(userEvalDto)) {
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    /**
+     * 상호 평가 가져오기
+     *
+     * @param userSeq
+     * @return String
+     */
+
+    @ApiOperation(value = "상호 평가 하기", response = String.class)
+    @PostMapping("/eval/{userSeq}")
+    public ResponseEntity<?> evalMutualInfo(@PathVariable("userSeq") int userSeq) {
+        if (myPageService.evalMutualInfo(userSeq)) {
+            return new ResponseEntity<UserEvalDto>("SUCCESS", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

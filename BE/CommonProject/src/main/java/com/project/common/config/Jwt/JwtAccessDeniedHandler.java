@@ -1,4 +1,4 @@
-package com.project.common.config;
+package com.project.common.config.Jwt;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
