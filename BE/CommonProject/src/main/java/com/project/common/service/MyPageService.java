@@ -1,8 +1,13 @@
 package com.project.common.service;
 
+import com.project.common.dto.MyDailyMemoDto;
+import com.project.common.dto.MyDailyMemoMapper;
 import com.project.common.dto.UserKeywordDto;
 import com.project.common.dto.UserKeywordMapper;
+import com.project.common.entity.MyDailyMemoEntity;
 import com.project.common.entity.UserKeywordEntity;
+import com.project.common.repository.MyDailyMemoRepository;
+import com.project.common.repository.MyDailyMemoRepositoryCustom;
 import com.project.common.repository.UserKeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +22,12 @@ import java.util.List;
 @Transactional
 public class MyPageService {
     private final UserKeywordRepository userKeywordRepository;
+
+    private final MyDailyMemoRepositoryCustom myDailyMemoRepositoryCustom;
+
+    private final MyDailyMemoRepository myDailyMemoRepository;
+
+
     public boolean createKeyword(UserKeywordDto userKeywordDto) {
         UserKeywordEntity userKeywordEntity = UserKeywordMapper.MAPPER.toEntity(userKeywordDto);
 
@@ -49,6 +60,20 @@ public class MyPageService {
             return false;
         }else {
             userKeywordRepository.deleteByMyKeywordSeq(myKeywordSeq);
+            return true;
+        }
+    }
+
+    public boolean createDailyMemo(MyDailyMemoDto myDailyMemoDto) {
+        // 이미 메모가 있으면
+        if(myDailyMemoRepositoryCustom.findByUserSeqAndMyDailyMemoDate(myDailyMemoDto.getUserSeq(), myDailyMemoDto.getMyDailyMemoDate()) != null){
+            return false;
+        }else {
+            myDailyMemoDto.setMyDailyMemoRegistedAt(LocalDateTime.now());
+            myDailyMemoDto.setMyDailyMemoUpdatedAt(LocalDateTime.now());
+
+            MyDailyMemoEntity myDailyMemoEntity = MyDailyMemoMapper.MAPPER.toEntity(myDailyMemoDto);
+            myDailyMemoRepository.save(myDailyMemoEntity);
             return true;
         }
     }

@@ -1,12 +1,12 @@
 package com.project.common.controller;
 
 import com.project.common.dto.HeritageScrapDto;
+import com.project.common.dto.MyDailyMemoDto;
 import com.project.common.dto.UserKeywordDto;
 import com.project.common.service.HeritageService;
 import com.project.common.service.MyPageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -111,5 +111,23 @@ public class MyPageController {
            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
        }
     }
+
+    /**
+     * 데일리 메모 생성
+     *
+     * @param myDailyMemoDto
+     * @return String
+     */
+
+    @ApiOperation(value = "데일리 메모 생성", response = String.class)
+    @PostMapping("/memo")
+    public ResponseEntity<String> createDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
+        if(myPageService.createDailyMemo(myDailyMemoDto)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }
