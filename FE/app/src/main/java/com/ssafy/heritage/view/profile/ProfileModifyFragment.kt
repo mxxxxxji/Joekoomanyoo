@@ -15,13 +15,13 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentProfileModifyBinding
-import com.ssafy.heritage.viewmodel.ProfileViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,36 +34,34 @@ private val PERMISSIONS_REQUIRED = arrayOf(
 class ProfileModifyFragment :
     BaseFragment<FragmentProfileModifyBinding>(R.layout.fragment_profile_modify) {
 
-    private val profileViewModel by viewModels<ProfileViewModel>()
-
+    //    private val profileViewModel by viewModels<ProfileViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
+    lateinit var oldNickname: String
 
     override fun init() {
-        binding.profileVM = profileViewModel
 
-        initView()
+        initObserver()
 
         initClickListener()
 
         setTextChangedListener()
     }
 
-    @SuppressLint("LongLogTag")
-    override fun onStart() {
-        super.onStart()
-        val safeArgs: ProfileModifyFragmentArgs by navArgs()
-        profileViewModel.user.value = safeArgs.user
-        profileViewModel.oldNickname.value = safeArgs.user.userNickname
-    }
 
-    private fun initView() = with(binding) {
-        val safeArgs: ProfileModifyFragmentArgs by navArgs()
-        spinnerYear.text = safeArgs.user.userBirth
-        spinnerGender.text = when (safeArgs.user.userGender) {
-            'M' -> "남자"
-            else -> "여자"
+    private fun initObserver() = with(binding) {
+        userViewModel.user.observe(viewLifecycleOwner) {
+            binding.user = it.copy()
+
+            oldNickname = it.userNickname
+            spinnerYear.text = it.userBirth
+            spinnerGender.text = when (it.userGender) {
+                'M' -> "남자"
+                else -> "여자"
+            }
         }
     }
 
+    @SuppressLint("LongLogTag")
     private fun initClickListener() = with(binding) {
 
         // 프사 변경 버튼 클릭시
@@ -82,19 +80,30 @@ class ProfileModifyFragment :
             CoroutineScope(Dispatchers.Main).launch {
 
                 // 닉네임 중복검사 확인
-                if (!profileViewModel.nicknameVerify(tilNickname)) {
+                if (!userViewModel.nicknameVerify(
+                        user!!.userNickname,
+                        oldNickname,
+                        tilNickname
+                    )!!
+                ) {
                     return@launch
                 }
-
+                Log.d(TAG, "닉네임 중복검사 확인 통과")
                 // 비밀번호 유효성 검사 확인
-                if (!profileViewModel.validatePw(tilPw, tilPwCheck)) {
+                if (!userViewModel.validatePw(pw, pwCheck, tilPw, tilPwCheck)) {
                     return@launch
                 }
+                Log.d(TAG, "비밀번호 유효성 검사 확인")
 
                 // 유효성 검사 통과하면 회원정보 수정
-                makeToast("수정 완료")
-                profileViewModel.modify()
-                // 수정완료후 마이페이지로 이동
+                if (userViewModel.modify(user!!, pw) == true) {
+                    // 수정완료후 마이페이지로 이동
+                    makeToast("회원정보 수정 성공")
+                    findNavController().navigate(R.id.action_profileModifyFragment_to_profileFragment)
+                } else {
+                    makeToast("회원정보 수정에 실패하였습니다")
+                }
+
             }
         }
     }
@@ -171,6 +180,32 @@ class ProfileModifyFragment :
         }
     }
 
+    @SuppressLint("LongLogTag")
+    private fun setItemSelectedListener() = with(binding) {
+
+        // 스피너 선택 리스너 설정
+        spinnerYear.setOnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
+            Log.d(TAG, "setItemSelectedListener: $newItem")
+            user?.userBirth = newItem
+            spinnerYear.text = newItem
+        }
+
+        spinnerGender.setOnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
+            Log.d(TAG, "setItemSelectedListener: $newItem")
+            when (newItem) {
+                "남자" -> {
+                    user?.userGender = 'M'
+                    spinnerGender.text = "남자"
+                }
+                "여자" -> {
+                    user?.userGender = 'F'
+                    spinnerGender.text = "여자"
+                }
+            }
+        }
+    }
+
+    // 권한 있는지 체크
     fun hasPermissions() = PERMISSIONS_REQUIRED.all {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }

@@ -1,19 +1,35 @@
 package com.ssafy.heritage.view.profile
 
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
-import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.FragmentPasswordRequestBinding
+import com.ssafy.heritage.viewmodel.UserViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val TAG = "PasswordRequestFragment___"
 
 class PasswordRequestFragment :
     BaseFragment<FragmentPasswordRequestBinding>(R.layout.fragment_password_request) {
+
+    private val userViewModel by activityViewModels<UserViewModel>()
+
     override fun init() {
+
+        initObserver()
+
         initClickListener()
+    }
+
+    private fun initObserver() {
+        userViewModel.user.observe(viewLifecycleOwner) {
+            binding.user = it
+        }
     }
 
     private fun initClickListener() = with(binding) {
@@ -26,26 +42,16 @@ class PasswordRequestFragment :
             }
 
             // 서버에 비밀번호가 해당 유저의 비밀번호인지 확인 요청하고 성공하면 유저 정보 받아옴
-            //// 비밀번호가 일치하면 받아온 유저정보를 가지고 ProfileModifyFragment로 이동
-            val user = User(
-                null,
-                "id",
-                "nickname",
-                "",
-                "2000",
-                "normal",
-                'M',
-                "",
-                "",
-                "",
-                "",
-                'N'
-            ) // 더미 데이터
-            val action =
-                PasswordRequestFragmentDirections.actionPasswordRequestFragmentToProfileModifyFragment(
-                    user
-                )
-            findNavController().navigate(action,)
+            CoroutineScope(Dispatchers.Main).launch {
+                if (userViewModel.checkPassword(pw!!) == true) {
+                    // ProfileModifyFragment로 이동
+                    findNavController().navigate(R.id.action_passwordRequestFragment_to_profileModifyFragment)
+                } else {
+                    makeTextInputLayoutError(tilPw, "비밀번호가 일치하지 않습니다")
+                    makeToast("비밀번호가 일치하지 않습니다")
+                }
+            }
+
         }
     }
 

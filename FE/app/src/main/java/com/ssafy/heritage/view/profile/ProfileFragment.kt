@@ -101,6 +101,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     }
 
     private fun initObserver() {
+
+        userViewModel.user.observe(viewLifecycleOwner){
+            binding.user = it
+        }
         /*
         키워드 목록 받아와야함
          */

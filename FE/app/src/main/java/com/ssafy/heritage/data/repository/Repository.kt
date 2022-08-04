@@ -3,13 +3,13 @@ package com.ssafy.heritage.data.repository
 import android.content.Context
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.User
+import com.ssafy.heritage.data.dto.UserModify
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import retrofit2.Response
-import retrofit2.http.Body
 
 class Repository constructor(context: Context) {
 
@@ -45,11 +45,19 @@ class Repository constructor(context: Context) {
 
     suspend fun resign(userId: String): Response<String> = userApi.resign(userId)
 
+    suspend fun modifyProfile(userModify: UserModify): Response<String> =
+        userApi.modifyProfile(userModify)
+
+    suspend fun checkPassword(map: HashMap<String, String>): Response<String> =
+        userApi.checkPassword(map)
+
     // heritage
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()
-    suspend fun insertHeritageReview(body: HeritageReviewListResponse): Response<HeritageReviewListResponse> = heritageApi.insertHeritageReview(body)
-    suspend fun selectAllHeritageReviews(): Response<List<HeritageReviewListResponse>> = heritageApi.selectAllHeritageReviews()
+    suspend fun insertHeritageReview(body: HeritageReviewListResponse): Response<HeritageReviewListResponse> =
+        heritageApi.insertHeritageReview(body)
 
+    suspend fun selectAllHeritageReviews(): Response<List<HeritageReviewListResponse>> =
+        heritageApi.selectAllHeritageReviews()
 
 
     companion object {

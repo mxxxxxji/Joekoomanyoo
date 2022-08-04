@@ -6,8 +6,16 @@
     <data>
 
         <variable
-            name="profileVM"
-            type="com.ssafy.heritage.viewmodel.ProfileViewModel" />
+            name="user"
+            type="com.ssafy.heritage.data.dto.User" />
+
+        <variable
+            name="pw"
+            type="String" />
+
+        <variable
+            name="pwCheck"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="이메일"
-                android:text="@{profileVM.user.userId}" />
+                android:text="@{user.userId}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="비밀번호"
-                android:text="@={profileVM.user.userPassword}" />
+                android:text="@={pw}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,7 +147,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="비밀번호 확인"
-                android:text="@={profileVM.pw_check}" />
+                android:text="@={pwCheck}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -176,7 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="닉네임"
-                android:text="@={profileVM.user.userNickname}" />
+                android:text="@={user.userNickname}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
