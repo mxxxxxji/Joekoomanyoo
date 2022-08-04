@@ -42,4 +42,14 @@ public class MyPageService {
 
         return listDto;
     }
+
+    public boolean deleteKeyword(int myKeywordSeq) {
+        // 키워드가 없는 경우
+        if(userKeywordRepository.findByMyKeywordSeq(myKeywordSeq)==null){
+            return false;
+        }else {
+            userKeywordRepository.deleteByMyKeywordSeq(myKeywordSeq);
+            return true;
+        }
+    }
 }

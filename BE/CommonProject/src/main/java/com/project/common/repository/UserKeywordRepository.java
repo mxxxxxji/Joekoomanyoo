@@ -11,4 +11,8 @@ public interface UserKeywordRepository extends JpaRepository<UserKeywordEntity, 
     UserKeywordEntity findByUserSeq(int userSeq);
 
     List<UserKeywordEntity> findAllByUserSeq(int userSeq);
+
+    UserKeywordEntity findByMyKeywordSeq(int myKeywordSeq);
+
+    void deleteByMyKeywordSeq(int myKeywordSeq);
 }
