@@ -172,4 +172,14 @@ public class MyPageService {
             return true;
         }
     }
+
+    public boolean deleteSchedule(int myScheduleSeq) {
+        // 스케쥴이 없다면 false
+        if(myScheduleRepository.findByMyScheduleSeq(myScheduleSeq) == null){
+            return false;
+        }else{
+            myScheduleRepository.deleteByMyScheduleSeq(myScheduleSeq);
+            return true;
+        }
+    }
 }

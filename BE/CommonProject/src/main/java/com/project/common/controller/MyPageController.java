@@ -243,5 +243,13 @@ public class MyPageController {
      * @return String
      */
 
-
+    @ApiOperation(value = "내 일정 삭제", response = String.class)
+    @DeleteMapping("/schedule/{myScheduleSeq}")
+    public ResponseEntity<String> deleteSchedule(@PathVariable("myScheduleSeq") int myScheduleSeq) {
+        if(myPageService.deleteSchedule(myScheduleSeq)){
+            return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
+        }
+    }
 }
