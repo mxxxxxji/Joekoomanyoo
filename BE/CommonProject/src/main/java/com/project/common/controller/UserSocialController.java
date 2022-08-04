@@ -99,6 +99,13 @@ public class UserSocialController {
                 .profileImgUrl("")
                 .isDeleted('N')
                 .roles(Collections.singletonList("ROLE_USER"))
+                .evalCnt(0)
+                .evalList1(0)
+                .evalList2(0)
+                .evalList3(0)
+                .evalList4(0)
+                .evalList5(0)
+                .evalUpdatedAt(LocalDateTime.now())
                 .build());
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 
