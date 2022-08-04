@@ -1,4 +1,4 @@
-package com.project.common.entity;
+package com.project.common.entity.User;
 
 import lombok.*;
 
@@ -15,19 +15,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "tb_daily_memo")
-public class MyDailyMemoEntity {
+@Table(name = "tb_my_keyword")
+public class UserKeywordEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int myDailyMemoSeq;
+    private int myKeywordSeq;
+
     @Column(nullable = false)
-    private int myDailyMemoDate;
+    private String myKeywordName;
 
-    private LocalDateTime myDailyMemoRegistedAt;
-
-    private LocalDateTime myDailyMemoUpdatedAt;
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String myDailyMemo;
     @Column(nullable = false)
     private int userSeq;
+
+    private LocalDateTime myKeywordRegistedAt;
 }

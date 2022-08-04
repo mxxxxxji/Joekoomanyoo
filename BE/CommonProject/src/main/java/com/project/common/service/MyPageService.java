@@ -1,14 +1,14 @@
 package com.project.common.service;
 
-import com.project.common.dto.MyDailyMemoDto;
-import com.project.common.dto.MyDailyMemoMapper;
-import com.project.common.dto.UserKeywordDto;
-import com.project.common.dto.UserKeywordMapper;
+import com.project.common.dto.MyDailyMemo.MyDailyMemoDto;
+import com.project.common.dto.MyDailyMemo.MyDailyMemoMapper;
+import com.project.common.dto.User.UserKeywordDto;
+import com.project.common.dto.User.UserKeywordMapper;
 import com.project.common.entity.MyDailyMemoEntity;
-import com.project.common.entity.UserKeywordEntity;
+import com.project.common.entity.User.UserKeywordEntity;
 import com.project.common.repository.MyDailyMemoRepository;
 import com.project.common.repository.MyDailyMemoRepositoryCustom;
-import com.project.common.repository.UserKeywordRepository;
+import com.project.common.repository.User.UserKeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,6 +75,16 @@ public class MyPageService {
             MyDailyMemoEntity myDailyMemoEntity = MyDailyMemoMapper.MAPPER.toEntity(myDailyMemoDto);
             myDailyMemoRepository.save(myDailyMemoEntity);
             return true;
+        }
+    }
+
+    public MyDailyMemoDto showDailyMemo(MyDailyMemoDto myDailyMemoDto) {
+        MyDailyMemoEntity myDailyMemoEntity = myDailyMemoRepositoryCustom.findByUserSeqAndMyDailyMemoDate(myDailyMemoDto.getUserSeq(), myDailyMemoDto.getMyDailyMemoDate());
+        // 데일리 메모가 없는 경우
+        if(myDailyMemoEntity == null){
+            return null;
+        }else{
+            return MyDailyMemoMapper.MAPPER.toDto(myDailyMemoEntity);
         }
     }
 }

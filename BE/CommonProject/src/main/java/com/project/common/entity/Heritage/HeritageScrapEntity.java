@@ -1,4 +1,4 @@
-package com.project.common.entity;
+package com.project.common.entity.Heritage;
 
 import lombok.*;
 
@@ -15,19 +15,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "tb_daily_memo")
-public class MyDailyMemoEntity {
+@Table(name = "tb_heritage_scrap")
+public class HeritageScrapEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int myDailyMemoSeq;
-    @Column(nullable = false)
-    private int myDailyMemoDate;
-
-    private LocalDateTime myDailyMemoRegistedAt;
-
-    private LocalDateTime myDailyMemoUpdatedAt;
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String myDailyMemo;
+    private int heritageScrapSeq;
     @Column(nullable = false)
     private int userSeq;
+    @Column(nullable = false)
+    private int heritageSeq;
+    @Column(nullable = false)
+    private LocalDateTime heritageScrapRegistedAt;
 }

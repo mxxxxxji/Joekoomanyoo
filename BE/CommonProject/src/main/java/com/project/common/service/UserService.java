@@ -1,9 +1,9 @@
 package com.project.common.service;
 
-import com.project.common.dto.UserDto;
-import com.project.common.dto.UserMapper;
-import com.project.common.entity.UserEntity;
-import com.project.common.repository.UserRepository;
+import com.project.common.dto.User.UserDto;
+import com.project.common.dto.User.UserMapper;
+import com.project.common.entity.User.UserEntity;
+import com.project.common.repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

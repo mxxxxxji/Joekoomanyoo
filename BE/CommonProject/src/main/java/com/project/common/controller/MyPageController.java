@@ -1,8 +1,8 @@
 package com.project.common.controller;
 
-import com.project.common.dto.HeritageScrapDto;
-import com.project.common.dto.MyDailyMemoDto;
-import com.project.common.dto.UserKeywordDto;
+import com.project.common.dto.Heritage.HeritageScrapDto;
+import com.project.common.dto.MyDailyMemo.MyDailyMemoDto;
+import com.project.common.dto.User.UserKeywordDto;
 import com.project.common.service.HeritageService;
 import com.project.common.service.MyPageService;
 import io.swagger.annotations.Api;
@@ -37,9 +37,9 @@ public class MyPageController {
     public ResponseEntity<?> myScrapList(@PathVariable("userSeq") int userSeq) {
         List<HeritageScrapDto> list = heritageService.myScrapList(userSeq);
         if (list.size() == 0) {
-            return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            return new ResponseEntity<List<HeritageScrapDto>>(list, HttpStatus.OK);
         }
     }
 
@@ -89,9 +89,9 @@ public class MyPageController {
     public ResponseEntity<?> listKeyword(@PathVariable("userSeq") int userSeq) {
         List<UserKeywordDto> list = myPageService.listKeyword(userSeq);
         if (list.size() == 0) {
-            return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            return new ResponseEntity<List<UserKeywordDto>>(list, HttpStatus.OK);
         }
     }
 
@@ -129,5 +129,22 @@ public class MyPageController {
         }
     }
 
+    /**
+     * 데일리 메모 불러오기
+     *
+     * @param myDailyMemoDto
+     * @return String
+     */
+
+    @ApiOperation(value = "데일리 메모 불러오기", response = String.class)
+    @PostMapping("/memo/daily")
+    public ResponseEntity<?> showDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
+        MyDailyMemoDto dto = myPageService.showDailyMemo(myDailyMemoDto);
+        if(dto==null){
+            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<MyDailyMemoDto>(dto, HttpStatus.OK);
+        }
+    }
 
 }

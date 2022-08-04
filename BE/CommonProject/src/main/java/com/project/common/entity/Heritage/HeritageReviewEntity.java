@@ -1,4 +1,4 @@
-package com.project.common.entity;
+package com.project.common.entity.Heritage;
 
 import lombok.*;
 
@@ -13,21 +13,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 // 모든 필드 값을 파라미터로 받는 생성자 생성
 @AllArgsConstructor
-@Getter
-@Setter
-@Table(name = "tb_daily_memo")
-public class MyDailyMemoEntity {
+@Table(name = "tb_heritage_review")
+public class HeritageReviewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int myDailyMemoSeq;
-    @Column(nullable = false)
-    private int myDailyMemoDate;
-
-    private LocalDateTime myDailyMemoRegistedAt;
-
-    private LocalDateTime myDailyMemoUpdatedAt;
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String myDailyMemo;
+    private int heritageReviewSeq;
     @Column(nullable = false)
     private int userSeq;
+    @Column(nullable = false)
+    private int heritageSeq;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String heritageReviewText;
+    @Column(nullable = false)
+    private LocalDateTime heritageReviewRegistedAt;
+
+
 }
