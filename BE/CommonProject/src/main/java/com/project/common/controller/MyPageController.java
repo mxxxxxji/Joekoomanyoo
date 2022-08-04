@@ -207,7 +207,7 @@ public class MyPageController {
      * @return List
      */
 
-    @ApiOperation(value = "내 일정 생성", response = String.class)
+    @ApiOperation(value = "내 일정 불러오기", response = List.class)
     @PostMapping("/schedule/list")
     public ResponseEntity<?> listSchedule(@RequestBody MyScheduleDto myScheduleDto) {
         List<MyScheduleDto> list = myPageService.listSchedule(myScheduleDto);
@@ -224,6 +224,16 @@ public class MyPageController {
      * @param myScheduleDto
      * @return String
      */
+
+    @ApiOperation(value = "내 일정 수정", response = String.class)
+    @PutMapping("/schedule")
+    public ResponseEntity<String> modifySchedule(@RequestBody MyScheduleDto myScheduleDto) {
+        if(myPageService.modifySchedule(myScheduleDto)){
+            return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
     /**

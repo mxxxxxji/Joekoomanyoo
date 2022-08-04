@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MyScheduleRepository extends JpaRepository<MyScheduleEntity, Integer> {
 
+    MyScheduleEntity findByMyScheduleSeq(int myScheduleSeq);
 }

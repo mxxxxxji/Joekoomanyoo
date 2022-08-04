@@ -121,8 +121,8 @@ public class MyPageService {
     }
 
     public boolean createSchedule(MyScheduleDto myScheduleDto) {
-        // 없다면 false
-        if(myScheduleDto == null){
+        // 이미 일정이 있는 경우 false
+        if(myScheduleRepositoryCustom.findByUserSeqAndMyScheduleDateAndMyScheduleTime(myScheduleDto.getUserSeq(), myScheduleDto.getMyScheduleDate(), myScheduleDto.getMyScheduleTime())!=null){
             return false;
         }else {
             MyScheduleEntity myScheduleEntity = MyScheduleMapper.MAPPER.toEntity(myScheduleDto);
@@ -146,6 +146,30 @@ public class MyPageService {
                 listDto.add(MyScheduleMapper.MAPPER.toDto(myScheduleEntity));
             }
             return listDto;
+        }
+    }
+
+    public boolean modifySchedule(MyScheduleDto myScheduleDto) {
+        // 그전 시간 값 구하기
+        int beforeTime = myScheduleRepository.findByMyScheduleSeq(myScheduleDto.getMyScheduleSeq()).getMyScheduleTime();
+
+        // 일정 체크 ( 날짜, 시간, 사용자 이용해서 )
+        MyScheduleEntity myScheduleEntity = myScheduleRepositoryCustom.findByUserSeqAndMyScheduleDateAndMyScheduleTime(myScheduleDto.getUserSeq(), myScheduleDto.getMyScheduleDate(), beforeTime);
+        // 일정이 없는 경우
+        if(myScheduleEntity==null){
+            return false;
+        }else{
+            // 시간 설정
+            myScheduleEntity.setMyScheduleTime(myScheduleDto.getMyScheduleTime());
+            // 일정 내용 설정
+            myScheduleEntity.setMyScheduleContent(myScheduleDto.getMyScheduleContent());
+            // 업데이트 시간 설정
+            myScheduleEntity.setMyScheduleUpdatedAt(LocalDateTime.now());
+            // 날짜는 변경 불가능
+            
+            // 저장
+            myScheduleRepository.save(myScheduleEntity);
+            return true;
         }
     }
 }

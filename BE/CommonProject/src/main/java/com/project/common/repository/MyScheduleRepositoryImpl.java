@@ -19,4 +19,10 @@ public class MyScheduleRepositoryImpl implements MyScheduleRepositoryCustom{
         QMyScheduleEntity qMyScheduleEntity = QMyScheduleEntity.myScheduleEntity;
         return jpaQueryFactory.select(qMyScheduleEntity).from(qMyScheduleEntity).where(qMyScheduleEntity.userSeq.eq(userSeq).and(qMyScheduleEntity.myScheduleDate.eq(myScheduleDate))).fetch();
     }
+
+    @Override
+    public MyScheduleEntity findByUserSeqAndMyScheduleDateAndMyScheduleTime(int userSeq, int myScheduleDate, int myScheduleTime) {
+        QMyScheduleEntity qMyScheduleEntity = QMyScheduleEntity.myScheduleEntity;
+        return jpaQueryFactory.select(qMyScheduleEntity).from(qMyScheduleEntity).where(qMyScheduleEntity.userSeq.eq(userSeq).and(qMyScheduleEntity.myScheduleDate.eq(myScheduleDate).and(qMyScheduleEntity.myScheduleTime.eq(myScheduleTime)))).fetchOne();
+    }
 }
