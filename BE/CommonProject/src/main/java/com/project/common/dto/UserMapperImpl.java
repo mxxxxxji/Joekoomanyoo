@@ -3,17 +3,13 @@ package com.project.common.dto;
 import com.project.common.dto.UserDto.UserDtoBuilder;
 import com.project.common.entity.UserEntity;
 import com.project.common.entity.UserEntity.UserEntityBuilder;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-08-04T10:21:26+0900",
+    date = "2022-08-04T15:38:18+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.5.jar, environment: Java 11 (Oracle Corporation)"
 )
 public class UserMapperImpl implements UserMapper {
@@ -63,13 +59,16 @@ public class UserMapperImpl implements UserMapper {
         userEntity.userGender( userDto.getUserGender() );
         userEntity.profileImgUrl( userDto.getProfileImgUrl() );
         userEntity.fcmToken( userDto.getFcmToken() );
-        if ( userDto.getUserRegistedAt() != null ) {
-            userEntity.userRegistedAt( LocalDateTime.ofInstant( userDto.getUserRegistedAt().toInstant(), ZoneId.of( "UTC" ) ) );
-        }
-        if ( userDto.getUserUpdatedAt() != null ) {
-            userEntity.userUpdatedAt( LocalDateTime.ofInstant( userDto.getUserUpdatedAt().toInstant(), ZoneId.of( "UTC" ) ) );
-        }
+        userEntity.userRegistedAt( userDto.getUserRegistedAt() );
+        userEntity.userUpdatedAt( userDto.getUserUpdatedAt() );
         userEntity.isDeleted( userDto.getIsDeleted() );
+        userEntity.evalCnt( userDto.getEvalCnt() );
+        userEntity.evalList1( userDto.getEvalList1() );
+        userEntity.evalList2( userDto.getEvalList2() );
+        userEntity.evalList3( userDto.getEvalList3() );
+        userEntity.evalList4( userDto.getEvalList4() );
+        userEntity.evalList5( userDto.getEvalList5() );
+        userEntity.evalUpdatedAt( userDto.getEvalUpdatedAt() );
 
         return userEntity.build();
     }
@@ -91,13 +90,16 @@ public class UserMapperImpl implements UserMapper {
         userDto.socialLoginType( userEntity.getSocialLoginType() );
         userDto.profileImgUrl( userEntity.getProfileImgUrl() );
         userDto.fcmToken( userEntity.getFcmToken() );
-        if ( userEntity.getUserRegistedAt() != null ) {
-            userDto.userRegistedAt( Date.from( userEntity.getUserRegistedAt().toInstant( ZoneOffset.UTC ) ) );
-        }
-        if ( userEntity.getUserUpdatedAt() != null ) {
-            userDto.userUpdatedAt( Date.from( userEntity.getUserUpdatedAt().toInstant( ZoneOffset.UTC ) ) );
-        }
+        userDto.userRegistedAt( userEntity.getUserRegistedAt() );
+        userDto.userUpdatedAt( userEntity.getUserUpdatedAt() );
         userDto.isDeleted( userEntity.getIsDeleted() );
+        userDto.evalCnt( userEntity.getEvalCnt() );
+        userDto.evalList1( userEntity.getEvalList1() );
+        userDto.evalList2( userEntity.getEvalList2() );
+        userDto.evalList3( userEntity.getEvalList3() );
+        userDto.evalList4( userEntity.getEvalList4() );
+        userDto.evalList5( userEntity.getEvalList5() );
+        userDto.evalUpdatedAt( userEntity.getEvalUpdatedAt() );
 
         return userDto.build();
     }

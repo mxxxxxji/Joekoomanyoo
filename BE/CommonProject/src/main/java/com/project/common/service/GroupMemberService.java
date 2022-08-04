@@ -34,11 +34,10 @@ public class GroupMemberService{
 		for(GroupMemberEntity entity: groupMemberRepository.findAll()) {
 			if(entity.getGroup().getGroupSeq()==groupSeq) {
 				findGroup.add(entity);
-				}
 			}
-		return findGroup;
 		}
-	
+		return findGroup;
+	}
 	
 	//가입자 목록 목록 
 	public List<GroupMemberListDto> getMemberList(long groupSeq){
