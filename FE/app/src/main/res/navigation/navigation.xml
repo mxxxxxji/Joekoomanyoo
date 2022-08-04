@@ -130,6 +130,9 @@
         <action
             android:id="@+id/action_profileFragment_to_passwordRequestFragment"
             app:destination="@id/passwordRequestFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_scrapListFragment"
+            app:destination="@id/scrapListFragment" />
     </fragment>
     <fragment
         android:id="@+id/passwordRequestFragment"
@@ -181,4 +184,8 @@
         android:id="@+id/heritageReviewFragment"
         android:name="com.ssafy.heritage.view.heritage.HeritageReviewFragment"
         android:label="HeritageReviewFragment" />
+    <fragment
+        android:id="@+id/scrapListFragment"
+        android:name="com.ssafy.heritage.view.profile.ScrapListFragment"
+        android:label="ScrapListFragment" />
 </navigation>
