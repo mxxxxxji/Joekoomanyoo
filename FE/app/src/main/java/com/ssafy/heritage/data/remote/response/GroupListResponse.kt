@@ -25,4 +25,23 @@ data class GroupListResponse(
     @SerializedName("groupChild") var childJoin: Char,
     @SerializedName("groupGlobal") var globalJoin: Char,
     @SerializedName("groupSeq") val groupSeq: Int
+
+    @SerializedName(accessType)": "string",
+@SerializedName(active)": "string",
+    @SerializedName(ageRange)": 0,
+        @SerializedName(createdTime)": "2022-08-04T03:36:30.899Z",
+        @SerializedName(description": "string",
+            @SerializedName(endDate": 0,
+                @SerializedName(groupSeq": 0,
+                    @SerializedName(master": "string",
+                        @SerializedName(maxCount": 0,
+                            @SerializedName(name": "string",
+                                @SerializedName(password": "string",
+                                    @SerializedName(region": "string",
+                                        @SerializedName(startDate": 0,
+                                            @SerializedName(status": "string",
+                                                @SerializedName(themaImg": "string",
+                                                    @SerializedName(updatedTime": "2022-08-04T03:36:30.899Z",
+                                                    @SerializedName(withChild": "string",
+                                            @SerializedName(withGlobal)": "string"
 ) : Parcelable

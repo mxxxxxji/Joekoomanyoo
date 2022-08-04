@@ -18,5 +18,4 @@ data class User(
     var userRegisteredAt: String,   // 가입 시간
     var userUpdatedAt: String,      // 수정 시간
     var isDeleted: Char,            // 회원 탈퇴 여부(N,Y)
-) : Parcelable {
-}
+) : Parcelable

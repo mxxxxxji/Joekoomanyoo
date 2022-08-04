@@ -45,15 +45,19 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>(R.layout.fr
             Log.d(TAG, it.groupMakerNickname)
             // 현재유저가 방장이면
             if(it.groupMakerNickname == user.userNickname){
+
                 Log.d(TAG, "USER IS GROUPMAKER")
                 btnSubscription.visibility = View.GONE
                 btnCancellation.visibility = View.GONE
                 btnDrop.visibility = View.GONE
+
                 if(it.groupStatus!='R'){
                     Log.d(TAG, "GROUP IS NOT RECRUTING")
                     headerApplicant.visibility = View.GONE
                     recyclerviewApplicant.visibility = View.GONE
                 }
+
+
             }else{
                 // 설정, 사진 변경버튼 제거
                 Log.d(TAG, "USER IS NOT GROUPMAKER")
