@@ -1,6 +1,7 @@
 package com.ssafy.heritage.data.remote.api
 
 import com.ssafy.heritage.data.dto.User
+import com.ssafy.heritage.data.dto.UserModify
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -41,4 +42,12 @@ interface UserService {
     // 소셜 회원가입
     @POST("/api/user/social/signup")
     suspend fun socialSignup(@Body user: User): Response<String>
+
+    // 사용자 정보 불러오기
+    @PUT("/api/modify")
+    suspend fun modifyProfile(@Body userModify: UserModify): Response<String>
+
+    // 사용자 비밀번호 확인하기
+    @GET("/api/modify/{userSeq}")
+    suspend fun getProfileInfo(@Body map: HashMap<String, String>): Response<String>
 }
