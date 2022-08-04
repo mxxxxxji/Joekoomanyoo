@@ -3,6 +3,7 @@ package com.ssafy.heritage.data.repository
 import android.content.Context
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.GroupAttribute
+import com.ssafy.heritage.data.dto.HeritageScrap
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
@@ -32,6 +33,8 @@ class Repository constructor(context: Context) {
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()
     suspend fun insertHeritageReview(body: HeritageReviewListResponse): Response<HeritageReviewListResponse> = heritageApi.insertHeritageReview(body)
     suspend fun selectAllHeritageReviews(): Response<List<HeritageReviewListResponse>> = heritageApi.selectAllHeritageReviews()
+    suspend fun insertHeritageScrap(scrap: HeritageScrap): Response<String> = heritageApi.insertHeritageScrap(scrap)
+    suspend fun deleteHeritageScrap(userSeq: Int, heritageSeq: Int): Response<String> = heritageApi.deleteHeritageScrap(userSeq, heritageSeq)
 
 
 

@@ -43,7 +43,7 @@ class HeritageReviewFragment :
     private val heritageViewModel by viewModels<HeritageViewModel>()
     private lateinit var heritageReview: HeritageReviewListResponse
     private var userSeq: Int = 0
-    private var heritageReviewRegistedAt: Int = 0
+    private var heritageReviewRegistedAt: String = ""
     private var heritageReviewText: String = ""
     private var attachSeq: Int = 0
 
