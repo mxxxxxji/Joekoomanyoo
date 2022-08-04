@@ -5,6 +5,7 @@ import com.project.common.dto.My.MyDailyMemoDto;
 import com.project.common.dto.My.MyScheduleDto;
 import com.project.common.dto.User.UserEvalDto;
 import com.project.common.dto.User.UserKeywordDto;
+import com.project.common.dto.User.UserResponseEvalDto;
 import com.project.common.service.HeritageService;
 import com.project.common.service.MyPageService;
 import io.swagger.annotations.Api;
@@ -282,16 +283,18 @@ public class MyPageController {
      * 상호 평가 가져오기
      *
      * @param userSeq
-     * @return String
+     * @return UserResponseEvalDto
      */
 
-    @ApiOperation(value = "상호 평가 하기", response = String.class)
-    @PostMapping("/eval/{userSeq}")
+    @ApiOperation(value = "상호 평가 가져오기", response = Object.class)
+    @GetMapping("/eval/{userSeq}")
     public ResponseEntity<?> evalMutualInfo(@PathVariable("userSeq") int userSeq) {
-        if (myPageService.evalMutualInfo(userSeq)) {
-            return new ResponseEntity<UserEvalDto>("SUCCESS", HttpStatus.OK);
-        } else {
+        UserResponseEvalDto userResponseEvalDto = myPageService.evalMutualInfo(userSeq);
+
+        if (userResponseEvalDto == null) {
             return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<UserResponseEvalDto>(userResponseEvalDto, HttpStatus.OK);
         }
     }
 

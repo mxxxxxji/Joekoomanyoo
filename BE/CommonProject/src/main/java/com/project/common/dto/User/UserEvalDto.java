@@ -1,6 +1,5 @@
 package com.project.common.dto.User;
 
-import com.project.common.entity.User.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

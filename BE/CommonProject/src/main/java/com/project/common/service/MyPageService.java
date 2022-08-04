@@ -7,6 +7,7 @@ import com.project.common.dto.My.MyScheduleMapper;
 import com.project.common.dto.User.UserEvalDto;
 import com.project.common.dto.User.UserKeywordDto;
 import com.project.common.dto.User.UserKeywordMapper;
+import com.project.common.dto.User.UserResponseEvalDto;
 import com.project.common.entity.My.MyDailyMemoEntity;
 import com.project.common.entity.My.MyScheduleEntity;
 import com.project.common.entity.User.UserEntity;
@@ -220,6 +221,35 @@ public class MyPageService {
             userEntity.setEvalUpdatedAt(time);
 
             return true;
+        }
+    }
+
+    public UserResponseEvalDto evalMutualInfo(int userSeq) {
+        UserEntity userEntity = userEvalRepository.findByUserSeq(userSeq);
+
+        // 만약 사용자가 없다면
+        if(userEntity == null){
+            return null;
+        }else{
+            UserResponseEvalDto userResponseEvalDto = new UserResponseEvalDto();
+//            userResponseEvalDto.setUserSeq(userEntity.getUserSeq());
+
+
+            // DB에 있는 점수들 가져와서 계산해서 응답 DTO에 저장하기
+            int cnt = userEntity.getEvalCnt();
+//            int list1 = userEntity.getEvalList1() * 100 / cnt;
+//            int list2 = userEntity.getEvalList2() * 100 / cnt;
+//            int list3 = userEntity.getEvalList3() * 100 / cnt;
+//            int list4 = userEntity.getEvalList4() * 100 / cnt;
+//            int list5 = userEntity.getEvalList5() * 100 / cnt;
+
+            return userResponseEvalDto.builder().userSeq(userEntity.getUserSeq())
+                    .evalCnt(cnt)
+                    .evalList1(userEntity.getEvalList1() * 100 / cnt)
+                    .evalList2(userEntity.getEvalList2() * 100 / cnt)
+                    .evalList3(userEntity.getEvalList3() * 100 / cnt)
+                    .evalList4(userEntity.getEvalList4() * 100 / cnt)
+                    .evalList5(userEntity.getEvalList5() * 100 / cnt).build();
         }
     }
 }
