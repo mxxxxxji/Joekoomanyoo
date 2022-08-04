@@ -174,12 +174,8 @@
     <fragment
         android:id="@+id/heritageInfoFragment"
         android:name="com.ssafy.heritage.view.heritage.HeritageInfoFragment"
-<<<<<<< HEAD
-        android:label="HeritageInfoFragment">
-
-=======
         android:label="HeritageInfoFragment" >
->>>>>>> feature/FE/Daily
+
     </fragment>
     <fragment
         android:id="@+id/heritageReviewFragment"
