@@ -1,9 +1,5 @@
 package com.project.common.dto;
 
-import java.util.Date;
-
-import com.project.common.entity.GroupMemberEntity;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +11,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class GroupJoinRequestDto {
-
 	private long userSeq;
 	private String memberAppeal;
 
@@ -25,7 +20,4 @@ public class GroupJoinRequestDto {
 		this.userSeq = userSeq;
 		this.memberAppeal = memberAppeal;
 	}
-
-	
-
 }

@@ -2,21 +2,14 @@ package com.project.common.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -56,8 +49,6 @@ public class GroupEntity {
     
     @Column(name="group_pwd")
     private String password;
-
- //   private int memberCount = 0;
     
     @Column(name="group_total_count")
     private int maxCount;
@@ -86,20 +77,19 @@ public class GroupEntity {
     @Column(name="group_status")
    	private char status;
 
- // 모임 설정 정보 //
-//   	private boolean recruiting;
-//   	private boolean published;
-//   	private boolean closed;
-//    private LocalDateTime publishedTime;
-//    private LocalDateTime recruitUpdatedTime;
-//    private LocalDateTime closedTime;
-
+    // 모임 설정 정보 //
     @Column(name="group_created_at")
     private LocalDateTime createdTime;
     @Column(name="group_updated_at")
     private LocalDateTime updatedTime;
-  
-//    
+    
+//	private boolean recruiting;
+//	private boolean published;
+//	private boolean closed;
+//private LocalDateTime publishedTime;
+//private LocalDateTime recruitUpdatedTime;
+//private LocalDateTime closedTime; 
+    
 //	@ManyToOne(fetch = FetchType.LAZY)
 //	@JoinColumn(name="user_seq")
 //	private UserEntity user;
@@ -109,24 +99,14 @@ public class GroupEntity {
     @Builder.Default
     private List<GroupMemberEntity> members = new ArrayList<>();
     
-    
-    
-    
-    
     public void addGroupMember(GroupMemberEntity groupMember) {
-    //	memberCount++;
     	members.add(groupMember);
     	groupMember.setGroup(this);
     }
-    
 
     public void removeGroupMember(long	userSeq) {
-     //   memberCount--;
         members.removeIf(groupMember ->
                 groupMember.getUserSeq()==userSeq);
     }
     
-
-    
-
 }

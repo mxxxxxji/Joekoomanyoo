@@ -39,7 +39,7 @@ public class GroupMemberController {
     	return new ResponseEntity<>(groupMemberService.getMemberList(groupSeq),HttpStatus.OK);
     }
     
-	  //참가 신청
+	//참가 신청
     @ApiOperation(value = "그륩 참가 신청, 참가 정보(GroupDto) 반환")
 	@PostMapping("/join")
 	public ResponseEntity<GroupJoinRequestDto> joinGroup(@RequestBody GroupJoinRequestDto groupJoinRequestDto, @PathVariable long groupSeq){
@@ -47,7 +47,6 @@ public class GroupMemberController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 		
-	
 	 //탈퇴
 	@ApiOperation(value = "그륩 탈퇴, 참가 정보(GroupDto) 반환")
 	@DeleteMapping("/leave")

@@ -9,7 +9,7 @@ import javax.persistence.*;
 import lombok.*;
 
 @Entity
-@Getter @Setter @EqualsAndHashCode(of = "seq")
+@Getter @Setter 
 @Builder @AllArgsConstructor @NoArgsConstructor
 @Table(name="tb_group_member")
 public class GroupMemberEntity {
@@ -17,7 +17,6 @@ public class GroupMemberEntity {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_seq")
 	private long memberSeq;
-	
 	
 	@Column(name = "member_status")
 	private int memberStatus;
@@ -44,8 +43,6 @@ public class GroupMemberEntity {
     @Column(name = "user_seq")
     private long userSeq;
 	
-
-
 	
 //	// 생성 메서드 //
 //    public GroupMemberEntity createGroupMember(GroupEntity group,UserEntity user) {

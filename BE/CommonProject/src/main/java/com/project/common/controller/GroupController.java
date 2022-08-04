@@ -2,6 +2,7 @@ package com.project.common.controller;
 
 
 import com.project.common.dto.GroupDto;
+import com.project.common.dto.GroupMyListDto;
 import com.project.common.service.GroupService;
 
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +27,7 @@ public class GroupController {
     }
     
     //모임 전체 목록 조회
-    @ApiOperation(value = "모임 전체 목록 조회, 모임 정보(GroupDto) 반환")
+    @ApiOperation(value = "모임 전체 목록 조회, 모임 정보(List<GroupDto>) 반환")
     @GetMapping("/list")
     public ResponseEntity<List<GroupDto>> getGroupList() throws Exception{
     	return new ResponseEntity<>(groupService.getGroupList(),HttpStatus.OK);
@@ -54,17 +55,13 @@ public class GroupController {
     	return new ResponseEntity<>(groupService.updateGroup(groupSeq,groupDto),HttpStatus.OK);
     }
     
-//    //내 모임 목록 조회
-//    @ApiOperation(value = "내 모임 목록 조회, 모임 정보(GroupDto) 반환")
-//    @GetMapping("/mylist/user/{userSeq}")
-//    public ResponseEntity<List<GroupDto>> getMyGroupList(@PathVariable("userSeq") String userSeq) throws Exception{
-//    	return new ResponseEntity<>(groupService.getMyGroupList(userSeq),HttpStatus.OK);
-//    }
+    //내 모임 목록 조회
+    @ApiOperation(value = "내 모임 목록 조회, 모임 정보(List<GroupMyListDto>) 반환")
+    @GetMapping("/mylist/user/{userSeq}")
+    public ResponseEntity<List<GroupMyListDto>> getMyGroupList(@PathVariable("userSeq") Long userSeq) throws Exception{
+    	return new ResponseEntity<>(groupService.getMyGroupList(userSeq),HttpStatus.OK);
+    }
     
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    //모임 기본 정보 수정
-//    
 
     
 //    //모임 시작
@@ -92,7 +89,5 @@ public class GroupController {
 //    }
 //    
 //    
-    
-    /////////////////////////////////////////////////////////////////////////////////////////////////
     
 }

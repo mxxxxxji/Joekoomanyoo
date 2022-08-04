@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.project.common.entity.GroupEntity;
 import com.project.common.entity.GroupMemberEntity;
-import com.project.common.entity.UserEntity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -56,9 +55,5 @@ public class GroupMemberDto {
                 .group(group).build();
 
     }
-
-
-
-	
 
 }
