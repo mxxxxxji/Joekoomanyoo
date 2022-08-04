@@ -17,63 +17,68 @@ import com.ssafy.heritage.databinding.FragmentGroupDetailBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
 
 private const val TAG = " GroupDetailFragment___"
-class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>(R.layout.fragment_group_detail),
+
+class GroupDetailFragment :
+    BaseFragment<FragmentGroupDetailBinding>(R.layout.fragment_group_detail),
     OnItemClickListener {
 
 
     private val groupViewModel by activityViewModels<GroupViewModel>()
-    private val user = User(0,"ssafy@naver.com", "잠만보", "1", "970317", "N", 'W', "","","","",'N')
-    private lateinit var memberAdapter:MemberAdapter
-    private lateinit var applicantAdapter:MemberAdapter
+    private val user =
+        User(0, "ssafy@naver.com", "블랙맘바", "1", "970317", "N", 'W', "", "", "", "", 'N')
+    private lateinit var memberAdapter: MemberAdapter
+    private lateinit var applicantAdapter: MemberAdapter
     override fun init() {
 
         initAdapter()
         initObserver()
 
     }
-    private fun initAdapter(){
+
+    private fun initAdapter() {
         memberAdapter = MemberAdapter(this)
-        applicantAdapter= MemberAdapter(this)
+        applicantAdapter = MemberAdapter(this)
         binding.recyclerviewMembers.adapter = memberAdapter
-        binding.recyclerviewApplicant.adapter =applicantAdapter
+        binding.recyclerviewApplicant.adapter = applicantAdapter
     }
+
     private fun initObserver() = with(binding) {
-        groupViewModel.groupMemberList.observe(viewLifecycleOwner){
+        groupViewModel.groupMemberList.observe(viewLifecycleOwner) {
             Log.d(TAG, "groupMemberList")
             Log.d(TAG, it.toString())
             memberAdapter.submitList(it)
             applicantAdapter.submitList(it)
         }
-        groupViewModel.insertGroupInfo.observe(viewLifecycleOwner) {
-            Log.d(TAG, "insertGroupInfo")
-            groupDetailInfo = it
-        }
-        groupViewModel.detailInfo.observe(viewLifecycleOwner){
+//        groupViewModel.insertGroupInfo.observe(viewLifecycleOwner) {
+//            Log.d(TAG, "insertGroupInfo")
+//            groupDetailInfo = it
+//        }
+        groupViewModel.detailInfo.observe(viewLifecycleOwner) {
             Log.d(TAG, "detailInfo")
             groupDetailInfo = it
             Log.d(TAG, it.master)
             Log.d(TAG, it.name)
             // 현재유저가 방장이면
-            if(it.master == user.userNickname){
+            if (it.master == user.userNickname) {
 
                 Log.d(TAG, "USER IS GROUPMAKER")
                 btnSubscription.visibility = View.GONE
                 btnCancellation.visibility = View.GONE
                 btnDrop.visibility = View.GONE
 
-                if(it.status!='R'){
+                if (it.status != 'R') {
                     Log.d(TAG, "GROUP IS NOT RECRUTING")
                     headerApplicant.visibility = View.GONE
                     recyclerviewApplicant.visibility = View.GONE
                 }
 
 
-            }else{
+            } else {
                 // 설정, 사진 변경버튼 제거
                 Log.d(TAG, "USER IS NOT GROUPMAKER")
                 Log.d(TAG, it.toString())
                 btnSetting.visibility = View.GONE
-                btnChangeImage.visibility =View.GONE
+                btnChangeImage.visibility = View.GONE
             }
 
             // 현재유저가 방장이면
