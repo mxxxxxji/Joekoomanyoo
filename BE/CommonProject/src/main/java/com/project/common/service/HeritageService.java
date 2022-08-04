@@ -1,10 +1,13 @@
 package com.project.common.service;
 
-import com.project.common.dto.*;
-import com.project.common.entity.HeritageEntity;
-import com.project.common.entity.HeritageReviewEntity;
-import com.project.common.entity.HeritageScrapEntity;
-import com.project.common.repository.*;
+import com.project.common.dto.Heritage.*;
+import com.project.common.entity.Heritage.HeritageEntity;
+import com.project.common.entity.Heritage.HeritageReviewEntity;
+import com.project.common.entity.Heritage.HeritageScrapEntity;
+import com.project.common.repository.Heritage.HeritageRepository;
+import com.project.common.repository.Heritage.HeritageReviewRepository;
+import com.project.common.repository.Heritage.HeritageScrapRepository;
+import com.project.common.repository.Heritage.HeritageScrapRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

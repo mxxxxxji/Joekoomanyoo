@@ -1,7 +1,6 @@
 package com.project.common.controller;
 
-import com.project.common.dto.UserDto;
-import com.project.common.dto.UserModifyDto;
+import com.project.common.dto.User.UserModifyDto;
 import com.project.common.service.UserModifyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

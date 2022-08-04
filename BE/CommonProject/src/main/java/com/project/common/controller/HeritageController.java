@@ -1,8 +1,8 @@
 package com.project.common.controller;
 
-import com.project.common.dto.HeritageDto;
-import com.project.common.dto.HeritageReivewDto;
-import com.project.common.dto.HeritageScrapDto;
+import com.project.common.dto.Heritage.HeritageDto;
+import com.project.common.dto.Heritage.HeritageReivewDto;
+import com.project.common.dto.Heritage.HeritageScrapDto;
 import com.project.common.service.HeritageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
