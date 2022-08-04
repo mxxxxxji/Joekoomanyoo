@@ -1,10 +1,7 @@
 package com.ssafy.heritage.data.repository
 
 import android.content.Context
-import com.ssafy.heritage.data.dto.Heritage
-import com.ssafy.heritage.data.dto.Member
-import com.ssafy.heritage.data.dto.User
-import com.ssafy.heritage.data.dto.UserModify
+import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
@@ -59,6 +56,12 @@ class Repository constructor(context: Context) {
 
     suspend fun selectAllHeritageReviews(): Response<List<HeritageReviewListResponse>> =
         heritageApi.selectAllHeritageReviews()
+
+    suspend fun insertHeritageScrap(scrap: HeritageScrap): Response<String> =
+        heritageApi.insertHeritageScrap(scrap)
+
+    suspend fun deleteHeritageScrap(userSeq: Int, heritageSeq: Int): Response<String> =
+        heritageApi.deleteHeritageScrap(userSeq, heritageSeq)
 
 
     companion object {
