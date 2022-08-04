@@ -87,4 +87,19 @@ public class MyPageService {
             return MyDailyMemoMapper.MAPPER.toDto(myDailyMemoEntity);
         }
     }
+
+    public boolean modifyDailyMemo(MyDailyMemoDto myDailyMemoDto) {
+        MyDailyMemoEntity myDailyMemoEntity =myDailyMemoRepositoryCustom.findByUserSeqAndMyDailyMemoDate(myDailyMemoDto.getUserSeq(), myDailyMemoDto.getMyDailyMemoDate());
+        // 메모가 없으면
+        if(myDailyMemoEntity == null){
+            return false;
+        }else {
+            // 메모 내용 수정
+            myDailyMemoEntity.setMyDailyMemo(myDailyMemoDto.getMyDailyMemo());
+            myDailyMemoEntity.setMyDailyMemoUpdatedAt(LocalDateTime.now());
+
+            myDailyMemoRepository.save(myDailyMemoEntity);
+            return true;
+        }
+    }
 }

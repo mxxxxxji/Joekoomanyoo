@@ -130,6 +130,23 @@ public class MyPageController {
     }
 
     /**
+     * 데일리 메모 수정하기
+     *
+     * @param myDailyMemoDto
+     * @return String
+     */
+
+    @ApiOperation(value = "데일리 메모 수정하기", response = String.class)
+    @PutMapping("/memo")
+    public ResponseEntity<String> modifyDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
+        if(myPageService.modifyDailyMemo(myDailyMemoDto)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * 데일리 메모 불러오기
      *
      * @param myDailyMemoDto
