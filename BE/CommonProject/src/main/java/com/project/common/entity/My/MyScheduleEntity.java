@@ -24,8 +24,8 @@ public class MyScheduleEntity {
     private int myScheduleTime;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String myScheduleContent;
-    private LocalDateTime myScheduleRegistedAt;
-    private LocalDateTime myScheduleUpdatedAt;
+    private String myScheduleRegistedAt;
+    private String myScheduleUpdatedAt;
     @Column(nullable = false)
     private int userSeq;
 }

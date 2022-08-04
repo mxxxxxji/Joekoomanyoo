@@ -23,9 +23,9 @@ public class MyDailyMemoEntity {
     @Column(nullable = false)
     private int myDailyMemoDate;
 
-    private LocalDateTime myDailyMemoRegistedAt;
+    private String myDailyMemoRegistedAt;
 
-    private LocalDateTime myDailyMemoUpdatedAt;
+    private String myDailyMemoUpdatedAt;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String myDailyMemo;
     @Column(nullable = false)

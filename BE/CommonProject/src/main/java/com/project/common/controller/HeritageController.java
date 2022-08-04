@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Api("HeritageController")
@@ -24,6 +25,9 @@ public class HeritageController {
     private static final String FAIL = "fail";
     private final HeritageService heritageService;
 
+    // 시간설정
+    private static LocalDateTime localDateTime = LocalDateTime.now();
+    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     /**
      * 문화 유산 정보 불러오기
      * @param
@@ -46,7 +50,7 @@ public class HeritageController {
     @PostMapping("/review")
     public ResponseEntity<String> createReview(@ApiParam(value = "회원 번호, 문화 유산 번호", required = true) @RequestBody HeritageReivewDto heritageReivewDto){
         heritageReivewDto.setHeritageReviewSeq(0);
-        heritageReivewDto.setHeritageReviewRegistedAt(LocalDateTime.now());
+        heritageReivewDto.setHeritageReviewRegistedAt(time);
 
         // 성공적으로 입력된다면
         if(heritageService.createReview(heritageReivewDto)){
@@ -83,7 +87,7 @@ public class HeritageController {
     public ResponseEntity<String> createScrap(@RequestBody HeritageScrapDto heritageScrapDto){
         // 초기값 입력
         heritageScrapDto.setHeritageScrapSeq(0);
-        heritageScrapDto.setHeritageScrapRegistedAt(LocalDateTime.now());
+        heritageScrapDto.setHeritageScrapRegistedAt(time);
         // 성공적으로 입력 되었으면
         if(heritageService.createScrap(heritageScrapDto)){
             return new ResponseEntity<String>(SUCCESS,HttpStatus.OK);

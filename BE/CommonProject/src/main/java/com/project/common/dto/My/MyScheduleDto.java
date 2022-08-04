@@ -16,7 +16,7 @@ public class MyScheduleDto {
     private int myScheduleDate;
     private int myScheduleTime;
     private String myScheduleContent;
-    private LocalDateTime myScheduleRegistedAt;
-    private LocalDateTime myScheduleUpdatedAt;
+    private String myScheduleRegistedAt;
+    private String myScheduleUpdatedAt;
     private int userSeq;
 }

@@ -21,8 +21,8 @@ public class UserDto {
     private String socialLoginType;
     private String profileImgUrl;
     private String fcmToken;
-    private LocalDateTime userRegistedAt;
-    private LocalDateTime userUpdatedAt;
+    private String userRegistedAt;
+    private String userUpdatedAt;
     private char isDeleted;
     private int evalCnt;
     private int evalList1;
@@ -30,6 +30,6 @@ public class UserDto {
     private int evalList3;
     private int evalList4;
     private int evalList5;
-    private LocalDateTime evalUpdatedAt;
+    private String evalUpdatedAt;
 
 }

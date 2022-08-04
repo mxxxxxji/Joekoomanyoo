@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Map;
 
@@ -34,6 +35,9 @@ public class UserSocialController {
     private final UserService userService;
 
     private final JwtTokenProvider jwtTokenProvider;
+    // 시간설정
+    private static LocalDateTime localDateTime = LocalDateTime.now();
+    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
 
     /**
@@ -91,14 +95,14 @@ public class UserSocialController {
                 .userBirth(userSignDto.getUserBirth())
                 .userNickname(userSignDto.getUserNickname())
                 .userGender(userSignDto.getUserGender())
-                .userRegistedAt(LocalDateTime.now())
-                .userUpdatedAt(LocalDateTime.now())
+                .userRegistedAt(time)
+                .userUpdatedAt(time)
                 .socialLoginType("social")
                 .fcmToken("")
                 .profileImgUrl("")
                 .isDeleted('N')
                 .roles(Collections.singletonList("ROLE_USER"))
-                .evalUpdatedAt(LocalDateTime.now())
+                .evalUpdatedAt(time)
                 .build());
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 

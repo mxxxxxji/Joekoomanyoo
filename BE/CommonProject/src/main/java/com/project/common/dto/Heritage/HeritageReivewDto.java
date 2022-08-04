@@ -16,5 +16,5 @@ public class HeritageReivewDto {
     private int userSeq;
     private int heritageSeq;
     private String heritageReviewText;
-    private LocalDateTime heritageReviewRegistedAt;
+    private String heritageReviewRegistedAt;
 }

@@ -25,7 +25,7 @@ public class HeritageReviewEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String heritageReviewText;
     @Column(nullable = false)
-    private LocalDateTime heritageReviewRegistedAt;
+    private String heritageReviewRegistedAt;
 
 
 }

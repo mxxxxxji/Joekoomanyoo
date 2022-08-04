@@ -25,5 +25,5 @@ public class HeritageScrapEntity {
     @Column(nullable = false)
     private int heritageSeq;
     @Column(nullable = false)
-    private LocalDateTime heritageScrapRegistedAt;
+    private String heritageScrapRegistedAt;
 }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,11 @@ public class MyPageService {
 
     private final MyScheduleRepositoryCustom myScheduleRepositoryCustom;
 
+    // 시간설정
+    private static LocalDateTime localDateTime = LocalDateTime.now();
+    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+
     public boolean createKeyword(UserKeywordDto userKeywordDto) {
         UserKeywordEntity userKeywordEntity = UserKeywordMapper.MAPPER.toEntity(userKeywordDto);
 
@@ -43,7 +49,7 @@ public class MyPageService {
             return false;
         }else{
             // 현재 날짜 , 인덱스 주기
-            userKeywordEntity.setMyKeywordRegistedAt(LocalDateTime.now());
+            userKeywordEntity.setMyKeywordRegistedAt(time);
             userKeywordEntity.setMyKeywordSeq(0);
             userKeywordRepository.save(userKeywordEntity);
             return true;
@@ -76,8 +82,8 @@ public class MyPageService {
         if(myDailyMemoRepositoryCustom.findByUserSeqAndMyDailyMemoDate(myDailyMemoDto.getUserSeq(), myDailyMemoDto.getMyDailyMemoDate()) != null){
             return false;
         }else {
-            myDailyMemoDto.setMyDailyMemoRegistedAt(LocalDateTime.now());
-            myDailyMemoDto.setMyDailyMemoUpdatedAt(LocalDateTime.now());
+            myDailyMemoDto.setMyDailyMemoRegistedAt(time);
+            myDailyMemoDto.setMyDailyMemoUpdatedAt(time);
 
             MyDailyMemoEntity myDailyMemoEntity = MyDailyMemoMapper.MAPPER.toEntity(myDailyMemoDto);
             myDailyMemoRepository.save(myDailyMemoEntity);
@@ -103,7 +109,7 @@ public class MyPageService {
         }else {
             // 메모 내용 수정
             myDailyMemoEntity.setMyDailyMemo(myDailyMemoDto.getMyDailyMemo());
-            myDailyMemoEntity.setMyDailyMemoUpdatedAt(LocalDateTime.now());
+            myDailyMemoEntity.setMyDailyMemoUpdatedAt(time);
 
             myDailyMemoRepository.save(myDailyMemoEntity);
             return true;
@@ -127,8 +133,8 @@ public class MyPageService {
         }else {
             MyScheduleEntity myScheduleEntity = MyScheduleMapper.MAPPER.toEntity(myScheduleDto);
             // 시간 등록
-            myScheduleEntity.setMyScheduleRegistedAt(LocalDateTime.now());
-            myScheduleEntity.setMyScheduleUpdatedAt(LocalDateTime.now());
+            myScheduleEntity.setMyScheduleRegistedAt(time);
+            myScheduleEntity.setMyScheduleUpdatedAt(time);
 
             myScheduleRepository.save(myScheduleEntity);
             return true;
@@ -164,7 +170,7 @@ public class MyPageService {
             // 일정 내용 설정
             myScheduleEntity.setMyScheduleContent(myScheduleDto.getMyScheduleContent());
             // 업데이트 시간 설정
-            myScheduleEntity.setMyScheduleUpdatedAt(LocalDateTime.now());
+            myScheduleEntity.setMyScheduleUpdatedAt(time);
             // 날짜는 변경 불가능
             
             // 저장

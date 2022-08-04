@@ -15,5 +15,5 @@ public class HeritageScrapDto {
     private int heritageScrapSeq;
     private int userSeq;
     private int heritageSeq;
-    private LocalDateTime heritageScrapRegistedAt;
+    private String heritageScrapRegistedAt;
 }

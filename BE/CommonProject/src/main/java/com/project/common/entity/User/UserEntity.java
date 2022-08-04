@@ -62,9 +62,9 @@ public class UserEntity implements UserDetails{
     @Column(length = 50)
     private String fcmToken;
 
-    private LocalDateTime userRegistedAt;
+    private String userRegistedAt;
 
-    private LocalDateTime userUpdatedAt;
+    private String userUpdatedAt;
 
     @Column(length = 1, nullable = false)
     private char isDeleted;
@@ -75,7 +75,7 @@ public class UserEntity implements UserDetails{
     private int evalList3;
     private int evalList4;
     private int evalList5;
-    private LocalDateTime evalUpdatedAt;
+    private String evalUpdatedAt;
 
 
     public void encodePassword(PasswordEncoder passwordEncoder) {

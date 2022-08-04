@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class MyDailyMemoDto {
     private int myDailyMemoSeq;
     private int myDailyMemoDate;
-    private LocalDateTime myDailyMemoRegistedAt;
-    private LocalDateTime myDailyMemoUpdatedAt;
+    private String myDailyMemoRegistedAt;
+    private String myDailyMemoUpdatedAt;
     private String myDailyMemo;
     private int userSeq;
 }

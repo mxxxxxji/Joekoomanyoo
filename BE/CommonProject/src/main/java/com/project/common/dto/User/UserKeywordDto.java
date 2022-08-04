@@ -15,5 +15,5 @@ public class UserKeywordDto {
     private int myKeywordSeq;
     private int userSeq;
     private String myKeywordName;
-    private LocalDateTime myKeywordRegistedAt;
+    private String myKeywordRegistedAt;
 }

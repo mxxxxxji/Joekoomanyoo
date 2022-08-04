@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Map;
 
@@ -35,6 +36,10 @@ public class UserController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    // 시간설정
+    private static LocalDateTime localDateTime = LocalDateTime.now();
+    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     /**
      * 일반 회원 가입
@@ -58,13 +63,13 @@ public class UserController {
                 .userBirth(userSignDto.getUserBirth())
                 .userNickname(userSignDto.getUserNickname())
                 .userGender(userSignDto.getUserGender())
-                .userRegistedAt(LocalDateTime.now())
-                .userUpdatedAt(LocalDateTime.now())
+                .userRegistedAt(time)
+                .userUpdatedAt(time)
                 .socialLoginType("none")
                 .fcmToken("")
                 .profileImgUrl("")
                 .isDeleted('N')
-                .evalUpdatedAt(LocalDateTime.now())
+                .evalUpdatedAt(time)
                 .roles(Collections.singletonList("ROLE_USER"))
                 .build());
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

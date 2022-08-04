@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @Service
@@ -21,6 +22,11 @@ public class UserModifyService{
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    // 시간설정
+    private static LocalDateTime localDateTime = LocalDateTime.now();
+    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
 
     // 사용자 정보 불러오기
     @Transactional
@@ -54,7 +60,7 @@ public class UserModifyService{
                 userEntity.setUserBirth(userModifyDto.getUserBirth());
                 userEntity.setUserGender(userModifyDto.getUserGender());
                 userEntity.setProfileImgUrl(userModifyDto.getProfileImgUrl());
-                userEntity.setUserUpdatedAt(LocalDateTime.now());
+                userEntity.setUserUpdatedAt(time);
 
                 // 비밀번호가 바뀐경우
                 // 비밀번호가 안바뀐 경우에는 그냥 통과

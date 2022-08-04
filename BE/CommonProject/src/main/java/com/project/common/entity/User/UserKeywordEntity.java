@@ -27,5 +27,5 @@ public class UserKeywordEntity {
     @Column(nullable = false)
     private int userSeq;
 
-    private LocalDateTime myKeywordRegistedAt;
+    private String myKeywordRegistedAt;
 }

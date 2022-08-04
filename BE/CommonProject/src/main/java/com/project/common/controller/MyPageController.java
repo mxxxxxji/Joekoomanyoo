@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -26,6 +28,10 @@ public class MyPageController {
     private final HeritageService heritageService;
     private final MyPageService myPageService;
 
+    // 시간설정
+    private static LocalDateTime localDateTime = LocalDateTime.now();
+    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    
     /**
      * 내 문화 유산 스크랩 목록 불러오기
      *
@@ -249,7 +255,9 @@ public class MyPageController {
         if(myPageService.deleteSchedule(myScheduleSeq)){
             return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
         }else{
-            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("FAIL",HttpStatus
+
+                    .BAD_REQUEST);
         }
     }
 }

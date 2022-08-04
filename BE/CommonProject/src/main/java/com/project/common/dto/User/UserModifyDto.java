@@ -20,5 +20,5 @@ public class UserModifyDto {
     private String userBirth;
     private char userGender;
     private String profileImgUrl;
-    private LocalDateTime userUpdatedAt;
+    private String userUpdatedAt;
 }
