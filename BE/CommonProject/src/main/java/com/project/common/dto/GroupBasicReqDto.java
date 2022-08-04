@@ -6,12 +6,12 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-public class GroupLeaveRequestDto {
+public class GroupBasicReqDto {
 
 	private long userSeq;
 	private long groupSeq;	
 	@Builder
-	public GroupLeaveRequestDto(long userSeq, long groupSeq) {
+	public GroupBasicReqDto(long userSeq, long groupSeq) {
 		super();
 		this.userSeq = userSeq;
 		this.groupSeq = groupSeq;

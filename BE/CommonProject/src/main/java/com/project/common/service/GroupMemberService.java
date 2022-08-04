@@ -6,9 +6,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.common.dto.GroupJoinRequestDto;
-import com.project.common.dto.GroupLeaveRequestDto;
+import com.project.common.dto.GroupJoinReqDto;
+import com.project.common.dto.GroupMapper;
+import com.project.common.dto.GroupMemberDto;
+import com.project.common.dto.GroupBasicReqDto;
+import com.project.common.dto.GroupDto;
 import com.project.common.dto.GroupMemberListDto;
+import com.project.common.dto.GroupMemberMapper;
+import com.project.common.dto.GroupSettingDto;
 import com.project.common.entity.GroupEntity;
 import com.project.common.entity.GroupMemberEntity;
 import com.project.common.repository.GroupMemberRepository;
@@ -52,7 +57,7 @@ public class GroupMemberService{
 	
 	//그륩 참가
 	@Transactional
-	public void joinGroup(long groupSeq, GroupJoinRequestDto groupJoinRequestDto) {
+	public void joinGroup(long groupSeq, GroupJoinReqDto groupJoinRequestDto) {
 		GroupEntity group = groupService.findGroup(groupSeq);
 		group.addGroupMember(GroupMemberEntity.builder().memberAppeal(groupJoinRequestDto.getMemberAppeal()).userSeq(groupJoinRequestDto.getUserSeq()).build());
 		groupRepository.save(group);
@@ -60,7 +65,7 @@ public class GroupMemberService{
 	
 	//그륩 탈퇴
 	@Transactional
-	public void leaveGroup( GroupLeaveRequestDto groupLeave) {
+	public void leaveGroup( GroupBasicReqDto groupLeave) {
 		List<GroupMemberEntity> group = findGroup(groupLeave.getGroupSeq());
 		GroupEntity groupE = groupService.findGroup(groupLeave.getGroupSeq());
 		for(GroupMemberEntity entity : group) {
@@ -69,4 +74,14 @@ public class GroupMemberService{
 		}
 	}
 	
+	//모임 수락
+	public void approveMember(Long groupSeq,GroupBasicReqDto groupBasicReqDto) {
+		for(GroupMemberEntity entity: findGroup(groupSeq)) {
+			if(entity.getUserSeq()==groupBasicReqDto.getUserSeq()) {
+				entity.setMemberStatus(1);
+				groupMemberRepository.save(entity);
+				break;
+			}
+		}
+	}
 }
