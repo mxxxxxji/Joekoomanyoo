@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,5 +30,16 @@ public class MyPageService {
             userKeywordRepository.save(userKeywordEntity);
             return true;
         }
+    }
+
+    public List<UserKeywordDto> listKeyword(int userSeq) {
+        List<UserKeywordDto> listDto = new ArrayList<>();
+
+        List<UserKeywordEntity> list = userKeywordRepository.findAllByUserSeq(userSeq);
+        for(UserKeywordEntity userKeywordEntity : list){
+            listDto.add(UserKeywordMapper.MAPPER.toDto(userKeywordEntity));
+        }
+
+        return listDto;
     }
 }

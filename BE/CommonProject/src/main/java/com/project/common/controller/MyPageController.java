@@ -6,6 +6,7 @@ import com.project.common.service.HeritageService;
 import com.project.common.service.MyPageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +74,24 @@ public class MyPageController {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }else{
             return new ResponseEntity<>(SUCCESS, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 내 키워드 리스트 보여주기
+     *
+     * @param userSeq
+     * @return List
+     */
+
+    @ApiOperation(value = "내 키워드 리스트 보여주기", response = List.class)
+    @GetMapping("/keyword/list/{userSeq}")
+    public ResponseEntity<?> listKeyword(@PathVariable("userSeq") int userSeq) {
+        List<UserKeywordDto> list = myPageService.listKeyword(userSeq);
+        if(list==null){
+            return new ResponseEntity<>(FAIL,HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<>(list,HttpStatus.OK);
         }
     }
 }
