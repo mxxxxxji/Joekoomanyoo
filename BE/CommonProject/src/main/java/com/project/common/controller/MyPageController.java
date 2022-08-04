@@ -164,4 +164,20 @@ public class MyPageController {
         }
     }
 
+    /**
+     * 데일리 메모 삭제하기
+     *
+     * @param myDailyMemoSeq
+     * @return String
+     */
+
+    @ApiOperation(value = "데일리 메모 삭제하기", response = String.class)
+    @DeleteMapping("/memo/{myDailyMemoSeq}")
+    public ResponseEntity<String> deleteDailyMemo(@PathVariable("myDailyMemoSeq") int myDailyMemoSeq) {
+        if(myPageService.deleteDailyMemo(myDailyMemoSeq)) {
+            return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>("FAIL", HttpStatus.OK);
+        }
+    }
 }

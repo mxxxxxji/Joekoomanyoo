@@ -102,4 +102,14 @@ public class MyPageService {
             return true;
         }
     }
+
+    public boolean deleteDailyMemo(int myDailyMemoSeq) {
+        // 만약 메모가 없는 경우
+        if(myDailyMemoRepository.findByMyDailyMemoSeq(myDailyMemoSeq) == null){
+            return false;
+        }else {
+            myDailyMemoRepository.deleteByMyDailyMemoSeq(myDailyMemoSeq);
+            return true;
+        }
+    }
 }
