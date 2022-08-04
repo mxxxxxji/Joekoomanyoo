@@ -1,7 +1,7 @@
 package com.project.common.repository.Heritage;
 
 import com.project.common.entity.Heritage.HeritageScrapEntity;
-import com.project.common.entity.QHeritageScrapEntity;
+import com.project.common.entity.Heritage.QHeritageScrapEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

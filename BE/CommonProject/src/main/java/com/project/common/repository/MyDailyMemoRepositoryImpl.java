@@ -1,7 +1,7 @@
 package com.project.common.repository;
 
-import com.project.common.entity.MyDailyMemoEntity;
-import com.project.common.entity.QMyDailyMemoEntity;
+import com.project.common.entity.My.MyDailyMemoEntity;
+import com.project.common.entity.My.QMyDailyMemoEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

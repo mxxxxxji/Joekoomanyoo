@@ -1,7 +1,8 @@
 package com.project.common.controller;
 
 import com.project.common.dto.Heritage.HeritageScrapDto;
-import com.project.common.dto.MyDailyMemo.MyDailyMemoDto;
+import com.project.common.dto.My.MyDailyMemoDto;
+import com.project.common.dto.My.MyScheduleDto;
 import com.project.common.dto.User.UserKeywordDto;
 import com.project.common.service.HeritageService;
 import com.project.common.service.MyPageService;
@@ -180,4 +181,57 @@ public class MyPageController {
             return new ResponseEntity<String>("FAIL", HttpStatus.OK);
         }
     }
+
+    /**
+     * 내 일정 생성
+     *
+     * @param myScheduleDto
+     * @return String
+     */
+
+    @ApiOperation(value = "내 일정 생성", response = String.class)
+    @PostMapping("/schedule")
+    public ResponseEntity<String> createSchedule(@RequestBody MyScheduleDto myScheduleDto) {
+        if(myPageService.createSchedule(myScheduleDto)){
+            return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    /**
+     * 내 일정 불러오기
+     *
+     * @param myScheduleDto
+     * @return List
+     */
+
+    @ApiOperation(value = "내 일정 생성", response = String.class)
+    @PostMapping("/schedule/list")
+    public ResponseEntity<?> listSchedule(@RequestBody MyScheduleDto myScheduleDto) {
+        List<MyScheduleDto> list = myPageService.listSchedule(myScheduleDto);
+        if(list == null){
+            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<List<MyScheduleDto>>(list,HttpStatus.OK);
+        }
+    }
+
+    /**
+     * 내 일정 수정
+     *
+     * @param myScheduleDto
+     * @return String
+     */
+
+
+    /**
+     * 내 일정 삭제
+     *
+     * @param myScheduleSeq
+     * @return String
+     */
+
+
 }

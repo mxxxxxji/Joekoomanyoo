@@ -1,7 +1,7 @@
-package com.project.common.dto.MyDailyMemo;
+package com.project.common.dto.My;
 
 import com.project.common.dto.StructMapper;
-import com.project.common.entity.MyDailyMemoEntity;
+import com.project.common.entity.My.MyDailyMemoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

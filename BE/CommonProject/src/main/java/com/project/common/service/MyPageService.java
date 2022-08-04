@@ -1,13 +1,18 @@
 package com.project.common.service;
 
-import com.project.common.dto.MyDailyMemo.MyDailyMemoDto;
-import com.project.common.dto.MyDailyMemo.MyDailyMemoMapper;
+import com.project.common.dto.My.MyDailyMemoDto;
+import com.project.common.dto.My.MyDailyMemoMapper;
+import com.project.common.dto.My.MyScheduleDto;
+import com.project.common.dto.My.MyScheduleMapper;
 import com.project.common.dto.User.UserKeywordDto;
 import com.project.common.dto.User.UserKeywordMapper;
-import com.project.common.entity.MyDailyMemoEntity;
+import com.project.common.entity.My.MyDailyMemoEntity;
+import com.project.common.entity.My.MyScheduleEntity;
 import com.project.common.entity.User.UserKeywordEntity;
 import com.project.common.repository.MyDailyMemoRepository;
 import com.project.common.repository.MyDailyMemoRepositoryCustom;
+import com.project.common.repository.MyScheduleRepository;
+import com.project.common.repository.MyScheduleRepositoryCustom;
 import com.project.common.repository.User.UserKeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +31,9 @@ public class MyPageService {
     private final MyDailyMemoRepositoryCustom myDailyMemoRepositoryCustom;
 
     private final MyDailyMemoRepository myDailyMemoRepository;
+    private final MyScheduleRepository myScheduleRepository;
 
+    private final MyScheduleRepositoryCustom myScheduleRepositoryCustom;
 
     public boolean createKeyword(UserKeywordDto userKeywordDto) {
         UserKeywordEntity userKeywordEntity = UserKeywordMapper.MAPPER.toEntity(userKeywordDto);
@@ -110,6 +117,35 @@ public class MyPageService {
         }else {
             myDailyMemoRepository.deleteByMyDailyMemoSeq(myDailyMemoSeq);
             return true;
+        }
+    }
+
+    public boolean createSchedule(MyScheduleDto myScheduleDto) {
+        // 없다면 false
+        if(myScheduleDto == null){
+            return false;
+        }else {
+            MyScheduleEntity myScheduleEntity = MyScheduleMapper.MAPPER.toEntity(myScheduleDto);
+            // 시간 등록
+            myScheduleEntity.setMyScheduleRegistedAt(LocalDateTime.now());
+            myScheduleEntity.setMyScheduleUpdatedAt(LocalDateTime.now());
+
+            myScheduleRepository.save(myScheduleEntity);
+            return true;
+        }
+    }
+
+    public List<MyScheduleDto> listSchedule(MyScheduleDto myScheduleDto) {
+        List<MyScheduleEntity> list = myScheduleRepositoryCustom.findByUserSeqAndMyScheduleDate(myScheduleDto.getUserSeq(), myScheduleDto.getMyScheduleDate());
+        // 리스트에 아무것도 없는 경우 ( 일정이 없다 )
+        if(list.size()==0){
+            return null;
+        }else {
+            List<MyScheduleDto> listDto = new ArrayList<>();
+            for (MyScheduleEntity myScheduleEntity : list) {
+                listDto.add(MyScheduleMapper.MAPPER.toDto(myScheduleEntity));
+            }
+            return listDto;
         }
     }
 }

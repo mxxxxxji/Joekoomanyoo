@@ -1,4 +1,4 @@
-package com.project.common.dto.MyDailyMemo;
+package com.project.common.dto.My;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
