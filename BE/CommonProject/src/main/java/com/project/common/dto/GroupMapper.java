@@ -20,6 +20,4 @@ public interface GroupMapper extends StructMapper<GroupDto,GroupEntity>{
 	@Override
 	List<GroupDto> toDtoList(List<GroupEntity> entityList);
 	
-	
-	
 }

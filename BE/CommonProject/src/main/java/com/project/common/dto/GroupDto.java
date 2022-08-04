@@ -3,15 +3,6 @@ package com.project.common.dto;
 
 
 import java.time.LocalDateTime;
-import java.util.Date;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
 
 import com.project.common.entity.GroupEntity;
 
@@ -27,8 +18,8 @@ import lombok.ToString;
 @ToString
 public class GroupDto {
 
-	private Long groupSeq;
-    
+	private Long groupSeq;  
+	
 	// 스터디 기본 정보 //
     private String name;
     private String themaImg;
@@ -36,7 +27,6 @@ public class GroupDto {
     private String description;
     private char accessType;
     private String password;
-   // private int memberCount = 0;
     private int maxCount;
    	private String region;
    	private int startDate;
@@ -47,16 +37,15 @@ public class GroupDto {
    	private char active;
    	private char status;
 	
- // 모임 설정 정보 //
-//   	private boolean recruiting;
-//   	private boolean published;
-//   	private boolean closed;
-//    private LocalDateTime publishedTime;
-//    private LocalDateTime recruitUpdatedTime;
-//    private LocalDateTime closedTime;
-
+   	// 모임 설정 정보 //
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
+	//private boolean recruiting;
+	//private boolean published;
+	//private boolean closed;
+	//private LocalDateTime publishedTime;
+	//private LocalDateTime recruitUpdatedTime;
+	//private LocalDateTime closedTime;
 
 	@Builder
 	public GroupDto(Long groupSeq, String name, String themaImg, String master, String description, char accessType,
@@ -71,7 +60,6 @@ public class GroupDto {
 		this.description = description;
 		this.accessType = accessType;
 		this.password = password;
-	//	this.memberCount = memberCount;
 		this.maxCount = maxCount;
 		this.region = region;
 		this.startDate = startDate;
@@ -85,8 +73,6 @@ public class GroupDto {
 		this.updatedTime = updatedTime;
 	}
 
-	
-
     public GroupEntity toEntity(){
         return GroupEntity.builder()
                 .groupSeq(groupSeq)
@@ -96,7 +82,6 @@ public class GroupDto {
                 .description(description)
                 .accessType(accessType)
                 .password(password)
-           //     .memberCount(memberCount)
                 .maxCount(maxCount)
                 .region(region)
                 .startDate(startDate)
@@ -106,14 +91,7 @@ public class GroupDto {
                 .withGlobal(withGlobal)
                 .active(active)
                 .status(status)
-//                .recruiting(recruiting)
-//                .published(published)
-//                .closed(closed)
-//                .publishedTime(publishedTime)
-//                .recruitUpdatedTime(recruitUpdatedTime)
-//                .closedTime(closedTime)
                 .build();
-
     }
 
 
