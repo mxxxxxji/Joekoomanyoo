@@ -27,11 +27,13 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
 
     override fun init() {
         groupViewModel.getGroupList()
+        Log.d(TAG, args.groupInfo.toString())
         groupViewModel.add(args.groupInfo)
+        groupViewModel.selectGroupMembers(args.groupInfo.groupSeq)
         initAdapter()
         initObserver()
         initClickListener()
-        Log.d(TAG, args.groupInfo.groupName)
+        Log.d(TAG, args.groupInfo.name)
 
         // groupViewModel.getGroupDetailInfo(args.groupInfo.groupSeq) //- 서버 API 수정중 : 서버 오류로 데이터 받아오는지 미확인
         // groupViewModel.selectGroupMembers(args.groupInfo.groupSeq) - 서버 API 미작성 : 회원 이미지,이름 나오는지 확인 필요

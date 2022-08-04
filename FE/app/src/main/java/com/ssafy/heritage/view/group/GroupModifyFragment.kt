@@ -1,7 +1,9 @@
 package com.ssafy.heritage.view.group
 
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.heritage.R
@@ -10,6 +12,7 @@ import com.ssafy.heritage.data.dto.GroupAttribute
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupModifyBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import java.time.LocalDateTime
 
 private const val TAG = "GroupModifyFragment___"
 
@@ -30,6 +33,7 @@ class GroupModifyFragment :
     private var groupAccessType:Char = 'N'
     private var groupPwd: String=""
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun init() {
 
         initObserver()
@@ -44,8 +48,7 @@ class GroupModifyFragment :
             if (it != null) {
                 Toast.makeText(context, "모임이 등록되었습니다.", Toast.LENGTH_SHORT)
                     .show() // 추후에 모임세부화면으로 이동하겠냐는 다이얼로그 추가
-                val action =
-                    GroupModifyFragmentDirections.actionGroupModifyFragmentToGroupInfoFragment(it)
+                val action = GroupModifyFragmentDirections.actionGroupModifyFragmentToGroupInfoFragment(it)
                 findNavController().navigate(action)
             } else {
                 Toast.makeText(context, "모임이 등록되지 않았습니다. 서버오류", Toast.LENGTH_SHORT).show()
@@ -53,6 +56,7 @@ class GroupModifyFragment :
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initClickListener() = with(binding) {
 
         // 아이 동반 여부
@@ -106,11 +110,10 @@ class GroupModifyFragment :
                     groupPwd = etGroupPassword.text.toString()
                 }
                 // groupMaker : 현재 유저 번호로 넣어야함
-                groupInfo = GroupListResponse("잠만보", name, content,groupAccessType,groupPwd,'Y', 'R',max,
-                    region,startDate,endDate,age,child,global,0)
+                groupInfo = GroupListResponse('0', 'Y', age,  content, endDate, 0, "잠만보",
+                    max, name, groupPwd, region, startDate, 'R', "",  child, global)
                 groupViewModel.insertGroup(groupInfo)
             }
-            //if ()
         }
 
         btnBack.setOnClickListener{

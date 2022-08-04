@@ -24,7 +24,6 @@ class GroupListFragment :
 
     private lateinit var groupListAdapter: GroupListAdapter
     private val groupViewModel by viewModels<GroupViewModel>()
-    private var groupSeq : Int = 0
 
     override fun init() {
 
@@ -54,9 +53,7 @@ class GroupListFragment :
     }
 
     override fun onItemClick(position: Int) {
-        val action = GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(
-            groupListAdapter.getItem(position)
-        )
+        val action = GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(groupListAdapter.getItem(position))
         findNavController().navigate(action)
     }
 

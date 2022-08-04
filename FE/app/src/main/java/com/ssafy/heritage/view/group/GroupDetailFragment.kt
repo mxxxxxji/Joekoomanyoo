@@ -20,38 +20,48 @@ private const val TAG = " GroupDetailFragment___"
 class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>(R.layout.fragment_group_detail),
     OnItemClickListener {
 
-    private val args by navArgs<GroupDetailFragmentArgs>()
 
     private val groupViewModel by activityViewModels<GroupViewModel>()
     private val user = User(0,"ssafy@naver.com", "잠만보", "1", "970317", "N", 'W', "","","","",'N')
     private lateinit var memberAdapter:MemberAdapter
-
+    private lateinit var applicantAdapter:MemberAdapter
     override fun init() {
-        groupViewModel.selectGroupMembers(args.groupInfo.groupSeq)
+
         initAdapter()
         initObserver()
-        initView()
 
     }
     private fun initAdapter(){
         memberAdapter = MemberAdapter(this)
+        applicantAdapter= MemberAdapter(this)
         binding.recyclerviewMembers.adapter = memberAdapter
+        binding.recyclerviewApplicant.adapter =applicantAdapter
     }
     private fun initObserver() = with(binding) {
         groupViewModel.groupMemberList.observe(viewLifecycleOwner){
+            Log.d(TAG, "groupMemberList")
+            Log.d(TAG, it.toString())
             memberAdapter.submitList(it)
+            applicantAdapter.submitList(it)
+        }
+        groupViewModel.insertGroupInfo.observe(viewLifecycleOwner) {
+            Log.d(TAG, "insertGroupInfo")
+            groupDetailInfo = it
         }
         groupViewModel.detailInfo.observe(viewLifecycleOwner){
-            Log.d(TAG, it.groupMakerNickname)
+            Log.d(TAG, "detailInfo")
+            groupDetailInfo = it
+            Log.d(TAG, it.master)
+            Log.d(TAG, it.name)
             // 현재유저가 방장이면
-            if(it.groupMakerNickname == user.userNickname){
+            if(it.master == user.userNickname){
 
                 Log.d(TAG, "USER IS GROUPMAKER")
                 btnSubscription.visibility = View.GONE
                 btnCancellation.visibility = View.GONE
                 btnDrop.visibility = View.GONE
 
-                if(it.groupStatus!='R'){
+                if(it.status!='R'){
                     Log.d(TAG, "GROUP IS NOT RECRUTING")
                     headerApplicant.visibility = View.GONE
                     recyclerviewApplicant.visibility = View.GONE
@@ -79,11 +89,7 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>(R.layout.fr
         }
     }
 
-    private fun initView() = with(binding){
-
-    }
-
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+
     }
 }

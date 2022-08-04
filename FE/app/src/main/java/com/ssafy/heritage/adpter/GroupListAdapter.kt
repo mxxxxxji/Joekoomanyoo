@@ -102,13 +102,13 @@ class GroupListAdapter(private val listener: OnItemClickListener) :
         fun bind(position: Int) = with(binding) {
             val item = groupList[position]
             groupListResponse = item
-            if (item.groupAccessType == '1') {
+            if (item.accessType == '1') {
                 ivLockOn.visibility = View.GONE
             }
-            if (item.childJoin == 'N') {
+            if (item.withChild == 'N') {
                 tvKidsCheck.visibility = View.GONE
 
-                if (item.globalJoin == 'N') {
+                if (item.withGlobal == 'N') {
                     tvGlobalCheck.visibility = View.GONE
                 }
             }
