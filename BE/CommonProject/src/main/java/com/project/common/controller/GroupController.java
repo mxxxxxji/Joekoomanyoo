@@ -54,9 +54,9 @@ public class GroupController {
     	return new ResponseEntity<>(groupService.updateGroup(groupSeq,groupDto),HttpStatus.OK);
     }
     
-//  //내 모임 목록 조회
+//    //내 모임 목록 조회
 //    @ApiOperation(value = "내 모임 목록 조회, 모임 정보(GroupDto) 반환")
-//    @GetMapping("/list/user/{userSeq}")
+//    @GetMapping("/mylist/user/{userSeq}")
 //    public ResponseEntity<List<GroupDto>> getMyGroupList(@PathVariable("userSeq") String userSeq) throws Exception{
 //    	return new ResponseEntity<>(groupService.getMyGroupList(userSeq),HttpStatus.OK);
 //    }

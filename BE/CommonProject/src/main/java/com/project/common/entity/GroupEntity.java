@@ -14,7 +14,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,11 +24,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Builder @AllArgsConstructor @NoArgsConstructor
 @Entity
-@Getter
+@Getter @Setter
 @ToString
 @Table(name="tb_group")
 public class GroupEntity {
@@ -96,8 +99,14 @@ public class GroupEntity {
     @Column(name="group_updated_at")
     private LocalDateTime updatedTime;
   
+//    
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name="user_seq")
+//	private UserEntity user;
+    
     // 관리자 및 참여 멤버 //
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<GroupMemberEntity> members = new ArrayList<>();
     
     

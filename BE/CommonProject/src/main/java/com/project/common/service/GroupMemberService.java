@@ -66,7 +66,6 @@ public class GroupMemberService{
 		GroupEntity groupE = groupService.findGroup(groupLeave.getGroupSeq());
 		for(GroupMemberEntity entity : group) {
 				groupMemberRepository.deleteByUserSeq(groupLeave.getUserSeq());
-				System.out.println(entity.getUserSeq());
 				groupE.removeGroupMember(groupLeave.getUserSeq());
 		}
 	}
