@@ -6,17 +6,14 @@ import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.ssafy.heritage.ApplicationClass.Companion.sharedPreferencesUtil
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseActivity
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.ActivityHomeBinding
-import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
 import java.security.MessageDigest
@@ -86,6 +83,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             // 바텀 네비게이션이 표시되지 않는 Fragment
 
         }
+
+        // 바텀네비 중복클릭 방지
+        bottomNavigation.setOnItemReselectedListener { }
     }
 
     override fun onBackPressed() {
@@ -101,7 +101,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         ) {
             if (gapTime in 0..2000) {
                 //2초 안에 두 번 뒤로가기 누를 시 앱 종료
-                finishAndRemoveTask()
+                finish()
             } else {
                 backButtonTime = currentTime
                 Toast.makeText(this, "뒤로가기 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
