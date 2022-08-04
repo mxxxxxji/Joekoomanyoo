@@ -18,18 +18,24 @@ object JWTUtils {
             val split = JWTEncoded.split(".").toTypedArray()
             val body = getJson(split[1])
             Log.d(TAG, "decoded: $body")
+
             val userSeq = JSONObject(body)["userSeq"] as Int
             val userId = JSONObject(body)["userId"] as String
+            val userNickname = JSONObject(body)["userNickname"] as String
+            val userBirth = JSONObject(body)["userBirth"] as String
+            val socialLoginType = JSONObject(body)["socialLoginType"] as String
+            val userGender = JSONObject(body)["userGender"] as String
+            val profileImgUrl = JSONObject(body)["profileImgUrl"] as String
 
             val user = User(
                 userSeq = userSeq,
                 userId = userId,
-                userNickname = "",
+                userNickname = userNickname,
                 userPassword = null,
-                userBirth = "",
-                socialLoginType = "",
-                userGender = ' ',
-                profileImgUrl = "",
+                userBirth = userBirth,
+                socialLoginType = socialLoginType,
+                userGender = userGender,
+                profileImgUrl = profileImgUrl,
                 fcmToken = "",
                 userRegisteredAt = "",
                 userUpdatedAt = "",

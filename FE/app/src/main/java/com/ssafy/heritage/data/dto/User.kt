@@ -12,7 +12,7 @@ data class User(
     var userPassword: String?,      // 비밀번호
     var userBirth: String,          // 출생년도 월일
     var socialLoginType: String,    // 로그인타입
-    var userGender: Char,           // 성별(M,F)
+    var userGender: String,           // 성별(M,F)
     var profileImgUrl: String,      // 프로필 사진 링크
     var fcmToken: String,           // fcm 토큰
     var userRegisteredAt: String,   // 가입 시간
