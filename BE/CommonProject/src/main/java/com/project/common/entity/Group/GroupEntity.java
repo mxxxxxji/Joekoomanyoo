@@ -1,4 +1,4 @@
-package com.project.common.entity;
+package com.project.common.entity.Group;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -1,10 +1,11 @@
-package com.project.common.controller;
+package com.project.common.controller.Group;
 
 
-import com.project.common.dto.GroupDto;
-import com.project.common.dto.GroupMyListDto;
-import com.project.common.service.GroupService;
+import com.project.common.dto.Group.GroupDto;
+import com.project.common.dto.Group.GroupMyListDto;
+import com.project.common.service.Group.GroupService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/group")
+@Api(tags = {"모임 관리 API"})
 public class GroupController {
     private final GroupService groupService;
     
@@ -61,33 +63,6 @@ public class GroupController {
     public ResponseEntity<List<GroupMyListDto>> getMyGroupList(@PathVariable("userSeq") Long userSeq) throws Exception{
     	return new ResponseEntity<>(groupService.getMyGroupList(userSeq),HttpStatus.OK);
     }
-    
 
-    
-//    //모임 시작
-//    @PatchMapping("/{groupSeq}/start")
-//    public ResponseEntity<?> startGroup(@PathVariable("groupSeq") Long groupSeq){
-//    	return new ResponseEntity<>(groupService.startGroup(groupSeq),HttpStatus.OK);
-//    }
-//    
-//  //모임 종료
-//    @PatchMapping("/{groupSeq}/finish")
-//    public ResponseEntity<?> finishGroup(@PathVariable("groupSeq") Long groupSeq){
-//    	return new ResponseEntity<>(groupService.finishGroup(groupSeq),HttpStatus.OK);
-//    }
-//    
-//    //모임 수락
-//    @PatchMapping("/{groupSeq}/approve")
-//    public ResponseEntity<?> startGroup(@PathVariable("groupSeq") Long groupSeq){
-//    	return new ResponseEntity<>(groupService.startGroup(groupSeq),HttpStatus.OK);
-//    }
-//    
-//  //모임 거절
-//    @PatchMapping("/{groupSeq}/reject")
-//    public ResponseEntity<?> finishGroup(@PathVariable("groupSeq") Long groupSeq){
-//    	return new ResponseEntity<>(groupService.finishGroup(groupSeq),HttpStatus.OK);
-//    }
-//    
-//    
     
 }

@@ -1,10 +1,10 @@
-package com.project.common.dto;
+package com.project.common.dto.Group;
 
 
 
 import java.time.LocalDateTime;
 
-import com.project.common.entity.GroupEntity;
+import com.project.common.entity.Group.GroupEntity;
 
 import lombok.Builder;
 import lombok.Getter;

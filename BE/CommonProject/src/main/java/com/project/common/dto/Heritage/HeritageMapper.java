@@ -1,7 +1,8 @@
 package com.project.common.dto.Heritage;
 
-import com.project.common.dto.StructMapper;
 import com.project.common.entity.Heritage.HeritageEntity;
+import com.project.common.mapper.StructMapper;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

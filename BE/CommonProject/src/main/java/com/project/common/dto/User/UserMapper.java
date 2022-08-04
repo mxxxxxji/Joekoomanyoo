@@ -1,7 +1,8 @@
 package com.project.common.dto.User;
 
-import com.project.common.dto.StructMapper;
 import com.project.common.entity.User.UserEntity;
+import com.project.common.mapper.StructMapper;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

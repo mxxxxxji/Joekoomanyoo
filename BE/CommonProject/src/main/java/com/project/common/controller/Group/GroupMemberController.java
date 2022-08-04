@@ -1,4 +1,4 @@
-package com.project.common.controller;
+package com.project.common.controller.Group;
 
 import java.util.List;
 
@@ -14,19 +14,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.config.JwtTokenProvider;
-import com.project.common.dto.GroupBasicReqDto;
-import com.project.common.dto.GroupJoinReqDto;
-import com.project.common.dto.GroupMemberListDto;
-import com.project.common.service.GroupMemberService;
-import com.project.common.service.GroupService;
+import com.project.common.dto.Group.GroupBasicReqDto;
+import com.project.common.dto.Group.GroupJoinReqDto;
+import com.project.common.dto.Group.GroupMemberListDto;
 import com.project.common.service.UserService;
+import com.project.common.service.Group.GroupMemberService;
+import com.project.common.service.Group.GroupService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/group/{groupSeq}")
+
+@Api(tags = {"모임 멤버 API"})
 public class GroupMemberController {
     private final GroupService groupService;
     private final UserService userService;
@@ -57,7 +60,7 @@ public class GroupMemberController {
 	}
 	
 	//모임 수락
-	@ApiOperation(value = "모임수락, member status -> 1로 변경")
+	@ApiOperation(value = "모임 가입 승인, member status -> 1로 변경")
 	@PutMapping("/approve")
 	public ResponseEntity<?> approveMember(@PathVariable("groupSeq") Long groupSeq,@RequestBody GroupBasicReqDto groupBasicReqDto){
 		groupMemberService.approveMember(groupSeq,groupBasicReqDto);

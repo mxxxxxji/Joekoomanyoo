@@ -1,6 +1,6 @@
-package com.project.common.dto;
+package com.project.common.dto.Group;
 
-import com.project.common.entity.GroupMemberEntity;
+import com.project.common.entity.Group.GroupMemberEntity;
 
 import lombok.*;
 

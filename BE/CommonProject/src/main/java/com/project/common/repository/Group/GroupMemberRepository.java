@@ -1,9 +1,9 @@
-package com.project.common.repository;
+package com.project.common.repository.Group;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.project.common.entity.GroupMemberEntity;
+import com.project.common.entity.Group.GroupMemberEntity;
 
 
 public interface GroupMemberRepository extends JpaRepository<GroupMemberEntity, Long> {

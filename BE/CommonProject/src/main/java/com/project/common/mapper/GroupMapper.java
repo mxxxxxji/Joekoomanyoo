@@ -1,11 +1,12 @@
-package com.project.common.dto;
+package com.project.common.mapper;
 
 import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import com.project.common.entity.GroupEntity;
+import com.project.common.dto.Group.GroupDto;
+import com.project.common.entity.Group.GroupEntity;
 
 @Mapper
 public interface GroupMapper extends StructMapper<GroupDto,GroupEntity>{

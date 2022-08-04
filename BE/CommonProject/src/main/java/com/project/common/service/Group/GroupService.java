@@ -1,4 +1,4 @@
-package com.project.common.service;
+package com.project.common.service.Group;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.common.dto.GroupDto;
-import com.project.common.dto.GroupMapper;
-import com.project.common.dto.GroupMyListDto;
-import com.project.common.entity.GroupEntity;
-import com.project.common.entity.GroupMemberEntity;
-import com.project.common.repository.GroupMemberRepository;
-import com.project.common.repository.GroupRepository;
+import com.project.common.dto.Group.GroupDto;
+import com.project.common.dto.Group.GroupMyListDto;
+import com.project.common.entity.Group.GroupEntity;
+import com.project.common.entity.Group.GroupMemberEntity;
+import com.project.common.mapper.GroupMapper;
+import com.project.common.repository.Group.GroupMemberRepository;
+import com.project.common.repository.Group.GroupRepository;
 
 import lombok.RequiredArgsConstructor;
 

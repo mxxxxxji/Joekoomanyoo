@@ -1,4 +1,4 @@
-package com.project.common.controller;
+package com.project.common.controller.Group;
 
 
 import org.springframework.http.HttpStatus;
@@ -9,16 +9,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.common.dto.GroupDto;
-import com.project.common.dto.GroupSettingDto;
-import com.project.common.service.GroupSettingService;
+import com.project.common.dto.Group.GroupDto;
+import com.project.common.dto.Group.GroupSettingDto;
+import com.project.common.service.Group.GroupSettingService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/group")
+
+@Api(tags = {"모임 설정 API"})
 public class GroupSettingController {
     private final GroupSettingService groupSettingService;
     
