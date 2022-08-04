@@ -1,5 +1,6 @@
 package com.ssafy.heritage.data.remote.api
 
+import com.ssafy.heritage.data.dto.HeritageScrap
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.dto.UserModify
 import retrofit2.Response
@@ -50,4 +51,17 @@ interface UserService {
     // 사용자 비밀번호 확인하기
     @POST("/api/modify/check-password")
     suspend fun checkPassword(@Body map: HashMap<String, String>): Response<String>
+
+    // 문화유산 스크랩을 추가한다
+    @POST("/api/heritage/scrap")
+    suspend fun insertHeritageScrap(@Body scrap: HeritageScrap): Response<String>
+
+    // 문화유산 스크랩 목록을 불러온다
+    @GET("/api/mypage/scrap/{userSeq}")
+    suspend fun selectAllScraps(@Path("userSeq") userSeq: Int): Response<List<HeritageScrap>>
+
+    // 문화유산 스크랩을 삭제한다
+    @DELETE("/api/mypage/scrap/{userSeq}/{heritageSeq}")
+    suspend fun deleteHeritageScrap(@Path("userSeq") userSeq: Int, @Path("heritageSeq") heritageSeq: Int): Response<String>
+
 }

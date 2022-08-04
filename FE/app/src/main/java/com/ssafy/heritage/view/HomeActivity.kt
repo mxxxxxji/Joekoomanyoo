@@ -50,6 +50,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun initObserver() {
         userViewModel.user.observe(this) {
             Log.d(TAG, "initObserver: $it")
+            // userViewModel에 있는 user에 데이터가 들어오면 블라블라
+            userViewModel.getScrapLIst()
         }
     }
 

@@ -36,13 +36,13 @@ class HeritageViewModel : ViewModel() {
         get() = _insertHeritageReview
 
 
-    // 전체 문화유산 목록 가져옴
+    // 전체 문화유산 목록 가져옴  << 이거 왜 적었더라,,,?
     fun getHeritageList() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectAllHeritage().let { response ->
                 if (response.isSuccessful) {
                     var list = (response.body() as MutableList<Heritage>)
-                    list.sortBy { it.heritageScrapCnt } // 스크랩순 정렬
+//                    list.sortBy { it.heritageScrapCnt } // 스크랩순 정렬
                     _heritageList.postValue(list)
                 } else {
                     Log.d(TAG, "${response.code()}")
@@ -67,8 +67,9 @@ class HeritageViewModel : ViewModel() {
             repository.selectAllHeritageReviews().let { response ->
                 if(response.isSuccessful){
                     var list = response.body()!! as MutableList<HeritageReviewListResponse>
-                    list.sortBy { it.heritageReviewRegistedAt }  // 등록최신순
+//                    list.sortBy { it.heritageReviewRegistedAt }  // 등록최신순
                     _heritageReviewList.postValue(list)
+                    Log.d(TAG, "getHeritageReviewList: ${list}")
                 }else{
                     Log.d(TAG, "${response.code()}")
                 }
@@ -81,8 +82,8 @@ class HeritageViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertHeritageReview(heritageReviewInfo).let { response ->
                 if (response.isSuccessful) {
-                    var info = response.body()!! as HeritageReviewListResponse
-                    _insertHeritageReview.postValue(info)
+//                    var info = response.body()!! as HeritageReviewListResponse
+//                    _insertHeritageReview.postValue(info)
                 } else {
                     Log.d(TAG, "${response.code()}")
                 }

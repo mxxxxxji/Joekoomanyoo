@@ -12,21 +12,13 @@ interface HeritageService {
     @GET("/api/heritage/list")
     suspend fun selectAllHeritage(): Response<List<Heritage>>
 
-    // 문화유산 스크랩을 추가한다
-    @POST("/api/heritage/scrap")
-    suspend fun insertHeritageScrap(@Body scrap: HeritageScrap ): Response<String>
-
-    // 문화유산 스크랩을 삭제한다
-    @DELETE("/api/mypage/scrap/{userSeq}/{heritageSeq}")
-    suspend fun deleteHeritageScrap(@Path("userSeq") userSeq: Int, @Path("heritageSeq") heritageSeq: Int): Response<String>
-
     // 해당 문화유산의 전체 리뷰를 가져온다
     @GET("/api/heritage/reviews")
     suspend fun selectAllHeritageReviews(): Response<List<HeritageReviewListResponse>>
 
     // 리뷰를 작성한다
     @POST("/api/heritage/review")
-    suspend fun insertHeritageReview(@Body body: HeritageReviewListResponse): Response<HeritageReviewListResponse>
+    suspend fun insertHeritageReview(@Body body: HeritageReviewListResponse): Response<String>
 
     // 스터디에 공유한다다
 

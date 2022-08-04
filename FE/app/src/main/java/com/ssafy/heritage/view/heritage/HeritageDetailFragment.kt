@@ -11,11 +11,11 @@ import com.google.android.material.tabs.TabLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Heritage
+import com.ssafy.heritage.data.remote.api.UserService
 import com.ssafy.heritage.databinding.FragmentHeritageDetailBinding
 
 
 private const val TAG = "HeritageDetailFragment___"
-
 private const val ARG_HERITAGE = "heritage"
 
 class HeritageDetailFragment :
@@ -24,6 +24,7 @@ class HeritageDetailFragment :
     private var heritage: Heritage? = null
     private lateinit var heritageInfoFragment: HeritageInfoFragment
     private lateinit var heritageReviewFragment: HeritageReviewFragment
+    private lateinit var userService: UserService
 
     @SuppressLint("LongLogTag")
     override fun init() {
@@ -34,6 +35,31 @@ class HeritageDetailFragment :
 
             binding.heritage = heritage
         }
+
+    // 스크랩처리
+//    override suspend fun like(reviewId: Int) {
+//
+//        if (userDao.hasLike(reviewId) > 0) {
+//            // 스크랩 있다면 제거
+//            //api 호출
+//            userService.deleteHeritageScrap(
+//                Like(
+//                    reviewId = reviewId,
+//                    user_id = userId(),
+//                    like_id = userDao.getLike1(reviewId).like_id
+//                )
+//            )
+//            //local db 처리
+//            userDao.deleteLike(Like(reviewId = reviewId))
+//        } else {
+//            // 스크랩 없다면 추가
+//            val like = Like(reviewId = reviewId, user_id = userId())
+//            //api 호출
+//            val resultLike = userService.insertHeritageScrap(like)
+//            //local db 처리
+//            userDao.insertLike(resultLike)
+//        }
+//    }
 
     }
     private fun initAdapter()=with(binding) {
