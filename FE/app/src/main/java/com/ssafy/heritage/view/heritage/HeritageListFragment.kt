@@ -1,10 +1,12 @@
 package com.ssafy.heritage.view.heritage
 
 import android.Manifest
-import android.util.Log
 import android.view.View
+import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.SearchView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +15,7 @@ import com.ssafy.heritage.adpter.HeritageListAdapter
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.databinding.FragmentHeritageListBinding
+import com.ssafy.heritage.databinding.PopupHeritageSortBinding
 import com.ssafy.heritage.listener.HeritageListClickListener
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 
@@ -27,18 +30,19 @@ class HeritageListFragment :
     private val heritageAdapter: HeritageListAdapter by lazy { HeritageListAdapter() }
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
 
+    private lateinit var popupWindow: PopupWindow
+
     override fun init() {
 
         initAdapter()
 
         initObserver()
 
+        setPopupWindow()
+
         setToolbar()
 
-        // 지도 목록으로 가는 버튼
-        binding.ivMap.setOnClickListener {
-
-        }
+        setSearchView()
     }
 
     private fun initAdapter() = with(binding) {
@@ -71,10 +75,80 @@ class HeritageListFragment :
         heritageViewModel.heritageList.observe(viewLifecycleOwner) {
             heritageAdapter.submitList(it)
         }
+
+        binding.headerHeritage.setOnClickListener {
+            popupWindow.showAsDropDown(it)
+        }
+    }
+
+    private fun setPopupWindow() {
+        val popBinding = PopupHeritageSortBinding.inflate(layoutInflater)
+
+        // 리뷰순 정렬 클릭시
+        popBinding.btnSortReview.setOnClickListener {
+            heritageViewModel.heritageList.value!!.sortedBy { it.heritageReviewCnt }
+            popupWindow.dismiss()
+        }
+
+        // 스크랩순 정렬 클릭시
+        popBinding.btnSortScrap.setOnClickListener {
+            heritageViewModel.heritageList.value!!.sortedBy { it.heritageScrapCnt }
+            popupWindow.dismiss()
+        }
+
+        // 거리순 정렬 클릭시
+        popBinding.btnSortDist.setOnClickListener {
+            popupWindow.dismiss()
+        }
+
+        popupWindow = PopupWindow(
+            popBinding.root,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            true
+        )
     }
 
     private fun setToolbar() = with(binding) {
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.menu_sort -> {
+                    val view = requireActivity().findViewById<View>(R.id.menu_map)
+                    popupWindow.showAsDropDown(view)
+                    true
+                }
+                R.id.menu_map -> {
+                    requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
+    }
 
+    private fun setSearchView() {
+
+        // 검색 했을 때
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrBlank()) {
+                    val newList = heritageViewModel.heritageList.value!!.filter {
+                        it.heritageName.contains(query)
+                    }
+                    heritageAdapter.submitList(newList)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrBlank()) {
+                    heritageAdapter.submitList(heritageViewModel.heritageList.value!!)
+                }
+                return false
+            }
+        })
     }
 
     // 위치 권한 체크 해주고 이후 동작 설정

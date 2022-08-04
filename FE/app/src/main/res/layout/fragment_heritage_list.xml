@@ -11,7 +11,6 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            app:menu="@menu/heritage_list_menu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/background_heritage_top"
@@ -19,7 +18,8 @@
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/heritage_list_menu">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_top"
@@ -40,93 +40,75 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/iv_sort"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginEnd="12dp"
-                    android:src="@drawable/ic_baseline_sort_24"
-                    app:layout_constraintBottom_toTopOf="@id/scrollview"
-                    app:layout_constraintEnd_toStartOf="@id/iv_map" />
-
-                <ImageView
-                    android:id="@+id/iv_map"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginEnd="20dp"
-                    android:src="@drawable/ic_map"
-                    app:layout_constraintBottom_toTopOf="@id/scrollview"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <HorizontalScrollView
-                    android:id="@+id/scrollview"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/header_heritage">
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/header_heritage"
-                        app:singleSelection="true">
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/chip_background_tint_color"
-                            android:text="전체"
-                            android:textColor="@color/chip_text_color"
-                            android:textSize="16sp" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/chip_background_tint_color"
-                            android:text="박물관"
-                            android:textColor="@color/chip_text_color"
-                            android:textSize="16sp" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/chip_background_tint_color"
-                            android:text="궁궐"
-                            android:textColor="@color/chip_text_color"
-                            android:textSize="16sp" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/chip_background_tint_color"
-                            android:text="세계"
-                            android:textColor="@color/chip_text_color"
-                            android:textSize="16sp" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/chip_background_tint_color"
-                            android:text="인물"
-                            android:textColor="@color/chip_text_color"
-                            android:textSize="16sp" />
-
-                    </com.google.android.material.chip.ChipGroup>
-                </HorizontalScrollView>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.MaterialToolbar>
+
+        <HorizontalScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="0dp"
+            android:background="@drawable/background_heritage_top"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_heritage"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/chip_background_tint_color"
+                    android:text="전체"
+                    android:textColor="@color/chip_text_color"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/chip_background_tint_color"
+                    android:text="박물관"
+                    android:textColor="@color/chip_text_color"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/chip_background_tint_color"
+                    android:text="궁궐"
+                    android:textColor="@color/chip_text_color"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/chip_background_tint_color"
+                    android:text="세계"
+                    android:textColor="@color/chip_text_color"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/chip_background_tint_color"
+                    android:text="인물"
+                    android:textColor="@color/chip_text_color"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view"
@@ -138,7 +120,7 @@
             app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/scrollview"
             app:queryHint="검색어를 입력해주세요" />
 
         <androidx.recyclerview.widget.RecyclerView
