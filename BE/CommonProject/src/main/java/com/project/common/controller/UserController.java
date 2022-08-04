@@ -53,7 +53,6 @@ public class UserController {
 
 
         userRepository.save(UserEntity.builder()
-                .userSeq(0)
                 .userId(userSignDto.getUserId())
                 .userPassword(passwordEncoder.encode(userSignDto.getUserPassword()))
                 .userBirth(userSignDto.getUserBirth())
@@ -65,12 +64,6 @@ public class UserController {
                 .fcmToken("")
                 .profileImgUrl("")
                 .isDeleted('N')
-                .evalCnt(0)
-                .evalList1(0)
-                .evalList2(0)
-                .evalList3(0)
-                .evalList4(0)
-                .evalList5(0)
                 .evalUpdatedAt(LocalDateTime.now())
                 .roles(Collections.singletonList("ROLE_USER"))
                 .build());
