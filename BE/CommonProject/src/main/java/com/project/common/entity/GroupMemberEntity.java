@@ -14,7 +14,7 @@ import lombok.*;
 @Table(name="tb_group_member")
 public class GroupMemberEntity {
 
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_seq")
 	private long memberSeq;
 	
@@ -41,20 +41,19 @@ public class GroupMemberEntity {
 	@JoinColumn(name="group_seq")
 	private GroupEntity group;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_seq")
-    private UserEntity user;
+    @Column(name = "user_seq")
+    private long userSeq;
 	
 
 
 	
-	// 생성 메서드 //
-    public GroupMemberEntity createGroupMember(GroupEntity group,UserEntity user) {
-        return GroupMemberEntity.builder()
-                .group(group)
-                .user(user)
-                .build();
-    }
+//	// 생성 메서드 //
+//    public GroupMemberEntity createGroupMember(GroupEntity group,UserEntity user) {
+//        return GroupMemberEntity.builder()
+//                .group(group)
+//                .user(user)
+//                .build();
+//    }
 
 
 

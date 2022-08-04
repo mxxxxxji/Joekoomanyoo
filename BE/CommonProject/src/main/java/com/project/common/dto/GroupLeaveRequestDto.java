@@ -14,17 +14,20 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class GroupJoinRequestDto {
+public class GroupLeaveRequestDto {
 
 	private long userSeq;
-	private String memberAppeal;
-
+	private long groupSeq;
+	
 	@Builder
-	public GroupJoinRequestDto(long userSeq, String memberAppeal) {
+	public GroupLeaveRequestDto(long userSeq, long groupSeq) {
 		super();
 		this.userSeq = userSeq;
-		this.memberAppeal = memberAppeal;
+		this.groupSeq = groupSeq;
 	}
+	
+
+	
 
 	
 

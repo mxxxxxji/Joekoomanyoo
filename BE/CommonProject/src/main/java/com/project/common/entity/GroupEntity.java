@@ -1,7 +1,9 @@
 package com.project.common.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -37,7 +39,6 @@ public class GroupEntity {
 	@Column(name="group_name")
     private String name;
     
-    @Lob @Basic(fetch = FetchType.EAGER)
     @Column(name="attach_seq")
     private String themaImg;
  
@@ -48,12 +49,12 @@ public class GroupEntity {
     private String description;
     
     @Column(name="group_access_type")
-    private int accessType;
+    private char accessType;
     
     @Column(name="group_pwd")
     private String password;
 
-    private int memberCount = 0;
+ //   private int memberCount = 0;
     
     @Column(name="group_total_count")
     private int maxCount;
@@ -71,16 +72,16 @@ public class GroupEntity {
    	private int ageRange;
 
     @Column(name="group_child")
-   	private boolean withChild;
+   	private char withChild;
        
     @Column(name="group_global")
-   	private boolean withGlobal;
+   	private char withGlobal;
     
     @Column(name="group_is_active")
-   	private boolean active;
+   	private char active;
 
     @Column(name="group_status")
-   	private String status;
+   	private char status;
 
  // 모임 설정 정보 //
 //   	private boolean recruiting;
@@ -97,20 +98,24 @@ public class GroupEntity {
   
     // 관리자 및 참여 멤버 //
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private Set<GroupMemberEntity> members = new HashSet<>();
+    private List<GroupMemberEntity> members = new ArrayList<>();
     
     
     
     
     
     public void addGroupMember(GroupMemberEntity groupMember) {
-    	memberCount++;
-    	this.members.add(groupMember);
+    //	memberCount++;
+    	members.add(groupMember);
     	groupMember.setGroup(this);
     }
     
 
-
+    public void removeGroupMember(long	userSeq) {
+     //   memberCount--;
+        members.removeIf(groupMember ->
+                groupMember.getUserSeq()==userSeq);
+    }
     
 
     

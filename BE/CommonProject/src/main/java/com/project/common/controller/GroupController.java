@@ -18,8 +18,6 @@ import java.util.List;
 public class GroupController {
     private final GroupService groupService;
     
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    
     //모임 개설
     @ApiOperation(value = "모임 개설, 모임 개설이 성공하면, 모임 정보(GroupDto) 반환")
     @PostMapping("/add")
@@ -34,6 +32,7 @@ public class GroupController {
     	return new ResponseEntity<>(groupService.getGroupList(),HttpStatus.OK);
     }
     
+    //모임 정보 보기
     @ApiOperation(value = "모임 정보 보기, 모임 정보(GroupDto) 반환")
     @GetMapping("{groupSeq}/info")
     public ResponseEntity<GroupDto> getGroupInfo(@PathVariable("groupSeq") Long groupSeq){
@@ -48,6 +47,7 @@ public class GroupController {
     	return new ResponseEntity<>(HttpStatus.OK);
     }
     
+    //모임 정보 수정
     @ApiOperation(value = "모임 정보 수정, 모임 정보 수정에 성공하면, 수정한 모임 정보(GroupDto) 반환")
     @PutMapping("/{groupSeq}/update")
     public ResponseEntity<GroupDto> updateGroup(@PathVariable("groupSeq") Long groupSeq,@RequestBody GroupDto groupDto){
