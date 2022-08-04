@@ -1,12 +1,12 @@
 package com.project.common.controller;
 
-import com.project.common.dto.HeritageScrapDto;
-import com.project.common.dto.UserKeywordDto;
+import com.project.common.dto.Heritage.HeritageScrapDto;
+import com.project.common.dto.MyDailyMemo.MyDailyMemoDto;
+import com.project.common.dto.User.UserKeywordDto;
 import com.project.common.service.HeritageService;
 import com.project.common.service.MyPageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +37,9 @@ public class MyPageController {
     public ResponseEntity<?> myScrapList(@PathVariable("userSeq") int userSeq) {
         List<HeritageScrapDto> list = heritageService.myScrapList(userSeq);
         if (list.size() == 0) {
-            return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            return new ResponseEntity<List<HeritageScrapDto>>(list, HttpStatus.OK);
         }
     }
 
@@ -89,9 +89,9 @@ public class MyPageController {
     public ResponseEntity<?> listKeyword(@PathVariable("userSeq") int userSeq) {
         List<UserKeywordDto> list = myPageService.listKeyword(userSeq);
         if (list.size() == 0) {
-            return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            return new ResponseEntity<List<UserKeywordDto>>(list, HttpStatus.OK);
         }
     }
 
@@ -110,6 +110,58 @@ public class MyPageController {
        }else{
            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
        }
+    }
+
+    /**
+     * 데일리 메모 생성
+     *
+     * @param myDailyMemoDto
+     * @return String
+     */
+
+    @ApiOperation(value = "데일리 메모 생성", response = String.class)
+    @PostMapping("/memo")
+    public ResponseEntity<String> createDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
+        if(myPageService.createDailyMemo(myDailyMemoDto)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 데일리 메모 수정하기
+     *
+     * @param myDailyMemoDto
+     * @return String
+     */
+
+    @ApiOperation(value = "데일리 메모 수정하기", response = String.class)
+    @PutMapping("/memo")
+    public ResponseEntity<String> modifyDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
+        if(myPageService.modifyDailyMemo(myDailyMemoDto)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 데일리 메모 불러오기
+     *
+     * @param myDailyMemoDto
+     * @return String
+     */
+
+    @ApiOperation(value = "데일리 메모 불러오기", response = String.class)
+    @PostMapping("/memo/daily")
+    public ResponseEntity<?> showDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
+        MyDailyMemoDto dto = myPageService.showDailyMemo(myDailyMemoDto);
+        if(dto==null){
+            return new ResponseEntity<String>("FAIL",HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<MyDailyMemoDto>(dto, HttpStatus.OK);
+        }
     }
 
 }

@@ -1,11 +1,11 @@
 package com.project.common.controller;
 
 import com.project.common.config.JwtTokenProvider;
-import com.project.common.dto.MailDto;
-import com.project.common.dto.UserDto;
-import com.project.common.dto.UserSignDto;
-import com.project.common.entity.UserEntity;
-import com.project.common.repository.UserRepository;
+import com.project.common.dto.Mail.MailDto;
+import com.project.common.dto.User.UserDto;
+import com.project.common.dto.User.UserSignDto;
+import com.project.common.entity.User.UserEntity;
+import com.project.common.repository.User.UserRepository;
 import com.project.common.service.MailService;
 import com.project.common.service.UserService;
 import io.swagger.annotations.*;
