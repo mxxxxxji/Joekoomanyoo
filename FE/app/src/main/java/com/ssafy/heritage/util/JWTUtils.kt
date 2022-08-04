@@ -24,7 +24,7 @@ object JWTUtils {
             val userNickname = JSONObject(body)["userNickname"] as String
             val userBirth = JSONObject(body)["userBirth"] as String
             val socialLoginType = JSONObject(body)["socialLoginType"] as String
-            val userGender = JSONObject(body)["userGender"] as String
+            val userGender = (JSONObject(body)["userGender"] as String)[0]
             val profileImgUrl = JSONObject(body)["profileImgUrl"] as String
 
             val user = User(
