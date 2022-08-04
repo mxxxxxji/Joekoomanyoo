@@ -55,24 +55,12 @@ class GroupViewModel: ViewModel() {
         }
     }
 
-    fun getGroupDetailInfo(groupSeq: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.selectGroupDetail(groupSeq).let { response ->
-                if(response.isSuccessful){
-                    var info = response.body()!! as GroupAttribute
-                    _groupDetailInfo.postValue(info)
-                }else{
-                    Log.d(TAG, "${response.code()}")
-                }
-            }
-        }
-    }
-
     fun selectGroupMembers(groupSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectGroupMembers(groupSeq).let { response ->
                 if(response.isSuccessful) {
                     var list = response.body()!! as MutableList<Member>
+                    Log.d(TAG, list.toString())
                     _groupMemberList.postValue(list)
                 }else{
                     Log.d(TAG, "${response.code()}")

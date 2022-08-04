@@ -1,6 +1,7 @@
 package com.ssafy.heritage.data.remote.api
 
 import com.ssafy.heritage.data.dto.GroupAttribute
+import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import retrofit2.Response
@@ -60,8 +61,8 @@ interface GroupService {
 
 
     // 회원 목록을 조회한다
-    @GET("/api/group/{groupSeq}/join")
-    suspend fun selectGroupMembers(@Path("groupSeq") groupSeq: Int): Response<List<User>>
+    @GET("/api/group/{groupSeq}/member")
+    suspend fun selectGroupMembers(@Path("groupSeq") groupSeq: Int): Response<List<Member>>
 
     // 회원 프로필을 조회한다
 

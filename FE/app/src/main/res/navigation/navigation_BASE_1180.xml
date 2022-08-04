@@ -58,25 +58,9 @@
         android:id="@+id/groupDetailFragment"
         android:name="com.ssafy.heritage.view.group.GroupDetailFragment"
         android:label="GroupDetailFragment">
-    </fragment>
-    <fragment
-        android:id="@+id/groupInfoFragment"
-        android:name="com.ssafy.heritage.view.group.GroupInfoFragment"
-        android:label="GroupInfoFragment">
         <argument
             android:name="groupInfo"
             app:argType="com.ssafy.heritage.data.remote.response.GroupListResponse" />
-        <action
-            android:id="@+id/action_groupInfoFragment_to_groupDetailFragment"
-            app:destination="@id/groupDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/groupModifyFragment"
-        android:name="com.ssafy.heritage.view.group.GroupModifyFragment"
-        android:label="GroupModifyFragment">
-        <action
-            android:id="@+id/action_groupModifyFragment_to_groupInfoFragment"
-            app:destination="@id/groupInfoFragment" />
     </fragment>
     <!--heritage-->
     <fragment
@@ -143,11 +127,9 @@
         android:id="@+id/profileModifyFragment"
         android:name="com.ssafy.heritage.view.profile.ProfileModifyFragment"
         android:label="ProfileModifyFragment">
-        <action
-            android:id="@+id/action_profileModifyFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/profileFragment"
-            app:popUpToInclusive="true" />
+        <argument
+            android:name="user"
+            app:argType="com.ssafy.heritage.data.dto.User" />
     </fragment>
     <fragment
         android:id="@+id/heritageMapFragment"
@@ -157,8 +139,25 @@
             android:id="@+id/action_heritageMapFragment_to_heritageDetailFragment"
             app:destination="@id/heritageDetailFragment" />
     </fragment>
-
-
+    <fragment
+        android:id="@+id/groupInfoFragment"
+        android:name="com.ssafy.heritage.view.group.GroupInfoFragment"
+        android:label="GroupInfoFragment">
+        <argument
+            android:name="groupInfo"
+            app:argType="com.ssafy.heritage.data.remote.response.GroupListResponse" />
+        <action
+            android:id="@+id/action_groupInfoFragment_to_groupDetailFragment"
+            app:destination="@id/groupDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupModifyFragment"
+        android:name="com.ssafy.heritage.view.group.GroupModifyFragment"
+        android:label="GroupModifyFragment">
+        <action
+            android:id="@+id/action_groupModifyFragment_to_groupInfoFragment"
+            app:destination="@id/groupInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/ARFragment"
         android:name="com.ssafy.heritage.view.ar.ARFragment"
@@ -174,12 +173,8 @@
     <fragment
         android:id="@+id/heritageInfoFragment"
         android:name="com.ssafy.heritage.view.heritage.HeritageInfoFragment"
-<<<<<<< HEAD
-        android:label="HeritageInfoFragment">
-
-=======
         android:label="HeritageInfoFragment" >
->>>>>>> feature/FE/Daily
+
     </fragment>
     <fragment
         android:id="@+id/heritageReviewFragment"

@@ -2,6 +2,7 @@ package com.ssafy.heritage.data.repository
 
 import android.content.Context
 import com.ssafy.heritage.data.dto.Heritage
+import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.dto.UserModify
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
@@ -22,7 +23,7 @@ class Repository constructor(context: Context) {
     suspend fun changeGroupActiveState(body: Int): Response<Boolean> =
         groupApi.changeGroupActiveState(body)
 
-    suspend fun selectGroupMembers(groupSeq: Int): Response<List<User>> =
+    suspend fun selectGroupMembers(groupSeq: Int): Response<List<Member>> =
         groupApi.selectGroupMembers(groupSeq)
 
     suspend fun selectGroupDetail(groupSeq: Int): Response<GroupListResponse> =

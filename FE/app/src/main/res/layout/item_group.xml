@@ -37,7 +37,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginVertical="5dp"
                 tools:text="방장 닉네임"
-                android:text="@{groupListResponse.groupMakerNickname}"
+                android:text="@{groupListResponse.master}"
                 app:layout_constraintStart_toEndOf="@id/iv_member_img"
                 app:layout_constraintTop_toTopOf="parent"/>
             <TextView
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 tools:text="설명"
-                android:text="@{groupListResponse.groupName}"
+                android:text="@{groupListResponse.name}"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
                 android:layout_marginHorizontal="10dp"
-                android:text="@{String.valueOf(groupListResponse.age)}"
+                android:text="@{String.valueOf(groupListResponse.ageRange)}"
                 tools:text="나이대"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="@id/tv_global_check"

@@ -5,5 +5,6 @@ data class Member(
     var memberAppeal: String,
     var memberIsEvaluated: String,
     var memberStatus: Int,
-    val userNickname: Int
+    val memberSeq: Int
+
 )

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             tools:text = "김싸피"
-            android:text="@{member.userNickname}"
+            android:text="@{String.valueOf(member.memberSeq)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
