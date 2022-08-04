@@ -68,6 +68,25 @@ public class UserEntity implements UserDetails{
 
     @Column(length = 1, nullable = false)
     private char isDeleted;
+    
+    
+//    // 관리자 및 참여 멤버 //
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<GroupEntity> groups = new ArrayList<>();
+//    
+//    public void addGroup(GroupEntity group) {
+//        //	memberCount++;
+//        	groups.add(group);
+//        	group.setUser(this);
+//        }
+//        
+////
+////        public void removeGroup(long userSeq) {
+////         //   memberCount--;
+////            groups.removeIf(group ->
+////                    group.getUserSeq()==userSeq);
+////        }
+//    
 
     private int evalCnt;
     private int evalList1;
