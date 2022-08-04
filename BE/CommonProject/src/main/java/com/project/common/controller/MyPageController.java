@@ -40,14 +40,14 @@ public class MyPageController {
 
     /**
      * 내 문화 유산 스크랩 삭제하기
-     * @param heritageScrapDto
+     * @param userSeq, heritageSeq
      * @return List
      */
 
-    @DeleteMapping("/scrap")
+    @DeleteMapping("/scrap/{userSeq}/{heritageSeq}")
     @ApiOperation(value = "내 문화 유산 스크랩 삭제하기", response = String.class)
-    public ResponseEntity<String> deleteScrap(@RequestBody HeritageScrapDto heritageScrapDto){
-        if(heritageService.deleteScrap(heritageScrapDto)){
+    public ResponseEntity<String> deleteScrap(@PathVariable("userSeq") int userSeq, @PathVariable("heritageSeq") int heritageSeq){
+        if(heritageService.deleteScrap(userSeq, heritageSeq)){
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }else{
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
