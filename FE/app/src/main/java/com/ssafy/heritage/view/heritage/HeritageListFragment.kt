@@ -1,6 +1,7 @@
 package com.ssafy.heritage.view.heritage
 
 import android.Manifest
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,9 +33,11 @@ class HeritageListFragment :
 
         initObserver()
 
+        setToolbar()
+
         // 지도 목록으로 가는 버튼
         binding.ivMap.setOnClickListener {
-            requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
+
         }
     }
 
@@ -68,6 +71,10 @@ class HeritageListFragment :
         heritageViewModel.heritageList.observe(viewLifecycleOwner) {
             heritageAdapter.submitList(it)
         }
+    }
+
+    private fun setToolbar() = with(binding) {
+
     }
 
     // 위치 권한 체크 해주고 이후 동작 설정
