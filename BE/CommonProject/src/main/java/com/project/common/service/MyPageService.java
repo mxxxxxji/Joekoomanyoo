@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +28,27 @@ public class MyPageService {
             userKeywordEntity.setMyKeywordRegistedAt(LocalDateTime.now());
             userKeywordEntity.setMyKeywordSeq(0);
             userKeywordRepository.save(userKeywordEntity);
+            return true;
+        }
+    }
+
+    public List<UserKeywordDto> listKeyword(int userSeq) {
+        List<UserKeywordDto> listDto = new ArrayList<>();
+
+        List<UserKeywordEntity> list = userKeywordRepository.findAllByUserSeq(userSeq);
+        for(UserKeywordEntity userKeywordEntity : list){
+            listDto.add(UserKeywordMapper.MAPPER.toDto(userKeywordEntity));
+        }
+
+        return listDto;
+    }
+
+    public boolean deleteKeyword(int myKeywordSeq) {
+        // 키워드가 없는 경우
+        if(userKeywordRepository.findByMyKeywordSeq(myKeywordSeq)==null){
+            return false;
+        }else {
+            userKeywordRepository.deleteByMyKeywordSeq(myKeywordSeq);
             return true;
         }
     }

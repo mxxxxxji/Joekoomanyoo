@@ -68,7 +68,7 @@ public class UserModifyController {
      */
     @PostMapping("/check-password")
     @ApiOperation(value="사용자 비밀번호 확인하기", response = String.class)
-    public ResponseEntity<String> checkPassword(@ApiParam(value="사용자 비밀번호 확인 ( userPassword )") @RequestBody Map<String, String> userInfo){
+    public ResponseEntity<String> checkPassword(@ApiParam(value="사용자 비밀번호 확인 ( userSeq, userPassword )") @RequestBody Map<String, String> userInfo){
         // 비밀번호가 맞으면
         if(userModifyService.checkPassword(userInfo)){
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

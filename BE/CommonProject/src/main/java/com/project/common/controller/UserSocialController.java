@@ -86,7 +86,6 @@ public class UserSocialController {
         }
 
         userRepository.save(UserEntity.builder()
-                .userSeq(0)
                 .userId(userSignDto.getUserId())
                 .userPassword(passwordEncoder.encode(userSignDto.getUserPassword()))
                 .userBirth(userSignDto.getUserBirth())
@@ -99,6 +98,7 @@ public class UserSocialController {
                 .profileImgUrl("")
                 .isDeleted('N')
                 .roles(Collections.singletonList("ROLE_USER"))
+                .evalUpdatedAt(LocalDateTime.now())
                 .build());
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 
@@ -137,5 +137,4 @@ public class UserSocialController {
             return new ResponseEntity<String>(FAIL+" token", HttpStatus.OK);
         }
     }
-
 }
