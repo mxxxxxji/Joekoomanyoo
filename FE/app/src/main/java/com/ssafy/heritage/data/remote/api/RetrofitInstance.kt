@@ -1,5 +1,7 @@
 package com.ssafy.heritage.data.remote.api
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.ssafy.heritage.ApplicationClass.Companion.BASE_URL
 import com.ssafy.heritage.util.NullOnEmptyConverterFactory
 import okhttp3.OkHttpClient
@@ -63,12 +65,16 @@ object RetrofitInstance {
         .build()
 
 
+    val gson: Gson = GsonBuilder()
+        .setLenient()
+        .create()
+
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

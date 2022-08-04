@@ -5,32 +5,21 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.ImageDecoder
-import android.graphics.Outline
-import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewOutlineProvider
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
+import com.ssafy.heritage.adpter.HeritageReviewAdapter
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.databinding.FragmentHeritageReviewBinding
 import com.ssafy.heritage.viewmodel.HeritageViewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 private const val TAG = "HeritageReviewFragment___"
 private val PERMISSIONS_REQUIRED = arrayOf(
@@ -42,6 +31,7 @@ class HeritageReviewFragment :
 
     private val heritageViewModel by viewModels<HeritageViewModel>()
     private lateinit var heritageReview: HeritageReviewListResponse
+    private lateinit var heritageReviewAdapter: HeritageReviewAdapter
     private var userSeq: Int = 0
     private var heritageReviewRegistedAt: String = ""
     private var heritageReviewText: String = ""
@@ -56,12 +46,23 @@ class HeritageReviewFragment :
     override fun init() {
         Log.d("review","can you see review??")
         heritageViewModel.getHeritageList()
+        heritageViewModel.getHeritageReviewList()
 
+        initAdapter()
         initObserver()
         initClickListener()
     }
 
+    private fun initAdapter() {
+        heritageReviewAdapter = HeritageReviewAdapter(this)
+        binding.recyclerviewReviewList.adapter = heritageReviewAdapter
+    }
+
     private fun initObserver() {
+        heritageViewModel.heritageReviewList.observe(viewLifecycleOwner) {
+            heritageReviewAdapter.submitList(it)
+        }
+
         heritageViewModel.insertHeritageReview.observe(viewLifecycleOwner) {
             if (it != null) {
                 Toast.makeText(context, "리뷰가 등록되었습니다.", Toast.LENGTH_SHORT).show()
@@ -121,7 +122,7 @@ class HeritageReviewFragment :
             }
 
             if (heritageReviewText != "") {
-                heritageReview = HeritageReviewListResponse(0, 0, 0,  heritageReviewText, 0, attachSeq)
+                heritageReview = HeritageReviewListResponse(0, 0, 0,  heritageReviewText, "", attachSeq)
                 heritageViewModel.insertHeritageReview(heritageReview)
             }
         }

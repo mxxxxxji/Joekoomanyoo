@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textColor="@color/black"
-            android:text="@{heritageReviewListResponse.userSeq}"
+            android:text="@{String.valueOf(heritageReviewListResponse.userSeq)}"
             tools:text="매일우유학자"
             app:layout_constraintBottom_toBottomOf="@+id/iv_heritage_review_user_img"
             app:layout_constraintStart_toEndOf="@+id/iv_heritage_review_user_img"
