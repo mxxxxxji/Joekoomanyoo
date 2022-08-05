@@ -22,6 +22,8 @@ public class HeritageReviewEntity {
     private int userSeq;
     @Column(nullable = false)
     private int heritageSeq;
+    @Column()
+    private String userNickname;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String heritageReviewText;
     @Column(nullable = false)

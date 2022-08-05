@@ -8,6 +8,7 @@ import com.project.common.repository.Heritage.HeritageRepository;
 import com.project.common.repository.Heritage.HeritageReviewRepository;
 import com.project.common.repository.Heritage.HeritageScrapRepository;
 import com.project.common.repository.Heritage.HeritageScrapRepositoryCustom;
+import com.project.common.repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,8 @@ public class HeritageService {
     private final HeritageScrapRepository heritageScrapRepository;
     private final HeritageScrapRepositoryCustom heritageScrapRepositoryCustom;
 
+    private final UserRepository userRepository;
+
     // 문화유산 리스트
     @Transactional
     public List<HeritageDto> listInfo() throws Exception {
@@ -38,7 +41,9 @@ public class HeritageService {
     // 리뷰 등록
     @Transactional
     public boolean createReview(HeritageReivewDto heritageReivewDto) {
+        String nickname = userRepository.findByUserSeq(heritageReivewDto.getUserSeq()).getUserNickname();
         HeritageReviewEntity heritageReviewEntity = HeritageReviewMapper.MAPPER.toEntity(heritageReivewDto);
+        heritageReviewEntity.setUserNickname(nickname);
         heritageReviewRepository.save(heritageReviewEntity);
         if (heritageReviewEntity == null) {
             return false;
@@ -73,8 +78,8 @@ public class HeritageService {
     }
 
     // 리뷰 리스트 반환
-    public List<HeritageReivewDto> reviewList() {
-        List<HeritageReviewEntity> list = heritageReviewRepository.findAll();
+    public List<HeritageReivewDto> reviewList(int heritageSeq) {
+        List<HeritageReviewEntity> list = heritageReviewRepository.findAllByHeritageSeq(heritageSeq);
         List<HeritageReivewDto> listDto= new ArrayList<>();
         for(HeritageReviewEntity heritageReviewEntity : list){
             listDto.add(HeritageReviewMapper.MAPPER.toDto(heritageReviewEntity));

@@ -15,6 +15,7 @@ public class HeritageReivewDto {
     private int heritageReviewSeq;
     private int userSeq;
     private int heritageSeq;
+    private String userNickname;
     private String heritageReviewText;
     private String heritageReviewRegistedAt;
 }

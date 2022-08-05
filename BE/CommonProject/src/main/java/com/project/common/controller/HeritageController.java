@@ -81,18 +81,18 @@ public class HeritageController {
 
     /**
      * 문화 유산 리뷰 목록
-     * @param
+     * @param heritageSeq
      * @return List
      */
 
     @ApiOperation(value = "문화 유산 리뷰 목록", response = List.class)
-    @GetMapping("/reviews")
-    public ResponseEntity<?> reviewList(){
-        List<HeritageReivewDto> list = heritageService.reviewList();
+    @GetMapping("/reviews/{heritageSeq}")
+    public ResponseEntity<?> reviewList(@PathVariable("heritageSeq") int heritageSeq){
+        List<HeritageReivewDto> list = heritageService.reviewList(heritageSeq);
         if(list == null){
-            return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }else{
-            return new ResponseEntity<>(list,HttpStatus.OK);
+            return new ResponseEntity<List<HeritageReivewDto>>(list,HttpStatus.OK);
         }
     }
 
