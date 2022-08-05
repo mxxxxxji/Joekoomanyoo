@@ -80,33 +80,41 @@ public class GroupEntity {
     // 모임 설정 정보 //
     @Column(name="group_created_at")
     private LocalDateTime createdTime;
+    
     @Column(name="group_updated_at")
     private LocalDateTime updatedTime;
     
-//	private boolean recruiting;
-//	private boolean published;
-//	private boolean closed;
-//private LocalDateTime publishedTime;
-//private LocalDateTime recruitUpdatedTime;
-//private LocalDateTime closedTime; 
     
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name="user_seq")
-//	private UserEntity user;
-    
-    // 관리자 및 참여 멤버 //
+    // 참여 멤버 //
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @Builder.Default
     private List<GroupMemberEntity> members = new ArrayList<>();
     
+    // 참여 멤버 Method //
     public void addGroupMember(GroupMemberEntity groupMember) {
-    	members.add(groupMember);
+    	this.members.add(groupMember);
     	groupMember.setGroup(this);
     }
 
     public void removeGroupMember(long	userSeq) {
-        members.removeIf(groupMember ->
+        this.members.removeIf(groupMember ->
                 groupMember.getUserSeq()==userSeq);
+    }
+    
+    // 모임 데일리 메모 //
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<GroupDailyMemoEntity> memos = new ArrayList<>();
+    
+    // 모임 데일리 메모 Method //
+    public void addGroupMemo(GroupDailyMemoEntity groupMemo) {
+    	this.memos.add(groupMemo);
+    	groupMemo.setGroup(this);
+    }
+
+    public void removeGroupMemo(int gdmDate) {
+        memos.removeIf(groupMemo ->
+                groupMemo.getGdmDate()==gdmDate);
     }
     
 }

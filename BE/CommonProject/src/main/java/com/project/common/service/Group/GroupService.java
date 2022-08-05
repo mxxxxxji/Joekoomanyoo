@@ -23,7 +23,7 @@ public class GroupService{
 	private final GroupRepository groupRepository;
 	private final GroupMemberRepository groupMemberRepository;
 	
-	//그륩 번호로 그륩 찾기
+	//모임 찾기
 	public GroupEntity findGroup(long groupSeq) {
 		GroupEntity findGroup = groupRepository.findByGroupSeq(groupSeq);
 	    if (findGroup == null) {
@@ -41,7 +41,7 @@ public class GroupService{
 		return GroupMapper.MAPPER.toDto(saved);
 	}
 	
-	//전체 목록 조회
+	//모임 목록 조회
 	public List<GroupDto> getGroupList(){
 		List<GroupEntity> groupList=groupRepository.findAll();
 		return GroupMapper.MAPPER.toDtoList(groupList);
@@ -63,7 +63,7 @@ public class GroupService{
 		groupRepository.deleteById(groupSeq);
 	}
 	
-	//모임 기본 정보 수정
+	//모임 정보 수정
 	public GroupDto updateGroup(Long groupSeq,GroupDto groupDto) {
 		GroupEntity oldGroup =groupRepository.findById(groupSeq).orElse(null);
 		GroupDto updateGroup=new GroupDto();
@@ -76,7 +76,7 @@ public class GroupService{
 		return updateGroup;
 	}
 	
-	//내 목록 조회
+	//내 모임 조회
 	public List<GroupMyListDto> getMyGroupList(long userSeq){
 		List<GroupMyListDto> groupList=new ArrayList<>();
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
