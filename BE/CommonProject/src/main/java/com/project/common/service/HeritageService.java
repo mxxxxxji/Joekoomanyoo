@@ -58,6 +58,19 @@ public class HeritageService {
     // 스크랩 등록
     public boolean createScrap(HeritageScrapDto heritageScrapDto){
         HeritageScrapEntity heritageScrapEntity = HeritageScrapMapper.MAPPER.toEntity(heritageScrapDto);
+
+        // 스크랩 개수 추가
+        HeritageEntity heritageEntity = heritageRepository.findByHeritageSeq(heritageScrapEntity.getHeritageSeq());
+        // 그전 스크랩 개수에서 하나 더해주기
+        int cnt = heritageEntity.getHeritageScrapCnt()+1;
+        
+        // 개수 바꿔주기
+        heritageEntity.setHeritageScrapCnt(cnt);
+
+        // 스크랩 개수 Heritage DB에 저장
+        heritageRepository.save(heritageEntity);
+
+        // 스크랩 DB에 저장
         heritageScrapRepository.save(heritageScrapEntity);
 
         // 올바르게 들어갔으면 true
@@ -85,6 +98,17 @@ public class HeritageService {
             return false;
         }
         else{
+            // 스크랩 개수 하나 줄이기
+            HeritageEntity heritageEntity = heritageRepository.findByHeritageSeq(heritageSeq);
+            // 그전 스크랩 개수에서 하나 빼주기
+            int cnt = heritageEntity.getHeritageScrapCnt()-1;
+
+            // 개수 바꿔주기
+            heritageEntity.setHeritageScrapCnt(cnt);
+
+            // 스크랩 개수 Heritage DB에 저장
+            heritageRepository.save(heritageEntity);
+
             return heritageScrapRepositoryCustom.deleteByUserSeqAndHeritageSeq(userSeq, heritageSeq);
         }
     }
