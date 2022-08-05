@@ -1,6 +1,5 @@
 package com.ssafy.heritage.view
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -48,11 +47,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
          */
 
         heritageViewModel.heritageList.observe(viewLifecycleOwner) { list ->
-            heritageAdapter.submitList(list.sortedBy { it.heritageScrapCnt })
-        }
-
-        userViewModel.user.observe(viewLifecycleOwner) { user ->
-            Log.d(TAG, "initObserver: $user")
+            // 스크랩 순으로 문화재 추천
+            heritageAdapter.submitList(
+                list.sortedWith(
+                    compareBy({ -it.heritageScrapCnt },
+                        { it.heritageSeq })
+                )
+            )
         }
     }
 
@@ -125,7 +126,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
     override fun onItemClick(position: Int) {
 
         val action =
-            GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(groupListAdapter.getItem(position))
+            GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(
+                groupListAdapter.getItem(
+                    position
+                )
+            )
         findNavController().navigate(action)
     }
 }

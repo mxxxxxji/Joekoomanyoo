@@ -86,13 +86,25 @@ class HeritageListFragment :
 
         // 리뷰순 정렬 클릭시
         popBinding.btnSortReview.setOnClickListener {
-            heritageViewModel.heritageList.value!!.sortedBy { it.heritageReviewCnt }
+            // 우선 리뷰 내림차순, 그 다음 seq 오름차순
+            heritageAdapter.submitList(
+                heritageViewModel.heritageList.value!!.sortedWith(
+                    compareBy({ -it.heritageReviewCnt },
+                        { it.heritageSeq })
+                )
+            )
             popupWindow.dismiss()
         }
 
         // 스크랩순 정렬 클릭시
         popBinding.btnSortScrap.setOnClickListener {
-            heritageViewModel.heritageList.value!!.sortedBy { it.heritageScrapCnt }
+            // 우선 스크랩 내림차순, 그 다음 seq 오름차순
+            heritageAdapter.submitList(
+                heritageViewModel.heritageList.value!!.sortedWith(
+                    compareBy({ -it.heritageScrapCnt },
+                        { it.heritageSeq })
+                )
+            )
             popupWindow.dismiss()
         }
 
