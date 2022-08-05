@@ -194,7 +194,7 @@ public class UserController {
     // 토큰에서 사용자 정보 가져오기
     @GetMapping("/me")
     public UserDto getCurrentUser(HttpServletRequest request) { //(1)
-            String token = request.getHeader("Authorization");
+            String token = request.getHeader("X-AUTH-TOKEN");
             if(token == null || !jwtTokenProvider.validateToken(token)){
                 return null;
             }else{
