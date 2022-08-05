@@ -26,6 +26,9 @@ class GroupViewModel: ViewModel() {
     private val _groupMemberList = SingleLiveEvent<MutableList<Member>>()
     val groupMemberList: LiveData<MutableList<Member>> get() = _groupMemberList
 
+    private val _groupPermission = SingleLiveEvent<Int>()
+    val groupPermission: LiveData<Int> get() = _groupPermission
+
     private val _insertGroupInfo = SingleLiveEvent<GroupListResponse>()
     val insertGroupInfo: LiveData<GroupListResponse> get() = _insertGroupInfo
 
@@ -37,6 +40,9 @@ class GroupViewModel: ViewModel() {
     }
 
 
+    fun setGroupPermission(groupPermission: Int){
+        _groupPermission.postValue(groupPermission)
+    }
     fun getGroupList() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectAllGroups().let { response ->
@@ -45,25 +51,30 @@ class GroupViewModel: ViewModel() {
                    // list.sortBy { it.groupCreatedAt } // 최신순 정렬
                     _groupList.postValue(list)
                 }else{
-                    Log.d(TAG, "${response.code()}")
+                    Log.d(TAG, "getGroupList : ${response.code()}")
                 }
 
             }
         }
     }
 
-    fun selectGroupMembers(groupSeq: Int) {
+    fun selectGroupMembers(userSeq:Int, groupSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectGroupMembers(groupSeq).let { response ->
                 if(response.isSuccessful) {
                     var list = response.body()!! as MutableList<Member>
-                    Log.d(TAG, list.toString())
+                    Log.d(TAG, "selectGroupMembers : ${list}")
                     for(i in list){
-                        if(u)
+                        if(i.userSeq == userSeq){
+                            Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION: ${i.memberStatus} ")
+                            _groupPermission.postValue(i.memberStatus)
+                        }else{ // 그 외의 경우
+                            _groupPermission.postValue(3)
+                        }
                     }
                     _groupMemberList.postValue(list)
                 }else{
-                    Log.d(TAG, "${response.code()}")
+                    Log.d(TAG, "selectGroupMembers : ${response.code()}")
                 }
             }
         }
@@ -76,7 +87,7 @@ class GroupViewModel: ViewModel() {
                     var info = response.body()!! as GroupListResponse
                     _insertGroupInfo.postValue(info)
                 }else{
-                    Log.d(TAG, "${response.code()}")
+                    Log.d(TAG, "insertGroup: ${response.code()}")
                 }
             }
         }

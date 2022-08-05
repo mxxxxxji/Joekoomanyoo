@@ -2,11 +2,24 @@ package com.ssafy.heritage.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.ssafy.heritage.data.dto.User
 
 class SharedPreferencesUtil(context: Context) {
     private val sharedPreferencesName = "store_preference"
     private val preferences: SharedPreferences =
         context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+    // 사용자 정보 저장
+    fun saveUser(user: User){
+        val editor = preferences.edit()
+        user.userSeq?.let { editor.putInt("userSeq", it) }
+        editor.commit()
+    }
+
+    // 사용자 정보 불러오기
+    fun getUser(): Int {
+        return preferences.getInt("userSeq", 0)
+    }
 
     // 토큰 저장
     fun saveToken(token: String) {

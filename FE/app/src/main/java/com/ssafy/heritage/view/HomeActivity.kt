@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.ApplicationClass.Companion.sharedPreferencesUtil
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseActivity
@@ -50,6 +51,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun initObserver() {
         userViewModel.user.observe(this) {
             Log.d(TAG, "initObserver: $it")
+            ApplicationClass.sharedPreferencesUtil.saveUser(it)
         }
     }
 

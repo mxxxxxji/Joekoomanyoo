@@ -18,7 +18,7 @@ interface GroupService {
     suspend fun selectAllGroups(): Response<List<GroupListResponse>>
 
     // 모임을 삭제한다
-    @DELETE("/api/group/{groupSeq}")
+    @DELETE("/api/group/{groupSeq}/delete")
     suspend fun deleteGroup(@Path("groupSeq") groupSeq: Int): Response<Boolean>
 
     // 모임 활성화 여부를 등록한다
@@ -26,11 +26,11 @@ interface GroupService {
     suspend fun changeGroupActiveState(@Body body: Int): Response<Boolean>
 
     // 모임 상세정보를 조회한다
-    @GET("/api/group/{groupSeq}/simple")
+    @GET("/api/group/{groupSeq}/info")
     suspend fun selectGroupDetail(@Path("groupSeq") groupSeq: Int): Response<GroupListResponse>
 
     // 모임 정보를 수정한다
-    @PUT("/api/group/{groupSeq}/modify")
+    @PUT("/api/group/{groupSeq}/update")
     suspend fun modifyGroup(@Path("groupSeq") groupSeq: Int, @Body body: GroupAttribute): Response<Boolean>
 
     // 나의 모임 정보만 조회한다
@@ -61,7 +61,7 @@ interface GroupService {
 
 
     // 회원 목록을 조회한다
-    @GET("/api/group/{groupSeq}/member")
+    @GET("/api/group/{groupSeq}/member-list")
     suspend fun selectGroupMembers(@Path("groupSeq") groupSeq: Int): Response<List<Member>>
 
     // 회원 프로필을 조회한다
