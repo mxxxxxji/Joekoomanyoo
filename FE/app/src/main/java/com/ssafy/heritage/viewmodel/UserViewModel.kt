@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.data.dto.HeritageScrap
+import com.ssafy.heritage.data.dto.Keyword
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.dto.UserModify
 import com.ssafy.heritage.data.repository.Repository
@@ -39,6 +40,10 @@ class UserViewModel : ViewModel() {
     private val _scrapList = SingleLiveEvent<MutableList<HeritageScrap>>()
     val scrapList: LiveData<MutableList<HeritageScrap>>
         get() = _scrapList
+
+    private val _keywordList = SingleLiveEvent<MutableList<Keyword>>()
+    val keywordList: LiveData<MutableList<Keyword>>
+        get() = _keywordList
 
     fun setUser(user: User) {
         _user.value = user
@@ -223,6 +228,61 @@ class UserViewModel : ViewModel() {
                 } else {
                     Log.d(TAG, "${response.code()}")
                 }
+            }
+        }
+    }
+
+    // 내 키워드 목록 조회
+    fun getKeywordList(userSeq: Int) = viewModelScope.launch {
+        var response: Response<List<Keyword>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.selectAllMyKeyword(userSeq)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "getKeywordList response: $it")
+            if (it.isSuccessful) {
+                val list = it.body() as MutableList<Keyword>
+                _keywordList.postValue(list)
+            } else {
+
+            }
+        }
+    }
+
+    // 내 키워드 추가
+    fun insertKeyword(keyword: Keyword) = viewModelScope.launch {
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.insertMyKeyword(keyword)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "insertKeyword response: $it")
+            if (it.isSuccessful) {
+                getKeywordList(user.value?.userSeq!!)
+            } else {
+
+            }
+        }
+    }
+
+    // 내 키워드 삭제
+    fun deleteKeyword(myKeywordSeq: Int) = viewModelScope.launch {
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.deleteMyKeyword(myKeywordSeq)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "deleteKeyword response: $it")
+            if (it.isSuccessful) {
+                getKeywordList(user.value?.userSeq!!)
+            } else {
+
             }
         }
     }

@@ -54,6 +54,10 @@ class Repository constructor(context: Context) {
     suspend fun deleteHeritageScrap(userSeq: Int, heritageSeq: Int): Response<String> =
         userApi.deleteHeritageScrap(userSeq, heritageSeq)
 
+    suspend fun selectAllMyKeyword(userSeq: Int): Response<List<Keyword>> = userApi.selectAllMyKeyword(userSeq)
+    suspend fun insertMyKeyword(body: Keyword): Response<String> = userApi.insertMyKeyword(body)
+    suspend fun deleteMyKeyword(myKeywordSeq: Int): Response<String> = userApi.deleteMyKeyword(myKeywordSeq)
+
     // heritage
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()
     suspend fun insertHeritageReview(body: HeritageReviewListResponse): Response<String> =

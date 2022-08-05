@@ -5,20 +5,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ssafy.heritage.data.dto.Keyword
 import com.ssafy.heritage.databinding.ItemKeywordBinding
-import com.ssafy.heritage.listener.SettingListClickListener
+import com.ssafy.heritage.listener.KeywordListLongClickListener
 
-class KeywordListAdapter : ListAdapter<String, KeywordListAdapter.ViewHolder>(DiffCallback()) {
+class KeywordListAdapter : ListAdapter<Keyword, KeywordListAdapter.ViewHolder>(DiffCallback()) {
 
-    lateinit var settingListClickListener: SettingListClickListener
+    lateinit var kywordListLongClickListener: KeywordListLongClickListener
 
     inner class ViewHolder(private val binding: ItemKeywordBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: String) = with(binding) {
-            name = data
 
-            itemView.setOnClickListener {
-                settingListClickListener.onClick(bindingAdapterPosition, itemView)
+        fun bind(data: Keyword) = with(binding) {
+            name = data.myKeywordName
+
+            itemView.setOnLongClickListener {
+                kywordListLongClickListener.onClick(bindingAdapterPosition, data.myKeywordSeq)
+                true
             }
         }
     }
@@ -37,12 +40,12 @@ class KeywordListAdapter : ListAdapter<String, KeywordListAdapter.ViewHolder>(Di
         holder.bind(getItem(position))
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+    class DiffCallback : DiffUtil.ItemCallback<Keyword>() {
+        override fun areItemsTheSame(oldItem: Keyword, newItem: Keyword): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: Keyword, newItem: Keyword): Boolean {
             return oldItem == newItem
         }
     }

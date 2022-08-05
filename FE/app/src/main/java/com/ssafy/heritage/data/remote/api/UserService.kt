@@ -1,6 +1,7 @@
 package com.ssafy.heritage.data.remote.api
 
 import com.ssafy.heritage.data.dto.HeritageScrap
+import com.ssafy.heritage.data.dto.Keyword
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.dto.UserModify
 import retrofit2.Response
@@ -64,4 +65,15 @@ interface UserService {
     @DELETE("/api/mypage/scrap/{userSeq}/{heritageSeq}")
     suspend fun deleteHeritageScrap(@Path("userSeq") userSeq: Int, @Path("heritageSeq") heritageSeq: Int): Response<String>
 
+    // 내 키워드 리스트 불러온다
+    @GET("/api/mypage/keyword/list/{userSeq}")
+    suspend fun selectAllMyKeyword(@Path("userSeq") userSeq: Int): Response<List<Keyword>>
+
+    // 내 키워드 생성한다
+    @POST("/api/mypage/keyword")
+    suspend fun insertMyKeyword(@Body body: Keyword): Response<String>
+
+    // 내 키워드 삭제한다
+    @DELETE("/api/mypage/keyword/list/{myKeywordSeq}")
+    suspend fun deleteMyKeyword(@Path("myKeywordSeq") myKeywordSeq: Int): Response<String>
 }

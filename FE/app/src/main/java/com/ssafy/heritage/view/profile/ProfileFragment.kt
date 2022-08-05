@@ -15,6 +15,7 @@ import com.ssafy.heritage.adpter.KeywordListAdapter
 import com.ssafy.heritage.adpter.SettingListAdapter
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentProfileBinding
+import com.ssafy.heritage.listener.KeywordListLongClickListener
 import com.ssafy.heritage.listener.SettingListClickListener
 import com.ssafy.heritage.util.ProfileSetting.LOGOUT
 import com.ssafy.heritage.util.ProfileSetting.MODIFY_PROFILE
@@ -22,6 +23,8 @@ import com.ssafy.heritage.util.ProfileSetting.MY_TRIP
 import com.ssafy.heritage.util.ProfileSetting.SCHEDULE
 import com.ssafy.heritage.util.ProfileSetting.SCRAP
 import com.ssafy.heritage.util.ProfileSetting.SIGNOUT
+import com.ssafy.heritage.view.dialog.KeywordDialog
+import com.ssafy.heritage.view.dialog.YesOrNoDialog
 import com.ssafy.heritage.view.login.LoginActivity
 import com.ssafy.heritage.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -37,6 +40,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     private val keywordListAdapter: KeywordListAdapter by lazy { KeywordListAdapter() }
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
+    private val keywordDialog: KeywordDialog by lazy { KeywordDialog() }
+
     override fun init() {
 
         initAdapter()
@@ -44,6 +49,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         initObserver()
 
         initClickListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        userViewModel.getKeywordList(userViewModel.user.value?.userSeq!!)
     }
 
     private fun initAdapter() = with(binding) {
@@ -95,19 +105,31 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = keywordListAdapter
 
-            keywordListAdapter.submitList(keyowrd_list)
+            keywordListAdapter.kywordListLongClickListener = object : KeywordListLongClickListener {
+                override fun onClick(position: Int, scrapSeq: Int) {
+                    val yesOrNoDialog =
+                        YesOrNoDialog(title = "태그를 삭제할까요",
+                            positive = "삭제",
+                            negative = "취소",
+                            positiveClick = { userViewModel.deleteKeyword(scrapSeq) },
+                            negativeClick = { }
+                        )
+
+                    yesOrNoDialog.show(childFragmentManager, "yesOrNoDialog")
+                }
+            }
         }
 
     }
 
     private fun initObserver() {
 
-        userViewModel.user.observe(viewLifecycleOwner){
+        userViewModel.user.observe(viewLifecycleOwner) {
             binding.user = it
         }
-        /*
-        키워드 목록 받아와야함
-         */
+        userViewModel.keywordList.observe(viewLifecycleOwner) {
+            keywordListAdapter.submitList(it)
+        }
     }
 
     private fun initClickListener() = with(binding) {
@@ -115,6 +137,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         // 설정 아이콘 클릭시
         btnSetting.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_settingFragment)
+        }
+
+        // 키워드 추가 클릭시
+        btnAddKeyword.setOnClickListener {
+            keywordDialog.show(childFragmentManager, "keywordDialog")
         }
     }
 
@@ -146,10 +173,4 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     private fun makeToast(msg: String) {
         Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
     }
-
-
-    /*
-    더미 데이터
-     */
-    val keyowrd_list = arrayListOf<String>("운전가능", "강한 뚜벅이", "수다쟁이", "수다쟁이", "문화초보")
 }
