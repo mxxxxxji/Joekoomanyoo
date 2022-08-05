@@ -8,4 +8,6 @@ public interface MyScheduleRepository extends JpaRepository<MyScheduleEntity, In
     MyScheduleEntity findByMyScheduleSeq(int myScheduleSeq);
 
     void deleteByMyScheduleSeq(int myScheduleSeq);
+
+    void deleteAllByUserSeq(int userSeq);
 }

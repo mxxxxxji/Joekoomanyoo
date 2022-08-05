@@ -78,6 +78,7 @@ public class HeritageService {
     }
 
     // 리뷰 리스트 반환
+    @Transactional
     public List<HeritageReivewDto> reviewList(int heritageSeq) {
         List<HeritageReviewEntity> list = heritageReviewRepository.findAllByHeritageSeq(heritageSeq);
         List<HeritageReivewDto> listDto= new ArrayList<>();
@@ -90,6 +91,7 @@ public class HeritageService {
 
 
     // 스크랩 등록
+    @Transactional
     public boolean createScrap(HeritageScrapDto heritageScrapDto){
         HeritageScrapEntity heritageScrapEntity = HeritageScrapMapper.MAPPER.toEntity(heritageScrapDto);
 
@@ -116,6 +118,7 @@ public class HeritageService {
     }
 
     // 유저 scrap 리스트 반환
+    @Transactional
     public List<HeritageDto> myScrapList(int userSeq) {
         // 유저 번호로 스크랩 목록들 가져오기
         // 그 목록들의 번호로 문화유산 DTO에 담아주기
@@ -129,6 +132,7 @@ public class HeritageService {
     }
     
     // 유저 scrap 삭제
+    @Transactional
     public boolean deleteScrap(int userSeq, int heritageSeq) {
         // 값이 없으면 false
         if(heritageScrapRepositoryCustom.findByUserSeqAndHeritageSeq(userSeq, heritageSeq) == null){
@@ -149,6 +153,4 @@ public class HeritageService {
             return heritageScrapRepositoryCustom.deleteByUserSeqAndHeritageSeq(userSeq, heritageSeq);
         }
     }
-
-
 }

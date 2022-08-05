@@ -66,7 +66,7 @@ public class HeritageController {
      * @return String
      */
 
-    @ApiOperation(value = "화 유산 리뷰 삭제 ", response = String.class)
+    @ApiOperation(value = "문화 유산 리뷰 삭제 ", response = String.class)
     @DeleteMapping("/review/{heritageReviewSeq}/{heritageSeq}")
     public ResponseEntity<String> deleteReview(@PathVariable("heritageReviewSeq") int heritageReviewSeq, @PathVariable("heritageSeq") int heritageSeq){
 

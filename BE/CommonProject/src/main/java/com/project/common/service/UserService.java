@@ -3,6 +3,10 @@ package com.project.common.service;
 import com.project.common.dto.User.UserDto;
 import com.project.common.dto.User.UserMapper;
 import com.project.common.entity.User.UserEntity;
+import com.project.common.repository.Heritage.HeritageScrapRepository;
+import com.project.common.repository.My.MyDailyMemoRepository;
+import com.project.common.repository.My.MyScheduleRepository;
+import com.project.common.repository.User.UserKeywordRepository;
 import com.project.common.repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +22,11 @@ public class UserService{
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final HeritageScrapRepository heritageScrapRepository;
+    private final UserKeywordRepository userKeywordRepository;
+    private final MyScheduleRepository myScheduleRepository;
+    private final MyDailyMemoRepository myDailyMemoRepository;
+
 
     // 회원가입
     @Transactional
@@ -45,6 +54,17 @@ public class UserService{
         }else{
             // 사용자가 존재하면 삭제표시
             userEntity.setIsDeleted('Y');
+
+            int userSeq = userEntity.getUserSeq();
+            // 탈퇴 처리 되면서 같이 바뀌는 것들
+            // 문화유산 스크랩 목록 삭제
+            heritageScrapRepository.deleteAllByUserSeq(userSeq);
+            // 내 키워드 삭제
+            userKeywordRepository.deleteAllByUserSeq(userSeq);
+            // 나의 일정들 삭제
+            myScheduleRepository.deleteAllByUserSeq(userSeq);
+            // 데일리 메모 삭제
+            myDailyMemoRepository.deleteAllByUserSeq(userSeq);
             return true;
         }
     }

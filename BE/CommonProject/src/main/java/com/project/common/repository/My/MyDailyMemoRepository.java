@@ -8,4 +8,6 @@ public interface MyDailyMemoRepository extends JpaRepository<MyDailyMemoEntity, 
     MyDailyMemoEntity findByMyDailyMemoSeq(int myDailyMemoSeq);
 
     void deleteByMyDailyMemoSeq(int myDailyMemoSeq);
+
+    void deleteAllByUserSeq(int userSeq);
 }

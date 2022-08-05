@@ -9,7 +9,5 @@ public interface HeritageScrapRepository extends JpaRepository<HeritageScrapEnti
 
     List<HeritageScrapEntity> findAllByUserSeq(int userSeq);
 
-    HeritageScrapEntity findByHeritageSeq(int heritageSeq);
-
-    HeritageScrapEntity findByUserSeq(int userSeq);
+    void deleteAllByUserSeq(int userSeq);
 }

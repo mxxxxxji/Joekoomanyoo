@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface UserKeywordRepository extends JpaRepository<UserKeywordEntity, Integer> {
 
-    UserKeywordEntity findByUserSeq(int userSeq);
-
     List<UserKeywordEntity> findAllByUserSeq(int userSeq);
 
     UserKeywordEntity findByMyKeywordSeq(int myKeywordSeq);
 
     void deleteByMyKeywordSeq(int myKeywordSeq);
+
+    void deleteAllByUserSeq(int userSeq);
 }
