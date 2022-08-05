@@ -7,8 +7,9 @@ import org.springframework.stereotype.Repository;
 import com.project.common.entity.Group.GroupEntity;
 
 @Repository
-public interface GroupRepository extends JpaRepository<GroupEntity, Long> {
+public interface GroupRepository extends JpaRepository<GroupEntity, Integer> {
 
-	GroupEntity findByGroupSeq(long groupSeq);
+	GroupEntity findByGroupSeq(int groupSeq);
+
 
 }

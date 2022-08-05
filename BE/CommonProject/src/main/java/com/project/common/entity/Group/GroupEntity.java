@@ -10,8 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.project.common.entity.User.UserEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,9 +33,9 @@ public class GroupEntity {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="group_seq")
-	private Long groupSeq;
+	private int groupSeq;
     
-	// 스터디 기본 정보 //
+	// 모임 기본 정보 //
 	@Column(name="group_name")
     private String name;
     
@@ -76,15 +80,19 @@ public class GroupEntity {
 
     @Column(name="group_status")
    	private char status;
-
+    
     // 모임 설정 정보 //
     @Column(name="group_created_at")
     private LocalDateTime createdTime;
     
     @Column(name="group_updated_at")
     private LocalDateTime updatedTime;
+
+    @ManyToOne
+	@JoinColumn(name="user_seq")
+	private UserEntity user;
     
-    
+
     // 모임 멤버 //
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @Builder.Default
@@ -96,7 +104,7 @@ public class GroupEntity {
     	groupMember.setGroup(this);
     }
 
-    public void removeGroupMember(long	userSeq) {
+    public void removeGroupMember(int userSeq) {
         this.members.removeIf(groupMember ->
                 groupMember.getUserSeq()==userSeq);
     }

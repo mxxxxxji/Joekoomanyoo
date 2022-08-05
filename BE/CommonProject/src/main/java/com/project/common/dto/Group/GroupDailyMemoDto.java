@@ -1,17 +1,15 @@
 package com.project.common.dto.Group;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.time.LocalDateTime;
 
 import com.project.common.entity.Group.GroupDailyMemoEntity;
 import com.project.common.entity.Group.GroupEntity;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -32,8 +30,6 @@ public class GroupDailyMemoDto {
 		this.gdmDate = memo.getGdmDate();
 		this.gdmCreatedAt = memo.getGdmCreatedAt();
 	}
-    
-    
 	
     public GroupDailyMemoEntity toEntity(){
         return GroupDailyMemoEntity.builder()
@@ -44,10 +40,7 @@ public class GroupDailyMemoDto {
                 .gdmUpdatedAt(gdmUpdatedAt)
                 .group(group)
                 .build();
-
     }
-
-
 
 }
 

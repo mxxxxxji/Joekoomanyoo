@@ -10,8 +10,8 @@ import lombok.*;
 @ToString
 public class GroupMemberListDto {
 
-	private long memberSeq;
-	private long groupSeq;
+	private int memberSeq;
+	private int groupSeq;
 	private int memberStatus;
 	private String memberAppeal;
 	private char memberIsEvaluated;

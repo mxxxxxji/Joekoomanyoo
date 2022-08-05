@@ -22,20 +22,8 @@ public class GroupDailyMemoService{
 	private final GroupDailyMemoRepository groupDailyMemoRepository;
 	private final GroupService groupService;
 
-	
-	//그륩 메모 찾기(그륩 번호로)
-	public List<GroupDailyMemoEntity> findMemo(long groupSeq) {
-		List<GroupDailyMemoEntity> findMemo = new ArrayList<>();
-		for(GroupDailyMemoEntity entity: groupDailyMemoRepository.findAll()) {
-			if(entity.getGroup().getGroupSeq()==groupSeq) {
-				findMemo.add(entity);
-			}
-		}
-		return findMemo;
-	}
-	
-	//메모 조회
-	public List<GroupDailyMemoDto> getMemoList(long groupSeq){
+	//데일리 메모 조회
+	public List<GroupDailyMemoDto> getMemoList(int groupSeq){
 		List<GroupDailyMemoDto> list = new ArrayList<>();
 		for(GroupDailyMemoEntity entity : groupDailyMemoRepository.findAll()) {
 			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
@@ -47,9 +35,9 @@ public class GroupDailyMemoService{
 		return list;
 	}
 	
-	//메모 등록
+	//데일리 메모 등록
 	@Transactional
-	public GroupDailyMemoDto createGroupMemo(long groupSeq, GroupDailyMemoDto gdmDto) {
+	public GroupDailyMemoDto createGroupMemo(int groupSeq, GroupDailyMemoDto gdmDto) {
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDailyMemoEntity entity:group.getMemos()) {
 			if(entity.getGdmDate()==gdmDto.getGdmDate()) {
@@ -61,10 +49,12 @@ public class GroupDailyMemoService{
 		return gdmDto;
 	}
 	
-	//메모 삭제
+	//데일리 메모 삭제
 	@Transactional
-	public void deleteGroupMemo(long groupSeq, GroupDailyMemoDto gdmDto) {
+	public void deleteGroupMemo(int groupSeq, GroupDailyMemoDto gdmDto) {
 		List<GroupDailyMemoEntity> memos= findMemo(groupSeq);
+		if(memos==null) 
+			throw new IllegalArgumentException("등록된 메모가 없습니다");
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDailyMemoEntity entity : memos) {
 			if(entity.getGdmDate()==gdmDto.getGdmDate()) {
@@ -74,9 +64,9 @@ public class GroupDailyMemoService{
 		}
 	}
 	
-	//메모 수정
+	//데일리 메모 수정
 	@Transactional
-	public GroupDailyMemoDto modifyGroupMemo(long groupSeq, GroupDailyMemoDto gdmDto) {
+	public GroupDailyMemoDto modifyGroupMemo(int groupSeq, GroupDailyMemoDto gdmDto) {
 		for(GroupDailyMemoEntity entity: findMemo(groupSeq)) {
 			if(entity !=null && entity.getGdmDate()==gdmDto.getGdmDate()) {
 				entity.setGdmContent(gdmDto.getGdmContent());
@@ -85,6 +75,17 @@ public class GroupDailyMemoService{
 			}
 		}
 		return gdmDto;
+	}
+	
+	//해당 모임 메모 찾기
+	public List<GroupDailyMemoEntity> findMemo(int groupSeq) {
+		List<GroupDailyMemoEntity> findMemo = new ArrayList<>();
+		for(GroupDailyMemoEntity entity: groupDailyMemoRepository.findAll()) {
+			if(entity.getGroup().getGroupSeq()==groupSeq) {
+				findMemo.add(entity);
+			}
+		}
+		return findMemo;
 	}
 
 }

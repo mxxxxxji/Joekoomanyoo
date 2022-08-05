@@ -1,7 +1,5 @@
 package com.project.common.entity.Group;
 
-
-
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -28,7 +26,7 @@ public class GroupDailyMemoEntity {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gdm_seq")
-	private long gdmSeq;
+	private int gdmSeq;
 	
 	@Column(name = "gdm_content")
     private String gdmContent;
@@ -45,6 +43,5 @@ public class GroupDailyMemoEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="group_seq")
 	private GroupEntity group;
-
 
 }

@@ -24,7 +24,6 @@ public class GroupMyListDto {
    	private char withGlobal;
    	private char active;
    	private char status;
-	
    	private int memberStatus;
 	private char memberIsEvaluated;
 	

@@ -31,21 +31,21 @@ public class GroupDailyMemoController {
     //메모 조회
     @ApiOperation(value = "모임 데일리 메모 조회")
     @GetMapping("/memo-list")
-    public ResponseEntity<List<GroupDailyMemoDto>> getMemberList(@PathVariable("groupSeq") long groupSeq) throws Exception{
+    public ResponseEntity<List<GroupDailyMemoDto>> getMemberList(@PathVariable("groupSeq") int groupSeq) throws Exception{
     	return new ResponseEntity<>(groupDailyMemoService.getMemoList(groupSeq),HttpStatus.OK);
     }
     
     //메모 등록
     @ApiOperation(value = "모임 데일리 메모 생성")
     @PostMapping("/memo-create")
-    public ResponseEntity<GroupDailyMemoDto> createGroupMemo(@RequestBody GroupDailyMemoDto gdmDto, @PathVariable long groupSeq){
+    public ResponseEntity<GroupDailyMemoDto> createGroupMemo(@RequestBody GroupDailyMemoDto gdmDto, @PathVariable int groupSeq){
     	return new ResponseEntity<>(groupDailyMemoService.createGroupMemo(groupSeq,gdmDto),HttpStatus.CREATED);
     }
     
     //메모 삭제
    	@ApiOperation(value = "모임 데일리 메모 삭제")
    	@DeleteMapping("/memo-delete")
-   	public ResponseEntity<?> deleteDailyMemo(@RequestBody GroupDailyMemoDto gdmDto, @PathVariable long groupSeq){
+   	public ResponseEntity<?> deleteDailyMemo(@RequestBody GroupDailyMemoDto gdmDto, @PathVariable int groupSeq){
    		groupDailyMemoService.deleteGroupMemo(groupSeq,gdmDto);
    	 	return new ResponseEntity<>(HttpStatus.OK);
    	}
@@ -53,7 +53,7 @@ public class GroupDailyMemoController {
    	//메모 수정
   	@ApiOperation(value = "모임 데일리 메모 수정")
   	@PutMapping("/memo-modify")
-  	public ResponseEntity<GroupDailyMemoDto> modifyDailyMemo(@RequestBody GroupDailyMemoDto gdmDto, @PathVariable long groupSeq){
+  	public ResponseEntity<GroupDailyMemoDto> modifyDailyMemo(@RequestBody GroupDailyMemoDto gdmDto, @PathVariable int groupSeq){
   		return new ResponseEntity<>(groupDailyMemoService.modifyGroupMemo(groupSeq,gdmDto),HttpStatus.OK);
   	}
 }

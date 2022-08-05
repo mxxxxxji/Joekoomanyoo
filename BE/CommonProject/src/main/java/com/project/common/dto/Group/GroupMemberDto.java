@@ -17,7 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class GroupMemberDto {
-	private long memberSeq;
+	private int memberSeq;
 	private int memberStatus;
 	private String memberAppeal;
 	private char memberIsEvaluated;
@@ -25,11 +25,11 @@ public class GroupMemberDto {
 	private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
 	private GroupEntity group;
-    private long userSeq;
-	
+    private int userSeq;
+    
 	@Builder
-	public GroupMemberDto(long memberSeq, int memberStatus, String memberAppeal, char memberIsEvaluated,
-			Date memberInAt, LocalDateTime createdTime, LocalDateTime updatedTime, GroupEntity group, long userSeq) {
+	public GroupMemberDto(int memberSeq, int memberStatus, String memberAppeal, char memberIsEvaluated,
+			Date memberInAt, LocalDateTime createdTime, LocalDateTime updatedTime, GroupEntity group, int userSeq) {
 		super();
 		this.memberSeq = memberSeq;
 		this.memberStatus = memberStatus;
@@ -41,7 +41,7 @@ public class GroupMemberDto {
 		this.group = group;
 		this.userSeq = userSeq;
 	}
-
+	
     public GroupMemberEntity toEntity(){
         return GroupMemberEntity.builder()
                 .memberSeq(memberSeq)
@@ -53,7 +53,6 @@ public class GroupMemberDto {
                 .createdTime(createdTime)
                 .updatedTime(updatedTime)
                 .group(group).build();
-
     }
 
 }

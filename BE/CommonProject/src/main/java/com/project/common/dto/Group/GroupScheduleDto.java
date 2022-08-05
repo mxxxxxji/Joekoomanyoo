@@ -18,18 +18,21 @@ import lombok.ToString;
 
 public class GroupScheduleDto {
 
-	private long gsSeq;
+	private int gsSeq;
     private String gsContent;
 	private long gsDateTime;
 	private LocalDateTime gsRegisteredAt;
     private LocalDateTime gsUpdatedAt;
 	private GroupEntity group;
     
-    @Builder
+ 
 	public GroupScheduleDto(GroupScheduleEntity schedule) {
 		this.gsContent = schedule.getGsContent();
 		this.gsDateTime = schedule.getGsDateTime();
 	}
+	
+	
+	
 	
     public GroupScheduleEntity toEntity(){
         return GroupScheduleEntity.builder()
@@ -41,5 +44,19 @@ public class GroupScheduleDto {
                 .group(group)
                 .build();
     }
+
+
+
+    @Builder
+	public GroupScheduleDto(int gsSeq, String gsContent, long gsDateTime, LocalDateTime gsRegisteredAt,
+			LocalDateTime gsUpdatedAt, GroupEntity group) {
+		super();
+		this.gsSeq = gsSeq;
+		this.gsContent = gsContent;
+		this.gsDateTime = gsDateTime;
+		this.gsRegisteredAt = gsRegisteredAt;
+		this.gsUpdatedAt = gsUpdatedAt;
+		this.group = group;
+	}
 }
 
