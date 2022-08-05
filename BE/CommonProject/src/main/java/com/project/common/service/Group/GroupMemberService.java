@@ -37,11 +37,11 @@ public class GroupMemberService{
 	}
 	
 	//모임 멤버 조회
-	public List<GroupMemberDto> getMemberList(long groupSeq){
-		List<GroupMemberDto> list = new ArrayList<>();
+	public List<GroupMemberListDto> getMemberList(long groupSeq){
+		List<GroupMemberListDto> list = new ArrayList<>();
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
 			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
-				list.add(new GroupMemberDto(entity));
+				list.add(new GroupMemberListDto(entity));
 			}
 		}
 		return list;

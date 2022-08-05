@@ -42,15 +42,6 @@ public class GroupMemberDto {
 		this.userSeq = userSeq;
 	}
 	
-	@Builder
-	public GroupMemberDto(GroupMemberEntity member) {
-		this.memberSeq = member.getMemberSeq();
-		this.memberStatus = member.getMemberStatus();
-		this.memberAppeal = member.getMemberAppeal();
-		this.memberIsEvaluated = member.getMemberIsEvaluated();
-		this.userSeq = member.getUserSeq();
-		this.group = member.getGroup();
-	}
 	
     public GroupMemberEntity toEntity(){
         return GroupMemberEntity.builder()
