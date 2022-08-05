@@ -133,4 +133,20 @@ public class GroupEntity {
 //        groupSchedule.getUserSeq()==userSeq);
 //    }
     
+    // 모임 일정 //
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<GroupScheduleEntity> schedules = new ArrayList<>();
+    
+    // 모임 일정 Method //
+    public void addGroupSchedule(GroupScheduleEntity groupSchedule) {
+    	this.schedules.add(groupSchedule);
+    	groupSchedule.setGroup(this);
+    }
+
+    public void removeGroupSchedule(long gsDateTime) {
+        this.schedules.removeIf(groupSchedule ->
+        groupSchedule.getGsDateTime()==gsDateTime);
+    }
+    
 }
