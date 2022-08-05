@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 
 import com.project.common.entity.Group.GroupDailyMemoEntity;
 import com.project.common.entity.Group.GroupEntity;
-import com.project.common.entity.Group.GroupMemberEntity;
 
 @Getter
 @Setter
