@@ -111,13 +111,16 @@ public class HeritageService {
     }
 
     // 유저 scrap 리스트 반환
-    public List<HeritageScrapDto> myScrapList(int userSeq) {
+    public List<HeritageDto> myScrapList(int userSeq) {
+        // 유저 번호로 스크랩 목록들 가져오기
+        // 그 목록들의 번호로 문화유산 DTO에 담아주기
+        // 그 리스트를 반환
         List<HeritageScrapEntity> list = heritageScrapRepository.findAllByUserSeq(userSeq);
-        List<HeritageScrapDto> listDto = new ArrayList<>();
+        List<HeritageDto> listHeritageDto = new ArrayList<>();
         for(HeritageScrapEntity heritageScrapEntity : list){
-            listDto.add(HeritageScrapMapper.MAPPER.toDto(heritageScrapEntity));
+            listHeritageDto.add(HeritageMapper.MAPPER.toDto(heritageRepository.findByHeritageSeq(heritageScrapEntity.getHeritageSeq())));
         }
-        return listDto;
+        return listHeritageDto;
     }
     
     // 유저 scrap 삭제

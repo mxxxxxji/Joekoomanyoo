@@ -1,5 +1,6 @@
 package com.project.common.controller;
 
+import com.project.common.dto.Heritage.HeritageDto;
 import com.project.common.dto.Heritage.HeritageScrapDto;
 import com.project.common.dto.My.MyDailyMemoDto;
 import com.project.common.dto.My.MyScheduleDto;
@@ -37,18 +38,18 @@ public class MyPageController {
     /**
      * 내 문화 유산 스크랩 목록 불러오기
      *
-     * @param
+     * @param userSeq
      * @return List
      */
 
     @GetMapping("/scrap/{userSeq}")
     @ApiOperation(value = "내 문화 유산 스크랩 목록 불러오기", response = List.class)
     public ResponseEntity<?> myScrapList(@PathVariable("userSeq") int userSeq) {
-        List<HeritageScrapDto> list = heritageService.myScrapList(userSeq);
+        List<HeritageDto> list = heritageService.myScrapList(userSeq);
         if (list.size() == 0) {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<List<HeritageScrapDto>>(list, HttpStatus.OK);
+            return new ResponseEntity<List<HeritageDto>>(list, HttpStatus.OK);
         }
     }
 
