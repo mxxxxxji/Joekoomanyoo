@@ -32,7 +32,7 @@ public class GroupMemberController {
     //모임 멤버 목록 조회
     @ApiOperation(value = "모임 멤버 목록 조회")
     @GetMapping("/member-list")
-    public ResponseEntity<List<GroupMemberListDto>> getMemberList(@PathVariable("groupSeq") long groupSeq) throws Exception{
+    public ResponseEntity<List<GroupMemberDto>> getMemberList(@PathVariable("groupSeq") long groupSeq) throws Exception{
     	return new ResponseEntity<>(groupMemberService.getMemberList(groupSeq),HttpStatus.OK);
     }
     
@@ -45,7 +45,7 @@ public class GroupMemberController {
 	}
 		
 	 //탈퇴
-	@ApiOperation(value = "모임 탈퇴")
+	@ApiOperation(value = "모임 탈퇴 / 가입 거절 / 가입 취소 / 강제 퇴장 ")
 	@DeleteMapping("/member-leave")
 	public ResponseEntity<?> leaveGroup(@RequestBody GroupBasicReqDto groupLeaveRequestDto){
 		groupMemberService.leaveGroup(groupLeaveRequestDto);

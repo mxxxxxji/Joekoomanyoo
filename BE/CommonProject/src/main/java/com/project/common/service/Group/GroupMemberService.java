@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.common.dto.Group.GroupBasicReqDto;
 import com.project.common.dto.Group.GroupJoinReqDto;
+import com.project.common.dto.Group.GroupMemberDto;
 import com.project.common.dto.Group.GroupMemberListDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
@@ -35,12 +36,12 @@ public class GroupMemberService{
 		return findMember;
 	}
 	
-	//멤버 목록
-	public List<GroupMemberListDto> getMemberList(long groupSeq){
-		List<GroupMemberListDto> list = new ArrayList<>();
+	//모임 멤버 조회
+	public List<GroupMemberDto> getMemberList(long groupSeq){
+		List<GroupMemberDto> list = new ArrayList<>();
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
 			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
-				list.add(new GroupMemberListDto(entity));
+				list.add(new GroupMemberDto(entity));
 			}
 		}
 		return list;
