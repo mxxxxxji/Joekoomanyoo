@@ -55,8 +55,7 @@ class ScrapListFragment : BaseFragment<FragmentScrapListBinding>(R.layout.fragme
 
     private fun initObserver() {
         userViewModel.scrapList.observe(viewLifecycleOwner) {
-
-            // 스크랩 목록 박아서 뿌려주기
+            heritageAdapter.submitList(it)
         }
     }
 }

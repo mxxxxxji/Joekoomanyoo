@@ -1,9 +1,6 @@
 package com.ssafy.heritage.data.remote.api
 
-import com.ssafy.heritage.data.dto.HeritageScrap
-import com.ssafy.heritage.data.dto.Keyword
-import com.ssafy.heritage.data.dto.User
-import com.ssafy.heritage.data.dto.UserModify
+import com.ssafy.heritage.data.dto.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -59,7 +56,7 @@ interface UserService {
 
     // 문화유산 스크랩 목록을 불러온다
     @GET("/api/mypage/scrap/{userSeq}")
-    suspend fun selectAllScraps(@Path("userSeq") userSeq: Int): Response<List<HeritageScrap>>
+    suspend fun selectAllScraps(@Path("userSeq") userSeq: Int): Response<List<Heritage>>
 
     // 문화유산 스크랩을 삭제한다
     @DELETE("/api/mypage/scrap/{userSeq}/{heritageSeq}")

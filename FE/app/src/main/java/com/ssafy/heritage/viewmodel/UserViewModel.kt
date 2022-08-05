@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputLayout
-import com.ssafy.heritage.data.dto.HeritageScrap
-import com.ssafy.heritage.data.dto.Keyword
-import com.ssafy.heritage.data.dto.User
-import com.ssafy.heritage.data.dto.UserModify
+import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.event.Event
 import com.ssafy.heritage.util.SingleLiveEvent
@@ -37,8 +34,8 @@ class UserViewModel : ViewModel() {
     val user: LiveData<User>
         get() = _user
 
-    private val _scrapList = SingleLiveEvent<MutableList<HeritageScrap>>()
-    val scrapList: LiveData<MutableList<HeritageScrap>>
+    private val _scrapList = MutableLiveData<MutableList<Heritage>>()
+    val scrapList: LiveData<MutableList<Heritage>>
         get() = _scrapList
 
     private val _keywordList = SingleLiveEvent<MutableList<Keyword>>()
@@ -222,7 +219,7 @@ class UserViewModel : ViewModel() {
             // 함수 호출 후 비동기적으로 응답 받음
             repository.selectAllScraps(user.value!!.userSeq!!).let { response ->
                 if (response.isSuccessful) {
-                    var list = response.body()!! as MutableList<HeritageScrap>
+                    var list = response.body()!! as MutableList<Heritage>
                     _scrapList.postValue(list)
                     Log.d(TAG, "getScrapLIst: ${list}")
                 } else {

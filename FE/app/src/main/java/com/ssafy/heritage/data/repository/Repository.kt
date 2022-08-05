@@ -50,7 +50,7 @@ class Repository constructor(context: Context) {
         userApi.checkPassword(map)
     suspend fun insertHeritageScrap(scrap: HeritageScrap): Response<String> =
         userApi.insertHeritageScrap(scrap)
-    suspend fun selectAllScraps(userSeq: Int): Response<List<HeritageScrap>> = userApi.selectAllScraps(userSeq)
+    suspend fun selectAllScraps(userSeq: Int): Response<List<Heritage>> = userApi.selectAllScraps(userSeq)
     suspend fun deleteHeritageScrap(userSeq: Int, heritageSeq: Int): Response<String> =
         userApi.deleteHeritageScrap(userSeq, heritageSeq)
 
