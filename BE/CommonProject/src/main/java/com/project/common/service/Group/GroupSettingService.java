@@ -18,14 +18,14 @@ public class GroupSettingService{
 	private final GroupRepository groupRepository;
 
 	//모임 상태 변경
-	public GroupDto changeStatus(Long groupSeq,GroupSettingDto groupSettingDto) {
+	public GroupDto changeStatus(int groupSeq,GroupSettingDto groupSettingDto) {
 		GroupEntity group =groupRepository.findById(groupSeq).orElse(null);
 		group.setStatus(groupSettingDto.getGroupStatus());
 		return GroupMapper.MAPPER.toDto(groupRepository.save(group));
 	}
 	
 	//모임 활성화 여부 변경
-	public GroupDto changeActive(Long groupSeq,GroupSettingDto groupSettingDto) {
+	public GroupDto changeActive(int groupSeq,GroupSettingDto groupSettingDto) {
 		GroupEntity group =groupRepository.findById(groupSeq).orElse(null);
 		group.setActive(groupSettingDto.getGroupActive());
 		return GroupMapper.MAPPER.toDto(groupRepository.save(group));

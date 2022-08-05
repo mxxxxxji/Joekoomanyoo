@@ -16,7 +16,7 @@ public class GroupMemberEntity {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_seq")
-	private long memberSeq;
+	private int memberSeq;
 	
 	@Column(name = "member_status")
 	private int memberStatus;
@@ -37,7 +37,7 @@ public class GroupMemberEntity {
     private LocalDateTime updatedTime;
 	
     @Column(name = "user_seq")
-    private long userSeq;
+    private int userSeq;
     
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="group_seq")

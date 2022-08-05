@@ -28,14 +28,14 @@ public class GroupSettingController {
     //모임 상태 변경 (R(모집), O(진행), F(종료))
     @ApiOperation(value = "모임 상태 변경 - R(모집), O(진행), F(종료)")
     @PutMapping("/{groupSeq}/status")
-    public ResponseEntity<GroupDto> changeStatus(@PathVariable("groupSeq") Long groupSeq, @RequestBody GroupSettingDto groupSettingDto){
+    public ResponseEntity<GroupDto> changeStatus(@PathVariable("groupSeq") int groupSeq, @RequestBody GroupSettingDto groupSettingDto){
     	return new ResponseEntity<>(groupSettingService.changeStatus(groupSeq,groupSettingDto),HttpStatus.OK);
     }
     
     //모임 활성화/비활성화
     @ApiOperation(value = "모임 활성화 여부 - Y(활성화), N(비활성화)")
     @PutMapping("/{groupSeq}/active")
-    public ResponseEntity<GroupDto> changeActive(@PathVariable("groupSeq") Long groupSeq, @RequestBody GroupSettingDto groupSettingDto){
+    public ResponseEntity<GroupDto> changeActive(@PathVariable("groupSeq") int groupSeq, @RequestBody GroupSettingDto groupSettingDto){
     	return new ResponseEntity<>(groupSettingService.changeActive(groupSeq,groupSettingDto),HttpStatus.OK);
     }
     

@@ -13,6 +13,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.common.entity.Group.GroupEntity;
+import com.project.common.entity.Group.GroupMemberEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -121,6 +125,23 @@ public class UserEntity implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+    
+    
+    
+    
+    // 모임 추가 //
+    @Builder.Default @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<GroupEntity> groups = new ArrayList<>();
+    
+    // 모임 추가 Method //
+    public void addGroup(GroupEntity group) {
+    	this.groups.add(group);
+    	group.setUser(this);
+    }
 
+    public void removeGroup(int groupSeq) {
+        this.groups.removeIf(group -> group.getGroupSeq()==groupSeq);
+    }
 
 }
