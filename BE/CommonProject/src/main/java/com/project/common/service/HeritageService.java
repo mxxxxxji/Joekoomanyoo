@@ -25,6 +25,7 @@ public class HeritageService {
     private final HeritageScrapRepository heritageScrapRepository;
     private final HeritageScrapRepositoryCustom heritageScrapRepositoryCustom;
 
+    // 문화유산 리스트
     @Transactional
     public List<HeritageDto> listInfo() throws Exception {
         List<HeritageDto> list = new ArrayList<>();
@@ -34,6 +35,7 @@ public class HeritageService {
         return list;
     }
 
+    // 리뷰 등록
     @Transactional
     public boolean createReview(HeritageReivewDto heritageReivewDto) {
         HeritageReviewEntity heritageReviewEntity = HeritageReviewMapper.MAPPER.toEntity(heritageReivewDto);
@@ -41,6 +43,31 @@ public class HeritageService {
         if (heritageReviewEntity == null) {
             return false;
         } else {
+            return true;
+        }
+    }
+
+    // 리뷰 삭제
+    @Transactional
+    public boolean deleteReview(int heritageReviewSeq, int heritageSeq) {
+        // 리뷰가 없으면 false
+        if(heritageReviewRepository.findByHeritageReviewSeq(heritageReviewSeq) == null){
+            return false;
+        }else{
+            // 리뷰 개수 줄이기 ( 문화유산에 )
+            HeritageEntity heritageEntity = heritageRepository.findByHeritageSeq(heritageSeq);
+            
+            // 리뷰 개수 하나 줄이기
+            int cnt = heritageEntity.getHeritageReviewCnt() - 1;
+
+            // 개수 entity에 세팅하기
+            heritageEntity.setHeritageReviewCnt(cnt);
+
+            // 개수 heritage DB에 저장하기
+            heritageRepository.save(heritageEntity);
+
+            // 리뷰 삭제하기
+            heritageReviewRepository.deleteByHeritageReviewSeq(heritageReviewSeq);
             return true;
         }
     }
@@ -54,6 +81,8 @@ public class HeritageService {
         }
         return listDto;
     }
+
+
 
     // 스크랩 등록
     public boolean createScrap(HeritageScrapDto heritageScrapDto){
@@ -112,4 +141,6 @@ public class HeritageService {
             return heritageScrapRepositoryCustom.deleteByUserSeqAndHeritageSeq(userSeq, heritageSeq);
         }
     }
+
+
 }

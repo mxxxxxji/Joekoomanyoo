@@ -59,6 +59,26 @@ public class HeritageController {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * 문화 유산 리뷰 삭제
+     * @param  heritageReviewSeq, heritageSeq
+     * @return String
+     */
+
+    @ApiOperation(value = "화 유산 리뷰 삭제 ", response = String.class)
+    @DeleteMapping("/review/{heritageReviewSeq}/{heritageSeq}")
+    public ResponseEntity<String> deleteReview(@PathVariable("heritageReviewSeq") int heritageReviewSeq, @PathVariable("heritageSeq") int heritageSeq){
+
+        // 성공적으로 입력된다면
+        if(heritageService.deleteReview(heritageReviewSeq, heritageSeq)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
     /**
      * 문화 유산 리뷰 목록
      * @param
