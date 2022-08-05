@@ -3,16 +3,17 @@ package com.ssafy.heritage.view.heritage
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Heritage
+import com.ssafy.heritage.data.dto.HeritageScrap
 import com.ssafy.heritage.data.remote.api.UserService
 import com.ssafy.heritage.databinding.FragmentHeritageDetailBinding
+import com.ssafy.heritage.viewmodel.HeritageViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 
 
 private const val TAG = "HeritageDetailFragment___"
@@ -25,43 +26,55 @@ class HeritageDetailFragment :
     private lateinit var heritageInfoFragment: HeritageInfoFragment
     private lateinit var heritageReviewFragment: HeritageReviewFragment
     private lateinit var userService: UserService
+    private val userViewModel by activityViewModels<UserViewModel>()
+    private val heritageViewModel: HeritageViewModel by activityViewModels()
+    private lateinit var heritageScrap: HeritageScrap
+
 
     @SuppressLint("LongLogTag")
     override fun init() {
-        initAdapter()
+
         arguments?.let {
             heritage = it.getSerializable(ARG_HERITAGE) as Heritage
             Log.d(TAG, "init: $heritage")
 
             binding.heritage = heritage
         }
-
-    // 스크랩처리
-//    override suspend fun like(reviewId: Int) {
-//
-//        if (userDao.hasLike(reviewId) > 0) {
-//            // 스크랩 있다면 제거
-//            //api 호출
-//            userService.deleteHeritageScrap(
-//                Like(
-//                    reviewId = reviewId,
-//                    user_id = userId(),
-//                    like_id = userDao.getLike1(reviewId).like_id
-//                )
-//            )
-//            //local db 처리
-//            userDao.deleteLike(Like(reviewId = reviewId))
-//        } else {
-//            // 스크랩 없다면 추가
-//            val like = Like(reviewId = reviewId, user_id = userId())
-//            //api 호출
-//            val resultLike = userService.insertHeritageScrap(like)
-//            //local db 처리
-//            userDao.insertLike(resultLike)
-//        }
-//    }
-
+        initAdapter()
+        initClickListener()
     }
+
+    // 스크랩 버튼
+    @SuppressLint("LongLogTag")
+    private fun initClickListener()= with(binding) {
+
+        // 포함 여부 확인은 여기서 (any!!)
+        var scrapCheck = userViewModel.scrapList.value?.any {
+            it.heritageSeq == heritage?.heritageSeq
+        }
+
+        btnScrap.setOnClickListener {
+
+            heritageScrap = HeritageScrap(
+                heritageSeq = heritage?.heritageSeq!!,
+                heritageScrapSeq = 0,
+                userSeq = userViewModel.user.value?.userSeq!!
+            )
+
+            // scrapList 안에 현재 heritageSeq 포함 여부 확인
+            Log.d(TAG, "initClickListener: ${scrapCheck}")
+            if (scrapCheck == true) {
+                // 포함되어 있으면 스크랩 된 것 => 스크랩 삭제할 수 있는 동작
+                userViewModel.deleteHeritageScrap(heritage?.heritageSeq!!)
+                scrapCheck = false
+            } else {
+                // 없으면 스크랩 할 수 있는 동작
+                userViewModel.insertHeritageScrap(heritageScrap)
+                scrapCheck = true
+            }
+        }
+    }
+
     private fun initAdapter()=with(binding) {
         heritageInfoFragment = HeritageInfoFragment()
         heritageReviewFragment = HeritageReviewFragment()
@@ -85,12 +98,11 @@ class HeritageDetailFragment :
         })
     }
     companion object {
-        fun newInstance(param: Heritage) =
-            HeritageDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(ARG_HERITAGE, param)
-                }
+        fun newInstance(param: Heritage) = HeritageDetailFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(ARG_HERITAGE, param)
             }
+        }
     }
 
     private fun replaceView(tab: Fragment) {
@@ -98,8 +110,7 @@ class HeritageDetailFragment :
         var selectedFragment: Fragment?=null
         selectedFragment = tab
         selectedFragment?.let {
-            childFragmentManager?.beginTransaction()?.replace(R.id.fragment_container_view, it)?.commit()
+            childFragmentManager.beginTransaction().replace(R.id.fragment_container_view, it).commit()
         }
     }
-
 }

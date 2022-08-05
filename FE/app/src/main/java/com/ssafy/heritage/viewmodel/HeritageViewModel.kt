@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.HeritageReview
+import com.ssafy.heritage.data.dto.HeritageScrap
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.SingleLiveEvent
@@ -35,8 +36,16 @@ class HeritageViewModel : ViewModel() {
     val insertHeritageReview: LiveData<HeritageReviewListResponse>
         get() = _insertHeritageReview
 
+    private val _heritageReview = MutableLiveData<HeritageReview>()
+    val heritageReview: LiveData<HeritageReview>
+        get() = _heritageReview
 
-    // 전체 문화유산 목록 가져옴  << 이거 왜 적었더라,,,?
+    private val _heritageScrap = MutableLiveData<HeritageScrap>()
+    val heritageScrap: MutableLiveData<HeritageScrap>
+        get() = _heritageScrap
+
+
+    // 전체 문화유산 목록 가져옴
     fun getHeritageList() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectAllHeritage().let { response ->
@@ -51,6 +60,7 @@ class HeritageViewModel : ViewModel() {
             }
         }
     }
+
     // private 값을 변경할 수 있는 함수
     fun setHeritage(heritage: Heritage) {
         _heritage.postValue(heritage)
@@ -64,7 +74,7 @@ class HeritageViewModel : ViewModel() {
     // 문화유산 상세 리뷰 목록 가져오기
     fun getHeritageReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.selectAllHeritageReviews().let { response ->
+            repository.selectAllHeritageReviews(heritage.value!!.heritageSeq!!).let { response ->
                 if(response.isSuccessful){
                     var list = response.body()!! as MutableList<HeritageReviewListResponse>
 //                    list.sortBy { it.heritageReviewRegistedAt }  // 등록최신순
@@ -82,6 +92,8 @@ class HeritageViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertHeritageReview(heritageReviewInfo).let { response ->
                 if (response.isSuccessful) {
+                    Log.d(TAG, "insertHeritageReview: 리뷰 작성 성공")
+                    getHeritageReviewList()
 //                    var info = response.body()!! as HeritageReviewListResponse
 //                    _insertHeritageReview.postValue(info)
                 } else {
@@ -90,4 +102,19 @@ class HeritageViewModel : ViewModel() {
             }
         }
     }
+
+    // 문화유산 상세 리뷰 삭제
+    fun deleteHeritageReview(heritageReviewSeq: Int, heritageSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteHeritageReview(heritageReviewSeq, heritageSeq).let { response ->
+                if (response.isSuccessful) {
+                    Log.d(TAG, "deleteHeritageReview: 리뷰 삭제 성공")
+                    getHeritageReviewList()
+                } else {
+                    Log.d(TAG, "deleteHeritageReview: ${response.code()}")
+                }
+            }
+        }
+    }
+
 }

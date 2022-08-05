@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textColor="@color/black"
-            android:text="@{String.valueOf(heritageReviewListResponse.userSeq)}"
+            android:text="@{heritageReviewListResponse.userNickname}"
             tools:text="매일우유학자"
             app:layout_constraintBottom_toBottomOf="@+id/iv_heritage_review_user_img"
             app:layout_constraintStart_toEndOf="@+id/iv_heritage_review_user_img"
@@ -49,6 +49,15 @@
             app:layout_constraintStart_toEndOf="@+id/tv_heritage_review_user_id"
             app:layout_constraintTop_toTopOf="@+id/tv_heritage_review_user_id"
             app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/imagebtn_heritage_review_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_heritage_review_user_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_heritage_review_user_id" />
 
         <TextView
             android:id="@+id/tv_heritage_review_content"

@@ -13,22 +13,22 @@ import com.ssafy.heritage.databinding.ItemGroupBinding
 import com.ssafy.heritage.databinding.ItemReviewBinding
 import com.ssafy.heritage.view.heritage.HeritageReviewFragment
 
-class HeritageReviewAdapter(private val listener: HeritageReviewFragment) : ListAdapter<HeritageReviewListResponse, HeritageReviewAdapter.ViewHolder>(
+class HeritageReviewAdapter(private val listener: OnItemClickListener) : ListAdapter<HeritageReviewListResponse, HeritageReviewAdapter.ViewHolder>(
     DiffCallback()
 ){
     inner class ViewHolder(private val binding: ItemReviewBinding) :
         RecyclerView.ViewHolder(binding.root){
 
-//        init {
-//            binding.root.setOnClickListener {
-//                listener.onItemClick(adapterPosition)
-//            }
-//        }
+        init {
+            binding.imagebtnHeritageReviewDelete.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+
+            }
+        }
 
         fun bind(data: HeritageReviewListResponse) = with(binding) {
             binding.apply {
                 heritageReviewListResponse = data
-
             }
         }
     }

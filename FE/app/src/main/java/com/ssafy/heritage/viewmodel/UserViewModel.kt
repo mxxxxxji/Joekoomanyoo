@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.util.regex.Pattern
+import kotlin.math.log
 
 private const val TAG = "UserViewModel___"
 
@@ -222,6 +223,30 @@ class UserViewModel : ViewModel() {
                     Log.d(TAG, "getScrapLIst: ${list}")
                 } else {
                     Log.d(TAG, "${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun insertHeritageScrap(heritageScrap: HeritageScrap) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertHeritageScrap(heritageScrap).let { response ->
+                if (response.isSuccessful) {
+                    Log.d(TAG, "success scrap")
+                } else {
+                    Log.d(TAG, "${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun deleteHeritageScrap(heritageSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteHeritageScrap(user.value!!.userSeq!!, heritageSeq).let {
+                if (it.isSuccessful) {
+                    Log.d(TAG, "삭제 성공?")
+                } else {
+                    Log.d(TAG, "${it.code()}")
                 }
             }
         }

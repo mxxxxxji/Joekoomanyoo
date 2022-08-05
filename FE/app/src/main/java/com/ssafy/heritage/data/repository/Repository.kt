@@ -58,9 +58,10 @@ class Repository constructor(context: Context) {
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()
     suspend fun insertHeritageReview(body: HeritageReviewListResponse): Response<String> =
         heritageApi.insertHeritageReview(body)
-
-    suspend fun selectAllHeritageReviews(): Response<List<HeritageReviewListResponse>> =
-        heritageApi.selectAllHeritageReviews()
+    suspend fun selectAllHeritageReviews(heritageSeq: Int): Response<List<HeritageReviewListResponse>> =
+        heritageApi.selectAllHeritageReviews(heritageSeq)
+    suspend fun deleteHeritageReview(heritageReviewSeq: Int, heritageSeq: Int): Response<String> =
+        heritageApi.deleteHeritageReivew(heritageReviewSeq, heritageSeq)
 
 
 
