@@ -15,6 +15,7 @@ import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.FragmentGroupDetailBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 
 private const val TAG = " GroupDetailFragment___"
 
@@ -22,12 +23,13 @@ class GroupDetailFragment :
     BaseFragment<FragmentGroupDetailBinding>(R.layout.fragment_group_detail),
     OnItemClickListener {
 
-
+    private val userViewModel by activityViewModels<UserViewModel>()
     private val groupViewModel by activityViewModels<GroupViewModel>()
-    private val user =
-        User(0, "ssafy@naver.com", "블랙맘바", "1", "970317", "N", 'W', "", "", "", "", 'N')
+    private lateinit var user:User
+        //User(0, "ssafy@naver.com", "블랙맘바", "1", "970317", "N", 'W', "", "", "", "", 'N')
     private lateinit var memberAdapter: MemberAdapter
     private lateinit var applicantAdapter: MemberAdapter
+
     override fun init() {
 
         initAdapter()
@@ -43,6 +45,10 @@ class GroupDetailFragment :
     }
 
     private fun initObserver() = with(binding) {
+        userViewModel.user.observe(viewLifecycleOwner) {
+            user = it
+            user.
+        }
         groupViewModel.groupMemberList.observe(viewLifecycleOwner) {
             Log.d(TAG, "groupMemberList")
             Log.d(TAG, it.toString())
@@ -59,6 +65,8 @@ class GroupDetailFragment :
             Log.d(TAG, it.master)
             Log.d(TAG, it.name)
             // 현재유저가 방장이면
+            if(it.status == '2'){}
+            else if()
             if (it.master == user.userNickname) {
 
                 Log.d(TAG, "USER IS GROUPMAKER")
@@ -74,6 +82,7 @@ class GroupDetailFragment :
 
 
             } else {
+                if()
                 // 설정, 사진 변경버튼 제거
                 Log.d(TAG, "USER IS NOT GROUPMAKER")
                 Log.d(TAG, it.toString())

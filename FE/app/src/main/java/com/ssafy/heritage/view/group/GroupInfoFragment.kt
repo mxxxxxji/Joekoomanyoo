@@ -8,10 +8,12 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
+import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.FragmentGroupInfoBinding
 import com.ssafy.heritage.view.HomeFragment
 import com.ssafy.heritage.view.ar.ARFragment
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 
 private const val TAG = "GroupInfoFragment___"
 
@@ -19,11 +21,13 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
 
     private val args by navArgs<GroupInfoFragmentArgs>()
     private val groupViewModel by activityViewModels<GroupViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
+
     private lateinit var detailFragment : GroupDetailFragment
     private lateinit var chatFragment: GroupChatFragment
     private lateinit var calenderFragment: GroupCalenderFragment
     private lateinit var mapFragment: GroupMapFragment
-
+    private lateinit var user: User
 
     override fun init() {
         groupViewModel.getGroupList()
@@ -72,9 +76,13 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
     }
 
     private fun initObserver() {
-        groupViewModel.groupDetailInfo.observe(viewLifecycleOwner) {
-            binding.apply {
-
+        userViewModel.user.observe(viewLifecycleOwner){
+            user = it
+        }
+        groupViewModel.groupMemberList.observe(viewLifecycleOwner) {
+            val permission =
+            for(i in it){
+                if(user.userSeq == i.memberSeq)
             }
         }
     }
