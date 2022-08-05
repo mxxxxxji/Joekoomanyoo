@@ -1,5 +1,7 @@
 package com.project.common.controller;
 
+import com.project.common.dto.AR.MyStampDto;
+import com.project.common.dto.AR.StampDto;
 import com.project.common.dto.Heritage.HeritageDto;
 import com.project.common.dto.Heritage.HeritageScrapDto;
 import com.project.common.dto.My.MyDailyMemoDto;
@@ -7,6 +9,7 @@ import com.project.common.dto.My.MyScheduleDto;
 import com.project.common.dto.User.UserEvalDto;
 import com.project.common.dto.User.UserKeywordDto;
 import com.project.common.dto.User.UserResponseEvalDto;
+import com.project.common.service.ARService;
 import com.project.common.service.HeritageService;
 import com.project.common.service.MyPageService;
 import io.swagger.annotations.Api;
@@ -30,6 +33,7 @@ public class MyPageController {
     private static final String FAIL = "fail";
     private final HeritageService heritageService;
     private final MyPageService myPageService;
+    private final ARService arService;
 
     // 시간설정
     private static LocalDateTime localDateTime = LocalDateTime.now();
@@ -296,6 +300,23 @@ public class MyPageController {
             return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<UserResponseEvalDto>(userResponseEvalDto, HttpStatus.OK);
+        }
+    }
+
+    /**
+     * 내가 보유한 스탬프 리스트 보여주기
+     * @param userSeq
+     * @return List
+     */
+
+    @ApiOperation(value = "내가 보유한 스탬프 리스트 보여주기", response = List.class)
+    @GetMapping("/stamp/{userSeq}")
+    public ResponseEntity<?> listMyStamp(@PathVariable("userSeq") int userSeq){
+        List<StampDto> list = arService.listMyStamp(userSeq);
+        if(list == null){
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<List<StampDto>>(list, HttpStatus.OK);
         }
     }
 
