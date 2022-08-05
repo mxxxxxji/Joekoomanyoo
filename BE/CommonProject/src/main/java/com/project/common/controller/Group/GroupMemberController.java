@@ -33,7 +33,7 @@ public class GroupMemberController {
     //모임 멤버 목록 조회
     @ApiOperation(value = "모임 멤버 목록 조회")
     @GetMapping("/member-list")
-    public ResponseEntity<List<GroupMemberDto>> getMemberList(@PathVariable("groupSeq") long groupSeq) throws Exception{
+    public ResponseEntity<List<GroupMemberListDto>> getMemberList(@PathVariable("groupSeq") long groupSeq) throws Exception{
     	return new ResponseEntity<>(groupMemberService.getMemberList(groupSeq),HttpStatus.OK);
     }
     

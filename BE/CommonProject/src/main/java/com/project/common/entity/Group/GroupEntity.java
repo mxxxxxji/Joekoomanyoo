@@ -85,12 +85,12 @@ public class GroupEntity {
     private LocalDateTime updatedTime;
     
     
-    // 참여 멤버 //
+    // 모임 멤버 //
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @Builder.Default
     private List<GroupMemberEntity> members = new ArrayList<>();
     
-    // 참여 멤버 Method //
+    // 모임 멤버 Method //
     public void addGroupMember(GroupMemberEntity groupMember) {
     	this.members.add(groupMember);
     	groupMember.setGroup(this);
@@ -116,5 +116,21 @@ public class GroupEntity {
         memos.removeIf(groupMemo ->
                 groupMemo.getGdmDate()==gdmDate);
     }
+//    
+//    // 모임 일정 //
+//    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+//    @Builder.Default
+//    private List<GroupScheduleEntity> schedules = new ArrayList<>();
+//    
+//    // 모임 일정 Method //
+//    public void addGroupSchedule(GroupScheduleEntity groupSchedule) {
+//    	this.schedules.add(groupSchedule);
+//    	groupSchedule.setGroup(this);
+//    }
+//
+//    public void removeGroupSchedule(int gsDate, int gs) {
+//        this.schedules.removeIf(groupSchedule ->
+//        groupSchedule.getUserSeq()==userSeq);
+//    }
     
 }
