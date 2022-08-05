@@ -37,13 +37,13 @@ public class GroupScheduleController {
     	return new ResponseEntity<>(groupScheduleService.getScheduleList(groupSeq),HttpStatus.OK);
     }
     
-    //내 모임 일정 조회
-    @ApiOperation(value = "내 모임 일정 조회")
-    @GetMapping("/mylist/user/{userSeq}")
-    public ResponseEntity<List<GroupScheduleDto>> getMyScheduleList(@PathVariable("userSeq") Long userSeq,@RequestBody GroupBasicReqDto Dto) throws Exception{
-    	return new ResponseEntity<>(groupScheduleService.getMyScheduleList(userSeq,Dto),HttpStatus.OK);
-    }
-    
+//    //내 모임 일정 조회
+//    @ApiOperation(value = "내 모임 일정 조회")
+//    @GetMapping("/mylist/user/{userSeq}")
+//    public ResponseEntity<List<GroupScheduleDto>> getMyScheduleList(@PathVariable("userSeq") Long userSeq,@RequestBody GroupBasicReqDto Dto) throws Exception{
+//    	return new ResponseEntity<>(groupScheduleService.getMyScheduleList(userSeq,Dto),HttpStatus.OK);
+//    }
+//    
     //일정 등록
     @ApiOperation(value = "모임 일정 생성")
     @PostMapping("/schedule-create")
