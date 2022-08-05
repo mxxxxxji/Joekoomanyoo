@@ -34,11 +34,11 @@ public class UserModifyService{
         // 사용자 번호로 사용자 찾기
         UserEntity userEntity = userRepository.findByUserSeq(userSeq);
 
+        
         // 사용자가 없거나 탈퇴된 경우
         if(userEntity == null || userEntity.getIsDeleted()=='Y'){
             return null;
         }
-
         // Dto로 변환해서 전달
         return UserMapper.MAPPER.toDto(userEntity);
     }

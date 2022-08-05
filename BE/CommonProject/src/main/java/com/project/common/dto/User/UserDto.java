@@ -32,4 +32,5 @@ public class UserDto {
     private int evalList5;
     private String evalUpdatedAt;
 
+
 }

@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.project.common.entity.Group.GroupMemberEntity;
 
 
-public interface GroupMemberRepository extends JpaRepository<GroupMemberEntity, Long> {
+public interface GroupMemberRepository extends JpaRepository<GroupMemberEntity, Integer> {
 
-	GroupMemberEntity findByUserSeq(long userSeq);
+	GroupMemberEntity findByUserSeq(int userSeq);
 
-	void deleteByUserSeq(long userSeq);  
+	void deleteByUserSeq(int userSeq);  
 }

@@ -32,14 +32,14 @@ public class GroupMemberController {
     //모임 멤버 목록 조회
     @ApiOperation(value = "모임 멤버 목록 조회")
     @GetMapping("/member-list")
-    public ResponseEntity<List<GroupMemberListDto>> getMemberList(@PathVariable("groupSeq") long groupSeq) throws Exception{
+    public ResponseEntity<List<GroupMemberListDto>> getMemberList(@PathVariable("groupSeq") int groupSeq) throws Exception{
     	return new ResponseEntity<>(groupMemberService.getMemberList(groupSeq),HttpStatus.OK);
     }
     
 	//참가 신청
     @ApiOperation(value = "모임 참가 신청")
 	@PostMapping("/member-join")
-	public ResponseEntity<GroupJoinReqDto> joinGroup(@RequestBody GroupJoinReqDto groupJoinRequestDto, @PathVariable long groupSeq){
+	public ResponseEntity<GroupJoinReqDto> joinGroup(@RequestBody GroupJoinReqDto groupJoinRequestDto, @PathVariable int groupSeq){
 		groupMemberService.joinGroup(groupSeq,groupJoinRequestDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
@@ -55,7 +55,7 @@ public class GroupMemberController {
 	//모임 수락
 	@ApiOperation(value = "모임 가입 승인 - memberStatus 0(가입대기)->1(일반회원)")
 	@PutMapping("/member-approve")
-	public ResponseEntity<?> approveMember(@PathVariable("groupSeq") Long groupSeq,@RequestBody GroupBasicReqDto groupBasicReqDto){
+	public ResponseEntity<?> approveMember(@PathVariable("groupSeq") int groupSeq,@RequestBody GroupBasicReqDto groupBasicReqDto){
 		groupMemberService.approveMember(groupSeq,groupBasicReqDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

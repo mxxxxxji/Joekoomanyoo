@@ -14,5 +14,4 @@ public class GroupSettingDto {
 	private char groupStatus;
 	private char groupActive;
 	
-	
 }

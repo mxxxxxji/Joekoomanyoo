@@ -11,11 +11,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class GroupJoinReqDto {
-	private long userSeq;
+	private int userSeq;
 	private String memberAppeal;
 
 	@Builder
-	public GroupJoinReqDto(long userSeq, String memberAppeal) {
+	public GroupJoinReqDto(int userSeq, String memberAppeal) {
 		super();
 		this.userSeq = userSeq;
 		this.memberAppeal = memberAppeal;

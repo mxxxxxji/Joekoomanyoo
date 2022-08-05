@@ -28,7 +28,7 @@ public class GroupScheduleEntity {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gs_seq")
-	private long gsSeq;
+	private int gsSeq;
 	
 	@Column(name = "gs_content")
     private String gsContent;

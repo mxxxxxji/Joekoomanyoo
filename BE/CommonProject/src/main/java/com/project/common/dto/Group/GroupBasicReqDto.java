@@ -8,10 +8,10 @@ import lombok.*;
 @ToString
 public class GroupBasicReqDto {
 
-	private long userSeq;
-	private long groupSeq;	
+	private int userSeq;
+	private int groupSeq;	
 	@Builder
-	public GroupBasicReqDto(long userSeq, long groupSeq) {
+	public GroupBasicReqDto(int userSeq, int groupSeq) {
 		super();
 		this.userSeq = userSeq;
 		this.groupSeq = groupSeq;
