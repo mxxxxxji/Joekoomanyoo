@@ -103,4 +103,7 @@ dependencies {
     // 원형 프로필
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
+    // Switcher https://github.com/bitvale/Switcher
+    implementation 'io.github.bitvale:switcher:1.1.2'
+
 }

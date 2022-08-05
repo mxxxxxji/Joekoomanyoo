@@ -1,8 +1,8 @@
 package com.ssafy.heritage.view.setting
 
 import android.view.View
-import android.view.Window
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.awesomedialog.*
@@ -48,10 +48,13 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                     val name = settingListAdapter.currentList[position]
                     when (name) {
                         NOTI_SETTING -> {
-
+                            findNavController().navigate(R.id.action_settingFragment_to_notiSettingFragment)
                         }
                         LANGUAGE_SETTING -> {
-                            languageSettingDialog.show(childFragmentManager, "languageSettingDialog")
+                            languageSettingDialog.show(
+                                childFragmentManager,
+                                "languageSettingDialog"
+                            )
                         }
                         VERSION_INFO -> {
                             AwesomeDialog.build(requireActivity())

@@ -173,7 +173,11 @@
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.ssafy.heritage.view.setting.SettingFragment"
-        android:label="SettingFragment" />
+        android:label="SettingFragment" >
+        <action
+            android:id="@+id/action_settingFragment_to_notiSettingFragment"
+            app:destination="@id/notiSettingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/heritageInfoFragment"
         android:name="com.ssafy.heritage.view.heritage.HeritageInfoFragment"
@@ -188,4 +192,8 @@
         android:id="@+id/scrapListFragment"
         android:name="com.ssafy.heritage.view.profile.ScrapListFragment"
         android:label="ScrapListFragment" />
+    <fragment
+        android:id="@+id/notiSettingFragment"
+        android:name="com.ssafy.heritage.view.setting.NotiSettingFragment"
+        android:label="NotiSettingFragment" />
 </navigation>
