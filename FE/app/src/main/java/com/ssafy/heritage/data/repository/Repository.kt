@@ -8,9 +8,13 @@ import com.ssafy.heritage.data.dto.UserModify
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
+import com.ssafy.heritage.data.remote.request.GroupBasic
+import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.Path
 
 class Repository constructor(context: Context) {
 
@@ -28,6 +32,14 @@ class Repository constructor(context: Context) {
 
     suspend fun selectGroupDetail(groupSeq: Int): Response<GroupListResponse> =
         groupApi.selectGroupDetail(groupSeq)
+
+    suspend fun approveGroupJoin(groupSeq: Int, body: GroupBasic): Response<Boolean> =
+        groupApi.approveGroupJoin(groupSeq, body)
+
+    suspend fun applyGroupJoin(groupSeq: Int, body: GroupJoin): Response<Boolean> =
+        groupApi.applyGroupJoin(groupSeq, body)
+    suspend fun leaveGroupJoin(groupSeq: Int, body: GroupBasic): Response<Boolean> =
+        groupApi.leaveGroupJoin(groupSeq, body)
 
     // user
     suspend fun checkEmail(userId: String): Response<String> = userApi.checkEmail(userId)

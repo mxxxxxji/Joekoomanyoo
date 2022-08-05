@@ -8,11 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.heritage.data.dto.GroupAttribute
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.dto.User
+import com.ssafy.heritage.data.remote.request.GroupBasic
+import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.http.Body
 
 private const val TAG = "GroupViewModel___"
 
@@ -34,6 +37,13 @@ class GroupViewModel: ViewModel() {
 
     private val _detailInfo = MutableLiveData<GroupListResponse>()
     val detailInfo : LiveData<GroupListResponse> get() = _detailInfo
+
+    private val _approveState = SingleLiveEvent<Boolean>()
+    val approveState: LiveData<Boolean> get() = _approveState
+
+    private val _applyState = SingleLiveEvent<Boolean>()
+    val applyState: LiveData<Boolean> get() = _applyState
+
 
     fun add(info : GroupListResponse){
         _detailInfo.postValue(info)
@@ -62,16 +72,20 @@ class GroupViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectGroupMembers(groupSeq).let { response ->
                 if(response.isSuccessful) {
+                    Log.d(TAG,"현재 유저 :${userSeq}")
                     var list = response.body()!! as MutableList<Member>
                     Log.d(TAG, "selectGroupMembers : ${list}")
+                    Log.d(TAG,"현재 유저 :${userSeq}")
                     for(i in list){
                         if(i.userSeq == userSeq){
                             Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION: ${i.memberStatus} ")
                             _groupPermission.postValue(i.memberStatus)
                         }else{ // 그 외의 경우
+                            Log.d(TAG,"현재 유저 :${userSeq}")
                             _groupPermission.postValue(3)
                         }
                     }
+                    Log.d(TAG,"현재 유저 permission:${_groupPermission.value}")
                     _groupMemberList.postValue(list)
                 }else{
                     Log.d(TAG, "selectGroupMembers : ${response.code()}")
@@ -88,6 +102,50 @@ class GroupViewModel: ViewModel() {
                     _insertGroupInfo.postValue(info)
                 }else{
                     Log.d(TAG, "insertGroup: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    // 가입승인
+    fun approveGroupJoin(groupSeq: Int, groupBasic: GroupBasic) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.approveGroupJoin(groupSeq, groupBasic).let { response ->
+                if(response.isSuccessful) {
+                    val result = response.body()!! as Boolean
+                    Log.d(TAG, "approveGroupJoin: $result")
+                    _approveState.postValue(result)
+                }else{
+                    Log.d(TAG, "approveGroupJoin: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    // 가입요청
+    fun applyGroupJoin(groupSeq: Int, groupJoin: GroupJoin) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.applyGroupJoin(groupSeq, groupJoin).let { response ->
+                if(response.isSuccessful) {
+                    //val result = response.body()!! as Boolean
+                    //Log.d(TAG, "applyGroupJoin: $result")
+                    _applyState.postValue(true)
+                    _groupPermission.postValue(0)
+                }else{
+                    Log.d(TAG, "applyGroupJoin: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    // 가입 취소, 거절, 탈퇴
+    fun leaveGroupJoin(groupSeq: Int, groupBasic: GroupBasic){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.leaveGroupJoin(groupSeq, groupBasic).let { response ->
+                if(response.isSuccessful) {
+                    _groupPermission.postValue(3)
+                }else{
+                    Log.d(TAG, "leaveGroupJoin: ${response.code()}")
                 }
             }
         }

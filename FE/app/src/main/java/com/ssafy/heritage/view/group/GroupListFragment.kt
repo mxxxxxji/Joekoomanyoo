@@ -65,7 +65,6 @@ class GroupListFragment :
 
     override fun onItemClick(position: Int) {
         val action = GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(groupListAdapter.getItem(position))
-        groupViewModel.selectGroupMembers(ApplicationClass.sharedPreferencesUtil.getUser(), groupListAdapter.getItem(position).groupSeq)
         findNavController().navigate(action)
     }
 

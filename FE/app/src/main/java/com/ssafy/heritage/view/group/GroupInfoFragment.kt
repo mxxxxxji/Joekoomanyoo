@@ -35,7 +35,7 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
     private lateinit var mapFragment: GroupMapFragment
 
     override fun init() {
-
+        groupViewModel.selectGroupMembers(ApplicationClass.sharedPreferencesUtil.getUser(),args.groupInfo.groupSeq)
         groupViewModel.getGroupList()
         groupViewModel.add(args.groupInfo)
         initAdapter()
