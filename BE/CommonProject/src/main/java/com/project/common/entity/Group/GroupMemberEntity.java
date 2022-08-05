@@ -36,22 +36,11 @@ public class GroupMemberEntity {
 	@Column(name = "member_updated_at")
     private LocalDateTime updatedTime;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="group_seq")
-	private GroupEntity group;
-
     @Column(name = "user_seq")
     private long userSeq;
-	
-	
-//	// 생성 메서드 //
-//    public GroupMemberEntity createGroupMember(GroupEntity group,UserEntity user) {
-//        return GroupMemberEntity.builder()
-//                .group(group)
-//                .user(user)
-//                .build();
-//    }
-
-
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="group_seq")
+	private GroupEntity group;
 
 }
