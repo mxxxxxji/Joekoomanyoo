@@ -33,12 +33,9 @@ import java.util.List;
 public class MyPageService {
     private final UserKeywordRepository userKeywordRepository;
     private final UserEvalRepository userEvalRepository;
-
     private final MyDailyMemoRepositoryCustom myDailyMemoRepositoryCustom;
-
     private final MyDailyMemoRepository myDailyMemoRepository;
     private final MyScheduleRepository myScheduleRepository;
-
     private final MyScheduleRepositoryCustom myScheduleRepositoryCustom;
 
     // 시간설정
@@ -46,6 +43,7 @@ public class MyPageService {
     private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
 
+    // 키워드 생성
     public boolean createKeyword(UserKeywordDto userKeywordDto) {
         UserKeywordEntity userKeywordEntity = UserKeywordMapper.MAPPER.toEntity(userKeywordDto);
 
@@ -61,6 +59,7 @@ public class MyPageService {
         }
     }
 
+    // 키워드 리스트 보여주기
     public List<UserKeywordDto> listKeyword(int userSeq) {
         List<UserKeywordDto> listDto = new ArrayList<>();
 
@@ -72,6 +71,7 @@ public class MyPageService {
         return listDto;
     }
 
+    // 키워드 삭제
     public boolean deleteKeyword(int myKeywordSeq) {
         // 키워드가 없는 경우
         if(userKeywordRepository.findByMyKeywordSeq(myKeywordSeq)==null){
@@ -82,6 +82,7 @@ public class MyPageService {
         }
     }
 
+    // 데일리 메모 생성
     public boolean createDailyMemo(MyDailyMemoDto myDailyMemoDto) {
         // 이미 메모가 있으면
         if(myDailyMemoRepositoryCustom.findByUserSeqAndMyDailyMemoDate(myDailyMemoDto.getUserSeq(), myDailyMemoDto.getMyDailyMemoDate()) != null){
@@ -96,6 +97,7 @@ public class MyPageService {
         }
     }
 
+    // 데일리 메모 보여주기
     public MyDailyMemoDto showDailyMemo(MyDailyMemoDto myDailyMemoDto) {
         MyDailyMemoEntity myDailyMemoEntity = myDailyMemoRepositoryCustom.findByUserSeqAndMyDailyMemoDate(myDailyMemoDto.getUserSeq(), myDailyMemoDto.getMyDailyMemoDate());
         // 데일리 메모가 없는 경우
@@ -106,6 +108,7 @@ public class MyPageService {
         }
     }
 
+    // 데일리 메모 수정하기
     public boolean modifyDailyMemo(MyDailyMemoDto myDailyMemoDto) {
         MyDailyMemoEntity myDailyMemoEntity =myDailyMemoRepositoryCustom.findByUserSeqAndMyDailyMemoDate(myDailyMemoDto.getUserSeq(), myDailyMemoDto.getMyDailyMemoDate());
         // 메모가 없으면
@@ -121,6 +124,7 @@ public class MyPageService {
         }
     }
 
+    // 데일리메모 삭제하기
     public boolean deleteDailyMemo(int myDailyMemoSeq) {
         // 만약 메모가 없는 경우
         if(myDailyMemoRepository.findByMyDailyMemoSeq(myDailyMemoSeq) == null){
@@ -131,6 +135,7 @@ public class MyPageService {
         }
     }
 
+    // 일정 생성하기
     public boolean createSchedule(MyScheduleDto myScheduleDto) {
         // 이미 일정이 있는 경우 false
         if(myScheduleRepositoryCustom.findByUserSeqAndMyScheduleDateAndMyScheduleTime(myScheduleDto.getUserSeq(), myScheduleDto.getMyScheduleDate(), myScheduleDto.getMyScheduleTime())!=null){
@@ -146,6 +151,7 @@ public class MyPageService {
         }
     }
 
+    // 일정 리스트 보여주기
     public List<MyScheduleDto> listSchedule(MyScheduleDto myScheduleDto) {
         List<MyScheduleEntity> list = myScheduleRepositoryCustom.findByUserSeqAndMyScheduleDate(myScheduleDto.getUserSeq(), myScheduleDto.getMyScheduleDate());
         // 리스트에 아무것도 없는 경우 ( 일정이 없다 )
@@ -160,6 +166,7 @@ public class MyPageService {
         }
     }
 
+    // 일정 수정하기
     public boolean modifySchedule(MyScheduleDto myScheduleDto) {
         // 그전 시간 값 구하기
         int beforeTime = myScheduleRepository.findByMyScheduleSeq(myScheduleDto.getMyScheduleSeq()).getMyScheduleTime();
@@ -184,6 +191,7 @@ public class MyPageService {
         }
     }
 
+    // 일정 삭제하기
     public boolean deleteSchedule(int myScheduleSeq) {
         // 스케쥴이 없다면 false
         if(myScheduleRepository.findByMyScheduleSeq(myScheduleSeq) == null){
@@ -194,6 +202,7 @@ public class MyPageService {
         }
     }
 
+    // 상호평가
     public boolean evalMutual(UserEvalDto userEvalDto) {
         // 만약 평가가 안들어왔다면 false
         if(userEvalDto == null){
@@ -203,10 +212,8 @@ public class MyPageService {
             UserEntity userEntity = userEvalRepository.getByUserSeq(userEvalDto.getUserSeq());
 
             // Entity에 상호평가 값 넣기
-            System.out.println("그전 카운팅 : " + userEntity.getEvalCnt());
             // 먼저 총 횟수 카운팅
             int cnt = userEntity.getEvalCnt()+1;
-            System.out.println("카운팅 한 것 " + cnt);
             userEntity.setEvalCnt(cnt);
 
             // 리스트 값들 카운팅 해주기
@@ -224,6 +231,7 @@ public class MyPageService {
         }
     }
 
+    // 상호평가 가져오기
     public UserResponseEvalDto evalMutualInfo(int userSeq) {
         UserEntity userEntity = userEvalRepository.findByUserSeq(userSeq);
 
@@ -232,16 +240,9 @@ public class MyPageService {
             return null;
         }else{
             UserResponseEvalDto userResponseEvalDto = new UserResponseEvalDto();
-//            userResponseEvalDto.setUserSeq(userEntity.getUserSeq());
-
 
             // DB에 있는 점수들 가져와서 계산해서 응답 DTO에 저장하기
             int cnt = userEntity.getEvalCnt();
-//            int list1 = userEntity.getEvalList1() * 100 / cnt;
-//            int list2 = userEntity.getEvalList2() * 100 / cnt;
-//            int list3 = userEntity.getEvalList3() * 100 / cnt;
-//            int list4 = userEntity.getEvalList4() * 100 / cnt;
-//            int list5 = userEntity.getEvalList5() * 100 / cnt;
 
             return userResponseEvalDto.builder().userSeq(userEntity.getUserSeq())
                     .evalCnt(cnt)
