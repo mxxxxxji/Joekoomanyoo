@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.project.common.entity.Heritage.HeritageEntity;
 import com.project.common.entity.User.UserEntity;
 
 import lombok.AllArgsConstructor;
@@ -124,22 +125,6 @@ public class GroupEntity {
         memos.removeIf(groupMemo ->
                 groupMemo.getGdmDate()==gdmDate);
     }
-//    
-//    // 모임 일정 //
-//    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-//    @Builder.Default
-//    private List<GroupScheduleEntity> schedules = new ArrayList<>();
-//    
-//    // 모임 일정 Method //
-//    public void addGroupSchedule(GroupScheduleEntity groupSchedule) {
-//    	this.schedules.add(groupSchedule);
-//    	groupSchedule.setGroup(this);
-//    }
-//
-//    public void removeGroupSchedule(int gsDate, int gs) {
-//        this.schedules.removeIf(groupSchedule ->
-//        groupSchedule.getUserSeq()==userSeq);
-//    }
     
     // 모임 일정 //
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
@@ -156,5 +141,22 @@ public class GroupEntity {
         this.schedules.removeIf(groupSchedule ->
         groupSchedule.getGsDateTime()==gsDateTime);
     }
+    
+    // 모임 목적지 //
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<GroupDestinationEntity> destinations = new ArrayList<>();
+    
+    // 모임 목적지  Method //
+    public void addGroupDestination(GroupDestinationEntity groupDestination) {
+    	this.destinations.add(groupDestination);
+    	groupDestination.setGroup(this);
+    }
+
+    public void removeGroupDestination(int heritageSeq) {
+        this.destinations.removeIf(groupDestination ->
+        groupDestination.getHeritageSeq()==heritageSeq);
+    }
+    
     
 }

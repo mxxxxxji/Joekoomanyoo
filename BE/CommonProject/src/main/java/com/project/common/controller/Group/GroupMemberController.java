@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.dto.Group.GroupBasicReqDto;
 import com.project.common.dto.Group.GroupJoinReqDto;
-import com.project.common.dto.Group.GroupMemberDto;
 import com.project.common.dto.Group.GroupMemberListDto;
 import com.project.common.service.Group.GroupMemberService;
 

@@ -6,11 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.common.dto.Group.GroupBasicReqDto;
 import com.project.common.dto.Group.GroupScheduleDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupScheduleEntity;
-import com.project.common.mapper.GroupScheduleMapper;
 import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.Group.GroupScheduleRepository;
 
