@@ -9,15 +9,15 @@ import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
+import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.Path
 
 class Repository constructor(context: Context) {
 
     // group
-    suspend fun insertGroup(body: GroupListResponse): Response<GroupListResponse> =
-        groupApi.insertGroup(body)
+    suspend fun insertGroup(userSeq: Int, body: GroupListResponse): Response<GroupListResponse> =
+        groupApi.insertGroup(userSeq, body)
 
     suspend fun selectAllGroups(): Response<List<GroupListResponse>> = groupApi.selectAllGroups()
     suspend fun deleteGroup(groupSeq: Int): Response<Boolean> = groupApi.deleteGroup(groupSeq)
@@ -37,6 +37,8 @@ class Repository constructor(context: Context) {
         groupApi.applyGroupJoin(groupSeq, body)
     suspend fun leaveGroupJoin(groupSeq: Int, body: GroupBasic): Response<Boolean> =
         groupApi.leaveGroupJoin(groupSeq, body)
+    suspend fun selectMyGroups(userSeq: Int): Response<List<MyGroupResponse>> =
+        groupApi.selectMyGroups(userSeq)
 
     // user
     suspend fun checkEmail(userId: String): Response<String> = userApi.checkEmail(userId)
