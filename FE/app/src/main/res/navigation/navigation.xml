@@ -106,6 +106,9 @@
         <action
             android:id="@+id/action_heritageDetailFragment_to_heritageReviewFragment"
             app:destination="@id/heritageReviewFragment" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="heritage/detail" />
     </fragment>
 
     <!--feed-->

@@ -43,8 +43,8 @@
         <activity
             android:name=".view.HomeActivity"
             android:exported="true">
-
         </activity>
+
     </application>
 
 </manifest>
