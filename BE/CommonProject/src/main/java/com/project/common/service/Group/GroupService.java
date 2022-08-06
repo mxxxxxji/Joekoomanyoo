@@ -64,15 +64,26 @@ public class GroupService{
 	
 	//모임 정보 수정
 	public GroupDto updateGroup(int groupSeq,GroupDto groupDto) {
-		GroupEntity oldGroup =groupRepository.findById(groupSeq).orElse(null);
-		GroupDto updateGroup=new GroupDto();
-		updateGroup=groupDto;
-		if(oldGroup != null) {
-			updateGroup.setGroupSeq(oldGroup.getGroupSeq());
-			updateGroup.setCreatedTime(oldGroup.getCreatedTime());
-			groupRepository.save(updateGroup.toEntity());
-		}
-		return updateGroup;
+		GroupEntity Group =groupRepository.findById(groupSeq).orElse(null);
+		Group.setAccessType(groupDto.getAccessType());
+		Group.setActive(groupDto.getActive());
+		Group.setAgeRange(groupDto.getAgeRange());
+		Group.setDescription(groupDto.getDescription());
+		Group.setEndDate(groupDto.getEndDate());
+		Group.setMaster(groupDto.getMaster());
+		Group.setMaxCount(groupDto.getMaxCount());
+		Group.setName(groupDto.getName());
+		Group.setPassword(groupDto.getPassword());
+		Group.setRegion(groupDto.getRegion());
+		Group.setStartDate(groupDto.getStartDate());
+		Group.setStatus(groupDto.getStatus());
+		Group.setWithGlobal(Group.getWithGlobal());
+		Group.setWithChild(Group.getWithChild());
+		Group.setThemaImg(Group.getThemaImg());
+		
+		groupRepository.save(Group);
+		
+		return GroupMapper.MAPPER.toDto(Group);
 	}
 	
 	//내 모임 조회

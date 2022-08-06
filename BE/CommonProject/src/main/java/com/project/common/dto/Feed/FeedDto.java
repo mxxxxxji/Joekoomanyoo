@@ -23,16 +23,14 @@ public class FeedDto {
     private String feedImgUrl;
    	private String feedTitle;
    	private String feedContent;
-   	private char feedOpen;
+   	private String feedOpen;
 	
    	// 모임 설정 정보 //
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
 
-
-
     @Builder
-    public FeedDto(int feedSeq, String feedImgUrl, String feedTitle, String feedContent, char feedOpen,
+    public FeedDto(int feedSeq, String feedImgUrl, String feedTitle, String feedContent, String feedOpen,
     		LocalDateTime createdTime, LocalDateTime updatedTime,UserEntity user) {
     	super();
     	this.feedSeq = feedSeq;
@@ -43,7 +41,6 @@ public class FeedDto {
     	this.createdTime = createdTime;
     	this.updatedTime = updatedTime;
     }
-	
 
     public FeedEntity toEntity(){
         return FeedEntity.builder()

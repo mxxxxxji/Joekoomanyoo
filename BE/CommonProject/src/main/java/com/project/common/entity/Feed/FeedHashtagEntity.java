@@ -1,7 +1,5 @@
 package com.project.common.entity.Feed;
 
-
-
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -39,6 +37,5 @@ public class FeedHashtagEntity {
 	
 	@Column(name="fh_created_at")
     private LocalDateTime createdTime;
-
 
 }

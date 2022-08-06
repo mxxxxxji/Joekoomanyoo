@@ -46,7 +46,7 @@ public class FeedEntity {
     private String feedContent;
     
     @Column(name="feed_open")
-    private char feedOpen;
+    private String feedOpen;
     
     // 모임 설정 정보 //
     @Column(name="feed_created_at")
@@ -56,17 +56,15 @@ public class FeedEntity {
     private LocalDateTime updatedTime;
 
     @ManyToOne
-	@JoinColumn(name="user_seq",updatable=false)
+	@JoinColumn(name="user_seq")
 	private UserEntity user;
     
-
-    
-    // 피드 좋아요 //
+    // Feed Like
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
     @Builder.Default
     private List<FeedLikeEntity> feedLikes = new ArrayList<>();
     
-    // 피드 좋아요 Method //
+    // Feed Like Method 
     public void addFeedLike(FeedLikeEntity feedLike) {
     	this.feedLikes.add(feedLike);
     	feedLike.setFeed(this);
@@ -77,13 +75,12 @@ public class FeedEntity {
     		feedLike.getUserSeq()==userSeq);
     }
     
-    
-    // 피드 해쉬태그 //
+    // Feed HashTag
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
     @Builder.Default
     private List<FeedHashtagEntity> hashtags = new ArrayList<>();
     
-    // 피드 해쉬 태그  Method //
+    // Feed HashTag Method
     public void addFeedHashtag(FeedHashtagEntity feedHashtag) {
     	this.hashtags.add(feedHashtag);
     	feedHashtag.setFeed(this);

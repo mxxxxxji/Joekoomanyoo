@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/group/{groupSeq}")
-@Api(tags = {"모임 데일리메모 API"})
+@Api(tags = {" 모임 데일리메모 API"})
 public class GroupDailyMemoController {
     private final GroupDailyMemoService groupDailyMemoService;
     

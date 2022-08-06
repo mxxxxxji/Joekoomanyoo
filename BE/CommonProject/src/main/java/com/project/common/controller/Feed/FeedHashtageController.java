@@ -1,9 +1,7 @@
 package com.project.common.controller.Feed;
 
-
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.common.dto.Feed.FeedDto;
 import com.project.common.dto.Feed.FeedHashtagDto;
 import com.project.common.service.Feed.FeedHashtagService;
 
@@ -25,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/feed/{feedSeq}/hashtag")
-@Api(tags = {"피드 해쉬태그 API"})
+@Api(tags = {" 피드 해쉬태그 API"})
 public class FeedHashtageController {
     private final FeedHashtagService feedHashtagService;
     
@@ -36,19 +33,19 @@ public class FeedHashtageController {
     	return new ResponseEntity<>(feedHashtagService.getFeedHashtagList(feedSeq),HttpStatus.OK);
     }
     
-//    //피드 해쉬태그 등록
-//    @ApiOperation(value = "피드 해쉬태그 등록")
-//    @PostMapping("/add")
-//    public ResponseEntity<?> addFeedHashtag(@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
-//    	return new ResponseEntity<>(feedHashtagService.addFeedHashtag(feedSeq,fhList),HttpStatus.CREATED);
-//    }
-//
-//    
-//    //피드 해쉬태그 삭제
-//   	@ApiOperation(value = "피드 해쉬태그 삭제")
-//   	@DeleteMapping("/delete")
-//   	public ResponseEntity<?> deleteFeedHashtag(@PathVariable("feedSeq") int feedSeq,@Param("fhTag") String fhTag){
-//   	 	return new ResponseEntity<>(feedHashtagService.deleteFeedHashtag(feedSeq,fhTag),HttpStatus.OK);
-//   	}
+    //피드 해쉬태그 등록
+    @ApiOperation(value = "피드 해쉬태그 등록")
+    @PostMapping("/add")
+    public ResponseEntity<?> addFeedHashtag(@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
+    	return new ResponseEntity<>(feedHashtagService.addFeedHashtag(feedSeq,fhList),HttpStatus.CREATED);
+    }
+
+    
+    //피드 해쉬태그 삭제
+   	@ApiOperation(value = "피드 해쉬태그 삭제")
+   	@DeleteMapping("/delete")
+   	public ResponseEntity<?> deleteFeedHashtag(@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
+   	 	return new ResponseEntity<>(feedHashtagService.deleteFeedHashtag(feedSeq,fhList),HttpStatus.OK);
+   	}
  
 }

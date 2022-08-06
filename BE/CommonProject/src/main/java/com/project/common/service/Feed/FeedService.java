@@ -35,7 +35,6 @@ public class FeedService{
 		UserEntity user = userRepository.findByUserSeq(userSeq);
 		user.addFeed(saved);
 	 	userRepository.save(user);
-		
 		return FeedMapper.MAPPER.toDto(saved);
 	}
 	
@@ -47,43 +46,17 @@ public class FeedService{
 		return FeedMapper.MAPPER.toDtoList(feedList);
 	}
 	
-	//피드 보기
-	public FeedDto getFeedInfo(int feedSeq) {
-		FeedEntity feedInfo=feedRepository.findById(feedSeq).orElse(null);
-		if(feedInfo==null)
-			throw new IllegalArgumentException("등록한 피드가 없습니다");
-		return FeedMapper.MAPPER.toDto(feedInfo);
-	}
-	
-	//피드 삭제
-	public void deleteFeed(int feedSeq){
+	//피드 전체 조회 (By 해쉬태그)
+	public List<FeedDto> getFeedListByTag(String fhTag){
+		List<FeedEntity> feedList=new ArrayList<>();
 		for(FeedHashtagEntity entity : feedHashtagRepository.findAll()) {
-			if(entity.getFeed().getFeedSeq()==feedSeq) {
-				feedHashtagRepository.deleteById(entity.getFhSeq());
+			if(entity.getFhTag().equals(fhTag)) {
+				feedList.add(findFeed(entity.getFeed().getFeedSeq()));
 			}
 		}
-		for(FeedLikeEntity entity : feedLikeRepository.findAll()) {
-			if(entity.getFeed().getFeedSeq()==feedSeq) {
-				feedLikeRepository.deleteById(entity.getFeedLikeSeq());
-			}
-		}
-		
-		feedRepository.deleteById(feedSeq);
-	}
-	
-	//피드 수정
-	public FeedDto updateFeed(int feedSeq,FeedDto feedDto) {
-		FeedEntity oldFeed =feedRepository.findById(feedSeq).orElse(null);
-		if(oldFeed==null)
-			throw new IllegalArgumentException("등록한 피드가 없습니다");
-		FeedDto newFeed=new FeedDto();
-		newFeed=feedDto;
-		if(oldFeed != null) {
-			newFeed.setFeedSeq(oldFeed.getFeedSeq());
-			newFeed.setCreatedTime(oldFeed.getCreatedTime());
-			feedRepository.save(newFeed.toEntity());
-		}
-		return newFeed;
+		if(feedList.size()==0)
+			throw new IllegalArgumentException("등록된 피드가 없습니다");
+		return FeedMapper.MAPPER.toDtoList(feedList);
 	}
 	
 	//내 피드 조회
@@ -98,15 +71,51 @@ public class FeedService{
 		return feedList;
 	}
 	
+	//피드 보기
+	public FeedDto getFeedInfo(int feedSeq) {
+		FeedEntity feedInfo=feedRepository.findById(feedSeq).orElse(null);
+		if(feedInfo==null)
+			throw new IllegalArgumentException("등록한 피드가 없습니다");
+		return FeedMapper.MAPPER.toDto(feedInfo);
+	}
+	
+	//피드 삭제
+	public void deleteFeed(int feedSeq){
+		for(FeedHashtagEntity entity : feedHashtagRepository.findAll()) 
+			if(entity.getFeed().getFeedSeq()==feedSeq) 
+				feedHashtagRepository.deleteById(entity.getFhSeq());
+		
+		for(FeedLikeEntity entity : feedLikeRepository.findAll()) 
+			if(entity.getFeed().getFeedSeq()==feedSeq) 
+				feedLikeRepository.deleteById(entity.getFeedLikeSeq());
+
+		feedRepository.deleteById(feedSeq);
+	}
+	
+	//피드 수정
+	public FeedDto updateFeed(int feedSeq,FeedDto feedDto) {
+		FeedEntity Feed =feedRepository.findById(feedSeq).orElse(null);
+		if(Feed==null)
+			throw new IllegalArgumentException("등록된 피드가 없습니다");
+
+		Feed.setFeedContent(feedDto.getFeedContent());
+		Feed.setFeedImgUrl(feedDto.getFeedImgUrl());
+		Feed.setFeedTitle(feedDto.getFeedTitle());
+		Feed.setFeedOpen(feedDto.getFeedOpen());
+		feedRepository.save(Feed);
+		
+		return FeedMapper.MAPPER.toDto(Feed);
+	}
+	
 	//피드 공개/비공개
-	public FeedDto openFeed(int feedSeq,char feedOpen) {
+	public FeedDto openFeed(int feedSeq,String feedOpen) {
 		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
 		feed.setFeedOpen(feedOpen);
 		feedRepository.save(feed);
 		return FeedMapper.MAPPER.toDto(feedRepository.save(feed));
 	}
 
-	
+	//피드 찾기
 	public FeedEntity findFeed(int feedSeq) {
 		FeedEntity findFeed = feedRepository.findById(feedSeq).orElse(null);
 	    if (findFeed == null) {

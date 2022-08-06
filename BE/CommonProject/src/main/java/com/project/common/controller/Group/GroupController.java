@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/group")
-@Api(tags = {"모임 관리 API"})
+@Api(tags = {" 모임 관리 API"})
 public class GroupController {
     private final GroupService groupService;
     

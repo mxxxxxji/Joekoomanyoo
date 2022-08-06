@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/feed")
-@Api(tags = {" 피드 기본 API"})
+@Api(tags = {" 피드 API"})
 public class FeedController {
     private final FeedService feedService;
     
@@ -43,9 +43,24 @@ public class FeedController {
     	return new ResponseEntity<>(feedService.getFeedList(),HttpStatus.OK);
     }
     
+    //내 피드 조회
+    @ApiOperation(value = "내 피드 조회")
+    @GetMapping("/mylist/{userSeq}")
+    public ResponseEntity<List<FeedDto>> getMyFeedList(@PathVariable("userSeq") int userSeq) throws Exception{
+    	return new ResponseEntity<>(feedService.getMyFeedList(userSeq),HttpStatus.OK);
+    }
+    
+	//피드 전체 조회 (By 해쉬태그)
+    @ApiOperation(value = "피드 해쉬태그 조회")
+    @GetMapping("/list-by-hashtag")
+    public ResponseEntity<List<FeedDto>> getFeedListByTag(@Param("fhTag") String fhTag) throws Exception{
+    	return new ResponseEntity<>(feedService.getFeedListByTag(fhTag),HttpStatus.OK);
+    }
+    
+    
     //피드 보기
     @ApiOperation(value = "피드 정보 보기")
-    @GetMapping("{feedSeq}/info")
+    @GetMapping("/{feedSeq}/info")
     public ResponseEntity<FeedDto> getFeedInfo(@PathVariable("feedSeq") int feedSeq){
     	return new ResponseEntity<>(feedService.getFeedInfo(feedSeq),HttpStatus.OK);
     }
@@ -60,24 +75,16 @@ public class FeedController {
     
     //피드 수정
     @ApiOperation(value = "피드 수정")
-    @PutMapping("/{feedSeq}/update")
+    @PutMapping("/{feedSeq}/modify")
     public ResponseEntity<FeedDto> updateFeed(@PathVariable("feedSeq") int feedSeq,@RequestBody FeedDto feedDto){
     	return new ResponseEntity<>(feedService.updateFeed(feedSeq,feedDto),HttpStatus.OK);
     }
     
-    //내 피드 조회
-    @ApiOperation(value = "내 모임 조회")
-    @GetMapping("/my/user/{userSeq}")
-    public ResponseEntity<List<FeedDto>> getMyFeedList(@PathVariable("userSeq") int userSeq) throws Exception{
-    	return new ResponseEntity<>(feedService.getMyFeedList(userSeq),HttpStatus.OK);
-    }
-    
     //피드 공개/비공개
-    @ApiOperation(value = "피드 공개 여부 - Y(공개), N(비활공개)")
+    @ApiOperation(value = "피드 활성화 여부 - Y(공개), N(비공개)")
     @PutMapping("/{feedSeq}/active")
-    public ResponseEntity<FeedDto> openFeed(@PathVariable("feedSeq") int feedSeq, @Param("feedOpen") char feedOpen){
+    public ResponseEntity<FeedDto> openFeed(@PathVariable("feedSeq") int feedSeq, @Param("feedOpen") String feedOpen){
     	return new ResponseEntity<>(feedService.openFeed(feedSeq,feedOpen),HttpStatus.OK);
     }
 
-    
 }

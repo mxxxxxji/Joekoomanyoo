@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class FeedHashtagService{
 	private final FeedRepository feedRepository;
 	private final FeedHashtagRepository feedHashtagRepository;
+	private final FeedService feedService;
 
 	//피드 전체 조회
 	public List<FeedHashtagDto> getFeedHashtagList(int feedSeq){
@@ -34,51 +35,54 @@ public class FeedHashtagService{
 		return FeedHashtagMapper.MAPPER.toDtoList(feedList);
 	}
 	
-	
 	//피드 해쉬태그 등록
 	@Transactional
 	public String addFeedHashtag(int feedSeq, List<FeedHashtagDto> fhList) {
-		
-		FeedEntity feed = feedRepository.findById(feedSeq).orElse(null);
-		for(FeedHashtagDto hashtag : fhList) {
-			
-			//해쉬태그 하나씩 등록
-			feed.addFeedHashtag(FeedHashtagEntity.builder()
-					.fhTag(hashtag.getFhTag()).build());
-			feedRepository.save(feed);
-		}	
-		return "Success";
+		if(fhList.size()==0)
+			throw new IllegalArgumentException("해쉬태그를 등록해주세요");
+
+		FeedEntity feed = feedService.findFeed(feedSeq);
+		int cnt =0;
+		for(FeedHashtagDto dto : fhList) {
+			boolean check=false;
+			for(FeedHashtagEntity entity : findHashtag(feedSeq)) {
+				if(dto.getFhTag().equals(entity.getFhTag())) {
+					check=true; break;
+				}
+			}
+			if(check==false) {
+				feed.addFeedHashtag(FeedHashtagEntity.builder().fhTag(dto.getFhTag()).build());
+				feedRepository.save(feed);
+				cnt++;
+			}
+		}
+		if(cnt>0)
+			return "Success";
+		throw new IllegalArgumentException("해쉬태그 등록에 실패했습니다");
 	}
 	
-//	public String addHashtag(FeedHashtagDto hashtag) {
-//		List<FeedHashtagEntity> hashList = feedHashtagRepository.findAll();
-//		for(FeedHashtagEntity entity : hashList) {
-//			if(entity.getFhTag().equals(hashtag.getFhTag())
-//					con
-//		}
-//		
-//		
-//	}
-//	
-//	//피드 해쉬태그 삭제
-//	@Transactional
-//	public String deleteFeedHashtag(int feedSeq, String fhTag) {
-//		List<FeedHashtagEntity> hashtags= findHashtag(feedSeq);
-//		if(hashtags==null) 
-//			throw new IllegalArgumentException("등록된 해쉬태그가 없습니다");
-//		FeedEntity feed = feedRepository.findById(feedSeq).orElse(null);
-//		for(FeedHashtagEntity entity : hashtags) {
-//			if(entity.getFhTag().equals(fhTag)) {
-//				feedHashtagRepository.deleteByFhTag(fhTag);
-//				feed.removeFeedHashTag(fhTag);
-//			}
-//		}
-//		return "Success";
-//	}
+	//피드 해쉬태그 삭제
+	@Transactional
+	public String deleteFeedHashtag(int feedSeq, List<FeedHashtagDto> fhList) {
+		if(fhList.size()==0)
+			throw new IllegalArgumentException("삭제할 해쉬태그를 선택해주세요");
+		FeedEntity feed = feedService.findFeed(feedSeq);
+		int cnt =0;
+		for(FeedHashtagDto dto : fhList) {
+			for(FeedHashtagEntity entity : findHashtag(feedSeq)) {
+				if(dto.getFhTag().equals(entity.getFhTag())) {
+					feedHashtagRepository.deleteByFhTag(entity.getFhTag());
+					feed.removeFeedHashTag(entity.getFhTag());
+					cnt++;
+					break;
+				}
+			}
+		}
+		if(cnt>0)
+			return "Success";
+		throw new IllegalArgumentException("삭제할 해쉬태그가 존재하지 않습니다");
+	}
 
-	
-	
-	
 	//해쉬태그 찾기
 	public List<FeedHashtagEntity> findHashtag(int feedSeq) {
 		List<FeedHashtagEntity> findHashtag = new ArrayList<>();

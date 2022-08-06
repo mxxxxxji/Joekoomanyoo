@@ -89,7 +89,7 @@ public class GroupEntity {
     private LocalDateTime updatedTime;
 
     @ManyToOne
-	@JoinColumn(name="user_seq",updatable=false)
+	@JoinColumn(name="user_seq")
 	private UserEntity user;
     
 

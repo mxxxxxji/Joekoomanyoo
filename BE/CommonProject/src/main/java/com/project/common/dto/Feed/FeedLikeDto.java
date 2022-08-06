@@ -26,7 +26,6 @@ public class FeedLikeDto {
 		this.feed = feed;
 		this.userSeq = userSeq;
 	}
-
 	
     public FeedLikeEntity toEntity(){
         return FeedLikeEntity.builder()

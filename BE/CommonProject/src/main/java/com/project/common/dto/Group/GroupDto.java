@@ -39,13 +39,15 @@ public class GroupDto {
    	// 모임 설정 정보 //
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
+    private int userSeq;
+   // private UserEntity user;
 
 
 
     @Builder
 	public GroupDto(int groupSeq, String name, String themaImg, String master, String description, char accessType,
 			String password, int maxCount, String region, int startDate, int endDate, int ageRange, char withChild,
-			char withGlobal, char active, char status, LocalDateTime createdTime,UserEntity user,
+			char withGlobal, char active, char status, LocalDateTime createdTime,int userSeq,
 			LocalDateTime updatedTime) {
 		super();
 		this.groupSeq = groupSeq;
@@ -64,7 +66,7 @@ public class GroupDto {
 		this.withGlobal = withGlobal;
 		this.active = active;
 		this.status = status;
-	//	this.user = user;
+		this.userSeq = userSeq;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 	}
@@ -87,7 +89,6 @@ public class GroupDto {
                 .withGlobal(withGlobal)
                 .active(active)
                 .status(status)
-      //          .user(user)
                 .build();
     }
 }
