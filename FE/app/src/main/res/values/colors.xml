@@ -34,4 +34,8 @@
     <color name="titan_white">#FFeaedff</color>
     <!--top 배경-->
     <color name="link_water">#FFDDEBF4</color>
+
+    <!--사진 피드 상태바-->
+    <color name="skyblue">#88bbde</color>
+    <color name="blue">#88aade</color>
 </resources>
