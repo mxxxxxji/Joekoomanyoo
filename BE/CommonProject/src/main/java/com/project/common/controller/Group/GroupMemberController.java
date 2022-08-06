@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.common.dto.Group.GroupBasicReqDto;
 import com.project.common.dto.Group.GroupJoinReqDto;
 import com.project.common.dto.Group.GroupMemberListDto;
 import com.project.common.service.Group.GroupMemberService;
@@ -54,7 +53,7 @@ public class GroupMemberController {
 	//모임 수락
 	@ApiOperation(value = "모임 가입 승인 - memberStatus 0(가입대기)->1(일반회원)")
 	@PutMapping("/member/approve")
-	public ResponseEntity<String> approveMember(@PathVariable("groupSeq") int groupSeq,@RequestBody GroupBasicReqDto groupBasicReqDto){	
-		return new ResponseEntity<>(groupMemberService.approveMember(groupSeq,groupBasicReqDto),HttpStatus.OK);
+	public ResponseEntity<String> approveMember(@PathVariable("groupSeq") int groupSeq,@Param("userSeq") int userSeq){	
+		return new ResponseEntity<>(groupMemberService.approveMember(groupSeq,userSeq),HttpStatus.OK);
 	}
 }

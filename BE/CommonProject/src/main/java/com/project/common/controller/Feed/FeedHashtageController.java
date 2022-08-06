@@ -36,7 +36,7 @@ public class FeedHashtageController {
     //피드 해쉬태그 등록
     @ApiOperation(value = "피드 해쉬태그 등록")
     @PostMapping("/add")
-    public ResponseEntity<?> addFeedHashtag(@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
+    public ResponseEntity<String> addFeedHashtag(@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
     	return new ResponseEntity<>(feedHashtagService.addFeedHashtag(feedSeq,fhList),HttpStatus.CREATED);
     }
 
@@ -44,7 +44,7 @@ public class FeedHashtageController {
     //피드 해쉬태그 삭제
    	@ApiOperation(value = "피드 해쉬태그 삭제")
    	@DeleteMapping("/delete")
-   	public ResponseEntity<?> deleteFeedHashtag(@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
+   	public ResponseEntity<String> deleteFeedHashtag(@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
    	 	return new ResponseEntity<>(feedHashtagService.deleteFeedHashtag(feedSeq,fhList),HttpStatus.OK);
    	}
  

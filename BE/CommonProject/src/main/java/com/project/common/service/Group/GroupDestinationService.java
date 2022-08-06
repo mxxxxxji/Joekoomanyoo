@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.common.dto.Group.GroupDestinationDto;
 import com.project.common.dto.Group.GroupDestinationMapDto;
 import com.project.common.entity.Group.GroupDestinationEntity;
 import com.project.common.entity.Group.GroupEntity;
@@ -65,15 +64,15 @@ public class GroupDestinationService{
 	
 	//모임 목적지 추가
 	@Transactional
-	public String addGroupDestination(int groupSeq, GroupDestinationDto gdDto) {
-		System.out.println(gdDto.getHeritageSeq());
+	public String addGroupDestination(int groupSeq, int heritageSeq) {
+		System.out.println(heritageSeq);
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDestinationEntity entity:group.getDestinations()) {
-			if(entity!=null&&entity.getHeritageSeq()==gdDto.getHeritageSeq()) {
+			if(entity!=null&&entity.getHeritageSeq()==heritageSeq) {
 				throw new IllegalArgumentException("이미 등록한 목적지입니다");
 			}
 		}
-		group.addGroupDestination(GroupDestinationEntity.builder().gdCompleted("N").heritageSeq(gdDto.getHeritageSeq()).build());
+		group.addGroupDestination(GroupDestinationEntity.builder().gdCompleted("N").heritageSeq(heritageSeq).build());
 		groupRepository.save(group);
 		return "Success";
 	}
@@ -96,9 +95,9 @@ public class GroupDestinationService{
 	
 	//모임 목적지 완료 표시
 	@Transactional
-	public String modifyGroupDestination(int groupSeq, GroupDestinationDto gdDto) {
+	public String modifyGroupDestination(int groupSeq,int heritageSeq) {
 		for(GroupDestinationEntity entity: findDestination(groupSeq)) {
-			if(entity !=null && entity.getHeritageSeq()==gdDto.getHeritageSeq()) {
+			if(entity !=null && entity.getHeritageSeq()==heritageSeq) {
 				entity.setGdCompleted("Y");
 				groupDestinationRepository.save(entity);
 				return "Success";
