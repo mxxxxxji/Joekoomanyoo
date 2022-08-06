@@ -7,4 +7,5 @@ data class HeritageReview(
     val heritageReviewText: String,         // 문화유산 리뷰 내용
     val heritageReviewRegistedAt: String,   // 문화유산 리뷰 등록시간
     val attachSeq: Int,                     // 첨부파일 번호
+    val userNickname: String,               // 사용자 닉네임
 )

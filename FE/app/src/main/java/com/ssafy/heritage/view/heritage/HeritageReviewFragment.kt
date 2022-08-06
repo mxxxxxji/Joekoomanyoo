@@ -2,24 +2,31 @@ package com.ssafy.heritage.view.heritage
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.google.android.gms.auth.api.signin.GoogleSignIn.hasPermissions
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.HeritageReviewAdapter
+import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.databinding.FragmentHeritageReviewBinding
 import com.ssafy.heritage.viewmodel.HeritageViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 
 private const val TAG = "HeritageReviewFragment___"
 private val PERMISSIONS_REQUIRED = arrayOf(
@@ -27,15 +34,18 @@ private val PERMISSIONS_REQUIRED = arrayOf(
 )
 
 class HeritageReviewFragment :
-    BaseFragment<FragmentHeritageReviewBinding>(R.layout.fragment_heritage_review) {
+    BaseFragment<FragmentHeritageReviewBinding>(R.layout.fragment_heritage_review),
+    OnItemClickListener {
 
-    private val heritageViewModel by viewModels<HeritageViewModel>()
+    private val heritageViewModel by activityViewModels<HeritageViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
     private lateinit var heritageReview: HeritageReviewListResponse
     private lateinit var heritageReviewAdapter: HeritageReviewAdapter
     private var userSeq: Int = 0
     private var heritageReviewRegistedAt: String = ""
     private var heritageReviewText: String = ""
     private var attachSeq: Int = 0
+    private var userNickname: String = ""
 
 //    var PICK_IMAGE_FROM_ALBUM = 0
 //    var storage: ReviewImgAttach? = null
@@ -45,7 +55,6 @@ class HeritageReviewFragment :
 
     override fun init() {
         Log.d("review","can you see review??")
-        heritageViewModel.getHeritageList()
         heritageViewModel.getHeritageReviewList()
 
         initAdapter()
@@ -109,6 +118,14 @@ class HeritageReviewFragment :
         // 리뷰 글쓰기 버튼 클릭 시
         btnCreateReview.setOnClickListener {
 
+            // 키보드 버튼 내리기 (둘 다 어째서인지 하이드 성공하고 앱이 꺼진다)
+            // 1안
+//            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//            imm.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
+            // 2안
+//            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//            imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+
             heritageReviewText = etReviewContent.text.toString()
 //            attachSeq = btnImgAttach.
 
@@ -122,10 +139,20 @@ class HeritageReviewFragment :
             }
 
             if (heritageReviewText != "") {
-                heritageReview = HeritageReviewListResponse(0, 0, 0,  heritageReviewText, "", attachSeq)
+                heritageReview = HeritageReviewListResponse(
+                    0,
+                    userSeq = userViewModel.user.value?.userSeq!!,
+                    heritageSeq = heritageViewModel.heritage.value?.heritageSeq!!,
+                    heritageReviewText,
+                    "",
+                    0,
+                    userNickname = userViewModel.user.value?.userNickname!!
+                )
                 heritageViewModel.insertHeritageReview(heritageReview)
+                etReviewContent.setText("")
             }
         }
+
     }
 
     // 사진 선택
@@ -192,6 +219,15 @@ class HeritageReviewFragment :
     fun makeTextInputLayoutError(textInputLayout: TextInputLayout, msg: String) {
         textInputLayout.error = msg
         textInputLayout.isErrorEnabled = true
+    }
+
+    override fun onItemClick(position: Int) {
+        // 리뷰 삭제 버튼 동작
+        heritageViewModel.deleteHeritageReview(
+            // adapter에서 position 번째 아이템을 가져온당
+            heritageReviewAdapter.currentList.get(position).heritageReviewSeq,
+            heritageReviewAdapter.currentList.get(position).heritageSeq
+        )
     }
 
 

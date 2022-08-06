@@ -13,14 +13,18 @@ interface HeritageService {
     suspend fun selectAllHeritage(): Response<List<Heritage>>
 
     // 해당 문화유산의 전체 리뷰를 가져온다
-    @GET("/api/heritage/reviews")
-    suspend fun selectAllHeritageReviews(): Response<List<HeritageReviewListResponse>>
+    @GET("/api/heritage/reviews/{heritageSeq}")
+    suspend fun selectAllHeritageReviews(@Path("heritageSeq") heritageSeq: Int): Response<List<HeritageReviewListResponse>>
 
     // 리뷰를 작성한다
     @POST("/api/heritage/review")
     suspend fun insertHeritageReview(@Body body: HeritageReviewListResponse): Response<String>
 
-    // 스터디에 공유한다다
+    // 리뷰를 삭제한다
+    @DELETE("/api/heritage/review/{heritageReviewSeq}/{heritageSeq}")
+    suspend fun deleteHeritageReivew(@Path("heritageReviewSeq") heritageReviewSeq: Int, @Path("heritageSeq") heritageSeq: Int): Response<String>
+
+    // 스터디에 공유한다
 
     // 문화유산 정렬해서 져오기??
     // 문화유산 상세정보 가져오기??
