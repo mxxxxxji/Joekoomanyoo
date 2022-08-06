@@ -93,6 +93,8 @@ class HeritageDetailFragment :
 //            }
 //        }
 
+        // 스터디로 공유하기 (토스트 필요한 듯)
+
     }
 
 
