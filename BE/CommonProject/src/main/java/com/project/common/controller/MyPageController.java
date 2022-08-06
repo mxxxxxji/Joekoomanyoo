@@ -221,9 +221,9 @@ public class MyPageController {
      */
 
     @ApiOperation(value = "내 일정 불러오기", response = List.class)
-    @PostMapping("/schedule/list")
-    public ResponseEntity<?> listSchedule(@RequestBody MyScheduleDto myScheduleDto) {
-        List<MyScheduleDto> list = myPageService.listSchedule(myScheduleDto);
+    @GetMapping("/schedule/{userSeq}/list")
+    public ResponseEntity<?> listSchedule(@PathVariable("userSeq") int userSeq) {
+        List<MyScheduleDto> list = myPageService.listSchedule(userSeq);
         if (list == null) {
             return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
         } else {

@@ -152,8 +152,8 @@ public class MyPageService {
     }
 
     // 일정 리스트 보여주기
-    public List<MyScheduleDto> listSchedule(MyScheduleDto myScheduleDto) {
-        List<MyScheduleEntity> list = myScheduleRepositoryCustom.findByUserSeqAndMyScheduleDate(myScheduleDto.getUserSeq(), myScheduleDto.getMyScheduleDate());
+    public List<MyScheduleDto> listSchedule(int userSeq) {
+        List<MyScheduleEntity> list = myScheduleRepositoryCustom.findByUserSeq(userSeq);
         // 리스트에 아무것도 없는 경우 ( 일정이 없다 )
         if(list.size()==0){
             return null;
@@ -165,6 +165,21 @@ public class MyPageService {
             return listDto;
         }
     }
+//    
+//    // 일정 리스트 보여주기
+//    public List<MyScheduleDto> listSchedule(int userSeq,MyScheduleDto myScheduleDto) {
+//        List<MyScheduleEntity> list = myScheduleRepositoryCustom.findByUserSeqAndMyScheduleDate(userSeq, myScheduleDto.getMyScheduleDate());
+//        // 리스트에 아무것도 없는 경우 ( 일정이 없다 )
+//        if(list.size()==0){
+//            return null;
+//        }else {
+//            List<MyScheduleDto> listDto = new ArrayList<>();
+//            for (MyScheduleEntity myScheduleEntity : list) {
+//                listDto.add(MyScheduleMapper.MAPPER.toDto(myScheduleEntity));
+//            }
+//            return listDto;
+//        }
+//    }
 
     // 일정 수정하기
     public boolean modifySchedule(MyScheduleDto myScheduleDto) {
