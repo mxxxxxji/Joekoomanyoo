@@ -109,4 +109,7 @@ dependencies {
 
     // Events Calendar https://github.com/tizisdeepan/EventsCalendar
     implementation 'com.github.tizisdeepan:eventscalendar:1.6.1'
+
+    // Floating Action Button Library for Android
+    implementation 'com.scalified:fab:1.1.3'
 }

@@ -78,4 +78,7 @@ interface UserService {
     @GET("/api/group/destination/mylist/{userSeq}")
     suspend fun selectAllMyDestination(@Path("userSeq") userSeq: Int): Response<List<GroupDestinationMap>>
 
+    // 내 일정 불러오기
+    @GET("/api/mypage/schedule/{userSeq}/list")
+    suspend fun selectAllMySchedule(@Path("userSeq") userSeq: Int): Response<List<Schedule>>
 }

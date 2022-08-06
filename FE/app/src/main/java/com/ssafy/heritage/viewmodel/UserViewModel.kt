@@ -46,6 +46,10 @@ class UserViewModel : ViewModel() {
     val myDestinationList: LiveData<MutableList<GroupDestinationMap>>
         get() = _myDestinationList
 
+    private val _myScheduleList = MutableLiveData<MutableList<Schedule>>()
+    val myScheduleList: LiveData<MutableList<Schedule>>
+        get() = _myScheduleList
+
     fun setUser(user: User) {
         _user.value = user
     }
@@ -326,6 +330,26 @@ class UserViewModel : ViewModel() {
                 val list = it.body() as MutableList<GroupDestinationMap>
                 Log.d(TAG, "getMydestination list: $list")
                 _myDestinationList.postValue(list)
+            } else {
+
+            }
+        }
+    }
+
+    // 내 일정 불러오기
+    fun getSchedule() = viewModelScope.launch {
+        var response: Response<List<Schedule>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.selectAllMySchedule(_user.value?.userSeq!!)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "getSchedule response: $it")
+            if (it.isSuccessful) {
+                val list = it.body() as MutableList<Schedule>
+                Log.d(TAG, "getSchedule list: $list")
+                _myScheduleList.postValue(list)
             } else {
 
             }

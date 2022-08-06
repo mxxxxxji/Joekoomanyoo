@@ -10,7 +10,6 @@ import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.Path
 
 class Repository constructor(context: Context) {
@@ -79,6 +78,8 @@ class Repository constructor(context: Context) {
 
     suspend fun selectAllMyDestination(userSeq: Int): Response<List<GroupDestinationMap>> =
         userApi.selectAllMyDestination(userSeq)
+
+    suspend fun selectAllMySchedule(userSeq: Int): Response<List<Schedule>> = userApi.selectAllMySchedule(userSeq)
 
 
     // heritage

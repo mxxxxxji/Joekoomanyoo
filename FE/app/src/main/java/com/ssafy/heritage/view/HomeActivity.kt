@@ -1,9 +1,13 @@
 package com.ssafy.heritage.view
 
+import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.util.Base64
 import android.util.Log
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -117,5 +121,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             //Navigation의 스택에서 pop 됨(원래 동작)
             super.onBackPressed()
         }
+    }
+
+    // EditText가 아닌 다른 곳 터치시 키보드 숨기기
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val view = currentFocus
+
+        if (view != null && view is EditText) {
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            view.clearFocus()
+        }
+
+        return super.dispatchTouchEvent(ev)
     }
 }
