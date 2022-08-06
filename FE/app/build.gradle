@@ -103,4 +103,14 @@ dependencies {
     // 원형 프로필
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
+<<<<<<< Updated upstream
+=======
+    // Switcher https://github.com/bitvale/Switcher
+    implementation 'io.github.bitvale:switcher:1.1.2'
+
+    // Calender
+    implementation 'com.github.tizisdeepan:eventscalendar:1.6.1'
+
+
+>>>>>>> Stashed changes
 }
