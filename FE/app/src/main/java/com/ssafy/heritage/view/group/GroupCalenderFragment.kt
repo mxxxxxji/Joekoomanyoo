@@ -17,47 +17,21 @@ import java.util.*
 class GroupCalenderFragment : BaseFragment<FragmentGroupCalendarBinding>(R.layout.fragment_group_calendar), EventsCalendar.Callback {
 
     override fun init() {
-        binding.eventsCalendar.setSelectionMode(SINGLE_SELECTION) //set mode of Calendar
-            .setToday(today) //set today's date [today: Calendar]
-           // .setMonthRange(start, end) //set starting month [start: Calendar] and ending month [end: Calendar]
-            .setWeekStartDay(Calendar.SUNDAY, false) //set start day of the week as you wish [startday: Int, doReset: Boolean]
-//            .setCurrentSelectedDate(today) //set current date and scrolls the calendar to the corresponding month of the selected date [today: Calendar]
- //           .setDatesTypeface(typeface) //set font for dates
-            .setDateTextFontSize(16f) //set font size for dates
-           // .setMonthTitleTypeface(typeface) //set font for title of the calendar
-            .setMonthTitleFontSize(16f) //set font size for title of the calendar
-           // .setWeekHeaderTypeface(typeface) //set font for week names
-            .setWeekHeaderFontSize(16f) //set font size for week names
-           // .setCallback(this) //set the callback for EventsCalendar
-           // .addEvent(c) //set events on the EventsCalendar [c: Calendar]
-           // .disableDate(dc) //disable a specific day on the EventsCalendar [c: Calendar]
-            .disableDaysInWeek(Calendar.SATURDAY, Calendar.SUNDAY) //disable days in a week on the whole EventsCalendar [varargs days: Int]
-            .build()
+        binding.selected.text = getDateString(binding.eventsCalendar.getCurrentSelectedDate()?.timeInMillis)
 
-    }
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         val today = Calendar.getInstance()
-
-        val start = Calendar.getInstance()
-        start.add(Calendar.YEAR, -10)
-
         val end = Calendar.getInstance()
-        end.add(Calendar.YEAR, 20)
-
-        binding.eventsCalendar.setSelectionMode(SINGLE_SELECTION)
+        end.add(Calendar.YEAR, 2)
+        binding.eventsCalendar.setSelectionMode(binding.eventsCalendar.MULTIPLE_SELECTION)
             .setToday(today)
             .setMonthRange(today, end)
             .setWeekStartDay(Calendar.SUNDAY, false)
-//            .setDatesTypeface(FontsManager.getTypeface(FontsManager.OPENSANS_REGULAR, requireContext()))
-//            .setMonthTitleTypeface(FontsManager.getTypeface(FontsManager.OPENSANS_SEMIBOLD, requireContext()))
-//            .setWeekHeaderTypeface(FontsManager.getTypeface(FontsManager.OPENSANS_SEMIBOLD, requireContext()))
+            .setIsBoldTextOnSelectionEnabled(true)
+//            .setDatesTypeface(FontsManager.getTypeface(FontsManager.OPENSANS_REGULAR, this))
+//            .setMonthTitleTypeface(FontsManager.getTypeface(FontsManager.OPENSANS_SEMIBOLD, this))
+//            .setWeekHeaderTypeface(FontsManager.getTypeface(FontsManager.OPENSANS_SEMIBOLD, this))
             .setCallback(this)
             .build()
-
-        binding.eventsCalendar.post {
-            binding.eventsCalendar.setCurrentSelectedDate(today)
-        }
 
         val c = Calendar.getInstance()
         c.add(Calendar.DAY_OF_MONTH, 2)
@@ -68,18 +42,33 @@ class GroupCalenderFragment : BaseFragment<FragmentGroupCalendarBinding>(R.layou
         binding.eventsCalendar.addEvent(c)
         c.add(Calendar.DAY_OF_MONTH, 7)
         binding.eventsCalendar.addEvent(c)
+        c.add(Calendar.MONTH, 1)
+        c[Calendar.DAY_OF_MONTH] = 1
+        binding.eventsCalendar.addEvent(c)
+
+        binding.selected.setOnClickListener {
+            val dates = binding.eventsCalendar.getDatesFromSelectedRange()
+            Log.e("SELECTED SIZE", dates.size.toString())
+        }
+
+
+
+        val dc = Calendar.getInstance()
+        dc.add(Calendar.DAY_OF_MONTH, 2)
+
+
     }
     override fun onDayLongPressed(selectedDate: Calendar?) {
+        Log.e("LONG CLICKED", EventsCalendarUtil.getDateString(selectedDate, EventsCalendarUtil.DD_MM_YYYY))
+    }
 
+    override fun onMonthChanged(monthStartDate: Calendar?) {
+        Log.e("MON", "CHANGED")
     }
 
     override fun onDaySelected(selectedDate: Calendar?) {
         Log.e("CLICKED", EventsCalendarUtil.getDateString(selectedDate, EventsCalendarUtil.DD_MM_YYYY))
         binding.selected.text = getDateString(selectedDate?.timeInMillis)
-    }
-
-    override fun onMonthChanged(monthStartDate: Calendar?) {
-
     }
     private fun getDateString(time: Long?): String {
         if (time != null) {
