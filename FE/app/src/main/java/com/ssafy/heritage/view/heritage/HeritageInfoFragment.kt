@@ -48,8 +48,7 @@ class HeritageInfoFragment :
     override fun init() {
         initObserver()
         initClickListener()
-
-//        initMap()
+        initMap()
     }
 
     // 뷰모델
@@ -227,8 +226,11 @@ class HeritageInfoFragment :
             this@HeritageInfoFragment
         )
         map.addView(mapView)
-        setLocation()
-        makeMarker()
+        Log.d(TAG, "initMap: ${viewModel.heritage.value?.heritageLat}")
+        Log.d(TAG, "initMap: ${viewModel.heritage.value?.heritageLng}")
+
+//        setLocation()
+//        makeMarker()
     }
 
     private fun setLocation() {
