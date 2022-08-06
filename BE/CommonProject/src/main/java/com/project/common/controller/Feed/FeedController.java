@@ -51,7 +51,7 @@ public class FeedController {
     }
     
 	//피드 전체 조회 (By 해쉬태그)
-    @ApiOperation(value = "피드 해쉬태그 조회")
+    @ApiOperation(value = "피드 조회 by 해쉬태그")
     @GetMapping("/list-by-hashtag")
     public ResponseEntity<List<FeedDto>> getFeedListByTag(@Param("fhTag") String fhTag) throws Exception{
     	return new ResponseEntity<>(feedService.getFeedListByTag(fhTag),HttpStatus.OK);
@@ -59,7 +59,7 @@ public class FeedController {
     
     
     //피드 보기
-    @ApiOperation(value = "피드 정보 보기")
+    @ApiOperation(value = "피드 보기")
     @GetMapping("/{feedSeq}/info")
     public ResponseEntity<FeedDto> getFeedInfo(@PathVariable("feedSeq") int feedSeq){
     	return new ResponseEntity<>(feedService.getFeedInfo(feedSeq),HttpStatus.OK);

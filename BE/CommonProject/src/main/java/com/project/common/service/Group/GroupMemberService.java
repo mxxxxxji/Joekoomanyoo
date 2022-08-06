@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.common.dto.Group.GroupBasicReqDto;
 import com.project.common.dto.Group.GroupJoinReqDto;
 import com.project.common.dto.Group.GroupMemberListDto;
 import com.project.common.entity.Group.GroupEntity;
@@ -74,9 +73,9 @@ public class GroupMemberService{
 	}
 	
 	//모임 가입 승인
-	public String approveMember(int groupSeq,GroupBasicReqDto groupBasicReqDto) {
+	public String approveMember(int groupSeq, int userSeq) {
 		for(GroupMemberEntity entity: findMember(groupSeq)) {
-			if(entity.getUserSeq()==groupBasicReqDto.getUserSeq()) {
+			if(entity.getUserSeq()==userSeq) {
 				entity.setMemberStatus(1);
 				groupMemberRepository.save(entity);
 				break;

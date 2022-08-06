@@ -46,9 +46,8 @@ public class GroupDailyMemoController {
     //메모 삭제
    	@ApiOperation(value = "모임 데일리 메모 삭제")
    	@DeleteMapping("/memo/delete")
-   	public ResponseEntity<?> deleteDailyMemo(@PathVariable int groupSeq, @Param("gdmDate") int gdmDate ){
-   		groupDailyMemoService.deleteGroupMemo(groupSeq,gdmDate);
-   	 	return new ResponseEntity<>(HttpStatus.OK);
+   	public ResponseEntity<String> deleteDailyMemo(@PathVariable int groupSeq, @Param("gdmDate") int gdmDate ){
+   	 	return new ResponseEntity<>(groupDailyMemoService.deleteGroupMemo(groupSeq,gdmDate),HttpStatus.OK);
    	}
     
    	//메모 수정

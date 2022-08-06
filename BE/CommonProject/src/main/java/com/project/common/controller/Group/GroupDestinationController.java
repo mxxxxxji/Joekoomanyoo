@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.common.dto.Group.GroupDestinationDto;
 import com.project.common.dto.Group.GroupDestinationMapDto;
 import com.project.common.service.Group.GroupDestinationService;
 
@@ -47,8 +45,8 @@ public class GroupDestinationController {
     //모임 목적지 추가
     @ApiOperation(value = "모임 목적지 추가")
     @PostMapping("/{groupSeq}/destination/add")
-    public ResponseEntity<String> addGroupDestination(@PathVariable("groupSeq") int groupSeq,@RequestBody GroupDestinationDto gdDto){
-    	return new ResponseEntity<>(groupDestinationService.addGroupDestination(groupSeq,gdDto),HttpStatus.CREATED);
+    public ResponseEntity<String> addGroupDestination(@PathVariable("groupSeq") int groupSeq,@Param("heritageSeq") int heritageSeq){
+    	return new ResponseEntity<>(groupDestinationService.addGroupDestination(groupSeq,heritageSeq),HttpStatus.CREATED);
     }
 
     
@@ -62,7 +60,7 @@ public class GroupDestinationController {
    	//모임 목적지 완료 표시
   	@ApiOperation(value = "모임 목적지 완료 표시 - gdCompleted N -> Y")
   	@PutMapping("/{groupSeq}/destination/modify")
-  	public ResponseEntity<String> modifyGroupDestination(@RequestBody GroupDestinationDto gdDto, @PathVariable int groupSeq){
-  		return new ResponseEntity<>(groupDestinationService.modifyGroupDestination(groupSeq,gdDto),HttpStatus.OK);
+  	public ResponseEntity<String> modifyGroupDestination(@PathVariable int groupSeq,@Param("heritageSeq") int heritageSeq){
+  		return new ResponseEntity<>(groupDestinationService.modifyGroupDestination(groupSeq,heritageSeq),HttpStatus.OK);
   	}
 }
