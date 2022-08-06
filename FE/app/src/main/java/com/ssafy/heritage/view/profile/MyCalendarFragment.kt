@@ -116,7 +116,7 @@ class MyCalendarFragment : BaseFragment<FragmentMyCalendarBinding>(R.layout.frag
             // 선택한 날짜와 리스트에 있는 날짜가 같은 리스트만 뿌려줌
             val list = userViewModel.myScheduleList.value?.filter { it.myScheduleDate == date }
             list?.forEach {
-                if (it.myScheduleTime.toInt() < 10) {
+                if (it.myScheduleTime.length < 2) {
                     it.myScheduleTime = "0" + it.myScheduleTime
                 }
             }
