@@ -9,10 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.GroupListAdapter
 import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
+import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupListBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import kotlin.properties.Delegates
@@ -24,6 +26,7 @@ class GroupListFragment :
 
     private lateinit var groupListAdapter: GroupListAdapter
     private val groupViewModel by viewModels<GroupViewModel>()
+    val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
 
     override fun init() {
 
@@ -31,6 +34,7 @@ class GroupListFragment :
         initAdapter()
         initObserver()
         initClickListener()
+
     }
 
     private fun initAdapter() {
@@ -40,7 +44,14 @@ class GroupListFragment :
 
     private fun initObserver() {
         groupViewModel.groupList.observe(viewLifecycleOwner) {
-            groupListAdapter.submitList(it)
+            // 진행
+            var list = mutableListOf<GroupListResponse>()
+            for(i in it){
+                if(i.status == 'R'){
+                    list.add(i)
+                }
+            }
+            groupListAdapter.submitList(list)
         }
     }
 

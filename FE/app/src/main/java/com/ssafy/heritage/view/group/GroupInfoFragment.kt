@@ -1,17 +1,26 @@
 package com.ssafy.heritage.view.group
 
+import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
+import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.FragmentGroupInfoBinding
 import com.ssafy.heritage.view.HomeFragment
 import com.ssafy.heritage.view.ar.ARFragment
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
+import kotlin.properties.Delegates
 
 private const val TAG = "GroupInfoFragment___"
 
@@ -19,25 +28,20 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
 
     private val args by navArgs<GroupInfoFragmentArgs>()
     private val groupViewModel by activityViewModels<GroupViewModel>()
+
     private lateinit var detailFragment : GroupDetailFragment
     private lateinit var chatFragment: GroupChatFragment
     private lateinit var calenderFragment: GroupCalenderFragment
     private lateinit var mapFragment: GroupMapFragment
 
-
     override fun init() {
+        groupViewModel.selectGroupMembers(ApplicationClass.sharedPreferencesUtil.getUser(),args.groupInfo.groupSeq)
         groupViewModel.getGroupList()
-        Log.d(TAG, args.groupInfo.toString())
         groupViewModel.add(args.groupInfo)
-        groupViewModel.selectGroupMembers(args.groupInfo.groupSeq)
         initAdapter()
-        initObserver()
         initClickListener()
-        Log.d(TAG, args.groupInfo.name)
-
-        // groupViewModel.getGroupDetailInfo(args.groupInfo.groupSeq) //- 서버 API 수정중 : 서버 오류로 데이터 받아오는지 미확인
-        // groupViewModel.selectGroupMembers(args.groupInfo.groupSeq) - 서버 API 미작성 : 회원 이미지,이름 나오는지 확인 필요
     }
+
     private fun initClickListener()= with(binding) {
         btnBack.setOnClickListener{
             findNavController().popBackStack()
@@ -71,13 +75,7 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
         }
     }
 
-    private fun initObserver() {
-        groupViewModel.groupDetailInfo.observe(viewLifecycleOwner) {
-            binding.apply {
 
-            }
-        }
-    }
 
     private fun replaceView(tab: Fragment) {
         // 탭한 화면 변경

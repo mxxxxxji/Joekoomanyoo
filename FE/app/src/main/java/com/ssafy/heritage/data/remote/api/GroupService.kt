@@ -3,6 +3,8 @@ package com.ssafy.heritage.data.remote.api
 import com.ssafy.heritage.data.dto.GroupAttribute
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.dto.User
+import com.ssafy.heritage.data.remote.request.GroupBasic
+import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import retrofit2.Response
 import retrofit2.http.*
@@ -18,7 +20,7 @@ interface GroupService {
     suspend fun selectAllGroups(): Response<List<GroupListResponse>>
 
     // 모임을 삭제한다
-    @DELETE("/api/group/{groupSeq}")
+    @DELETE("/api/group/{groupSeq}/delete")
     suspend fun deleteGroup(@Path("groupSeq") groupSeq: Int): Response<Boolean>
 
     // 모임 활성화 여부를 등록한다
@@ -26,11 +28,11 @@ interface GroupService {
     suspend fun changeGroupActiveState(@Body body: Int): Response<Boolean>
 
     // 모임 상세정보를 조회한다
-    @GET("/api/group/{groupSeq}/simple")
+    @GET("/api/group/{groupSeq}/info")
     suspend fun selectGroupDetail(@Path("groupSeq") groupSeq: Int): Response<GroupListResponse>
 
     // 모임 정보를 수정한다
-    @PUT("/api/group/{groupSeq}/modify")
+    @PUT("/api/group/{groupSeq}/update")
     suspend fun modifyGroup(@Path("groupSeq") groupSeq: Int, @Body body: GroupAttribute): Response<Boolean>
 
     // 나의 모임 정보만 조회한다
@@ -40,29 +42,22 @@ interface GroupService {
 
 
     // 가입을 승인한다
-    @PUT("/api/group/{groupSeq}/join/{memberSeq}")
-    suspend fun approveGroupJoin(@Path("groupSeq") groupSeq: Int, @Path("memberSeq") memberSeq: Int): Response<Boolean>
+    @PUT("/api/group/{groupSeq}/member-approve")
+    suspend fun approveGroupJoin(@Path("groupSeq") groupSeq: Int,@Body body: GroupBasic): Response<Boolean>
 
-    // 가입을 거절한다 (승인자가 거절)
-    @DELETE("/api/group/{groupSeq}/join/{memberSeq}/reject")
-    suspend fun rejectGroupJoin(@Path("groupSeq") groupSeq: Int, @Path("memberSeq") memberSeq: Int): Response<Boolean>
+    // 가입을 신청한다
+    @POST("/api/group/{groupSeq}/member-join")
+    suspend fun applyGroupJoin(@Path("groupSeq") groupSeq: Int, @Body body: GroupJoin): Response<Boolean>
 
-    // 가입을 취소한다 (신청자가 취소)
-    @DELETE("/api/group/{groupSeq}/join/{memberSeq}/cancel")
-    suspend fun cancelGroupJoin(@Path("groupSeq") groupSeq: Int, @Path("memberSeq") memberSeq: Int): Response<Boolean>
-
-    // 가입을 탈퇴한다
-    @DELETE("/api/group/{groupSeq}/join/{memberSeq}/drop")
-    suspend fun dropGroupJoin(@Path("groupSeq") groupSeq: Int, @Path("memberSeq") memberSeq: Int): Response<Boolean>
-
-    // 회원을 강제퇴장 시킨다
-    @DELETE("/api/group/{groupSeq}/join/{memberSeq}/ban")
-    suspend fun banGroupJoin(@Path("groupSeq") groupSeq: Int, @Path("memberSeq") memberSeq: Int): Response<Boolean>
-
+    // 가입을 탈퇴/취소/거절(방장)/취소한다
+    @DELETE("/api/group/{groupSeq}/member-leave")
+    suspend fun leaveGroupJoin(@Path("groupSeq") groupSeq: Int, @Body body: GroupBasic): Response<Boolean>
 
     // 회원 목록을 조회한다
-    @GET("/api/group/{groupSeq}/member")
+    @GET("/api/group/{groupSeq}/member-list")
     suspend fun selectGroupMembers(@Path("groupSeq") groupSeq: Int): Response<List<Member>>
+
+
 
     // 회원 프로필을 조회한다
 

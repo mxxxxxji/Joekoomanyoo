@@ -1,38 +1,42 @@
 package com.ssafy.heritage.view.group
 
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.navArgs
+import androidx.navigation.fragment.findNavController
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.MemberAdapter
 import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
-import com.ssafy.heritage.data.dto.User
+import com.ssafy.heritage.data.remote.request.GroupBasic
+import com.ssafy.heritage.data.remote.request.GroupJoin
+import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupDetailBinding
+import com.ssafy.heritage.view.dialog.ApplyGroupJoinDialog
+import com.ssafy.heritage.view.dialog.ApplyGroupJoinDialogInterface
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 
 private const val TAG = " GroupDetailFragment___"
 
 class GroupDetailFragment :
     BaseFragment<FragmentGroupDetailBinding>(R.layout.fragment_group_detail),
-    OnItemClickListener {
+    OnItemClickListener, ApplyGroupJoinDialogInterface {
 
-
+    private val userViewModel by activityViewModels<UserViewModel>()
     private val groupViewModel by activityViewModels<GroupViewModel>()
-    private val user =
-        User(0, "ssafy@naver.com", "블랙맘바", "1", "970317", "N", 'W', "", "", "", "", 'N')
+    private val userSeq : Int = ApplicationClass.sharedPreferencesUtil.getUser()
     private lateinit var memberAdapter: MemberAdapter
     private lateinit var applicantAdapter: MemberAdapter
+    private lateinit var groupInfo: GroupListResponse
+
     override fun init() {
+        binding.groupVM = groupViewModel
 
         initAdapter()
         initObserver()
-
+        initClickListener()
     }
 
     private fun initAdapter() {
@@ -43,58 +47,76 @@ class GroupDetailFragment :
     }
 
     private fun initObserver() = with(binding) {
+        groupViewModel.groupPermission.observe(viewLifecycleOwner) {
+            // 신청자 목록
+//            headerApplicant.visibility = View.GONE
+//            recyclerviewApplicant.visibility = View.GONE
+        }
         groupViewModel.groupMemberList.observe(viewLifecycleOwner) {
-            Log.d(TAG, "groupMemberList")
-            Log.d(TAG, it.toString())
             memberAdapter.submitList(it)
             applicantAdapter.submitList(it)
         }
-//        groupViewModel.insertGroupInfo.observe(viewLifecycleOwner) {
-//            Log.d(TAG, "insertGroupInfo")
-//            groupDetailInfo = it
-//        }
         groupViewModel.detailInfo.observe(viewLifecycleOwner) {
-            Log.d(TAG, "detailInfo")
             groupDetailInfo = it
-            Log.d(TAG, it.master)
-            Log.d(TAG, it.name)
-            // 현재유저가 방장이면
-            if (it.master == user.userNickname) {
+            groupInfo = it
 
-                Log.d(TAG, "USER IS GROUPMAKER")
-                btnSubscription.visibility = View.GONE
-                btnCancellation.visibility = View.GONE
-                btnDrop.visibility = View.GONE
+//            when(it.status){
+//                'R' -> {
+//                    Log.d(TAG, "GROUP IS RECRUITING")
+//                    constraintBtn.visibility = View.VISIBLE
+//                }
+//                'O' -> {
+//                    Log.d(TAG, "GROUP IS OPENING")
+//                    constraintBtn.visibility = View.GONE
+//                }
+//                'F' -> {
+//                    Log.d(TAG, "GROUP IS FINISHED")
+//                   constraintBtn.visibility = View.GONE
+//                }
+//            }
 
-                if (it.status != 'R') {
-                    Log.d(TAG, "GROUP IS NOT RECRUTING")
-                    headerApplicant.visibility = View.GONE
-                    recyclerviewApplicant.visibility = View.GONE
-                }
-
-
-            } else {
-                // 설정, 사진 변경버튼 제거
-                Log.d(TAG, "USER IS NOT GROUPMAKER")
-                Log.d(TAG, it.toString())
-                btnSetting.visibility = View.GONE
-                btnChangeImage.visibility = View.GONE
-            }
-
-            // 현재유저가 방장이면
-            // 그룹상태가 모집중일시 신청자, 구성원이보여야함,
-            // 그룹이 시작된 상태면 구성원만
-
-            // 현재유저가 구성원이면,
-            // 구성원, 탈퇴하기 버튼
-
-            // 현재유저가 일반인이면,0
-            // 구성원,
-            // 가입하기 click => 가입 취소버튼
         }
+    }
+    private fun initClickListener() {
+
+        // 가입 요청
+        binding.btnSubscription.setOnClickListener {
+            val dialog = ApplyGroupJoinDialog(requireContext(), this)
+            dialog.show()
+        }
+
+        // 가입취소
+        binding.btnCancellation.setOnClickListener {
+            // 모임을 떠나시겠습니까? 다이얼로그
+            groupViewModel.leaveGroupJoin(groupInfo.groupSeq, GroupBasic(groupInfo.groupSeq, userSeq))
+            Toast.makeText(requireActivity(), "가입이 취소되었습니다.", Toast.LENGTH_SHORT).show()
+            groupViewModel.setGroupPermission(3)
+            val action = GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupListFragment()
+            findNavController().navigate(action)
+        }
+
+        // 탈퇴하기
+        binding.btnDrop.setOnClickListener {
+            // 모임을 떠나시겠습니까? 다이얼로그
+            groupViewModel.leaveGroupJoin(groupInfo.groupSeq, GroupBasic(groupInfo.groupSeq, userSeq))
+            Toast.makeText(requireActivity(), "모임을 탈퇴했습니다.", Toast.LENGTH_SHORT).show()
+            groupViewModel.setGroupPermission(3)
+            val action = GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupListFragment()
+            findNavController().navigate(action)
+        }
+        // 모임시작
+        // 모임종료
+        // 모임삭제
     }
 
     override fun onItemClick(position: Int) {
 
+    }
+
+    override fun onOkBtnClicked(appeal: String) {
+        groupViewModel.applyGroupJoin(groupInfo.groupSeq, GroupJoin(appeal, userSeq))
+        Log.d(TAG, "가입을 요청했습니다.")
+        Toast.makeText(requireActivity(), "가입을 요청했습니다.", Toast.LENGTH_SHORT).show()
+        groupViewModel.setGroupPermission(0)
     }
 }

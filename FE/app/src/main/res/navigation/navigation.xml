@@ -58,6 +58,9 @@
         android:id="@+id/groupDetailFragment"
         android:name="com.ssafy.heritage.view.group.GroupDetailFragment"
         android:label="GroupDetailFragment">
+        <action
+            android:id="@+id/action_groupDetailFragment_to_groupListFragment"
+            app:destination="@id/groupListFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupInfoFragment"
