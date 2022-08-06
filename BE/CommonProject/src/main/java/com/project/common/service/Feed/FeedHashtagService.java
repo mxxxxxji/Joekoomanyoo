@@ -73,8 +73,7 @@ public class FeedHashtagService{
 				if(dto.getFhTag().equals(entity.getFhTag())) {
 					feedHashtagRepository.deleteByFhTag(entity.getFhTag());
 					feed.removeFeedHashTag(entity.getFhTag());
-					cnt++;
-					break;
+					cnt++;break;
 				}
 			}
 		}

@@ -80,7 +80,7 @@ public class FeedService{
 	}
 	
 	//피드 삭제
-	public void deleteFeed(int feedSeq){
+	public String deleteFeed(int feedSeq){
 		for(FeedHashtagEntity entity : feedHashtagRepository.findAll()) 
 			if(entity.getFeed().getFeedSeq()==feedSeq) 
 				feedHashtagRepository.deleteById(entity.getFhSeq());
@@ -90,6 +90,8 @@ public class FeedService{
 				feedLikeRepository.deleteById(entity.getFeedLikeSeq());
 
 		feedRepository.deleteById(feedSeq);
+		
+		return "Success";
 	}
 	
 	//피드 수정

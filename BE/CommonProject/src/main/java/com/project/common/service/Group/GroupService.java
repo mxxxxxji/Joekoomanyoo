@@ -53,13 +53,14 @@ public class GroupService{
 	}
 	
 	//모임 삭제
-	public void deleteGroup(int groupSeq){
+	public String deleteGroup(int groupSeq){
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
 			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
 				groupMemberRepository.deleteByUserSeq(entity.getUserSeq());
 			}
 		}
 		groupRepository.deleteById(groupSeq);
+		return "Success";
 	}
 	
 	//모임 정보 수정

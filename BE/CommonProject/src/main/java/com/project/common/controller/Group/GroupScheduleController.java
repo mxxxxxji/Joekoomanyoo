@@ -3,6 +3,7 @@ package com.project.common.controller.Group;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,42 +25,41 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/group")
-@Api(tags = {"모임 일정 API"})
+@Api(tags = {" 모임 일정 API"})
 public class GroupScheduleController {
     private final GroupScheduleService groupScheduleService;
     
     //일정 조회
     @ApiOperation(value = "모임 일정 조회")
-    @GetMapping("/{groupSeq}/schedule-list")
+    @GetMapping("/{groupSeq}/schedule/list")
     public ResponseEntity<List<GroupScheduleDto>> getScheduleList(@PathVariable("groupSeq") int groupSeq) throws Exception{
     	return new ResponseEntity<>(groupScheduleService.getScheduleList(groupSeq),HttpStatus.OK);
     }
     
     //내 모임 일정 조회
     @ApiOperation(value = "내 모임 일정 조회")
-    @GetMapping("/schedule-mylist/{userSeq}")
+    @GetMapping("/my-schedule/{userSeq}")
     public ResponseEntity<List<GroupScheduleDto>> getMyScheduleList(@PathVariable("userSeq") int userSeq) throws Exception{
     	return new ResponseEntity<>(groupScheduleService.getMyScheduleList(userSeq),HttpStatus.OK);
     }
     
     //일정 등록
     @ApiOperation(value = "모임 일정 생성")
-    @PostMapping("/{groupSeq}/schedule-create")
+    @PostMapping("/{groupSeq}/schedule/add")
     public ResponseEntity<GroupScheduleDto> createGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
     	return new ResponseEntity<>(groupScheduleService.createGroupSchedule(groupSeq,gsDto),HttpStatus.CREATED);
     }
     
     //일정 삭제
    	@ApiOperation(value = "모임 일정 삭제")
-   	@DeleteMapping("/{groupSeq}/schedule-delete")
-   	public ResponseEntity<?> deleteGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
-   		groupScheduleService.deleteGroupSchedule(groupSeq,gsDto);
-   	 	return new ResponseEntity<>(HttpStatus.OK);
+   	@DeleteMapping("/{groupSeq}/schedule/delete")
+   	public ResponseEntity<String> deleteGroupSchedule(@PathVariable int groupSeq, @Param("gsDateTime") long gsDateTime){
+   	 	return new ResponseEntity<>(groupScheduleService.deleteGroupSchedule(groupSeq,gsDateTime),HttpStatus.OK);
    	}
     
    	//메모 수정
   	@ApiOperation(value = "모임 일정 수정")
-  	@PutMapping("/{groupSeq}/schedule-modify")
+  	@PutMapping("/{groupSeq}/schedule/modify")
   	public ResponseEntity<GroupScheduleDto> modifyGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
   		return new ResponseEntity<>(groupScheduleService.modifyGroupSchedule(groupSeq,gsDto),HttpStatus.OK);
   	}

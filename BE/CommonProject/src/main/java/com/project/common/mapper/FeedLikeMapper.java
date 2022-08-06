@@ -21,6 +21,4 @@ public interface FeedLikeMapper extends StructMapper<FeedLikeDto,FeedLikeEntity>
 	@Override
 	List<FeedLikeDto> toDtoList(List<FeedLikeEntity> entityList);
 	
-	
-	
 }

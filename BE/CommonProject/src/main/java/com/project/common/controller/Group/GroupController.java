@@ -37,7 +37,7 @@ public class GroupController {
     
     //모임 정보 보기
     @ApiOperation(value = "모임 정보 보기")
-    @GetMapping("{groupSeq}/info")
+    @GetMapping("/{groupSeq}/info")
     public ResponseEntity<GroupDto> getGroupInfo(@PathVariable("groupSeq") int groupSeq){
     	return new ResponseEntity<>(groupService.getGroupInfo(groupSeq),HttpStatus.OK);
     }
@@ -45,24 +45,22 @@ public class GroupController {
     //모임 삭제
     @ApiOperation(value = "모임 삭제")
     @DeleteMapping("/{groupSeq}/delete")
-    public ResponseEntity<?> deleteGroup(@PathVariable("groupSeq") int groupSeq){
-        groupService.deleteGroup(groupSeq);
-    	return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> deleteGroup(@PathVariable("groupSeq") int groupSeq){  
+    	return new ResponseEntity<>(groupService.deleteGroup(groupSeq),HttpStatus.OK);
     }
     
     //모임 정보 수정
     @ApiOperation(value = "모임 정보 수정")
-    @PutMapping("/{groupSeq}/update")
-    public ResponseEntity<GroupDto> updateGroup(@PathVariable("groupSeq") int groupSeq,@RequestBody GroupDto groupDto){
+    @PutMapping("/{groupSeq}/modify")
+    public ResponseEntity<GroupDto> updateGroup(@PathVariable("groupSeq") int groupSeq, @RequestBody GroupDto groupDto){
     	return new ResponseEntity<>(groupService.updateGroup(groupSeq,groupDto),HttpStatus.OK);
     }
     
     //내 모임 목록 조회
     @ApiOperation(value = "내 모임 조회")
-    @GetMapping("/mylist/user/{userSeq}")
+    @GetMapping("/my-group/{userSeq}")
     public ResponseEntity<List<GroupMyListDto>> getMyGroupList(@PathVariable("userSeq") int userSeq) throws Exception{
     	return new ResponseEntity<>(groupService.getMyGroupList(userSeq),HttpStatus.OK);
     }
-
     
 }

@@ -2,6 +2,7 @@ package com.project.common.controller.Group;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,32 +32,29 @@ public class GroupMemberController {
     
     //모임 멤버 목록 조회
     @ApiOperation(value = "모임 멤버 목록 조회")
-    @GetMapping("/member-list")
+    @GetMapping("/member/list")
     public ResponseEntity<List<GroupMemberListDto>> getMemberList(@PathVariable("groupSeq") int groupSeq) throws Exception{
     	return new ResponseEntity<>(groupMemberService.getMemberList(groupSeq),HttpStatus.OK);
     }
     
 	//참가 신청
     @ApiOperation(value = "모임 참가 신청")
-	@PostMapping("/member-join")
-	public ResponseEntity<GroupJoinReqDto> joinGroup(@RequestBody GroupJoinReqDto groupJoinRequestDto, @PathVariable int groupSeq){
-		groupMemberService.joinGroup(groupSeq,groupJoinRequestDto);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+	@PostMapping("/member/join")
+	public ResponseEntity<String> joinGroup(@RequestBody GroupJoinReqDto groupJoinRequestDto, @PathVariable int groupSeq){
+		return new ResponseEntity<>(groupMemberService.joinGroup(groupSeq,groupJoinRequestDto),HttpStatus.CREATED);
 	}
 		
 	 //탈퇴
 	@ApiOperation(value = "모임 탈퇴 / 가입 거절 / 가입 취소 / 강제 퇴장 ")
-	@DeleteMapping("/member-leave")
-	public ResponseEntity<?> leaveGroup(@RequestBody GroupBasicReqDto groupLeaveRequestDto){
-		groupMemberService.leaveGroup(groupLeaveRequestDto);
-	 	return new ResponseEntity<>(HttpStatus.OK);
+	@DeleteMapping("/member/leave")
+	public ResponseEntity<String> leaveGroup(@PathVariable("groupSeq") int groupSeq,@Param("userSeq") int userSeq){
+	 	return new ResponseEntity<>(groupMemberService.leaveGroup(groupSeq,userSeq),HttpStatus.OK);
 	}
 	
 	//모임 수락
 	@ApiOperation(value = "모임 가입 승인 - memberStatus 0(가입대기)->1(일반회원)")
-	@PutMapping("/member-approve")
-	public ResponseEntity<?> approveMember(@PathVariable("groupSeq") int groupSeq,@RequestBody GroupBasicReqDto groupBasicReqDto){
-		groupMemberService.approveMember(groupSeq,groupBasicReqDto);
-		return new ResponseEntity<>(HttpStatus.OK);
+	@PutMapping("/member/approve")
+	public ResponseEntity<String> approveMember(@PathVariable("groupSeq") int groupSeq,@RequestBody GroupBasicReqDto groupBasicReqDto){	
+		return new ResponseEntity<>(groupMemberService.approveMember(groupSeq,groupBasicReqDto),HttpStatus.OK);
 	}
 }

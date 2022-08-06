@@ -65,7 +65,7 @@ public class GroupDestinationService{
 	
 	//모임 목적지 추가
 	@Transactional
-	public void addGroupDestination(int groupSeq, GroupDestinationDto gdDto) {
+	public String addGroupDestination(int groupSeq, GroupDestinationDto gdDto) {
 		System.out.println(gdDto.getHeritageSeq());
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDestinationEntity entity:group.getDestinations()) {
@@ -75,31 +75,33 @@ public class GroupDestinationService{
 		}
 		group.addGroupDestination(GroupDestinationEntity.builder().gdCompleted("N").heritageSeq(gdDto.getHeritageSeq()).build());
 		groupRepository.save(group);
+		return "Success";
 	}
 	
 	//모임 목적지 삭제
 	@Transactional
-	public void deleteGroupDestination(int groupSeq, GroupDestinationDto gdDto) {
+	public String deleteGroupDestination(int groupSeq, int heritageSeq) {
 		List<GroupDestinationEntity> destinations= findDestination(groupSeq);
 		if(destinations==null) 
 			throw new IllegalArgumentException("등록된 목적지가 없습니다");
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDestinationEntity entity : destinations) {
-			if(entity.getHeritageSeq()==gdDto.getHeritageSeq()) {
-				groupDestinationRepository.deleteByHeritageSeq(gdDto.getHeritageSeq());
-				group.removeGroupDestination(gdDto.getHeritageSeq());
+			if(entity.getHeritageSeq()==heritageSeq) {
+				groupDestinationRepository.deleteByHeritageSeq(heritageSeq);
+				group.removeGroupDestination(heritageSeq);
 			}
 		}
+		return "Success";
 	}
 	
 	//모임 목적지 완료 표시
 	@Transactional
-	public void modifyGroupDestination(int groupSeq, GroupDestinationDto gdDto) {
+	public String modifyGroupDestination(int groupSeq, GroupDestinationDto gdDto) {
 		for(GroupDestinationEntity entity: findDestination(groupSeq)) {
 			if(entity !=null && entity.getHeritageSeq()==gdDto.getHeritageSeq()) {
 				entity.setGdCompleted("Y");
 				groupDestinationRepository.save(entity);
-				return;
+				return "Success";
 			}
 		}
 		throw new IllegalArgumentException("유산 번호가 일치하지 없습니다");

@@ -21,6 +21,4 @@ public interface FeedHashtagMapper extends StructMapper<FeedHashtagDto,FeedHasht
 	@Override
 	List<FeedHashtagDto> toDtoList(List<FeedHashtagEntity> entityList);
 	
-	
-	
 }

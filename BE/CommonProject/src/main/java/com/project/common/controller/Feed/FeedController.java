@@ -45,7 +45,7 @@ public class FeedController {
     
     //내 피드 조회
     @ApiOperation(value = "내 피드 조회")
-    @GetMapping("/mylist/{userSeq}")
+    @GetMapping("/my-feed/{userSeq}")
     public ResponseEntity<List<FeedDto>> getMyFeedList(@PathVariable("userSeq") int userSeq) throws Exception{
     	return new ResponseEntity<>(feedService.getMyFeedList(userSeq),HttpStatus.OK);
     }
@@ -68,9 +68,8 @@ public class FeedController {
     //피드 삭제
     @ApiOperation(value = "피드 삭제")
     @DeleteMapping("/{feedSeq}/delete")
-    public ResponseEntity<?> deleteFeed(@PathVariable("feedSeq") int feedSeq){
-    	feedService.deleteFeed(feedSeq);
-    	return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> deleteFeed(@PathVariable("feedSeq") int feedSeq){
+    	return new ResponseEntity<>(feedService.deleteFeed(feedSeq),HttpStatus.OK);
     }
     
     //피드 수정

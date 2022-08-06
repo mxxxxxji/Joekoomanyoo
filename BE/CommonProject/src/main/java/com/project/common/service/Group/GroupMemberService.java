@@ -42,33 +42,39 @@ public class GroupMemberService{
 	
 	//모임 참가
 	@Transactional
-	public void joinGroup(int groupSeq, GroupJoinReqDto groupJoinRequestDto) {
-		UserEntity user = userRepository.findByUserSeq(groupJoinRequestDto.getUserSeq());
+	public String joinGroup(int groupSeq, GroupJoinReqDto requestDto) {
+		for(GroupMemberEntity entity: groupMemberRepository.findAll()) {
+			if(entity.getUserSeq()==requestDto.getUserSeq()&&entity.getGroup().getGroupSeq()==groupSeq)
+				throw new IllegalArgumentException("이미 참가 신청했습니다");
+		}
+		UserEntity user = userRepository.findByUserSeq(requestDto.getUserSeq());
 	 	GroupEntity group = groupService.findGroup(groupSeq);
 	 	user.addGroup(group);
 	 	userRepository.save(user);
 	 	
-		group.addGroupMember(GroupMemberEntity.builder().memberAppeal(groupJoinRequestDto.getMemberAppeal()).userSeq(groupJoinRequestDto.getUserSeq()).build());
+		group.addGroupMember(GroupMemberEntity.builder().memberAppeal(requestDto.getMemberAppeal()).userSeq(requestDto.getUserSeq()).build());
 		groupRepository.save(group);
+		return "Success";
 	}
 	
 	//모임 탈퇴
 	@Transactional
-	public void leaveGroup( GroupBasicReqDto groupLeave) {
-		List<GroupMemberEntity> member = findMember(groupLeave.getGroupSeq());
-		GroupEntity group = groupService.findGroup(groupLeave.getGroupSeq());
-		UserEntity user = userRepository.findByUserSeq(groupLeave.getUserSeq());
+	public String leaveGroup(int groupSeq, int userSeq) {
+		List<GroupMemberEntity> member = findMember(groupSeq);
+		GroupEntity group = groupService.findGroup(groupSeq);
+		UserEntity user = userRepository.findByUserSeq(userSeq);
 		for(GroupMemberEntity entity : member) {
-			if(entity.getUserSeq()==groupLeave.getUserSeq()) {
-				groupMemberRepository.deleteByUserSeq(groupLeave.getUserSeq());
-				group.removeGroupMember(groupLeave.getUserSeq());
-				user.removeGroup(groupLeave.getGroupSeq());
+			if(entity.getUserSeq()==userSeq) {
+				groupMemberRepository.deleteByUserSeq(userSeq);
+				group.removeGroupMember(userSeq);
+				user.removeGroup(groupSeq);
 			}
 		}
+		return "Success";
 	}
 	
 	//모임 가입 승인
-	public void approveMember(int groupSeq,GroupBasicReqDto groupBasicReqDto) {
+	public String approveMember(int groupSeq,GroupBasicReqDto groupBasicReqDto) {
 		for(GroupMemberEntity entity: findMember(groupSeq)) {
 			if(entity.getUserSeq()==groupBasicReqDto.getUserSeq()) {
 				entity.setMemberStatus(1);
@@ -76,6 +82,7 @@ public class GroupMemberService{
 				break;
 			}
 		}
+		return "Success";
 	}
 	
 	//멤버 찾기(그륩 번호로)

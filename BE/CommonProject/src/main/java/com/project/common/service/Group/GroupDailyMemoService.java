@@ -51,15 +51,15 @@ public class GroupDailyMemoService{
 	
 	//데일리 메모 삭제
 	@Transactional
-	public void deleteGroupMemo(int groupSeq, GroupDailyMemoDto gdmDto) {
+	public void deleteGroupMemo(int groupSeq, int gdmDate) {
 		List<GroupDailyMemoEntity> memos= findMemo(groupSeq);
 		if(memos==null) 
 			throw new IllegalArgumentException("등록된 메모가 없습니다");
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDailyMemoEntity entity : memos) {
-			if(entity.getGdmDate()==gdmDto.getGdmDate()) {
-				groupDailyMemoRepository.deleteByGdmDate(gdmDto.getGdmDate());
-				group.removeGroupMemo(gdmDto.getGdmDate());
+			if(entity.getGdmDate()==gdmDate) {
+				groupDailyMemoRepository.deleteByGdmDate(gdmDate);
+				group.removeGroupMemo(gdmDate);
 			}
 		}
 	}

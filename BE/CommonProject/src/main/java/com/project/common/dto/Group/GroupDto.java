@@ -3,7 +3,6 @@ package com.project.common.dto.Group;
 import java.time.LocalDateTime;
 
 import com.project.common.entity.Group.GroupEntity;
-import com.project.common.entity.User.UserEntity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -39,15 +38,12 @@ public class GroupDto {
    	// 모임 설정 정보 //
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
-    private int userSeq;
    // private UserEntity user;
-
-
 
     @Builder
 	public GroupDto(int groupSeq, String name, String themaImg, String master, String description, char accessType,
 			String password, int maxCount, String region, int startDate, int endDate, int ageRange, char withChild,
-			char withGlobal, char active, char status, LocalDateTime createdTime,int userSeq,
+			char withGlobal, char active, char status, LocalDateTime createdTime,
 			LocalDateTime updatedTime) {
 		super();
 		this.groupSeq = groupSeq;
@@ -66,7 +62,6 @@ public class GroupDto {
 		this.withGlobal = withGlobal;
 		this.active = active;
 		this.status = status;
-		this.userSeq = userSeq;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 	}
