@@ -245,6 +245,10 @@ class UserViewModel : ViewModel() {
                 _keywordList.postValue(list)
             } else {
 
+            }
+        }
+    }
+
     fun insertHeritageScrap(heritageScrap: HeritageScrap) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertHeritageScrap(heritageScrap).let { response ->
@@ -288,6 +292,10 @@ class UserViewModel : ViewModel() {
             if (it.isSuccessful) {
                 getKeywordList(user.value?.userSeq!!)
             } else {
+
+            }
+        }
+    }
 
     fun deleteHeritageScrap(heritageSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
