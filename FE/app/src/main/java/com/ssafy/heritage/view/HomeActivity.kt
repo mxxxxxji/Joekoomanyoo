@@ -84,8 +84,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
         }
 
-        // 바텀네비 중복클릭 방지
-        bottomNavigation.setOnItemReselectedListener { }
+//        // 바텀네비 중복클릭 방지
+//        bottomNavigation.setOnItemReselectedListener { }
     }
 
     override fun onBackPressed() {

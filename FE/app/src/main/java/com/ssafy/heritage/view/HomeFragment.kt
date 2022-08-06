@@ -6,7 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.GroupListAdapter
-import com.ssafy.heritage.adpter.HeritageListAdapter
+import com.ssafy.heritage.adpter.HomeHeritageAdapter
 import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Heritage
@@ -24,7 +24,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
     OnItemClickListener {
 
     private val groupListAdapter: GroupListAdapter by lazy { GroupListAdapter(this) }
-    private val heritageAdapter: HeritageListAdapter by lazy { HeritageListAdapter() }
+    private val homeHeritageAdapter: HomeHeritageAdapter by lazy { HomeHeritageAdapter() }
 
     private val groupViewModel by activityViewModels<GroupViewModel>()
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
@@ -32,6 +32,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
 
     override fun init() {
+        binding.user = userViewModel.user.value
 
         initObserver()
 
@@ -48,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
         heritageViewModel.heritageList.observe(viewLifecycleOwner) { list ->
             // 스크랩 순으로 문화재 추천
-            heritageAdapter.submitList(
+            homeHeritageAdapter.submitList(
                 list.sortedWith(
                     compareBy({ -it.heritageScrapCnt },
                         { it.heritageSeq })
@@ -66,12 +67,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
         // 추천 문화재 리스트
         recyclerviewHeritage.apply {
-            adapter = heritageAdapter
+            adapter = homeHeritageAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-            heritageAdapter.heritageListClickListener = object : HeritageListClickListener {
+            homeHeritageAdapter.heritageListClickListener = object : HeritageListClickListener {
                 override fun onClick(position: Int, heritage: Heritage, view: View) {
+
+                    heritageViewModel.setHeritage(heritage)
+
                     // 해당 문화유산의 상세페이지로 이동
                     parentFragmentManager
                         .beginTransaction()

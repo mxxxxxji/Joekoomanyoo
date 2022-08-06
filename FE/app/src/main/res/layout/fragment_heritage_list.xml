@@ -13,7 +13,7 @@
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_heritage_top"
+            android:background="@color/link_water"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,8 +47,8 @@
         <HorizontalScrollView
             android:id="@+id/scrollview"
             android:layout_width="0dp"
-            android:background="@drawable/background_heritage_top"
             android:layout_height="wrap_content"
+            android:background="@color/link_water"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
