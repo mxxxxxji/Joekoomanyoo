@@ -48,15 +48,26 @@ class Repository constructor(context: Context) {
 
     suspend fun checkPassword(map: HashMap<String, String>): Response<String> =
         userApi.checkPassword(map)
+
     suspend fun insertHeritageScrap(scrap: HeritageScrap): Response<String> =
         userApi.insertHeritageScrap(scrap)
-    suspend fun selectAllScraps(userSeq: Int): Response<List<Heritage>> = userApi.selectAllScraps(userSeq)
+
+    suspend fun selectAllScraps(userSeq: Int): Response<List<Heritage>> =
+        userApi.selectAllScraps(userSeq)
+
     suspend fun deleteHeritageScrap(userSeq: Int, heritageSeq: Int): Response<String> =
         userApi.deleteHeritageScrap(userSeq, heritageSeq)
 
-    suspend fun selectAllMyKeyword(userSeq: Int): Response<List<Keyword>> = userApi.selectAllMyKeyword(userSeq)
+    suspend fun selectAllMyKeyword(userSeq: Int): Response<List<Keyword>> =
+        userApi.selectAllMyKeyword(userSeq)
+
     suspend fun insertMyKeyword(body: Keyword): Response<String> = userApi.insertMyKeyword(body)
-    suspend fun deleteMyKeyword(myKeywordSeq: Int): Response<String> = userApi.deleteMyKeyword(myKeywordSeq)
+    suspend fun deleteMyKeyword(myKeywordSeq: Int): Response<String> =
+        userApi.deleteMyKeyword(myKeywordSeq)
+
+    suspend fun selectAllMyDestination(userSeq: Int): Response<List<GroupDestinationMap>> =
+        userApi.selectAllMyDestination(userSeq)
+
 
     // heritage
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()
@@ -65,7 +76,6 @@ class Repository constructor(context: Context) {
 
     suspend fun selectAllHeritageReviews(): Response<List<HeritageReviewListResponse>> =
         heritageApi.selectAllHeritageReviews()
-
 
 
     companion object {

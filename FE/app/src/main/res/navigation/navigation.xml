@@ -133,6 +133,9 @@
         <action
             android:id="@+id/action_profileFragment_to_scrapListFragment"
             app:destination="@id/scrapListFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_myDataFragment"
+            app:destination="@id/myDataFragment" />
     </fragment>
     <fragment
         android:id="@+id/passwordRequestFragment"
@@ -196,4 +199,8 @@
         android:id="@+id/notiSettingFragment"
         android:name="com.ssafy.heritage.view.setting.NotiSettingFragment"
         android:label="NotiSettingFragment" />
+    <fragment
+        android:id="@+id/myDataFragment"
+        android:name="com.ssafy.heritage.view.profile.MyDataFragment"
+        android:label="MyDataFragment" />
 </navigation>

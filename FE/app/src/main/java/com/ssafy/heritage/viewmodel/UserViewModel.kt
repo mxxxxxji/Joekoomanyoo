@@ -42,6 +42,10 @@ class UserViewModel : ViewModel() {
     val keywordList: LiveData<MutableList<Keyword>>
         get() = _keywordList
 
+    private val _myDestinationList = SingleLiveEvent<MutableList<GroupDestinationMap>>()
+    val myDestinationList: LiveData<MutableList<GroupDestinationMap>>
+        get() = _myDestinationList
+
     fun setUser(user: User) {
         _user.value = user
     }
@@ -278,6 +282,26 @@ class UserViewModel : ViewModel() {
             Log.d(TAG, "deleteKeyword response: $it")
             if (it.isSuccessful) {
                 getKeywordList(user.value?.userSeq!!)
+            } else {
+
+            }
+        }
+    }
+
+    // 내 목적지 불러오기
+    fun getMydestination() = viewModelScope.launch {
+        var response: Response<List<GroupDestinationMap>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.selectAllMyDestination(_user.value?.userSeq!!)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "getMydestination response: $it")
+            if (it.isSuccessful) {
+                val list = it.body() as MutableList<GroupDestinationMap>
+                Log.d(TAG, "getMydestination list: $list")
+                _myDestinationList.postValue(list)
             } else {
 
             }
