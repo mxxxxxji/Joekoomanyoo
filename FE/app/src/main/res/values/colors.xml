@@ -32,4 +32,8 @@
     <color name="bombay">#FFb6b6b9</color>eaedff
     <!--spinner item 배경-->
     <color name="titan_white">#FFeaedff</color>
+
+    <!--사진 피드 상태바-->
+    <color name="skyblue">#88bbde</color>
+    <color name="blue">#88aade</color>
 </resources>
