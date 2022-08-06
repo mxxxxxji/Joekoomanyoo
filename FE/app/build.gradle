@@ -110,5 +110,11 @@ dependencies {
     // Calender
     implementation 'com.github.tizisdeepan:eventscalendar:1.6.1'
 
+    // Circleindicator
+    implementation 'me.relex:circleindicator:2.1.6'
+
+
+    // foldingcell
+    implementation 'com.ramotion.foldingcell:folding-cell:1.2.3'
 
 }
