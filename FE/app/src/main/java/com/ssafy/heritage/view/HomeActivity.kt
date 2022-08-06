@@ -10,11 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-<<<<<<< HEAD
-=======
 import com.ssafy.heritage.ApplicationClass
-import com.ssafy.heritage.ApplicationClass.Companion.sharedPreferencesUtil
->>>>>>> feature/FE/groupJoin
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseActivity
 import com.ssafy.heritage.data.dto.User

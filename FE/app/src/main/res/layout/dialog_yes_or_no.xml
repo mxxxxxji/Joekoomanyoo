@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/FE/groupJoin
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-<<<<<<< HEAD
+
         <variable
             name="title"
             type="String" />
@@ -21,14 +17,12 @@
         <variable
             name="negative"
             type="String" />
-=======
->>>>>>> feature/FE/groupJoin
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:background="@drawable/dialog_white_border"
         android:minWidth="300dp"
         android:paddingVertical="40dp">
@@ -77,44 +71,5 @@
             app:layout_constraintTop_toTopOf="@id/btn_positive"
             tools:text="negative" />
 
-=======
-        android:layout_gravity="center"
-        android:layout_margin="50dp"
-        android:background="@drawable/background_dialog_other_profile"
-        android:padding="30dp">
-
-        <TextView
-            android:id="@+id/header_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="가입을 취소하시겠습니까?"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <Button
-            android:id="@+id/btn_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="확인"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_cancel"
-            app:layout_constraintTop_toBottomOf="@id/header_question"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="취소"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/btn_ok"
-            app:layout_constraintTop_toBottomOf="@id/header_question"
-            app:layout_constraintVertical_bias="0.0" />
->>>>>>> feature/FE/groupJoin
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
