@@ -29,8 +29,8 @@ import lombok.RequiredArgsConstructor;
 public class GroupDestinationController {
     private final GroupDestinationService groupDestinationService;
     
-    //내 모임 일정 조회
-    @ApiOperation(value = "내 목적지 조회")
+    //내 모임 목적지 회
+    @ApiOperation(value = "내 모임 목적지 조회")
     @GetMapping("/destination/mylist/{userSeq}")
     public ResponseEntity<List<GroupDestinationMapDto>> getMyDestinationList(@PathVariable("userSeq") int userSeq) throws Exception{
     	return new ResponseEntity<>(groupDestinationService.getMyDestinationList(userSeq),HttpStatus.OK);

@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 
@@ -142,6 +143,21 @@ public class UserEntity implements UserDetails{
 
     public void removeGroup(int groupSeq) {
         this.groups.removeIf(group -> group.getGroupSeq()==groupSeq);
+    }
+    
+    // 피드 추가 //
+    @Builder.Default @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<FeedEntity> feeds = new ArrayList<>();
+    
+    // 모임 추가 Method //
+    public void addFeed(FeedEntity feed) {
+    	this.feeds.add(feed);
+    	feed.setUser(this);
+    }
+
+    public void removeFeed(int feedSeq) {
+        this.feeds.removeIf(feed -> feed.getFeedSeq()==feedSeq);
     }
 
 }

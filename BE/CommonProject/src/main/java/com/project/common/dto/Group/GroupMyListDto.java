@@ -10,6 +10,7 @@ import lombok.*;
 @ToString
 public class GroupMyListDto {
 
+	private int groupSeq;
     private String groupName;
     private String master;
     private String descriaption;
@@ -24,11 +25,13 @@ public class GroupMyListDto {
    	private char withGlobal;
    	private char active;
    	private char status;
+   	
    	private int memberStatus;
 	private char memberIsEvaluated;
 	
 	@Builder
 	public GroupMyListDto(GroupMemberEntity member) {
+		this.groupSeq=member.getGroup().getGroupSeq();
 		this.groupName = member.getGroup().getName();
 		this.master = member.getGroup().getMaster();
 		this.descriaption = member.getGroup().getDescription();

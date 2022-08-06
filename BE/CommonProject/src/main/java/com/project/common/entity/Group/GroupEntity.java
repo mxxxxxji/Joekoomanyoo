@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.project.common.entity.Heritage.HeritageEntity;
 import com.project.common.entity.User.UserEntity;
 
 import lombok.AllArgsConstructor;
@@ -90,7 +89,7 @@ public class GroupEntity {
     private LocalDateTime updatedTime;
 
     @ManyToOne
-	@JoinColumn(name="user_seq")
+	@JoinColumn(name="user_seq",updatable=false)
 	private UserEntity user;
     
 
