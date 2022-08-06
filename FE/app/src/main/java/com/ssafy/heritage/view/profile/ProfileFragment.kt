@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.ssafy.heritage.ApplicationClass
@@ -49,7 +48,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         initObserver()
 
         initClickListener()
+
+        setToolbar()
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -63,7 +65,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = settingListAdapter
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+
+            addItemDecoration(
+                com.ssafy.heritage.util.DividerItemDecoration(
+                    5F,
+                    resources.getColor(R.color.link_water)
+                )
+            )
 
             settingListAdapter.settingListClickListener = object : SettingListClickListener {
                 override fun onClick(position: Int, view: View) {
@@ -73,7 +81,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
                             findNavController().navigate(R.id.action_profileFragment_to_myDataFragment)
                         }
                         SCHEDULE -> {
-
+                            findNavController().navigate(R.id.action_profileFragment_to_myCalendarFragment)
                         }
                         SCRAP -> {
                             findNavController().navigate(R.id.action_profileFragment_to_scrapListFragment)
@@ -134,14 +142,24 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     private fun initClickListener() = with(binding) {
 
-        // 설정 아이콘 클릭시
-        btnSetting.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_settingFragment)
-        }
-
         // 키워드 추가 클릭시
         btnAddKeyword.setOnClickListener {
             keywordDialog.show(childFragmentManager, "keywordDialog")
+        }
+    }
+
+    private fun setToolbar() = with(binding) {
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                // 설정 메뉴 클릭시
+                R.id.setting -> {
+                    findNavController().navigate(R.id.action_profileFragment_to_settingFragment)
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
         }
     }
 

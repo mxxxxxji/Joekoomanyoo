@@ -41,7 +41,13 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = settingListAdapter
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+
+            addItemDecoration(
+                com.ssafy.heritage.util.DividerItemDecoration(
+                    5F,
+                    resources.getColor(R.color.link_water)
+                )
+            )
 
             settingListAdapter.settingListClickListener = object : SettingListClickListener {
                 override fun onClick(position: Int, view: View) {

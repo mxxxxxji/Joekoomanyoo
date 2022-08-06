@@ -15,29 +15,54 @@
         android:layout_height="match_parent"
         tools:context=".view.profile.ProfileFragment">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btn_setting"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_launcher_foreground"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/link_water"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/profile_menu">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/header_heritage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="마이페이지"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_profile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_setting">
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_profile_img"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:layout_marginStart="20dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_foreground"
                 app:layout_constraintDimensionRatio="1:1"
@@ -47,7 +72,10 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="@{user.userNickname}"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/iv_profile_img"
                 app:layout_constraintStart_toEndOf="@id/iv_profile_img"
                 app:layout_constraintTop_toTopOf="@id/iv_profile_img"
@@ -57,15 +85,19 @@
                 android:id="@+id/header_keyword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
                 android:text="저는 이런사람 입니다"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_profile_img" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_add_keyword"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_launcher_foreground"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_baseline_add_24"
                 app:layout_constraintBottom_toBottomOf="@id/header_keyword"
                 app:layout_constraintStart_toEndOf="@id/header_keyword"
                 app:layout_constraintTop_toTopOf="@id/header_keyword" />
@@ -74,6 +106,7 @@
                 android:id="@+id/recyclerview_keyword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"

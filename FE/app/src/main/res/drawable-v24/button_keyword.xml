@@ -6,7 +6,7 @@
     <!--        android:startColor="@color/coffee_light_brown"-->
     <!--        android:endColor="@color/white"/>-->
 
-    <solid android:color="#80000000" />
+    <solid android:color="@color/link_water" />
 <!--    <stroke-->
 <!--        android:width="1dp"-->
 <!--        android:color="@color/cornflower_blue" />-->

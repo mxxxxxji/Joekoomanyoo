@@ -2,5 +2,5 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- disabled state -->
     <item android:color="@color/white" android:state_checked="true" />
-    <item android:color="#B797E2" />
+    <item android:color="@color/cornflower" />
 </selector>

@@ -39,6 +39,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
         initAdapter()
 
         initClickListener()
+
+        setToolbar()
     }
 
     private fun initObserver() {
@@ -100,16 +102,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
     private fun initClickListener() = with(binding) {
 
-        // 프로필 아이콘 클릭시
-        ivMyprofile.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
-        }
-
-        // 알림 아이콘 클릭시
-        ivNoti.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_notiFragment)
-        }
-
         // 나의 모임 더보기 클릭시
         tvGoMyGroup.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_groupListFragment)
@@ -123,6 +115,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
         // 추천 사진 더보기 클릭시
         tvGoFeed.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_feedListFragment)
+        }
+    }
+
+    private fun setToolbar() = with(binding) {
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                // 프로필 메뉴 클릭시
+                R.id.profile -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+                    true
+                }
+                // 알림 메뉴 클릭시
+                R.id.notification -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_notiFragment)
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
         }
     }
 

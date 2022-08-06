@@ -9,6 +9,7 @@ import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.databinding.FragmentScrapListBinding
 import com.ssafy.heritage.listener.HeritageListClickListener
+import com.ssafy.heritage.util.DividerItemDecoration
 import com.ssafy.heritage.view.heritage.HeritageDetailFragment
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
@@ -32,6 +33,8 @@ class ScrapListFragment : BaseFragment<FragmentScrapListBinding>(R.layout.fragme
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = heritageAdapter
+
+            addItemDecoration(DividerItemDecoration(5F, resources.getColor(R.color.link_water)))
 
             heritageAdapter.heritageListClickListener = object : HeritageListClickListener {
                 override fun onClick(position: Int, heritage: Heritage, view: View) {

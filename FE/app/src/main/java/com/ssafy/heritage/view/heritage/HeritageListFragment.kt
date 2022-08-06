@@ -1,6 +1,7 @@
 package com.ssafy.heritage.view.heritage
 
 import android.Manifest
+import android.graphics.Color
 import android.view.View
 import android.widget.PopupWindow
 import android.widget.Toast
@@ -17,6 +18,7 @@ import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.databinding.FragmentHeritageListBinding
 import com.ssafy.heritage.databinding.PopupHeritageSortBinding
 import com.ssafy.heritage.listener.HeritageListClickListener
+import com.ssafy.heritage.util.DividerItemDecoration
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 
 
@@ -50,6 +52,8 @@ class HeritageListFragment :
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = heritageAdapter
+
+            addItemDecoration(DividerItemDecoration(5F, resources.getColor(R.color.link_water)))
 
             heritageAdapter.heritageListClickListener = object : HeritageListClickListener {
                 override fun onClick(position: Int, heritage: Heritage, view: View) {

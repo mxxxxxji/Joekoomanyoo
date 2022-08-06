@@ -6,14 +6,15 @@
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
+            android:id="@+id/iv_header"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toTopOf="parent"
+            android:alpha="0"
             motion:layout_constraintBottom_toBottomOf="@id/gl_hori_30"
-            android:id="@+id/iv_header"
-            android:alpha="0" />
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+
         <Constraint
             android:id="@+id/gl_hori_20"
             motion:layout_constraintGuide_percent="0" />

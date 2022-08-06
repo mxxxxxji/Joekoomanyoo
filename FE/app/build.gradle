@@ -107,8 +107,6 @@ dependencies {
     // Switcher https://github.com/bitvale/Switcher
     implementation 'io.github.bitvale:switcher:1.1.2'
 
-    // Calender
+    // Events Calendar https://github.com/tizisdeepan/EventsCalendar
     implementation 'com.github.tizisdeepan:eventscalendar:1.6.1'
-
-
 }

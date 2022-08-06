@@ -139,6 +139,9 @@
         <action
             android:id="@+id/action_profileFragment_to_myDataFragment"
             app:destination="@id/myDataFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_myCalendarFragment"
+            app:destination="@id/myCalendarFragment" />
     </fragment>
     <fragment
         android:id="@+id/passwordRequestFragment"
@@ -206,4 +209,8 @@
         android:id="@+id/myDataFragment"
         android:name="com.ssafy.heritage.view.profile.MyDataFragment"
         android:label="MyDataFragment" />
+    <fragment
+        android:id="@+id/myCalendarFragment"
+        android:name="com.ssafy.heritage.view.profile.MyCalendarFragment"
+        android:label="MyCalendarFragment" />
 </navigation>
