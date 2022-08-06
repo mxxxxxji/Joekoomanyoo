@@ -73,4 +73,9 @@ interface UserService {
     // 내 키워드 삭제한다
     @DELETE("/api/mypage/keyword/list/{myKeywordSeq}")
     suspend fun deleteMyKeyword(@Path("myKeywordSeq") myKeywordSeq: Int): Response<String>
+
+    // 내 모임의 목적지들을 조회한다
+    @GET("/api/group/destination/mylist/{userSeq}")
+    suspend fun selectAllMyDestination(@Path("userSeq") userSeq: Int): Response<List<GroupDestinationMap>>
+
 }

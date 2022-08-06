@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.util.regex.Pattern
-import kotlin.math.log
 
 private const val TAG = "UserViewModel___"
 
@@ -42,6 +41,10 @@ class UserViewModel : ViewModel() {
     private val _keywordList = SingleLiveEvent<MutableList<Keyword>>()
     val keywordList: LiveData<MutableList<Keyword>>
         get() = _keywordList
+
+    private val _myDestinationList = SingleLiveEvent<MutableList<GroupDestinationMap>>()
+    val myDestinationList: LiveData<MutableList<GroupDestinationMap>>
+        get() = _myDestinationList
 
     fun setUser(user: User) {
         _user.value = user
@@ -261,6 +264,18 @@ class UserViewModel : ViewModel() {
         }
     }
 
+    fun deleteHeritageScrap(heritageSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteHeritageScrap(user.value!!.userSeq!!, heritageSeq).let {
+                if (it.isSuccessful) {
+                    Log.d(TAG, "삭제 성공?")
+                } else {
+                    Log.d(TAG, "${it.code()}")
+                }
+            }
+        }
+    }
+
     // 내 키워드 추가
     fun insertKeyword(keyword: Keyword) = viewModelScope.launch {
         var response: Response<String>? = null
@@ -297,14 +312,22 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    fun deleteHeritageScrap(heritageSeq: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteHeritageScrap(user.value!!.userSeq!!, heritageSeq).let {
-                if (it.isSuccessful) {
-                    Log.d(TAG, "삭제 성공?")
-                } else {
-                    Log.d(TAG, "${it.code()}")
-                }
+    // 내 목적지 불러오기
+    fun getMydestination() = viewModelScope.launch {
+        var response: Response<List<GroupDestinationMap>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.selectAllMyDestination(_user.value?.userSeq!!)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "getMydestination response: $it")
+            if (it.isSuccessful) {
+                val list = it.body() as MutableList<GroupDestinationMap>
+                Log.d(TAG, "getMydestination list: $list")
+                _myDestinationList.postValue(list)
+            } else {
+
             }
         }
     }

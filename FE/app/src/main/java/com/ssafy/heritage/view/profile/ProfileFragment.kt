@@ -70,7 +70,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
                     val name = settingListAdapter.currentList[position]
                     when (name) {
                         MY_TRIP -> {
-
+                            findNavController().navigate(R.id.action_profileFragment_to_myDataFragment)
                         }
                         SCHEDULE -> {
 

@@ -32,4 +32,6 @@
     <color name="bombay">#FFb6b6b9</color>eaedff
     <!--spinner item 배경-->
     <color name="titan_white">#FFeaedff</color>
+    <!--top 배경-->
+    <color name="link_water">#FFDDEBF4</color>
 </resources>
