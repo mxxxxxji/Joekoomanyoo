@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.ssafy.heritage.R
@@ -47,6 +48,11 @@ class HeritageMapFragment :
         initAdapter()
 
         initObserver()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.map.removeAllViews()
     }
 
     private fun initMap() = with(binding) {
@@ -176,7 +182,12 @@ class HeritageMapFragment :
             resources.getDrawable(R.drawable.background_heritage_map_item, null)
         cardBinding.heritage = data
 
+        ViewCompat.setTransitionName(cardBinding.ivHeritage, "heritage${data?.heritageSeq}")
+
         cardBinding.root.setOnClickListener {
+
+            binding.map.removeAllViews()
+
             parentFragmentManager
                 .beginTransaction()
                 .addSharedElement(cardBinding.ivHeritage, "heritage")
