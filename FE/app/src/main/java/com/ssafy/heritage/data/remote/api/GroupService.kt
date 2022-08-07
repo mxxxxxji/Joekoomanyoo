@@ -58,7 +58,7 @@ interface GroupService {
 
     // 가입을 탈퇴/취소/거절(방장)/취소한다
     @DELETE("/api/group/{groupSeq}/member/leave")
-    suspend fun leaveGroupJoin(@Path("groupSeq") groupSeq: Int, @Body body: GroupBasic): Response<Boolean>
+    suspend fun leaveGroupJoin(@Path("groupSeq") groupSeq: Int): Response<Boolean>
 
     // 회원 목록을 조회한다
     @GET("/api/group/{groupSeq}/member/list")

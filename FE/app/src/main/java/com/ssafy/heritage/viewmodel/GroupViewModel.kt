@@ -139,9 +139,9 @@ class GroupViewModel: ViewModel() {
     }
 
     // 가입 취소, 거절, 탈퇴
-    fun leaveGroupJoin(groupSeq: Int, groupBasic: GroupBasic){
+    fun leaveGroupJoin(groupSeq: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.leaveGroupJoin(groupSeq, groupBasic).let { response ->
+            repository.leaveGroupJoin(groupSeq).let { response ->
                 if(response.isSuccessful) {
                     _groupPermission.postValue(3)
                 }else{

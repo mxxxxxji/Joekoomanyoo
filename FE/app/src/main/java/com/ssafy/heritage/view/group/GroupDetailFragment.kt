@@ -26,7 +26,7 @@ class GroupDetailFragment :
     OnItemClickListener, ApplyGroupJoinDialogInterface {
 
     private val groupViewModel by activityViewModels<GroupViewModel>()
-    private val userSeq : Int = ApplicationClass.sharedPreferencesUtil.getUser()
+    private val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
     private lateinit var memberAdapter: MemberAdapter
     private lateinit var applicantAdapter: MemberAdapter
     private lateinit var groupInfo: GroupListResponse
@@ -55,13 +55,13 @@ class GroupDetailFragment :
         groupViewModel.groupMemberList.observe(viewLifecycleOwner) {
             var applicantList = mutableListOf<Member>()
             var memberList = mutableListOf<Member>()
-            for(i in it){
+            for (i in it) {
                 // 신청자일 경우
-                if(i.memberStatus == 0){
+                if (i.memberStatus == 0) {
                     applicantList.add(i)
                 }
-                // 회원일 경우
-                if(i.memberStatus == 1){
+                // 회원 또는 방장일 경우
+                if (i.memberStatus == 1 || i.memberStatus == 2) {
                     memberList.add(i)
                 }
             }
@@ -90,6 +90,7 @@ class GroupDetailFragment :
 
         }
     }
+
     private fun initClickListener() {
 
         // 가입 요청
@@ -101,20 +102,25 @@ class GroupDetailFragment :
         // 가입취소
         binding.btnCancellation.setOnClickListener {
             // 모임을 떠나시겠습니까? 다이얼로그
-            groupViewModel.leaveGroupJoin(groupInfo.groupSeq, GroupBasic(groupInfo.groupSeq, userSeq))
+            groupViewModel.leaveGroupJoin(
+                groupInfo.groupSeq
+            )
             Toast.makeText(requireActivity(), "가입이 취소되었습니다.", Toast.LENGTH_SHORT).show()
             groupViewModel.setGroupPermission(3)
-            val action = GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupListFragment()
-            findNavController().navigate(action)
+            parentFragment?.findNavController()?.popBackStack()
+
         }
 
         // 탈퇴하기
         binding.btnDrop.setOnClickListener {
             // 모임을 떠나시겠습니까? 다이얼로그
-            groupViewModel.leaveGroupJoin(groupInfo.groupSeq, GroupBasic(groupInfo.groupSeq, userSeq))
+            groupViewModel.leaveGroupJoin(
+                groupInfo.groupSeq
+            )
             Toast.makeText(requireActivity(), "모임을 탈퇴했습니다.", Toast.LENGTH_SHORT).show()
             groupViewModel.setGroupPermission(3)
-            val action = GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupListFragment()
+            val action =
+                GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupListFragment()
             findNavController().navigate(action)
         }
         // 모임시작
