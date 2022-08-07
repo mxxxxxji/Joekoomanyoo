@@ -34,7 +34,7 @@ interface GroupService {
     suspend fun selectGroupDetail(@Path("groupSeq") groupSeq: Int): Response<GroupListResponse>
 
     // 나의 모임 정보만 조회한다
-    @GET("/api/group/mylist/user/{userSeq}")
+    @GET("/api/group/my-group/{userSeq}")
     suspend fun selectMyGroups(@Path("userSeq") userSeq: Int): Response<List<MyGroupResponse>>
 
 
