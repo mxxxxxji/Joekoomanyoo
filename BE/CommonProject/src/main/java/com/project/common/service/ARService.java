@@ -79,16 +79,14 @@ public class ARService {
         // 문화유산 번호
         int heritageSeq = stampEntity.getHeritageSeq();
 
-        MyStampEntity myStampEntity = new MyStampEntity();
-        myStampEntity.builder()
-                .myStampSeq(0)
+        MyStampDto myStampDto = MyStampDto.builder()
+                 .myStampSeq(0)
                 .stampSeq(stampSeq)
                 .userSeq(userSeq)
                 .heritageSeq(heritageSeq)
-                .myStampRegistedAt(time)
-        .build();
+                .myStampRegistedAt(time).build();
 
-        myARRepository.save(myStampEntity);
+        myARRepository.save(MyStampMapper.MAPPER.toEntity(myStampDto));
         return true;
     }
 }
