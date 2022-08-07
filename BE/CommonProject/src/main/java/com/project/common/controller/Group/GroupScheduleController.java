@@ -1,6 +1,7 @@
 package com.project.common.controller.Group;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.query.Param;
@@ -53,7 +54,7 @@ public class GroupScheduleController {
     //일정 삭제
    	@ApiOperation(value = "모임 일정 삭제")
    	@DeleteMapping("/{groupSeq}/schedule/delete")
-   	public ResponseEntity<String> deleteGroupSchedule(@PathVariable int groupSeq, @Param("gsDateTime") long gsDateTime){
+   	public ResponseEntity<String> deleteGroupSchedule(@PathVariable int groupSeq, @Param("gsDateTime") Date gsDateTime){
    	 	return new ResponseEntity<>(groupScheduleService.deleteGroupSchedule(groupSeq,gsDateTime),HttpStatus.OK);
    	}
     

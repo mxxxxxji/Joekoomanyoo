@@ -35,8 +35,9 @@ public class GroupScheduleEntity {
 	@Column(name = "gs_content")
     private String gsContent;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "gs_date_time")
-	private long gsDateTime;
+	private Date gsDateTime;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "gs_registered_at")

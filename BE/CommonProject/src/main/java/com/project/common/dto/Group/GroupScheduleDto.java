@@ -20,7 +20,7 @@ public class GroupScheduleDto {
 
 	private int gsSeq;
     private String gsContent;
-	private long gsDateTime;
+	private Date gsDateTime;
 	private Date gsRegisteredAt;
     private Date gsUpdatedAt;
 	private GroupEntity group;
@@ -42,7 +42,7 @@ public class GroupScheduleDto {
     }
 
     @Builder
-	public GroupScheduleDto(int gsSeq, String gsContent, long gsDateTime, Date gsRegisteredAt,
+	public GroupScheduleDto(int gsSeq, String gsContent, Date gsDateTime, Date gsRegisteredAt,
 			Date gsUpdatedAt, GroupEntity group) {
 		super();
 		this.gsSeq = gsSeq;

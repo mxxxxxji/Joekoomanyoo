@@ -34,8 +34,9 @@ public class GroupDailyMemoEntity {
 	@Column(name = "gdm_content")
     private String gdmContent;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "gdm_date")
-	private int gdmDate;
+	private Date gdmDate;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="gdm_created_at")

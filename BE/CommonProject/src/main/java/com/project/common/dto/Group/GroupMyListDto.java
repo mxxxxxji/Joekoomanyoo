@@ -1,5 +1,7 @@
 package com.project.common.dto.Group;
 
+import java.util.Date;
+
 import com.project.common.entity.Group.GroupMemberEntity;
 
 import lombok.*;
@@ -19,8 +21,8 @@ public class GroupMyListDto {
     private String groupPassword;
     private int groupMaxCount;
    	private String groupRegion;
-   	private int groupStartDate;
-   	private int groupEndDate;
+   	private Date groupStartDate;
+   	private Date groupEndDate;
    	private int groupAgeRange;
    	private char groupWithChild;
    	private char groupWithGlobal;
