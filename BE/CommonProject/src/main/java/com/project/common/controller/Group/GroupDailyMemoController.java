@@ -24,35 +24,43 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor   
-@RequestMapping("/api/group/{groupSeq}")
+@RequestMapping("/api/group")
 @Api(tags = {" 모임 데일리메모 API"})
 public class GroupDailyMemoController {
     private final GroupDailyMemoService groupDailyMemoService;
     
     //메모 조회
     @ApiOperation(value = "모임 데일리 메모 조회")
-    @GetMapping("/memo/list")
+    @GetMapping("/{groupSeq}/memo/list")
     public ResponseEntity<List<GroupDailyMemoDto>> getMemberList(@PathVariable("groupSeq") int groupSeq) throws Exception{
     	return new ResponseEntity<>(groupDailyMemoService.getMemoList(groupSeq),HttpStatus.OK);
     }
     
+    //내 모임 메모 조회
+    @ApiOperation(value = "내 모임 데일리 메모 조회")
+    @GetMapping("/my-memo/{userSeq}")
+    public ResponseEntity<List<GroupDailyMemoDto>> getMyGroupMemoList(@PathVariable("userSeq") int userSeq) throws Exception{
+    	return new ResponseEntity<>(groupDailyMemoService.getMyGroupMemoList(userSeq),HttpStatus.OK);
+    }
+    
+    
     //메모 등록
     @ApiOperation(value = "모임 데일리 메모 생성")
-    @PostMapping("/memo/create")
-    public ResponseEntity<GroupDailyMemoDto> createGroupMemo(@PathVariable int groupSeq, @RequestBody GroupDailyMemoDto gdmDto){
+    @PostMapping("/{groupSeq}/memo/add")
+    public ResponseEntity<String> createGroupMemo(@PathVariable int groupSeq, @RequestBody GroupDailyMemoDto gdmDto){
     	return new ResponseEntity<>(groupDailyMemoService.createGroupMemo(groupSeq,gdmDto),HttpStatus.CREATED);
     }
     
     //메모 삭제
    	@ApiOperation(value = "모임 데일리 메모 삭제")
-   	@DeleteMapping("/memo/delete")
+   	@DeleteMapping("/{groupSeq}/memo/delete")
    	public ResponseEntity<String> deleteDailyMemo(@PathVariable int groupSeq, @Param("gdmDate") int gdmDate ){
    	 	return new ResponseEntity<>(groupDailyMemoService.deleteGroupMemo(groupSeq,gdmDate),HttpStatus.OK);
    	}
     
    	//메모 수정
   	@ApiOperation(value = "모임 데일리 메모 수정")
-  	@PutMapping("/memo/modify")
+  	@PutMapping("/{groupSeq}/memo/modify")
   	public ResponseEntity<GroupDailyMemoDto> modifyDailyMemo(@RequestBody GroupDailyMemoDto gdmDto, @PathVariable int groupSeq){
   		return new ResponseEntity<>(groupDailyMemoService.modifyGroupMemo(groupSeq,gdmDto),HttpStatus.OK);
   	}

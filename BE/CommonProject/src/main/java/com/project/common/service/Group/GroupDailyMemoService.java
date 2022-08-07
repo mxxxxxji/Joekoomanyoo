@@ -10,8 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.common.dto.Group.GroupDailyMemoDto;
 import com.project.common.entity.Group.GroupDailyMemoEntity;
 import com.project.common.entity.Group.GroupEntity;
+import com.project.common.entity.User.UserEntity;
+import com.project.common.mapper.GroupDailyMemoMapper;
 import com.project.common.repository.Group.GroupDailyMemoRepository;
 import com.project.common.repository.Group.GroupRepository;
+import com.project.common.repository.User.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +25,30 @@ public class GroupDailyMemoService{
 	private final GroupRepository groupRepository;
 	private final GroupDailyMemoRepository groupDailyMemoRepository;
 	private final GroupService groupService;
-
+	private final UserRepository userRepository;
+	
+	//내 모임 데일리 메모 조회
+	public List<GroupDailyMemoDto> getMyGroupMemoList(int userSeq){
+		List<GroupEntity> groupList= new ArrayList<>();
+		for(UserEntity entity : userRepository.findAll()) {
+			if(entity.getUserSeq()==userSeq) {
+				for(GroupEntity group : entity.getGroups()) {
+					groupList.add(group);
+				}
+			}
+		}
+		if(groupList.size()==0)
+			throw new IllegalArgumentException("가입한 모임이 없습니다");
+		
+			List<GroupDailyMemoDto> memoList= new ArrayList<>();
+			
+			for(GroupEntity entity : groupList) {
+				for(int i=0;i<entity.getMemos().size();i++)
+					memoList.add(new GroupDailyMemoDto(entity.getMemos().get(i)));
+			}
+			return memoList;
+	}
+	
 	//데일리 메모 조회
 	public List<GroupDailyMemoDto> getMemoList(int groupSeq){
 		List<GroupDailyMemoDto> list = new ArrayList<>();
@@ -38,7 +64,7 @@ public class GroupDailyMemoService{
 	
 	//데일리 메모 등록
 	@Transactional
-	public GroupDailyMemoDto createGroupMemo(int groupSeq, GroupDailyMemoDto gdmDto) {
+	public String createGroupMemo(int groupSeq, GroupDailyMemoDto gdmDto) {
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDailyMemoEntity entity:group.getMemos()) {
 			if(entity.getGdmDate()==gdmDto.getGdmDate()) {
@@ -51,7 +77,7 @@ public class GroupDailyMemoService{
 				.gdmCreatedAt(new Date())
 				.gdmUpdatedAt(new Date()).build());
 		groupRepository.save(group);
-		return gdmDto;
+		return "Success";
 	}
 	
 	//데일리 메모 삭제
