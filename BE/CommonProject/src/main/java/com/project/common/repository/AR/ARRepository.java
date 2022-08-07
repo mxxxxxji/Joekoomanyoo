@@ -4,7 +4,6 @@ import com.project.common.entity.AR.StampEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-
 public interface ARRepository extends JpaRepository<StampEntity, Integer> {
 
 

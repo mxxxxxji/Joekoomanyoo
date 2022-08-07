@@ -9,5 +9,4 @@ public interface MyARRepository extends JpaRepository<MyStampEntity, Integer> {
 
     List<MyStampEntity> findAllByUserSeq(int userSeq);
 
-    MyStampEntity findByStampSeq(int stampSeq);
 }

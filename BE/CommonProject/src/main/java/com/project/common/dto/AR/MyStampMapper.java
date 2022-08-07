@@ -2,8 +2,10 @@ package com.project.common.dto.AR;
 
 import com.project.common.entity.AR.MyStampEntity;
 import com.project.common.mapper.StructMapper;
+import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+@Mapper
 public interface MyStampMapper extends StructMapper<MyStampDto, MyStampEntity> {
     MyStampMapper MAPPER = Mappers.getMapper(MyStampMapper.class);
 
