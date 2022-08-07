@@ -25,7 +25,6 @@ class GroupDetailFragment :
     BaseFragment<FragmentGroupDetailBinding>(R.layout.fragment_group_detail),
     OnItemClickListener, ApplyGroupJoinDialogInterface {
 
-    private val userViewModel by activityViewModels<UserViewModel>()
     private val groupViewModel by activityViewModels<GroupViewModel>()
     private val userSeq : Int = ApplicationClass.sharedPreferencesUtil.getUser()
     private lateinit var memberAdapter: MemberAdapter
@@ -124,7 +123,6 @@ class GroupDetailFragment :
     }
 
     override fun onItemClick(position: Int) {
-
     }
 
     override fun onOkBtnClicked(appeal: String) {

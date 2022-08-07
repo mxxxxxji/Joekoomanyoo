@@ -35,6 +35,7 @@ class MemberAdapter(private val listener: OnItemClickListener)
         return memberList[position]
     }
 
+
     inner class MemberViewHolder(private val binding: ItemMemberBinding) : RecyclerView.ViewHolder(binding.root){
         init {
             binding.root.setOnClickListener {
