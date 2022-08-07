@@ -1,5 +1,11 @@
 package com.ssafy.heritage.view.group
 
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -10,6 +16,9 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentGroupInfoBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val TAG = "GroupInfoFragment___"
 
@@ -24,11 +33,14 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
     private lateinit var mapFragment: GroupMapFragment
 
     override fun init() {
-        groupViewModel.selectGroupMembers(ApplicationClass.sharedPreferencesUtil.getUser(),args.groupInfo.groupSeq)
-        groupViewModel.getGroupList()
-        groupViewModel.add(args.groupInfo)
-        initAdapter()
-        initClickListener()
+        CoroutineScope(Dispatchers.Main).launch {
+            groupViewModel.getGroupList()
+            groupViewModel.add(args.groupInfo)
+           val s= groupViewModel.selectGroupMembers(ApplicationClass.sharedPreferencesUtil.getUser(),args.groupInfo.groupSeq)
+            Log.d(TAG, "init CoroutineScope: $s")
+            initAdapter()
+            initClickListener()
+        }
     }
 
     private fun initClickListener() = with(binding) {
