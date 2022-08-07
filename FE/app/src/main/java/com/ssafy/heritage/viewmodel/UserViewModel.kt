@@ -355,4 +355,38 @@ class UserViewModel : ViewModel() {
             }
         }
     }
+
+    // 내 일정 추가하기
+    fun addSchedule(schedule: Schedule) = viewModelScope.launch {
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.insertMySchedule(schedule)
+        }
+        job?.join()
+        response?.let {
+            Log.d(TAG, "addSchedule response: $it")
+            if (it.isSuccessful) {
+                getSchedule()
+            } else {
+
+            }
+        }
+    }
+
+    // 내 일정 삭제하기
+    fun deleteSchedule(scheduleSeq: Int) = viewModelScope.launch {
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.deleteMySchedule(scheduleSeq)
+        }
+        job?.join()
+        response?.let {
+            Log.d(TAG, "deleteSchedule response: $it")
+            if (it.isSuccessful) {
+                getSchedule()
+            } else {
+
+            }
+        }
+    }
 }

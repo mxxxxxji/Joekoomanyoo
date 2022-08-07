@@ -81,4 +81,13 @@ interface UserService {
     // 내 일정 불러오기
     @GET("/api/mypage/schedule/{userSeq}/list")
     suspend fun selectAllMySchedule(@Path("userSeq") userSeq: Int): Response<List<Schedule>>
+
+    // 내 일정 생성하기
+    @POST("/api/mypage/schedule")
+    suspend fun insertMySchedule(@Body schedule: Schedule): Response<String>
+
+    // 내 일정 삭제하기
+    @DELETE("/api/mypage/schedule/{myScheduleSeq}")
+    suspend fun deleteMySchedule(@Path("myScheduleSeq") scheduleSeq: Int): Response<String>
+
 }
