@@ -1,5 +1,7 @@
 package com.project.common.controller;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Mail.MailDto;
 import com.project.common.dto.User.UserDto;
@@ -155,7 +157,8 @@ public class UserController {
             return new ResponseEntity<String>(FAIL + " password", HttpStatus.BAD_REQUEST);
         }
 
-        // 토큰 생성해서 리턴
+
+       // 토큰 생성해서 리턴
         String token = jwtTokenProvider.createToken(userEntity.getUserSeq(), userEntity.getUsername(), userEntity.getUserNickname(), userEntity.getUserGender(), userEntity.getUserBirth(), userEntity.getSocialLoginType(), userEntity.getProfileImgUrl(), userEntity.getRoles());
         if (token != null) {
             return new ResponseEntity<String>(token, HttpStatus.OK);

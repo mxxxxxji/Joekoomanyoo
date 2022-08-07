@@ -72,7 +72,7 @@ public class UserEntity implements UserDetails{
     @Column(length = 100)
     private String profileImgUrl;
 
-    @Column(length = 50)
+    @Column(length = 1000)
     private String fcmToken;
 
     private String userRegistedAt;

@@ -44,6 +44,7 @@ public class FirebaseCloudMessageService {
         googleCredentials.refreshIfExpired();
         String token = googleCredentials.getAccessToken().getTokenValue();
 
+        System.out.println(token);
         return token;
     }
 
@@ -55,6 +56,7 @@ public class FirebaseCloudMessageService {
      * @return
      * @throws JsonProcessingException
      */
+
     private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
         FcmMessage.Notification noti = new FcmMessage.Notification(title, body, null);
         FcmMessage.Message message = new FcmMessage.Message(noti, targetToken);
@@ -86,8 +88,7 @@ public class FirebaseCloudMessageService {
 
         Response response = client.newCall(request).execute();
 
-        System.out.println(response.body().string());
-//        logger.info("message : {}", message);
+        System.out.println("응답 : " + response.body().string());
     }
 
     // 전체 알림 세팅
