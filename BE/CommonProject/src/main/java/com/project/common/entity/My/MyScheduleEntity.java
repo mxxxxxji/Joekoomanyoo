@@ -21,7 +21,6 @@ public class MyScheduleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int myScheduleSeq;
     private int myScheduleDate;
-    private int myScheduleTime;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String myScheduleContent;
     private String myScheduleRegistedAt;

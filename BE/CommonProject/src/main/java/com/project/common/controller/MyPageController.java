@@ -133,74 +133,74 @@ public class MyPageController {
         }
     }
 
-    /**
-     * 데일리 메모 생성
-     *
-     * @param myDailyMemoDto
-     * @return String
-     */
-
-    @ApiOperation(value = "데일리 메모 생성", response = String.class)
-    @PostMapping("/memo")
-    public ResponseEntity<String> createDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
-        if (myPageService.createDailyMemo(myDailyMemoDto)) {
-            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    /**
-     * 데일리 메모 수정하기
-     *
-     * @param myDailyMemoDto
-     * @return String
-     */
-
-    @ApiOperation(value = "데일리 메모 수정하기", response = String.class)
-    @PutMapping("/memo")
-    public ResponseEntity<String> modifyDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
-        if (myPageService.modifyDailyMemo(myDailyMemoDto)) {
-            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    /**
-     * 데일리 메모 불러오기
-     *
-     * @param myDailyMemoDto
-     * @return String
-     */
-
-    @ApiOperation(value = "데일리 메모 불러오기", response = String.class)
-    @PostMapping("/memo/daily")
-    public ResponseEntity<?> showDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
-        MyDailyMemoDto dto = myPageService.showDailyMemo(myDailyMemoDto);
-        if (dto == null) {
-            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<MyDailyMemoDto>(dto, HttpStatus.OK);
-        }
-    }
-
-    /**
-     * 데일리 메모 삭제하기
-     *
-     * @param myDailyMemoSeq
-     * @return String
-     */
-
-    @ApiOperation(value = "데일리 메모 삭제하기", response = String.class)
-    @DeleteMapping("/memo/{myDailyMemoSeq}")
-    public ResponseEntity<String> deleteDailyMemo(@PathVariable("myDailyMemoSeq") int myDailyMemoSeq) {
-        if (myPageService.deleteDailyMemo(myDailyMemoSeq)) {
-            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>("FAIL", HttpStatus.OK);
-        }
-    }
+//    /**
+//     * 데일리 메모 생성
+//     *
+//     * @param myDailyMemoDto
+//     * @return String
+//     */
+//
+//    @ApiOperation(value = "데일리 메모 생성", response = String.class)
+//    @PostMapping("/memo")
+//    public ResponseEntity<String> createDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
+//        if (myPageService.createDailyMemo(myDailyMemoDto)) {
+//            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+//        }
+//    }
+//
+//    /**
+//     * 데일리 메모 수정하기
+//     *
+//     * @param myDailyMemoDto
+//     * @return String
+//     */
+//
+//    @ApiOperation(value = "데일리 메모 수정하기", response = String.class)
+//    @PutMapping("/memo")
+//    public ResponseEntity<String> modifyDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
+//        if (myPageService.modifyDailyMemo(myDailyMemoDto)) {
+//            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+//        }
+//    }
+//
+//    /**
+//     * 데일리 메모 불러오기
+//     *
+//     * @param myDailyMemoDto
+//     * @return String
+//     */
+//
+//    @ApiOperation(value = "데일리 메모 불러오기", response = String.class)
+//    @PostMapping("/memo/daily")
+//    public ResponseEntity<?> showDailyMemo(@RequestBody MyDailyMemoDto myDailyMemoDto) {
+//        MyDailyMemoDto dto = myPageService.showDailyMemo(myDailyMemoDto);
+//        if (dto == null) {
+//            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+//        } else {
+//            return new ResponseEntity<MyDailyMemoDto>(dto, HttpStatus.OK);
+//        }
+//    }
+//
+//    /**
+//     * 데일리 메모 삭제하기
+//     *
+//     * @param myDailyMemoSeq
+//     * @return String
+//     */
+//
+//    @ApiOperation(value = "데일리 메모 삭제하기", response = String.class)
+//    @DeleteMapping("/memo/{myDailyMemoSeq}")
+//    public ResponseEntity<String> deleteDailyMemo(@PathVariable("myDailyMemoSeq") int myDailyMemoSeq) {
+//        if (myPageService.deleteDailyMemo(myDailyMemoSeq)) {
+//            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<String>("FAIL", HttpStatus.OK);
+//        }
+//    }
 
     /**
      * 내 일정 생성
@@ -223,7 +223,7 @@ public class MyPageController {
     /**
      * 내 일정 불러오기
      *
-     * @param myScheduleDto
+     * @param userSeq
      * @return List
      */
 
@@ -238,22 +238,22 @@ public class MyPageController {
         }
     }
 
-    /**
-     * 내 일정 수정
-     *
-     * @param myScheduleDto
-     * @return String
-     */
-
-    @ApiOperation(value = "내 일정 수정", response = String.class)
-    @PutMapping("/schedule")
-    public ResponseEntity<String> modifySchedule(@RequestBody MyScheduleDto myScheduleDto) {
-        if (myPageService.modifySchedule(myScheduleDto)) {
-            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
-        }
-    }
+//    /**
+//     * 내 일정 수정
+//     *
+//     * @param myScheduleDto
+//     * @return String
+//     */
+//
+//    @ApiOperation(value = "내 일정 수정", response = String.class)
+//    @PutMapping("/schedule")
+//    public ResponseEntity<String> modifySchedule(@RequestBody MyScheduleDto myScheduleDto) {
+//        if (myPageService.modifySchedule(myScheduleDto)) {
+//            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 
     /**
