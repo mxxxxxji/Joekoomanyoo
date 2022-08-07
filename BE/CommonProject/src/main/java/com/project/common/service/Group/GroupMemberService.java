@@ -54,12 +54,13 @@ public class GroupMemberService{
 		group.addGroupMember(GroupMemberEntity.builder()
 				.memberAppeal(requestDto.getMemberAppeal())
 				.userSeq(requestDto.getUserSeq())
+				.memberStatus(0)
 				.memberIsEvaluated('N')
 				.createdTime(new Date())
 				.updatedTime(new Date()).build());
 		user.addGroup(group);
-	 	userRepository.save(user);
 		groupRepository.save(group);
+	 	userRepository.save(user);
 		return "Success";
 	}
 	

@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.common.dto.Group.GroupDestinationMapDto;
 import com.project.common.entity.Group.GroupDestinationEntity;
 import com.project.common.entity.Group.GroupEntity;
+import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.Heritage.HeritageEntity;
-import com.project.common.entity.User.UserEntity;
 import com.project.common.repository.Group.GroupDestinationRepository;
+import com.project.common.repository.Group.GroupMemberRepository;
 import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.Heritage.HeritageRepository;
-import com.project.common.repository.User.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GroupDestinationService{
 
-	private final UserRepository userRepository;
+	private final GroupMemberRepository groupMemberRepository;
 	private final GroupRepository groupRepository;
 	private final HeritageRepository heritageRepository;
 	private final GroupDestinationRepository groupDestinationRepository;
@@ -33,13 +33,12 @@ public class GroupDestinationService{
 	//내 모임 목적지 조회
 	public List<GroupDestinationMapDto> getMyDestinationList(int userSeq){
 		List<GroupEntity> groupList= new ArrayList<>();
-		for(UserEntity entity : userRepository.findAll()) {
+		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
 			if(entity.getUserSeq()==userSeq) {
-				for(GroupEntity group : entity.getGroups()) {
-					groupList.add(group);
+					groupList.add(entity.getGroup());
 				}
 			}
-		}
+		
 		if(groupList.size()==0)
 			throw new IllegalArgumentException("가입한 모임이 없습니다");
 		
@@ -52,6 +51,8 @@ public class GroupDestinationService{
 						destinationList.add(new GroupDestinationMapDto(entity.getDestinations().get(i),heritage));
 				}
 			}
+			if(destinationList.size()==0)
+				throw new IllegalArgumentException("등록된 목적지가 없습니다");
 			return destinationList;
 	}
 	

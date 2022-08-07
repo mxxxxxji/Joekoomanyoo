@@ -65,6 +65,29 @@ public class GroupDto {
     	this.createdTime = createdTime;
     	this.updatedTime = updatedTime;
     }
+    
+    @Builder
+    public GroupDto(GroupEntity group) {
+    	super();
+    	this.groupSeq = group.getGroupSeq();
+    	this.groupName = group.getGroupName();
+    	this.bannerImgUrl = group.getBannerImgUrl();
+    	this.groupMaster = group.getGroupMaster();
+    	this.groupDescription = group.getGroupDescription();
+    	this.groupAccessType = group.getGroupAccessType();
+    	this.groupPassword = group.getGroupPassword();
+    	this.groupMaxCount = group.getGroupMaxCount();
+    	this.groupRegion = group.getGroupRegion();
+    	this.groupStartDate = group.getGroupStartDate();
+    	this.groupEndDate = group.getGroupEndDate();
+    	this.groupAgeRange = group.getGroupAgeRange();
+    	this.groupWithChild = group.getGroupWithChild();
+    	this.groupWithGlobal = group.getGroupWithGlobal();
+    	this.groupActive = group.getGroupActive();
+    	this.groupStatus = group.getGroupStatus();
+    	this.createdTime = group.getCreatedTime();
+    	this.updatedTime = group.getUpdatedTime();
+    }
 
 
     public GroupEntity toEntity(){
