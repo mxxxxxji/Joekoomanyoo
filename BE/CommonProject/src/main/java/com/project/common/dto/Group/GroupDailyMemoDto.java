@@ -19,7 +19,7 @@ import lombok.ToString;
 public class GroupDailyMemoDto {
     private int gdmSeq;
     private String gdmContent;
-    private int gdmDate;
+    private Date gdmDate;
     private Date gdmCreatedAt;
     private Date gdmUpdatedAt;
     private GroupEntity group;

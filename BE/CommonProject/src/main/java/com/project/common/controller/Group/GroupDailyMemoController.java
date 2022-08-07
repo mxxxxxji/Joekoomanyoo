@@ -1,6 +1,7 @@
 package com.project.common.controller.Group;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.query.Param;
@@ -54,7 +55,7 @@ public class GroupDailyMemoController {
     //메모 삭제
    	@ApiOperation(value = "모임 데일리 메모 삭제")
    	@DeleteMapping("/{groupSeq}/memo/delete")
-   	public ResponseEntity<String> deleteDailyMemo(@PathVariable int groupSeq, @Param("gdmDate") int gdmDate ){
+   	public ResponseEntity<String> deleteDailyMemo(@PathVariable int groupSeq, @Param("gdmDate") Date gdmDate ){
    	 	return new ResponseEntity<>(groupDailyMemoService.deleteGroupMemo(groupSeq,gdmDate),HttpStatus.OK);
    	}
     

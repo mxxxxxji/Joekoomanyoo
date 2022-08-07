@@ -1,9 +1,22 @@
 package com.project.common.controller;
 
-import com.project.common.dto.AR.MyStampDto;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.project.common.dto.AR.StampDto;
 import com.project.common.dto.Heritage.HeritageDto;
-import com.project.common.dto.Heritage.HeritageScrapDto;
 import com.project.common.dto.My.MyDailyMemoDto;
 import com.project.common.dto.My.MyScheduleDto;
 import com.project.common.dto.User.UserEvalDto;
@@ -12,16 +25,10 @@ import com.project.common.dto.User.UserResponseEvalDto;
 import com.project.common.service.ARService;
 import com.project.common.service.HeritageService;
 import com.project.common.service.MyPageService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

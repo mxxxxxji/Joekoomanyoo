@@ -27,8 +27,8 @@ public class GroupDto {
     private String groupPassword;
     private int groupMaxCount;
    	private String groupRegion;
-   	private int groupStartDate;
-   	private int groupEndDate;
+   	private Date groupStartDate;
+   	private Date groupEndDate;
    	private int groupAgeRange;
    	private char groupWithChild;
    	private char groupWithGlobal;
@@ -42,8 +42,8 @@ public class GroupDto {
 
     @Builder
     public GroupDto(int groupSeq, String groupName, String bannerImgUrl, String groupMaster, String groupDescription,
-    		char groupAccessType, String groupPassword, int groupMaxCount, String groupRegion, int groupStartDate,
-    		int groupEndDate, int groupAgeRange, char groupWithChild, char groupWithGlobal, char groupActive,
+    		char groupAccessType, String groupPassword, int groupMaxCount, String groupRegion, Date groupStartDate,
+    		Date groupEndDate, int groupAgeRange, char groupWithChild, char groupWithGlobal, char groupActive,
     		char groupStatus, Date createdTime, Date updatedTime) {
     	super();
     	this.groupSeq = groupSeq;

@@ -11,12 +11,9 @@ import com.project.common.dto.Group.GroupDailyMemoDto;
 import com.project.common.entity.Group.GroupDailyMemoEntity;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
-import com.project.common.entity.User.UserEntity;
-import com.project.common.mapper.GroupDailyMemoMapper;
 import com.project.common.repository.Group.GroupDailyMemoRepository;
 import com.project.common.repository.Group.GroupMemberRepository;
 import com.project.common.repository.Group.GroupRepository;
-import com.project.common.repository.User.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -82,7 +79,7 @@ public class GroupDailyMemoService{
 	
 	//데일리 메모 삭제
 	@Transactional
-	public String deleteGroupMemo(int groupSeq, int gdmDate) {
+	public String deleteGroupMemo(int groupSeq, Date gdmDate) {
 		List<GroupDailyMemoEntity> memos= findMemo(groupSeq);
 		if(memos==null) 
 			throw new IllegalArgumentException("등록된 메모가 없습니다");

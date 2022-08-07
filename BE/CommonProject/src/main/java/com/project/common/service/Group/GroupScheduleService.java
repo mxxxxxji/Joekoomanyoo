@@ -14,7 +14,6 @@ import com.project.common.entity.Group.GroupScheduleEntity;
 import com.project.common.repository.Group.GroupMemberRepository;
 import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.Group.GroupScheduleRepository;
-import com.project.common.repository.User.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +24,6 @@ public class GroupScheduleService{
 	private final GroupRepository groupRepository;
 	private final GroupScheduleRepository groupScheduleRepository;
 	private final GroupService groupService;
-	private final UserRepository userRepository;
 	private final GroupMemberRepository groupMemberRepository;
 	
 	//일정 조회
@@ -84,7 +82,7 @@ public class GroupScheduleService{
 	
 	//일정 삭제
 	@Transactional
-	public String deleteGroupSchedule(int groupSeq, long gsDateTime) {
+	public String deleteGroupSchedule(int groupSeq, Date gsDateTime) {
 		List<GroupScheduleEntity> schedules= findSchedule(groupSeq);
 		System.out.println(groupSeq);
 		GroupEntity group = groupService.findGroup(groupSeq);

@@ -63,11 +63,13 @@ public class GroupEntity {
     @Column(name="group_region")
    	private String groupRegion;
        
+	@Temporal(TemporalType.DATE)
     @Column(name="group_start_date")
-   	private int groupStartDate;
+   	private Date groupStartDate;
        
+	@Temporal(TemporalType.DATE)
     @Column(name="group_end_date")
-   	private int groupEndDate;
+   	private Date groupEndDate;
        
     @Column(name="group_age_range")
    	private int groupAgeRange;
@@ -125,7 +127,7 @@ public class GroupEntity {
     	groupMemo.setGroup(this);
     }
 
-    public void removeGroupMemo(int gdmDate) {
+    public void removeGroupMemo(Date gdmDate) {
         memos.removeIf(groupMemo ->
                 groupMemo.getGdmDate()==gdmDate);
     }
@@ -141,7 +143,7 @@ public class GroupEntity {
     	groupSchedule.setGroup(this);
     }
 
-    public void removeGroupSchedule(long gsDateTime) {
+    public void removeGroupSchedule(Date gsDateTime) {
         this.schedules.removeIf(groupSchedule ->
         groupSchedule.getGsDateTime()==gsDateTime);
     }
