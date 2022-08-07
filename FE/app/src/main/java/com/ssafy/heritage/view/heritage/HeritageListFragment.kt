@@ -1,14 +1,19 @@
 package com.ssafy.heritage.view.heritage
 
 import android.Manifest
-import android.graphics.Color
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.doOnPreDraw
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.heritage.R
@@ -19,6 +24,9 @@ import com.ssafy.heritage.databinding.FragmentHeritageListBinding
 import com.ssafy.heritage.databinding.PopupHeritageSortBinding
 import com.ssafy.heritage.listener.HeritageListClickListener
 import com.ssafy.heritage.util.DividerItemDecoration
+import com.ssafy.heritage.util.SORT.ASCENDING_DIST
+import com.ssafy.heritage.util.SORT.ASCENDING_REVIEW
+import com.ssafy.heritage.util.SORT.ASCENDING_SCRAP
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 
 
@@ -31,6 +39,9 @@ class HeritageListFragment :
 
     private val heritageAdapter: HeritageListAdapter by lazy { HeritageListAdapter() }
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
+    private var dataList: List<Heritage> = arrayListOf()
+    private var selectedSort: String = ""
+    private var searchedList = listOf<Heritage>()
 
     private lateinit var popupWindow: PopupWindow
 
@@ -38,13 +49,26 @@ class HeritageListFragment :
 
         initAdapter()
 
-        initObserver()
-
         setPopupWindow()
 
         setToolbar()
 
         setSearchView()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        // transition 효과 일단 멈춤
+        postponeEnterTransition()
+
+        initObserver()
+
+        _binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
+        return binding.root
     }
 
     private fun initAdapter() = with(binding) {
@@ -61,27 +85,52 @@ class HeritageListFragment :
                     heritageViewModel.setHeritage(heritage)
 
                     // 해당 문화유산의 상세페이지로 이동
-                    parentFragmentManager
-                        .beginTransaction()
-                        .addSharedElement(view, "heritage")
-                        .addToBackStack(null)
-                        .replace(
-                            R.id.fragment_container_main,
-                            HeritageDetailFragment.newInstance(heritage)
-                        )
-                        .commit()
+                    requireActivity().supportFragmentManager
+                        .commit {
+                            addToBackStack(null)
+                            addSharedElement(view, "heritage")
+                            replace(
+                                R.id.fragment_container_main,
+                                HeritageDetailFragment.newInstance(heritage)
+                            )
+                        }
+//                    parentFragmentManager
+//                        .beginTransaction()
+//                        .addSharedElement(view, "heritage")
+//                        .addToBackStack(null)
+//                        .replace(
+//                            R.id.fragment_container_main,
+//                            HeritageDetailFragment.newInstance(heritage)
+//                        )
+//                        .commit()
                 }
             }
+            setHasFixedSize(true)
         }
     }
 
     private fun initObserver() {
         heritageViewModel.heritageList.observe(viewLifecycleOwner) {
-            heritageAdapter.submitList(it)
-        }
 
-        binding.headerHeritage.setOnClickListener {
-            popupWindow.showAsDropDown(it)
+            // Fragment에 처음 진입하는 경우
+            if (searchedList.isNotEmpty()) {
+                heritageAdapter.submitList(searchedList)
+            } else {
+                if (selectedSort == "") {
+                    dataList = it
+                    heritageAdapter.submitList(it)
+                    binding.recyclerview.setItemViewCacheSize(it.size)
+                }
+                // DetailFragment에서 온 경우
+                else {
+                    filterList(selectedSort)
+                }
+            }
+
+            // 뷰 다 불러오고나서 transition 효과 시작
+            (view?.parent as ViewGroup)?.doOnPreDraw {
+                startPostponedEnterTransition()
+            }
         }
     }
 
@@ -90,30 +139,22 @@ class HeritageListFragment :
 
         // 리뷰순 정렬 클릭시
         popBinding.btnSortReview.setOnClickListener {
-            // 우선 리뷰 내림차순, 그 다음 seq 오름차순
-            heritageAdapter.submitList(
-                heritageViewModel.heritageList.value!!.sortedWith(
-                    compareBy({ -it.heritageReviewCnt },
-                        { it.heritageSeq })
-                )
-            )
+            selectedSort = ASCENDING_REVIEW
+            filterList(selectedSort)
             popupWindow.dismiss()
         }
 
         // 스크랩순 정렬 클릭시
         popBinding.btnSortScrap.setOnClickListener {
-            // 우선 스크랩 내림차순, 그 다음 seq 오름차순
-            heritageAdapter.submitList(
-                heritageViewModel.heritageList.value!!.sortedWith(
-                    compareBy({ -it.heritageScrapCnt },
-                        { it.heritageSeq })
-                )
-            )
+            selectedSort = ASCENDING_SCRAP
+            filterList(selectedSort)
             popupWindow.dismiss()
         }
 
         // 거리순 정렬 클릭시
         popBinding.btnSortDist.setOnClickListener {
+            selectedSort = ASCENDING_DIST
+            filterList(selectedSort)
             popupWindow.dismiss()
         }
 
@@ -150,21 +191,52 @@ class HeritageListFragment :
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrBlank()) {
-                    val newList = heritageViewModel.heritageList.value!!.filter {
+                    searchedList = dataList.filter {
                         it.heritageName.contains(query)
                     }
-                    heritageAdapter.submitList(newList)
+                    heritageAdapter.submitList(searchedList)
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrBlank()) {
-                    heritageAdapter.submitList(heritageViewModel.heritageList.value!!)
+                    searchedList = arrayListOf()
+                    heritageAdapter.submitList(dataList)
                 }
                 return false
             }
         })
+    }
+
+    private fun filterList(sortType: String) {
+        when (sortType) {
+            ASCENDING_REVIEW -> {
+                // 우선 리뷰 내림차순, 그 다음 seq 오름차순
+                dataList = dataList.sortedWith(
+                    compareBy({ -it.heritageReviewCnt },
+                        { it.heritageSeq })
+                )
+                heritageAdapter.submitList(
+                    dataList
+                )
+            }
+            ASCENDING_SCRAP -> {
+                // 우선 스크랩 내림차순, 그 다음 seq 오름차순
+                dataList = dataList.sortedWith(
+                    compareBy({ -it.heritageScrapCnt },
+                        { it.heritageSeq })
+                )
+                heritageAdapter.submitList(
+                    dataList
+                )
+            }
+            ASCENDING_DIST -> {
+                /*
+                거리순 정렬 해야됨
+                 */
+            }
+        }
     }
 
     // 위치 권한 체크 해주고 이후 동작 설정
@@ -181,5 +253,13 @@ class HeritageListFragment :
 
     private fun makeToast(msg: String) {
         Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+
+        private val heritageListFragment by lazy { HeritageListFragment() }
+
+        @JvmStatic
+        fun newInstance() = heritageListFragment
     }
 }
