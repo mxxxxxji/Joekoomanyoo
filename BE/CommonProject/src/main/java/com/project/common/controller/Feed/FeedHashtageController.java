@@ -6,13 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
@@ -53,8 +51,8 @@ public class FeedHashtageController {
     
     //피드 해쉬태그 삭제
    	@ApiOperation(value = "피드 해쉬태그 삭제")
-   	@DeleteMapping("/delete")
-   	public ResponseEntity<String> deleteFeedHashtag(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq,@RequestParam List<FeedHashtagDto> fhList){
+   	@PostMapping("/delete")
+   	public ResponseEntity<String> deleteFeedHashtag(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
 	   	 String token = request.getHeader("X-AUTH-TOKEN");
 	     if (token == null || !jwtTokenProvider.validateToken(token)) return null;
 	     String userId = jwtTokenProvider.getUserId(token);

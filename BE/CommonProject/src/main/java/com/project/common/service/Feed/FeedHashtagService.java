@@ -1,6 +1,7 @@
 package com.project.common.service.Feed;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -50,7 +51,10 @@ public class FeedHashtagService{
 				}
 			}
 			if(check==false) {
-				feed.addFeedHashtag(FeedHashtagEntity.builder().fhTag(dto.getFhTag()).build());
+				feed.addFeedHashtag(
+						FeedHashtagEntity.builder()
+						.fhTag(dto.getFhTag())
+						.createdTime(new Date()).build());
 				feedRepository.save(feed);
 				cnt++;
 			}
