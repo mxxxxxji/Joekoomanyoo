@@ -7,16 +7,19 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.data.dto.Schedule
 import com.ssafy.heritage.databinding.ItemMyScheduleBinding
+import com.ssafy.heritage.listener.ScheduleListClickListener
 
 class ScheduleListAdapter : ListAdapter<Schedule, ScheduleListAdapter.ViewHolder>(DiffCallback()) {
+
+    lateinit var scheduleListClickListener: ScheduleListClickListener
 
     inner class ViewHolder(private val binding: ItemMyScheduleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Schedule) = with(binding) {
             schedule = data
 
-            btnEdit.setOnClickListener {
-
+            btnDelete.setOnClickListener {
+                scheduleListClickListener.onClick(bindingAdapterPosition, data.myScheduleSeq)
             }
         }
     }

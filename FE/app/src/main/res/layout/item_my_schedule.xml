@@ -29,24 +29,12 @@
             tools:text="봉정사 답사" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_time"
+            android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:text="@{schedule.myScheduleTime.equals(`00`) ? `하루 종일` : schedule.myScheduleTime+`시`}"
-            android:textColor="@color/gray"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_schedule"
-            app:layout_constraintEnd_toStartOf="@id/btn_edit"
-            app:layout_constraintTop_toTopOf="@id/tv_schedule"
-            tools:text="12:00" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btn_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:text="편집"
+            android:textColor="@color/cornflower"
+            android:text="삭제"
             app:layout_constraintBottom_toBottomOf="@id/tv_schedule"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_schedule" />

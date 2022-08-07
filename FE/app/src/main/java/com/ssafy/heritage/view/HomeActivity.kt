@@ -47,6 +47,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     override fun onStart() {
         super.onStart()
         heritageViewModel.getHeritageList()
+        userViewModel.getSchedule()
     }
 
     private fun initObserver() {
