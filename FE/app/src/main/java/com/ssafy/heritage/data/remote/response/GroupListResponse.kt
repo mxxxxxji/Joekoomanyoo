@@ -23,6 +23,6 @@ data class GroupListResponse(
     @SerializedName("groupWithGlobal") var groupWithGlobal: Char,           // 글로벌 여부
     @SerializedName("groupActive") var groupActive: Char,                   // 활성:Y, 비활성:N
     @SerializedName("groupStatus") var groupStatus: Char,                   // 모집중:R, 진행중:O, 종료:F
-    @SerializedName("createdTime") var createdTime: Date,
-    @SerializedName("updatedTime") var updatedTime: Date
+   // @SerializedName("createdTime") var createdTime: Date,
+   // @SerializedName("updatedTime") var updatedTime: Date
 ) : Parcelable

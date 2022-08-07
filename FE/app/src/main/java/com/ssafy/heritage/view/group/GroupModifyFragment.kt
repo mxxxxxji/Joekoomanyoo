@@ -118,7 +118,7 @@ class GroupModifyFragment :
                 // 현재 시간을 Date 타입으로 변환
                 val t_date = Date(long_now)
                 groupInfo = GroupListResponse(0, name,"", userNickname,  content, 'Y',groupPwd, max,
-                    region, t_date,t_date, age, child, global,'Y', 'R', t_date, t_date)
+                    region, t_date,t_date, age, child, global,'Y', 'R')
                 groupViewModel.insertGroup(userSeq,groupInfo)
             }
         }

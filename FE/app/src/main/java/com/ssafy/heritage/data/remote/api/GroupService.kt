@@ -49,19 +49,19 @@ interface GroupService {
     suspend fun changeGroupActiveState(@Body body: Int): Response<Boolean>
 
     // 가입을 승인한다
-    @PUT("/api/group/{groupSeq}/member-approve")
+    @PUT("/api/group/{groupSeq}/member/approve")
     suspend fun approveGroupJoin(@Path("groupSeq") groupSeq: Int,@Body body: GroupBasic): Response<Boolean>
 
     // 가입을 신청한다
-    @POST("/api/group/{groupSeq}/member-join")
+    @POST("/api/group/{groupSeq}/member/join")
     suspend fun applyGroupJoin(@Path("groupSeq") groupSeq: Int, @Body body: GroupJoin): Response<Boolean>
 
     // 가입을 탈퇴/취소/거절(방장)/취소한다
-    @DELETE("/api/group/{groupSeq}/member-leave")
+    @DELETE("/api/group/{groupSeq}/member/leave")
     suspend fun leaveGroupJoin(@Path("groupSeq") groupSeq: Int, @Body body: GroupBasic): Response<Boolean>
 
     // 회원 목록을 조회한다
-    @GET("/api/group/{groupSeq}/member-list")
+    @GET("/api/group/{groupSeq}/member/list")
     suspend fun selectGroupMembers(@Path("groupSeq") groupSeq: Int): Response<List<Member>>
 
 
