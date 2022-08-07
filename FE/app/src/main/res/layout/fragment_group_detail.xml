@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.ssafy.heritage.util.UtilsKt"/>
+
+        <import type="com.ssafy.heritage.util.UtilsKt" />
+
         <import type="android.view.View" />
+
         <variable
             name="groupDetailInfo"
             type="com.ssafy.heritage.data.remote.response.GroupListResponse" />
@@ -24,14 +27,14 @@
         <FrameLayout
             android:id="@+id/frame_layout_top"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/iv_group_img"
@@ -64,146 +67,167 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/tv_group_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="@{groupDetailInfo.groupName}"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frame_layout_top"
-            tools:text="경주여행" />
-
-        <TextView
-            android:id="@+id/tv_start_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="@{UtilsKt.formatter(groupDetailInfo.groupStartDate)}"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_group_name"
-            tools:text="0000.00.00" />
-
-        <TextView
-            android:id="@+id/header_from"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="~"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@id/tv_start_date"
-            app:layout_constraintTop_toBottomOf="@id/tv_group_name" />
-
-        <TextView
-            android:id="@+id/tv_end_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="@{UtilsKt.formatter(groupDetailInfo.groupEndDate)}"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@id/header_from"
-            app:layout_constraintTop_toBottomOf="@id/tv_group_name"
-            tools:text="0000.00.00" />
-
-        <TextView
-            android:id="@+id/header_group_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="모임소개"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_start_date"
-            tools:text="content" />
-
-        <TextView
-            android:id="@+id/tv_group_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:text="@{groupDetailInfo.groupDescription}"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header_group_content" />
-
-        <TextView
-            android:id="@+id/header_members"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="구성원"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_group_content" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_members"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header_members" />
-
-        <TextView
-            android:id="@+id/header_applicant"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="신청자"
-            android:visibility="@{groupVM.groupPermission == 2 ? View.VISIBLE : View.GONE}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerview_members" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_applicant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header_applicant" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraint_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:visibility="@{groupDetailInfo.groupStatus == 'R' ? View.VISIBLE : View.GONE}"
+            android:fillViewport="true"
+            android:padding="20dp"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frame_layout_top">
 
-            <Button
-                android:id="@+id/btn_subscription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="가입하기"
-                android:visibility="@{groupVM.groupPermission == 3 ? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
-            <Button
-                android:id="@+id/btn_cancellation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="가입취소"
-                android:visibility="@{groupVM.groupPermission == 0 ? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                <TextView
+                    android:id="@+id/tv_group_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:text="@{groupDetailInfo.groupName}"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="경주여행" />
 
-            <Button
-                android:id="@+id/btn_drop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="탈퇴하기"
-                android:visibility="@{groupVM.groupPermission == 1 ? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_start_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:text="@{UtilsKt.formatter(groupDetailInfo.groupStartDate)}"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_group_name"
+                    tools:text="0000.00.00" />
+
+                <TextView
+                    android:id="@+id/header_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:text="~"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toEndOf="@id/tv_start_date"
+                    app:layout_constraintTop_toBottomOf="@id/tv_group_name" />
+
+                <TextView
+                    android:id="@+id/tv_end_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:text="@{UtilsKt.formatter(groupDetailInfo.groupEndDate)}"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toEndOf="@id/header_from"
+                    app:layout_constraintTop_toBottomOf="@id/tv_group_name"
+                    tools:text="0000.00.00" />
+
+                <TextView
+                    android:id="@+id/header_group_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:text="모임소개"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_start_date"
+                    tools:text="content" />
+
+                <TextView
+                    android:id="@+id/tv_group_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:text="@{groupDetailInfo.groupDescription}"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/header_group_content" />
+
+                <TextView
+                    android:id="@+id/header_members"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="구성원"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_group_content" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_members"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/header_members" />
+
+                <TextView
+                    android:id="@+id/header_applicant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="신청자"
+                    android:visibility="@{(groupVM.groupPermission == 3? View.GONE :View.VISIBLE)}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recyclerview_members" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_applicant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/header_applicant" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="100dp"
+                    android:visibility="@{groupDetailInfo.groupStatus == 'R' ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintTop_toBottomOf="@id/recyclerview_applicant"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <Button
+                        android:id="@+id/btn_subscription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="가입하기"
+                        android:visibility="@{groupVM.groupPermission == 3 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <Button
+                        android:id="@+id/btn_cancellation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="가입취소"
+                        android:visibility="@{groupVM.groupPermission == 0 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <Button
+                        android:id="@+id/btn_drop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="탈퇴하기"
+                        android:visibility="@{groupVM.groupPermission == 1 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

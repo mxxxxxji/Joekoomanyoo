@@ -36,8 +36,8 @@ class Repository constructor(context: Context) {
 
     suspend fun applyGroupJoin(groupSeq: Int, body: GroupJoin): Response<Boolean> =
         groupApi.applyGroupJoin(groupSeq, body)
-    suspend fun leaveGroupJoin(groupSeq: Int, body: GroupBasic): Response<Boolean> =
-        groupApi.leaveGroupJoin(groupSeq, body)
+    suspend fun leaveGroupJoin(groupSeq: Int): Response<Boolean> =
+        groupApi.leaveGroupJoin(groupSeq)
     suspend fun selectMyGroups(userSeq: Int): Response<List<MyGroupResponse>> =
         groupApi.selectMyGroups(userSeq)
 
