@@ -41,6 +41,7 @@ class OtherProfileDialog(
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         Log.d(TAG, "PERMISSION: $userPermission")
+
         // 현재 유저가 방장일 때
         if (userPermission == 2) {
             if (member.memberStatus == 1) {

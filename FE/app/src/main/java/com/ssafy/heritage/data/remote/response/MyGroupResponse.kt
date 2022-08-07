@@ -9,7 +9,7 @@ data class MyGroupResponse(
     @SerializedName("groupSeq") var groupSeq: Int,
     @SerializedName("groupName") var groupName: String,
     @SerializedName("groupMaster") var groupMaster: String,
-    @SerializedName("groupDescriaption") var groupDescriaption: String,
+    @SerializedName("groupDescription") var groupDescription: String,
     @SerializedName("groupAccessType") var groupAccessType: String,
     @SerializedName("groupPassword") var groupPassword: String,
     @SerializedName("groupMaxCount") var groupMaxCount: Int,
