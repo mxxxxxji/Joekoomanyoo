@@ -20,7 +20,7 @@ public class FeedHashtagDto {
     private int fhSeq;
     private String fhTag;
 
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Date createdTime;
 	
     private FeedEntity feed;
