@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_group_img"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="@+id/iv_group_img">
 
             <TextView
-                android:id="@+id/tv_group_date"
+                android:id="@+id/tv_group_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="13dp"
@@ -34,7 +34,18 @@
                 android:textSize="12sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="22.08.22 - 22.08.28" />
+                tools:text="22.08.22 - " />
+
+            <TextView
+                android:id="@+id/tv_group_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#717174"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/tv_group_start_date"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="22.08.28" />
 
             <TextView
                 android:id="@+id/tv_group_name"
@@ -45,7 +56,7 @@
                 android:textColor="#48484a"
                 android:textSize="13sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/tv_group_date"
+                app:layout_constraintTop_toBottomOf="@+id/tv_group_start_date"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="고려 불화 보고 떠드실 분 환영" />
 

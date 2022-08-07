@@ -16,6 +16,7 @@ import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.HeritageScrap
 import com.ssafy.heritage.data.remote.api.UserService
 import com.ssafy.heritage.databinding.FragmentHeritageDetailBinding
+import com.ssafy.heritage.view.dialog.SharedMyGroupListDialog
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
 
@@ -93,8 +94,12 @@ class HeritageDetailFragment :
 //            }
 //        }
 
-        // 스터디로 공유하기 (토스트 필요한 듯)
-
+        // 스터디로 공유하기
+        btnLink.setOnClickListener {
+            // 다이얼로그 띄우기
+            val dialog = SharedMyGroupListDialog()
+            dialog.show(childFragmentManager, "SharedMyGroupListDialog")
+        }
     }
 
 
