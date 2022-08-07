@@ -1,6 +1,7 @@
 package com.project.common.service.Group;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.common.dto.Group.GroupScheduleDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupScheduleEntity;
+import com.project.common.mapper.GroupScheduleMapper;
 import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.Group.GroupScheduleRepository;
 
@@ -64,7 +66,12 @@ public class GroupScheduleService{
 				throw new IllegalArgumentException("같은 시간에 등록한 일정이 있습니다");
 			}
 		}
-		group.addGroupSchedule(GroupScheduleEntity.builder().gsContent(gsDto.getGsContent()).gsDateTime(gsDto.getGsDateTime()).build());
+		group.addGroupSchedule(GroupScheduleEntity.builder()
+				.gsContent(gsDto.getGsContent())
+				.gsDateTime(gsDto.getGsDateTime())
+				.gsRegisteredAt(new Date())
+				.gsUpdatedAt(new Date())
+				.build());
 		groupRepository.save(group);
 		return gsDto;
 	}
@@ -87,15 +94,19 @@ public class GroupScheduleService{
 	
 	//일정 수정
 	@Transactional
-	public GroupScheduleDto modifyGroupSchedule(int groupSeq, GroupScheduleDto gsDto) {
+	public String modifyGroupSchedule(int groupSeq, GroupScheduleDto gsDto) {
+		int cnt=0;
 		for(GroupScheduleEntity entity: findSchedule(groupSeq)) {
 			if(entity !=null && entity.getGsDateTime()==gsDto.getGsDateTime()) {
 				entity.setGsContent(gsDto.getGsContent());
+				entity.setGsUpdatedAt(new Date());
 				groupScheduleRepository.save(entity);
-				break;
+				cnt++;break;
 			}
 		}
-		return gsDto;
+		if(cnt==0)
+			throw new IllegalArgumentException("일정 수정에 실패했습니다");
+		return "Success";
 	}
 	
 	//그륩 일정 찾기(그륩 번호로)

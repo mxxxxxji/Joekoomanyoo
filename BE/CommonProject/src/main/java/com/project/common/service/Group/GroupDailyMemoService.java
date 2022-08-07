@@ -1,6 +1,7 @@
 package com.project.common.service.Group;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -44,7 +45,11 @@ public class GroupDailyMemoService{
 				throw new IllegalArgumentException("해당 날짜에 등록한 메모가 있습니다");
 			}
 		}
-		group.addGroupMemo(GroupDailyMemoEntity.builder().gdmContent(gdmDto.getGdmContent()).gdmDate(gdmDto.getGdmDate()).build());
+		group.addGroupMemo(GroupDailyMemoEntity.builder()
+				.gdmContent(gdmDto.getGdmContent())
+				.gdmDate(gdmDto.getGdmDate())
+				.gdmCreatedAt(new Date())
+				.gdmUpdatedAt(new Date()).build());
 		groupRepository.save(group);
 		return gdmDto;
 	}
@@ -71,6 +76,7 @@ public class GroupDailyMemoService{
 		for(GroupDailyMemoEntity entity: findMemo(groupSeq)) {
 			if(entity !=null && entity.getGdmDate()==gdmDto.getGdmDate()) {
 				entity.setGdmContent(gdmDto.getGdmContent());
+				entity.setGdmUpdatedAt(new Date());
 				groupDailyMemoRepository.save(entity);
 				break;
 			}

@@ -1,6 +1,7 @@
 package com.project.common.dto.Group;
 
 import com.project.common.entity.Group.GroupDestinationEntity;
+import com.project.common.entity.Heritage.HeritageEntity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,16 +15,14 @@ import lombok.ToString;
 public class GroupDestinationMapDto {
     
 	private int heritageSeq;
-    private String gdCompleted;
-    private String heritageLng;
-    private String heritageLat;
+    private char gdCompleted;
+    private HeritageEntity heritage;
     
-    public GroupDestinationMapDto(GroupDestinationEntity destination,String heritageLat, String heritageLng) {
+    public GroupDestinationMapDto(GroupDestinationEntity destination,HeritageEntity heritage) {
     	super();
     	this.heritageSeq = destination.getHeritageSeq();
     	this.gdCompleted = destination.getGdCompleted();
-    	this.heritageLng = heritageLng;
-    	this.heritageLat = heritageLat;
+    	this.heritage=heritage;
     }
     
   

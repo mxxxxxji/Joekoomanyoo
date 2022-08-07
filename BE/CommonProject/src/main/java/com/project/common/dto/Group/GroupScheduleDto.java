@@ -1,6 +1,6 @@
 package com.project.common.dto.Group;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupScheduleEntity;
@@ -21,18 +21,14 @@ public class GroupScheduleDto {
 	private int gsSeq;
     private String gsContent;
 	private long gsDateTime;
-	private LocalDateTime gsRegisteredAt;
-    private LocalDateTime gsUpdatedAt;
+	private Date gsRegisteredAt;
+    private Date gsUpdatedAt;
 	private GroupEntity group;
-    
- 
+  
 	public GroupScheduleDto(GroupScheduleEntity schedule) {
 		this.gsContent = schedule.getGsContent();
 		this.gsDateTime = schedule.getGsDateTime();
 	}
-	
-	
-	
 	
     public GroupScheduleEntity toEntity(){
         return GroupScheduleEntity.builder()
@@ -45,11 +41,9 @@ public class GroupScheduleDto {
                 .build();
     }
 
-
-
     @Builder
-	public GroupScheduleDto(int gsSeq, String gsContent, long gsDateTime, LocalDateTime gsRegisteredAt,
-			LocalDateTime gsUpdatedAt, GroupEntity group) {
+	public GroupScheduleDto(int gsSeq, String gsContent, long gsDateTime, Date gsRegisteredAt,
+			Date gsUpdatedAt, GroupEntity group) {
 		super();
 		this.gsSeq = gsSeq;
 		this.gsContent = gsContent;

@@ -44,7 +44,7 @@ public class GroupScheduleController {
     }
     
     //일정 등록
-    @ApiOperation(value = "모임 일정 생성")
+    @ApiOperation(value = "모임 일정 생성")	
     @PostMapping("/{groupSeq}/schedule/add")
     public ResponseEntity<GroupScheduleDto> createGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
     	return new ResponseEntity<>(groupScheduleService.createGroupSchedule(groupSeq,gsDto),HttpStatus.CREATED);
@@ -60,7 +60,7 @@ public class GroupScheduleController {
    	//메모 수정
   	@ApiOperation(value = "모임 일정 수정")
   	@PutMapping("/{groupSeq}/schedule/modify")
-  	public ResponseEntity<GroupScheduleDto> modifyGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
+  	public ResponseEntity<String> modifyGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
   		return new ResponseEntity<>(groupScheduleService.modifyGroupSchedule(groupSeq,gsDto),HttpStatus.OK);
   	}
 }

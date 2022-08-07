@@ -59,7 +59,7 @@ public class GroupDestinationController {
     
    	//모임 목적지 완료 표시
   	@ApiOperation(value = "모임 목적지 완료 표시 - gdCompleted N -> Y")
-  	@PutMapping("/{groupSeq}/destination/modify")
+  	@PutMapping("/{groupSeq}/destination/complete")
   	public ResponseEntity<String> modifyGroupDestination(@PathVariable int groupSeq,@Param("heritageSeq") int heritageSeq){
   		return new ResponseEntity<>(groupDestinationService.modifyGroupDestination(groupSeq,heritageSeq),HttpStatus.OK);
   	}

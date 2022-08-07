@@ -1,6 +1,6 @@
 package com.project.common.entity.Group;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.project.common.entity.User.UserEntity;
 
@@ -30,6 +32,7 @@ import lombok.ToString;
 @ToString
 @Table(name="tb_group")
 public class GroupEntity {
+
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="group_seq")
@@ -37,56 +40,58 @@ public class GroupEntity {
     
 	// 모임 기본 정보 //
 	@Column(name="group_name")
-    private String name;
+    private String groupName;
     
     @Column(name="attach_seq")
-    private String themaImg;
+    private String bannerImgUrl;
  
     @Column(name="group_maker")
-    private String master;
+    private String groupMaster;
     
     @Column(name= "group_description")
-    private String description;
+    private String groupDescription;
     
     @Column(name="group_access_type")
-    private char accessType;
+    private char groupAccessType;
     
     @Column(name="group_pwd")
-    private String password;
+    private String groupPassword;
     
     @Column(name="group_total_count")
-    private int maxCount;
+    private int groupMaxCount;
     
     @Column(name="group_region")
-   	private String region;
+   	private String groupRegion;
        
     @Column(name="group_start_date")
-   	private int startDate;
+   	private int groupStartDate;
        
     @Column(name="group_end_date")
-   	private int endDate;
+   	private int groupEndDate;
        
     @Column(name="group_age_range")
-   	private int ageRange;
+   	private int groupAgeRange;
 
     @Column(name="group_child")
-   	private char withChild;
+   	private char groupWithChild;
        
     @Column(name="group_global")
-   	private char withGlobal;
+   	private char groupWithGlobal;
     
     @Column(name="group_is_active")
-   	private char active;
+   	private char groupActive;
 
     @Column(name="group_status")
-   	private char status;
+   	private char groupStatus;
     
     // 모임 설정 정보 //
-    @Column(name="group_created_at")
-    private LocalDateTime createdTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="group_created_at")
+    private Date createdTime;
     
-    @Column(name="group_updated_at")
-    private LocalDateTime updatedTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="group_updated_at")
+    private Date updatedTime;
 
     @ManyToOne
 	@JoinColumn(name="user_seq")

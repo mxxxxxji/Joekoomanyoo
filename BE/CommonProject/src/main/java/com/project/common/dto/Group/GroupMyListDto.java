@@ -10,21 +10,22 @@ import lombok.*;
 @ToString
 public class GroupMyListDto {
 
+
 	private int groupSeq;
     private String groupName;
-    private String master;
-    private String descriaption;
-    private char accessType;
-    private String password;
-    private int maxCount;
-   	private String region;
-   	private int startDate;
-   	private int endDate;
-   	private int ageRange;
-   	private char withChild;
-   	private char withGlobal;
-   	private char active;
-   	private char status;
+    private String groupMaster;
+    private String groupDescription;
+    private char groupAccessType;
+    private String groupPassword;
+    private int groupMaxCount;
+   	private String groupRegion;
+   	private int groupStartDate;
+   	private int groupEndDate;
+   	private int groupAgeRange;
+   	private char groupWithChild;
+   	private char groupWithGlobal;
+   	private char groupActive;
+   	private char groupStatus;
    	
    	private int memberStatus;
 	private char memberIsEvaluated;
@@ -32,20 +33,20 @@ public class GroupMyListDto {
 	@Builder
 	public GroupMyListDto(GroupMemberEntity member) {
 		this.groupSeq=member.getGroup().getGroupSeq();
-		this.groupName = member.getGroup().getName();
-		this.master = member.getGroup().getMaster();
-		this.descriaption = member.getGroup().getDescription();
-		this.accessType = member.getGroup().getAccessType();
-		this.password = member.getGroup().getPassword();
-		this.maxCount = member.getGroup().getMaxCount();
-		this.region = member.getGroup().getRegion();
-		this.startDate=member.getGroup().getStartDate();
-		this.endDate = member.getGroup().getEndDate();
-		this.ageRange = member.getGroup().getAgeRange();
-		this.withChild=member.getGroup().getWithChild();
-		this.withGlobal=member.getGroup().getWithGlobal();
-		this.active = member.getGroup().getActive();
-		this.status = member.getGroup().getStatus();
+		this.groupName = member.getGroup().getGroupName();
+		this.groupMaster = member.getGroup().getGroupMaster();
+		this.groupDescription = member.getGroup().getGroupDescription();
+		this.groupAccessType = member.getGroup().getGroupAccessType();
+		this.groupPassword = member.getGroup().getGroupPassword();
+		this.groupMaxCount = member.getGroup().getGroupMaxCount();
+		this.groupRegion = member.getGroup().getGroupRegion();
+		this.groupStartDate=member.getGroup().getGroupStartDate();
+		this.groupEndDate = member.getGroup().getGroupEndDate();
+		this.groupAgeRange = member.getGroup().getGroupAgeRange();
+		this.groupWithChild=member.getGroup().getGroupWithChild();
+		this.groupWithGlobal=member.getGroup().getGroupWithGlobal();
+		this.groupActive = member.getGroup().getGroupActive();
+		this.groupStatus = member.getGroup().getGroupStatus();
 		this.memberStatus=member.getMemberStatus();
 		this.memberIsEvaluated = member.getMemberIsEvaluated();
 	}

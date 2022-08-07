@@ -1,6 +1,6 @@
 package com.project.common.dto.Feed;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.User.UserEntity;
@@ -23,15 +23,15 @@ public class FeedDto {
     private String feedImgUrl;
    	private String feedTitle;
    	private String feedContent;
-   	private String feedOpen;
+   	private char feedOpen;
 	
    	// 모임 설정 정보 //
-    private LocalDateTime createdTime;
-    private LocalDateTime updatedTime;
+    private Date createdTime;
+    private Date updatedTime;
 
     @Builder
-    public FeedDto(int feedSeq, String feedImgUrl, String feedTitle, String feedContent, String feedOpen,
-    		LocalDateTime createdTime, LocalDateTime updatedTime,UserEntity user) {
+    public FeedDto(int feedSeq, String feedImgUrl, String feedTitle, String feedContent, char feedOpen,
+    		Date createdTime, Date updatedTime,UserEntity user) {
     	super();
     	this.feedSeq = feedSeq;
     	this.feedImgUrl = feedImgUrl;

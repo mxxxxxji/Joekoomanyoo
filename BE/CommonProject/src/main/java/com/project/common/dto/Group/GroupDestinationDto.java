@@ -16,11 +16,11 @@ import lombok.ToString;
 public class GroupDestinationDto {
     private int gdSeq;
     private int heritageSeq;
-    private String gdCompleted;
+    private char gdCompleted;
     private GroupEntity group;
     
     @Builder
-    public GroupDestinationDto(int gdSeq, int heritageSeq, String gdCompleted, GroupEntity group) {
+    public GroupDestinationDto(int gdSeq, int heritageSeq, char gdCompleted, GroupEntity group) {
     	super();
     	this.gdSeq = gdSeq;
     	this.heritageSeq = heritageSeq;

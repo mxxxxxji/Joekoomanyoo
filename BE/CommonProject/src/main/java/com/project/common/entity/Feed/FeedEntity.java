@@ -1,6 +1,6 @@
 package com.project.common.entity.Feed;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.project.common.entity.User.UserEntity;
 
@@ -46,14 +48,16 @@ public class FeedEntity {
     private String feedContent;
     
     @Column(name="feed_open")
-    private String feedOpen;
+    private char feedOpen;
     
     // 모임 설정 정보 //
+	@Temporal(TemporalType.TIMESTAMP)
     @Column(name="feed_created_at")
-    private LocalDateTime createdTime;
+    private Date createdTime;
     
+	@Temporal(TemporalType.TIMESTAMP)
     @Column(name="feed_updated_at")
-    private LocalDateTime updatedTime;
+    private Date updatedTime;
 
     @ManyToOne
 	@JoinColumn(name="user_seq")

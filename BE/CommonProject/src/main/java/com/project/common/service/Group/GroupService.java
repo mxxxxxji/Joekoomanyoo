@@ -1,6 +1,7 @@
 package com.project.common.service.Group;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -34,8 +35,17 @@ public class GroupService{
 		UserEntity user = userRepository.findByUserSeq(userSeq);
 		user.addGroup(saved);
 	 	userRepository.save(user);
-		
-		saved.addGroupMember(GroupMemberEntity.builder().memberAppeal("방장").userSeq(saved.getUser().getUserSeq()).memberStatus(2).build());
+	 	saved.setCreatedTime(new Date());
+		saved.setUpdatedTime(new Date());
+		saved.addGroupMember(GroupMemberEntity.builder()
+				.memberAppeal("방장")
+				.userSeq(saved.getUser().getUserSeq())
+				.memberStatus(2)
+				.memberIsEvaluated('N')
+				.createdTime(new Date())
+				.updatedTime(new Date())
+				.approveTime(new Date())
+				.build());
 		groupRepository.save(saved);
 		return GroupMapper.MAPPER.toDto(saved);
 	}
@@ -66,21 +76,22 @@ public class GroupService{
 	//모임 정보 수정
 	public GroupDto updateGroup(int groupSeq,GroupDto groupDto) {
 		GroupEntity Group =groupRepository.findById(groupSeq).orElse(null);
-		Group.setAccessType(groupDto.getAccessType());
-		Group.setActive(groupDto.getActive());
-		Group.setAgeRange(groupDto.getAgeRange());
-		Group.setDescription(groupDto.getDescription());
-		Group.setEndDate(groupDto.getEndDate());
-		Group.setMaster(groupDto.getMaster());
-		Group.setMaxCount(groupDto.getMaxCount());
-		Group.setName(groupDto.getName());
-		Group.setPassword(groupDto.getPassword());
-		Group.setRegion(groupDto.getRegion());
-		Group.setStartDate(groupDto.getStartDate());
-		Group.setStatus(groupDto.getStatus());
-		Group.setWithGlobal(Group.getWithGlobal());
-		Group.setWithChild(Group.getWithChild());
-		Group.setThemaImg(Group.getThemaImg());
+		Group.setGroupAccessType(groupDto.getGroupAccessType());
+		Group.setGroupActive(groupDto.getGroupActive());
+		Group.setGroupAgeRange(groupDto.getGroupAgeRange());
+		Group.setGroupDescription(groupDto.getGroupDescription());
+		Group.setGroupEndDate(groupDto.getGroupEndDate());
+		Group.setGroupMaster(groupDto.getGroupMaster());
+		Group.setGroupMaxCount(groupDto.getGroupMaxCount());
+		Group.setGroupName(groupDto.getGroupName());
+		Group.setGroupPassword(groupDto.getGroupPassword());
+		Group.setGroupRegion(groupDto.getGroupRegion());
+		Group.setGroupStartDate(groupDto.getGroupStartDate());
+		Group.setGroupStatus(groupDto.getGroupStatus());
+		Group.setGroupWithGlobal(Group.getGroupWithGlobal());
+		Group.setGroupWithChild(Group.getGroupWithChild());
+		Group.setBannerImgUrl(Group.getBannerImgUrl());
+		Group.setUpdatedTime(new Date());
 		
 		groupRepository.save(Group);
 		

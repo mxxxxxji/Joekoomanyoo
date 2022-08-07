@@ -1,6 +1,6 @@
 package com.project.common.dto.Group;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.project.common.entity.Group.GroupDailyMemoEntity;
 import com.project.common.entity.Group.GroupEntity;
@@ -20,8 +20,8 @@ public class GroupDailyMemoDto {
     private int gdmSeq;
     private String gdmContent;
     private int gdmDate;
-    private LocalDateTime gdmCreatedAt;
-    private LocalDateTime gdmUpdatedAt;
+    private Date gdmCreatedAt;
+    private Date gdmUpdatedAt;
     private GroupEntity group;
     
     @Builder

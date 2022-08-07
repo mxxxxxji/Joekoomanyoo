@@ -110,7 +110,7 @@ public class FeedService{
 	}
 	
 	//피드 공개/비공개
-	public FeedDto openFeed(int feedSeq,String feedOpen) {
+	public FeedDto openFeed(int feedSeq,char feedOpen) {
 		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
 		feed.setFeedOpen(feedOpen);
 		feedRepository.save(feed);

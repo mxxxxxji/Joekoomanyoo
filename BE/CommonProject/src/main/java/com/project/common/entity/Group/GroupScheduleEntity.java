@@ -2,7 +2,7 @@ package com.project.common.entity.Group;
 
 
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,15 +38,16 @@ public class GroupScheduleEntity {
 	@Column(name = "gs_date_time")
 	private long gsDateTime;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "gs_registered_at")
-	private LocalDateTime gsRegisteredAt;
+	private Date gsRegisteredAt;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name= "gs_updated_at")
-    private LocalDateTime gsUpdatedAt;
+    private Date gsUpdatedAt;
 		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="group_seq")
 	private GroupEntity group;
-
 
 }

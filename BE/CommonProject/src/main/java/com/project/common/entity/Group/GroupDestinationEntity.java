@@ -29,7 +29,7 @@ public class GroupDestinationEntity {
 	private int gdSeq;
 	
 	@Column(name = "gd_completed")
-    private String gdCompleted;
+    private char gdCompleted;
 		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="group_seq")

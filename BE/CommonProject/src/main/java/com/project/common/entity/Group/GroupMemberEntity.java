@@ -2,11 +2,25 @@ package com.project.common.entity.Group;
 
 
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
-import javax.persistence.*;
-import lombok.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter @Setter 
@@ -27,14 +41,17 @@ public class GroupMemberEntity {
 	@Column(name = "member_is_evaluated")
 	private char memberIsEvaluated;
 	
-	@Column(name = "member_in_at")
-	private Date memberInAt;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "member_approve_at")
+	private Date approveTime;
 	
-	@Column(name = "member_created_at")
-	private LocalDateTime createdTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="member_created_at")
+	private Date createdTime;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "member_updated_at")
-    private LocalDateTime updatedTime;
+    private Date updatedTime;
 	
     @Column(name = "user_seq")
     private int userSeq;

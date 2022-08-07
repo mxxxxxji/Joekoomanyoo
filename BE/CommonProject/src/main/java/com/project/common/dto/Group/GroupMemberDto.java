@@ -1,6 +1,5 @@
 package com.project.common.dto.Group;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.project.common.entity.Group.GroupEntity;
@@ -21,21 +20,21 @@ public class GroupMemberDto {
 	private int memberStatus;
 	private String memberAppeal;
 	private char memberIsEvaluated;
-	private Date memberInAt;
-	private LocalDateTime createdTime;
-    private LocalDateTime updatedTime;
+	private Date approveTime;
+	private Date createdTime;
+    private Date updatedTime;
 	private GroupEntity group;
     private int userSeq;
     
 	@Builder
 	public GroupMemberDto(int memberSeq, int memberStatus, String memberAppeal, char memberIsEvaluated,
-			Date memberInAt, LocalDateTime createdTime, LocalDateTime updatedTime, GroupEntity group, int userSeq) {
+			Date approveTime, Date createdTime, Date updatedTime, GroupEntity group, int userSeq) {
 		super();
 		this.memberSeq = memberSeq;
 		this.memberStatus = memberStatus;
 		this.memberAppeal = memberAppeal;
 		this.memberIsEvaluated = memberIsEvaluated;
-		this.memberInAt = memberInAt;
+		this.approveTime = approveTime;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 		this.group = group;
@@ -49,7 +48,7 @@ public class GroupMemberDto {
                 .memberStatus(memberStatus)
                 .memberAppeal(memberAppeal)
                 .memberIsEvaluated(memberIsEvaluated)
-                .memberInAt(memberInAt)
+                .approveTime(approveTime)
                 .createdTime(createdTime)
                 .updatedTime(updatedTime)
                 .group(group).build();

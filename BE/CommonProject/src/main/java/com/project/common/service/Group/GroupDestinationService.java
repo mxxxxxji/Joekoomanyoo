@@ -27,7 +27,7 @@ public class GroupDestinationService{
 
 	
 	//내 모임 목적지 조회
-		public List<GroupDestinationMapDto> getMyDestinationList (int userSeq){
+		public List<GroupDestinationMapDto> getMyDestinationList(int userSeq){
 			List<GroupEntity> groupList= new ArrayList<>();
 			for(GroupEntity entity : groupRepository.findAll()) {
 				if(entity.getUser().getUserSeq()==userSeq) {
@@ -39,9 +39,10 @@ public class GroupDestinationService{
 			List<GroupDestinationMapDto> destinationList= new ArrayList<>();
 			for(GroupEntity entity : groupList) {
 				for(int i=0;i<entity.getDestinations().size();i++) {
-					HeritageEntity herritage=heritageRepository.findByHeritageSeq(entity.getDestinations().get(i).getHeritageSeq());
-					if(herritage!=null)
-						destinationList.add(new GroupDestinationMapDto(entity.getDestinations().get(i),herritage.getHeritageLat(),herritage.getHeritageLng()));
+					HeritageEntity heritage=heritageRepository.findByHeritageSeq(entity.getDestinations().get(i).getHeritageSeq());
+					if(heritage!=null)
+						destinationList.add(new GroupDestinationMapDto(
+								entity.getDestinations().get(i),heritage));
 				}
 			}return destinationList;
 		}
@@ -54,7 +55,8 @@ public class GroupDestinationService{
 			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
 				herritage=heritageRepository.findByHeritageSeq(entity.getHeritageSeq());
 				if(herritage!=null)
-					list.add(new GroupDestinationMapDto(entity,herritage.getHeritageLat(),herritage.getHeritageLng()));
+
+					list.add(new GroupDestinationMapDto(entity,herritage));
 			}
 		}
 		if(list.size()==0)
@@ -72,7 +74,7 @@ public class GroupDestinationService{
 				throw new IllegalArgumentException("이미 등록한 목적지입니다");
 			}
 		}
-		group.addGroupDestination(GroupDestinationEntity.builder().gdCompleted("N").heritageSeq(heritageSeq).build());
+		group.addGroupDestination(GroupDestinationEntity.builder().gdCompleted('N').heritageSeq(heritageSeq).build());
 		groupRepository.save(group);
 		return "Success";
 	}
@@ -98,7 +100,7 @@ public class GroupDestinationService{
 	public String modifyGroupDestination(int groupSeq,int heritageSeq) {
 		for(GroupDestinationEntity entity: findDestination(groupSeq)) {
 			if(entity !=null && entity.getHeritageSeq()==heritageSeq) {
-				entity.setGdCompleted("Y");
+				entity.setGdCompleted('Y');
 				groupDestinationRepository.save(entity);
 				return "Success";
 			}

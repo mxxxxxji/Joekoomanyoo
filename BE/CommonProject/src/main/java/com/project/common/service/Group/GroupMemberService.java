@@ -1,6 +1,7 @@
 package com.project.common.service.Group;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -51,7 +52,12 @@ public class GroupMemberService{
 	 	user.addGroup(group);
 	 	userRepository.save(user);
 	 	
-		group.addGroupMember(GroupMemberEntity.builder().memberAppeal(requestDto.getMemberAppeal()).userSeq(requestDto.getUserSeq()).build());
+		group.addGroupMember(GroupMemberEntity.builder()
+				.memberAppeal(requestDto.getMemberAppeal())
+				.userSeq(requestDto.getUserSeq())
+				.memberIsEvaluated('N')
+				.createdTime(new Date())
+				.updatedTime(new Date()).build());
 		groupRepository.save(group);
 		return "Success";
 	}
@@ -77,6 +83,8 @@ public class GroupMemberService{
 		for(GroupMemberEntity entity: findMember(groupSeq)) {
 			if(entity.getUserSeq()==userSeq) {
 				entity.setMemberStatus(1);
+				entity.setApproveTime(new Date());
+				entity.setUpdatedTime(new Date());
 				groupMemberRepository.save(entity);
 				break;
 			}

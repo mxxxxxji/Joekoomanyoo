@@ -1,6 +1,6 @@
 package com.project.common.dto.Feed;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedHashtagEntity;
@@ -18,11 +18,11 @@ import lombok.ToString;
 public class FeedHashtagDto {
     private int fhSeq;
     private String fhTag;
-    private LocalDateTime createdTime;
+    private Date createdTime;
     private FeedEntity feed;
     
     @Builder
-    public FeedHashtagDto(int fhSeq, String fhTag, LocalDateTime createdTime, FeedEntity feed) {
+    public FeedHashtagDto(int fhSeq, String fhTag, Date createdTime, FeedEntity feed) {
     	super();
     	this.fhSeq = fhSeq;
     	this.fhTag = fhTag;

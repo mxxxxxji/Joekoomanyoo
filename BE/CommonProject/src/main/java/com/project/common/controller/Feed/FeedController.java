@@ -82,7 +82,7 @@ public class FeedController {
     //피드 공개/비공개
     @ApiOperation(value = "피드 활성화 여부 - Y(공개), N(비공개)")
     @PutMapping("/{feedSeq}/active")
-    public ResponseEntity<FeedDto> openFeed(@PathVariable("feedSeq") int feedSeq, @Param("feedOpen") String feedOpen){
+    public ResponseEntity<FeedDto> openFeed(@PathVariable("feedSeq") int feedSeq, @Param("feedOpen") char feedOpen){
     	return new ResponseEntity<>(feedService.openFeed(feedSeq,feedOpen),HttpStatus.OK);
     }
 
