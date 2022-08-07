@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.GroupAttribute
@@ -18,7 +19,7 @@ private const val TAG = "GroupModifyFragment___"
 
 class GroupModifyFragment :
     BaseFragment<FragmentGroupModifyBinding>(R.layout.fragment_group_modify) {
-
+    val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
     private val groupViewModel by viewModels<GroupViewModel>()
     private lateinit var groupInfo: GroupListResponse
     private var region: String = ""
@@ -112,7 +113,7 @@ class GroupModifyFragment :
                 // groupMaker : 현재 유저 번호로 넣어야함
                 groupInfo = GroupListResponse('0', 'Y', age,  content, endDate, 0, "잠만보",
                     max, name, groupPwd, region, startDate, 'R', "",  child, global)
-                groupViewModel.insertGroup(groupInfo)
+                groupViewModel.insertGroup(userSeq,groupInfo)
             }
         }
 

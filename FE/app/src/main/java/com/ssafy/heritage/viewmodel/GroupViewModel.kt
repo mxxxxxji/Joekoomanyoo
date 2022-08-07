@@ -9,6 +9,7 @@ import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
+import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +42,8 @@ class GroupViewModel: ViewModel() {
     private val _applyState = SingleLiveEvent<Boolean>()
     val applyState: LiveData<Boolean> get() = _applyState
 
+    private val _myGroupList = SingleLiveEvent<MutableList<MyGroupResponse>>()
+    val myGroupList:  LiveData<MutableList<MyGroupResponse>> get() = _myGroupList
 
     fun add(info : GroupListResponse){
         _detailInfo.postValue(info)
@@ -91,9 +94,9 @@ class GroupViewModel: ViewModel() {
         }
     }
 
-    fun insertGroup(groupInfo: GroupListResponse) {
+    fun insertGroup(userSeq: Int, groupInfo: GroupListResponse) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertGroup(groupInfo).let { response ->
+            repository.insertGroup(userSeq, groupInfo).let { response ->
                 if(response.isSuccessful) {
                     var info = response.body()!! as GroupListResponse
                     _insertGroupInfo.postValue(info)
@@ -143,6 +146,20 @@ class GroupViewModel: ViewModel() {
                     _groupPermission.postValue(3)
                 }else{
                     Log.d(TAG, "leaveGroupJoin: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun selectMyGroups(userSeq: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.selectMyGroups(userSeq).let { response ->
+                if(response.isSuccessful) {
+                    var info = response.body()!! as MutableList<MyGroupResponse>
+                    Log.d(TAG, "selectMyGroups: ${response}")
+                    _myGroupList.postValue(info)
+                }else{
+                    Log.d(TAG, "selectMyGroups: ${response.code()}")
                 }
             }
         }

@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_groupListFragment_to_groupModifyFragment"
             app:destination="@id/groupModifyFragment" />
+        <action
+            android:id="@+id/action_groupListFragment_to_myGroupListFragment"
+            app:destination="@id/myGroupListFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupMapFragment"
@@ -216,4 +219,10 @@
         android:id="@+id/myCalendarFragment"
         android:name="com.ssafy.heritage.view.profile.MyCalendarFragment"
         android:label="MyCalendarFragment" />
+
+    <fragment
+        android:id="@+id/myGroupListFragment"
+        android:name="com.ssafy.heritage.view.group.MyGroupListFragment"
+        android:label="MyGroupListFragment" />
+
 </navigation>

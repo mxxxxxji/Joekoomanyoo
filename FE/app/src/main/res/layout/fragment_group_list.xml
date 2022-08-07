@@ -46,11 +46,21 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
-
+                <ImageButton
+                    android:id="@+id/btn_my_group"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:backgroundTint="@color/gray"
+                    android:background="@drawable/ic_mypage"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_sort"
+                    app:layout_constraintTop_toTopOf="parent" />
                 <ImageButton
                     android:id="@+id/btn_sort"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                   android:layout_marginStart="16dp"
                     android:background="@drawable/ic_sort"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
