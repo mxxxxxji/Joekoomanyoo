@@ -1,8 +1,11 @@
 package com.ssafy.heritage.view
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Base64
 import android.util.Log
 import android.view.MotionEvent
@@ -10,15 +13,20 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseActivity
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.ActivityHomeBinding
+import com.ssafy.heritage.util.Channel.CHANNEL_ID
+import com.ssafy.heritage.util.Channel.CHANNEL_NAME
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
 import java.security.MessageDigest
@@ -42,6 +50,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         initObserver()
 
         getHashKey()
+
+        getFCMToken()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(CHANNEL_ID, CHANNEL_NAME)
+        }
     }
 
     override fun onStart() {
@@ -122,6 +136,30 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             //Navigation의 스택에서 pop 됨(원래 동작)
             super.onBackPressed()
         }
+    }
+
+    fun getFCMToken() {
+        // FCM 토큰 수신
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "FCM 토큰 얻기에 실패하였습니다.", task.exception)
+                return@OnCompleteListener
+            }
+
+            // token log 남기기
+            Log.d(TAG, "FCM token: ${task.result ?: "task.result is null"}")
+        })
+    }
+
+    // Notification 수신을 위한 채널 추가
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(id: String, name: String) {
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(id, name, importance)
+
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
     // EditText가 아닌 다른 곳 터치시 키보드 숨기기

@@ -2,7 +2,6 @@ package com.ssafy.heritage.util
 
 object Setting {
 
-    const val NOTI_SETTING = "알림 설정"
     const val LANGUAGE_SETTING = "언어 설정"
     const val VERSION_INFO = "버전정보"
     const val TERMS = "이용약관"
@@ -17,4 +16,9 @@ object ProfileSetting {
     const val MODIFY_PROFILE = "회원정보 수정"
     const val LOGOUT = "로그아웃"
     const val SIGNOUT = "회원탈퇴"
+}
+
+object Channel {
+    const val CHANNEL_ID = "heritage"
+    const val CHANNEL_NAME = "알림"
 }
