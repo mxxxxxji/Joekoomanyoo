@@ -2,6 +2,7 @@ package com.project.common.dto.Group;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 
@@ -20,9 +21,16 @@ public class GroupMemberDto {
 	private int memberStatus;
 	private String memberAppeal;
 	private char memberIsEvaluated;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date approveTime;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date createdTime;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date updatedTime;
+	
 	private GroupEntity group;
     private int userSeq;
     

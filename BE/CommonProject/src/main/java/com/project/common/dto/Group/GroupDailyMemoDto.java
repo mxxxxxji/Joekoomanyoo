@@ -2,6 +2,7 @@ package com.project.common.dto.Group;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.common.entity.Group.GroupDailyMemoEntity;
 import com.project.common.entity.Group.GroupEntity;
 
@@ -19,9 +20,16 @@ import lombok.ToString;
 public class GroupDailyMemoDto {
     private int gdmSeq;
     private String gdmContent;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date gdmDate;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date gdmCreatedAt;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date gdmUpdatedAt;
+	
     private GroupEntity group;
     
     @Builder

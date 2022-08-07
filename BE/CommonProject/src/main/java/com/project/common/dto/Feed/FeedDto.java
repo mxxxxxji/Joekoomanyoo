@@ -2,6 +2,7 @@ package com.project.common.dto.Feed;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.User.UserEntity;
 
@@ -26,7 +27,11 @@ public class FeedDto {
    	private char feedOpen;
 	
    	// 모임 설정 정보 //
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date createdTime;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date updatedTime;
 
     @Builder

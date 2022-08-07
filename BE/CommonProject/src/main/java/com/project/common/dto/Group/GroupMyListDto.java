@@ -2,6 +2,7 @@ package com.project.common.dto.Group;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.common.entity.Group.GroupMemberEntity;
 
 import lombok.*;
@@ -21,8 +22,14 @@ public class GroupMyListDto {
     private String groupPassword;
     private int groupMaxCount;
    	private String groupRegion;
+   	
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
    	private Date groupStartDate;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
    	private Date groupEndDate;
+	
    	private int groupAgeRange;
    	private char groupWithChild;
    	private char groupWithGlobal;

@@ -2,6 +2,7 @@ package com.project.common.dto.Group;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupScheduleEntity;
 
@@ -20,9 +21,16 @@ public class GroupScheduleDto {
 
 	private int gsSeq;
     private String gsContent;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date gsDateTime;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date gsRegisteredAt;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date gsUpdatedAt;
+	
 	private GroupEntity group;
   
 	public GroupScheduleDto(GroupScheduleEntity schedule) {

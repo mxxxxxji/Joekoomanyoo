@@ -2,6 +2,7 @@ package com.project.common.dto.Feed;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedHashtagEntity;
 
@@ -18,7 +19,10 @@ import lombok.ToString;
 public class FeedHashtagDto {
     private int fhSeq;
     private String fhTag;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date createdTime;
+	
     private FeedEntity feed;
     
     @Builder

@@ -2,6 +2,7 @@ package com.project.common.dto.Group;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.common.entity.Group.GroupEntity;
 
 import lombok.Builder;
@@ -27,16 +28,25 @@ public class GroupDto {
     private String groupPassword;
     private int groupMaxCount;
    	private String groupRegion;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
    	private Date groupStartDate;
+	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
    	private Date groupEndDate;
-   	private int groupAgeRange;
+   	
+	private int groupAgeRange;
    	private char groupWithChild;
    	private char groupWithGlobal;
    	private char groupActive;
    	private char groupStatus;
 	
    	// 모임 설정 정보 //
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date createdTime;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date updatedTime;
    // private UserEntity user;
 
