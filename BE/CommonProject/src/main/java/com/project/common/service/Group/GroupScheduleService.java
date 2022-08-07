@@ -10,9 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.common.dto.Group.GroupScheduleDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupScheduleEntity;
-import com.project.common.mapper.GroupScheduleMapper;
+import com.project.common.entity.User.UserEntity;
 import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.Group.GroupScheduleRepository;
+import com.project.common.repository.User.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +24,7 @@ public class GroupScheduleService{
 	private final GroupRepository groupRepository;
 	private final GroupScheduleRepository groupScheduleRepository;
 	private final GroupService groupService;
+	private final UserRepository userRepository;
 	
 	//일정 조회
 	public List<GroupScheduleDto> getScheduleList(int groupSeq){
@@ -40,12 +42,13 @@ public class GroupScheduleService{
 	//내 모임 일정 조회
 	public List<GroupScheduleDto> getMyScheduleList (int userSeq){
 		List<GroupEntity> groupList= new ArrayList<>();
-		for(GroupEntity entity : groupRepository.findAll()) {
-			if(entity.getUser().getUserSeq()==userSeq) {
-				groupList.add(entity);
+		for(UserEntity entity : userRepository.findAll()) {
+			if(entity.getUserSeq()==userSeq) {
+				for(GroupEntity group : entity.getGroups()) {
+					groupList.add(group);
+				}
 			}
 		}
-		
 		if(groupList.size()==0)
 			throw new IllegalArgumentException("가입한 모임이 없습니다");
 		

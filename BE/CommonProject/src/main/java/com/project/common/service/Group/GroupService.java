@@ -31,15 +31,17 @@ public class GroupService{
 	//모임 개설
 	@Transactional
 	public GroupDto addGroup(int userSeq,GroupDto groupDto) {
-		GroupEntity saved= groupRepository.save(groupDto.toEntity());
 		UserEntity user = userRepository.findByUserSeq(userSeq);
-		user.addGroup(saved);
-	 	userRepository.save(user);
+		if(user==null)
+			throw new IllegalArgumentException("해당하는 사용자가 없습니다");
+		
+		GroupEntity saved= groupDto.toEntity();
+		saved.setGroupMaster(user.getUserNickname());
 	 	saved.setCreatedTime(new Date());
 		saved.setUpdatedTime(new Date());
 		saved.addGroupMember(GroupMemberEntity.builder()
 				.memberAppeal("방장")
-				.userSeq(saved.getUser().getUserSeq())
+				.userSeq(userSeq)
 				.memberStatus(2)
 				.memberIsEvaluated('N')
 				.createdTime(new Date())
@@ -47,6 +49,8 @@ public class GroupService{
 				.approveTime(new Date())
 				.build());
 		groupRepository.save(saved);
+		user.addGroup(saved);
+	 	userRepository.save(user);
 		return GroupMapper.MAPPER.toDto(saved);
 	}
 	

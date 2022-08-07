@@ -10,9 +10,11 @@ import com.project.common.dto.Group.GroupDestinationMapDto;
 import com.project.common.entity.Group.GroupDestinationEntity;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Heritage.HeritageEntity;
+import com.project.common.entity.User.UserEntity;
 import com.project.common.repository.Group.GroupDestinationRepository;
 import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.Heritage.HeritageRepository;
+import com.project.common.repository.User.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,32 +22,38 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class GroupDestinationService{
+
+	private final UserRepository userRepository;
 	private final GroupRepository groupRepository;
 	private final HeritageRepository heritageRepository;
 	private final GroupDestinationRepository groupDestinationRepository;
 	private final GroupService groupService;
 
-	
+
 	//내 모임 목적지 조회
-		public List<GroupDestinationMapDto> getMyDestinationList(int userSeq){
-			List<GroupEntity> groupList= new ArrayList<>();
-			for(GroupEntity entity : groupRepository.findAll()) {
-				if(entity.getUser().getUserSeq()==userSeq) {
-					groupList.add(entity);
+	public List<GroupDestinationMapDto> getMyDestinationList(int userSeq){
+		List<GroupEntity> groupList= new ArrayList<>();
+		for(UserEntity entity : userRepository.findAll()) {
+			if(entity.getUserSeq()==userSeq) {
+				for(GroupEntity group : entity.getGroups()) {
+					groupList.add(group);
 				}
 			}
-			if(groupList.size()==0)
-				throw new IllegalArgumentException("가입한 모임이 없습니다");
+		}
+		if(groupList.size()==0)
+			throw new IllegalArgumentException("가입한 모임이 없습니다");
+		
 			List<GroupDestinationMapDto> destinationList= new ArrayList<>();
+			
 			for(GroupEntity entity : groupList) {
 				for(int i=0;i<entity.getDestinations().size();i++) {
 					HeritageEntity heritage=heritageRepository.findByHeritageSeq(entity.getDestinations().get(i).getHeritageSeq());
 					if(heritage!=null)
-						destinationList.add(new GroupDestinationMapDto(
-								entity.getDestinations().get(i),heritage));
+						destinationList.add(new GroupDestinationMapDto(entity.getDestinations().get(i),heritage));
 				}
-			}return destinationList;
-		}
+			}
+			return destinationList;
+	}
 	
 	//모임 목적지 조회
 	public List<GroupDestinationMapDto> getGroupDestinationList(int groupSeq){

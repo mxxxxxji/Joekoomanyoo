@@ -28,6 +28,9 @@ public class GroupDestinationEntity {
     @Column(name = "gd_seq")
 	private int gdSeq;
 	
+	@Column(name="heritage_seq")
+    private int heritageSeq;
+	
 	@Column(name = "gd_completed")
     private char gdCompleted;
 		
@@ -35,8 +38,7 @@ public class GroupDestinationEntity {
 	@JoinColumn(name="group_seq")
 	private GroupEntity group;
 	
-	@Column(name="heritage_seq")
-    private int heritageSeq;
+
 
 
 }

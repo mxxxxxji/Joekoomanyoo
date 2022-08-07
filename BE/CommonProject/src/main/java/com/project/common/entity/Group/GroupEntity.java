@@ -45,7 +45,7 @@ public class GroupEntity {
     @Column(name="attach_seq")
     private String bannerImgUrl;
  
-    @Column(name="group_maker")
+    @Column(name="group_master")
     private String groupMaster;
     
     @Column(name= "group_description")

@@ -49,8 +49,7 @@ public class GroupMemberService{
 		}
 		UserEntity user = userRepository.findByUserSeq(requestDto.getUserSeq());
 	 	GroupEntity group = groupService.findGroup(groupSeq);
-	 	user.addGroup(group);
-	 	userRepository.save(user);
+	 
 	 	
 		group.addGroupMember(GroupMemberEntity.builder()
 				.memberAppeal(requestDto.getMemberAppeal())
@@ -58,6 +57,8 @@ public class GroupMemberService{
 				.memberIsEvaluated('N')
 				.createdTime(new Date())
 				.updatedTime(new Date()).build());
+		user.addGroup(group);
+	 	userRepository.save(user);
 		groupRepository.save(group);
 		return "Success";
 	}
