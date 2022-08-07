@@ -13,13 +13,13 @@
         android:layout_gravity="center"
         android:layout_margin="50dp"
         android:background="@drawable/background_dialog_other_profile"
-        android:padding="100dp">
+        android:padding="30dp">
 
         <ImageView
             android:id="@+id/iv_member_img"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="50dp"
             android:src="@drawable/monster"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +27,8 @@
 
         <Button
             android:id="@+id/btn_cancel"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
             android:text="닫기"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,10 +37,10 @@
             android:id="@+id/tv_user_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="20dp"
             android:text="잠만보"
             android:textColor="@color/black"
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@id/iv_member_img"
             app:layout_constraintTop_toTopOf="@id/iv_member_img"
             tools:text="잠만보" />
@@ -49,10 +49,10 @@
             android:id="@+id/tv_user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="20dp"
             android:text="\@ssafy"
             android:textColor="@color/gray"
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@id/iv_member_img"
             app:layout_constraintTop_toBottomOf="@id/tv_user_nickname"
             tools:text="\@ssafy" />
@@ -61,9 +61,9 @@
             android:id="@+id/tv_user_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="20dp"
             android:text="#20살"
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_member_img"
             app:layout_constraintStart_toEndOf="@id/iv_member_img"
             app:layout_constraintTop_toBottomOf="@id/tv_user_id"
@@ -73,9 +73,9 @@
             android:id="@+id/tv_user_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:text="#여성"
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_member_img"
             app:layout_constraintStart_toEndOf="@id/tv_user_age"
             app:layout_constraintTop_toBottomOf="@id/tv_user_id"
@@ -85,10 +85,10 @@
             android:id="@+id/header_my_stamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="나의 도감"
             android:textColor="@color/black"
-            android:textSize="40sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_member_img" />
 
@@ -96,9 +96,9 @@
             android:id="@+id/header_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:text="탑"
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_my_stamp"
             tools:text="탑" />
@@ -108,9 +108,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:text="20"
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@id/header_category"
             app:layout_constraintTop_toBottomOf="@id/header_my_stamp"
             tools:text="20" />
@@ -120,9 +120,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:text="회"
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@id/tv_category_count"
             app:layout_constraintTop_toBottomOf="@id/header_my_stamp"
             tools:text="회" />
@@ -131,10 +131,10 @@
             android:id="@+id/header_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="내가 받은 평가"
             android:textColor="@color/black"
-            android:textSize="40sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_category" />
 
@@ -142,9 +142,9 @@
             android:id="@+id/header_review_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:text="시간 약속을 잘 지켜요."
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_review" />
 
@@ -152,9 +152,9 @@
             android:id="@+id/header_review_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="친절하고 매너가 좋아요."
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_review_1" />
 
@@ -162,9 +162,9 @@
             android:id="@+id/header_review_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="응답이 빨라요."
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_review_2" />
 
@@ -172,9 +172,9 @@
             android:id="@+id/header_review_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="문화유산에 대한 지식이 많아요."
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_review_3" />
 
@@ -182,9 +182,9 @@
             android:id="@+id/header_review_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="체력이 좋아요."
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_review_4" />
 
@@ -192,10 +192,10 @@
             android:id="@+id/header_my_introduce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="나의 각오"
             android:textColor="@color/black"
-            android:textSize="40sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_review_5" />
 
@@ -203,35 +203,35 @@
             android:id="@+id/tv_my_introduce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="열심히하겠습니다!!"
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_my_introduce"
             tools:text="열심히하겠습니다!!" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_approve"
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="100dp"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/button_login"
             android:text="수락"
             android:textColor="@color/white"
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_my_introduce" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_refuse"
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="100dp"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/button_login"
             android:text="거절"
             android:textColor="@color/white"
-            android:textSize="40sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_my_introduce" />
