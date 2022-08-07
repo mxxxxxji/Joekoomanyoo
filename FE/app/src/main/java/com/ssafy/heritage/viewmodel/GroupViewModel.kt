@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssafy.heritage.data.dto.GroupAttribute
 import com.ssafy.heritage.data.dto.Member
-import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
@@ -15,7 +13,6 @@ import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.http.Body
 
 private const val TAG = "GroupViewModel___"
 

@@ -1,11 +1,5 @@
 package com.ssafy.heritage.view.group
 
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,13 +8,8 @@ import com.google.android.material.tabs.TabLayout
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
-import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.FragmentGroupInfoBinding
-import com.ssafy.heritage.view.HomeFragment
-import com.ssafy.heritage.view.ar.ARFragment
 import com.ssafy.heritage.viewmodel.GroupViewModel
-import com.ssafy.heritage.viewmodel.UserViewModel
-import kotlin.properties.Delegates
 
 private const val TAG = "GroupInfoFragment___"
 
