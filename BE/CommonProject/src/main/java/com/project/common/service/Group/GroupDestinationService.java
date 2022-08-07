@@ -38,10 +38,6 @@ public class GroupDestinationService{
 					groupList.add(entity.getGroup());
 				}
 			}
-		
-		if(groupList.size()==0)
-			throw new IllegalArgumentException("가입한 모임이 없습니다");
-		
 			List<GroupDestinationMapDto> destinationList= new ArrayList<>();
 			
 			for(GroupEntity entity : groupList) {
@@ -51,8 +47,6 @@ public class GroupDestinationService{
 						destinationList.add(new GroupDestinationMapDto(entity.getDestinations().get(i),heritage));
 				}
 			}
-			if(destinationList.size()==0)
-				throw new IllegalArgumentException("등록된 목적지가 없습니다");
 			return destinationList;
 	}
 	
@@ -68,8 +62,6 @@ public class GroupDestinationService{
 					list.add(new GroupDestinationMapDto(entity,herritage));
 			}
 		}
-		if(list.size()==0)
-			throw new IllegalArgumentException("등록된 메모가 없습니다");
 		return list;
 	}
 	
@@ -80,7 +72,7 @@ public class GroupDestinationService{
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDestinationEntity entity:group.getDestinations()) {
 			if(entity!=null&&entity.getHeritageSeq()==heritageSeq) {
-				throw new IllegalArgumentException("이미 등록한 목적지입니다");
+				return "Fail";
 			}
 		}
 		group.addGroupDestination(GroupDestinationEntity.builder().gdCompleted('N').heritageSeq(heritageSeq).build());
@@ -93,7 +85,7 @@ public class GroupDestinationService{
 	public String deleteGroupDestination(int groupSeq, int heritageSeq) {
 		List<GroupDestinationEntity> destinations= findDestination(groupSeq);
 		if(destinations==null) 
-			throw new IllegalArgumentException("등록된 목적지가 없습니다");
+			return "Fail";
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDestinationEntity entity : destinations) {
 			if(entity.getHeritageSeq()==heritageSeq) {
@@ -114,7 +106,7 @@ public class GroupDestinationService{
 				return "Success";
 			}
 		}
-		throw new IllegalArgumentException("유산 번호가 일치하지 없습니다");
+		return "Fail";
 		
 	}
 	

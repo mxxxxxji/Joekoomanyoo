@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/group")
-@Api(tags = {" 모임 관리 API"})
+@Api(tags = {"모임 관리 API"})
 public class GroupController {
     private final GroupService groupService;
     
@@ -36,7 +36,7 @@ public class GroupController {
     }
     
     //모임 정보 보기
-    @ApiOperation(value = "모임 정보 보기")
+    @ApiOperation(value = "모임 정보 조회")
     @GetMapping("/{groupSeq}/info")
     public ResponseEntity<GroupDto> getGroupInfo(@PathVariable("groupSeq") int groupSeq){
     	return new ResponseEntity<>(groupService.getGroupInfo(groupSeq),HttpStatus.OK);

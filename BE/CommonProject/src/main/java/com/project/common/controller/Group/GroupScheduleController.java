@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/group")
-@Api(tags = {" 모임 일정 API"})
+@Api(tags = {"모임 일정 API"})
 public class GroupScheduleController {
     private final GroupScheduleService groupScheduleService;
     
@@ -47,7 +47,7 @@ public class GroupScheduleController {
     //일정 등록
     @ApiOperation(value = "모임 일정 생성")	
     @PostMapping("/{groupSeq}/schedule/add")
-    public ResponseEntity<GroupScheduleDto> createGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
+    public ResponseEntity<String> createGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
     	return new ResponseEntity<>(groupScheduleService.createGroupSchedule(groupSeq,gsDto),HttpStatus.CREATED);
     }
     

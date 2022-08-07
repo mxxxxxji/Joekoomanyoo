@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/feed/{feedSeq}/like")
-@Api(tags = {" 피드 좋아요 API"})
+@Api(tags = {"피드 좋아요 API"})
 public class FeedLikeController {
     private final FeedLikeService feedLikeService;
     

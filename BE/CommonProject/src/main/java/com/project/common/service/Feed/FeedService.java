@@ -41,8 +41,6 @@ public class FeedService{
 	//피드 전체 조회
 	public List<FeedDto> getFeedList(){
 		List<FeedEntity> feedList=feedRepository.findAll();
-		if(feedList==null)
-			throw new IllegalArgumentException("등록한 피드가 없습니다");
 		return FeedMapper.MAPPER.toDtoList(feedList);
 	}
 	
@@ -54,8 +52,6 @@ public class FeedService{
 				feedList.add(findFeed(entity.getFeed().getFeedSeq()));
 			}
 		}
-		if(feedList.size()==0)
-			throw new IllegalArgumentException("등록된 피드가 없습니다");
 		return FeedMapper.MAPPER.toDtoList(feedList);
 	}
 	
@@ -66,16 +62,12 @@ public class FeedService{
 			if(entity.getUser().getUserSeq()==userSeq)
 				feedList.add(FeedMapper.MAPPER.toDto(entity));
 		}
-		if(feedList.size()==0)
-			throw new IllegalArgumentException("등록한 피드가 없습니다");
 		return feedList;
 	}
 	
 	//피드 보기
 	public FeedDto getFeedInfo(int feedSeq) {
 		FeedEntity feedInfo=feedRepository.findById(feedSeq).orElse(null);
-		if(feedInfo==null)
-			throw new IllegalArgumentException("등록한 피드가 없습니다");
 		return FeedMapper.MAPPER.toDto(feedInfo);
 	}
 	
@@ -95,10 +87,10 @@ public class FeedService{
 	}
 	
 	//피드 수정
-	public FeedDto updateFeed(int feedSeq,FeedDto feedDto) {
+	public String updateFeed(int feedSeq,FeedDto feedDto) {
 		FeedEntity Feed =feedRepository.findById(feedSeq).orElse(null);
 		if(Feed==null)
-			throw new IllegalArgumentException("등록된 피드가 없습니다");
+			return "Fail";
 
 		Feed.setFeedContent(feedDto.getFeedContent());
 		Feed.setFeedImgUrl(feedDto.getFeedImgUrl());
@@ -106,15 +98,16 @@ public class FeedService{
 		Feed.setFeedOpen(feedDto.getFeedOpen());
 		feedRepository.save(Feed);
 		
-		return FeedMapper.MAPPER.toDto(Feed);
+		return "Success";
 	}
 	
 	//피드 공개/비공개
-	public FeedDto openFeed(int feedSeq,char feedOpen) {
+	public String openFeed(int feedSeq,char feedOpen) {
 		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
 		feed.setFeedOpen(feedOpen);
 		feedRepository.save(feed);
-		return FeedMapper.MAPPER.toDto(feedRepository.save(feed));
+		feedRepository.save(feed);
+		return "Success";
 	}
 
 	//피드 찾기

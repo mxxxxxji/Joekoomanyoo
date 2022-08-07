@@ -38,7 +38,7 @@ public class FeedLikeService {
 		FeedEntity feed = feedService.findFeed(feedSeq);
 		for (FeedLikeEntity entity : feed.getFeedLikes()) {
 			if (entity.getUserSeq() == userSeq) {
-				throw new IllegalArgumentException("이미 좋아요를 등록했습니다");
+				return "Fail";
 			}
 		}
 		feed.addFeedLike(FeedLikeEntity.builder().userSeq(userSeq).build());
@@ -51,7 +51,7 @@ public class FeedLikeService {
 	public String deleteFeedLike(int feedSeq, int userSeq) {
 		List<FeedLikeEntity> feedLikes = findFeedLike(feedSeq);
 		if (feedLikes.size() == 0)
-			throw new IllegalArgumentException("등록된 좋아요가 없습니다");
+			return "Fail";
 		FeedEntity feed = feedService.findFeed(feedSeq);
 		for (FeedLikeEntity entity : feedLikes) {
 			if (entity.getUserSeq() == userSeq) {

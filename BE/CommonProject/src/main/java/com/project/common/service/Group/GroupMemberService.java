@@ -35,8 +35,6 @@ public class GroupMemberService{
 				list.add(new GroupMemberListDto(entity));
 			}
 		}
-		if(list.size()==0)
-			throw new IllegalArgumentException("등록된 멤버가 없습니다");
 		return list;
 	}
 	
@@ -45,7 +43,7 @@ public class GroupMemberService{
 	public String joinGroup(int groupSeq, GroupJoinReqDto requestDto) {
 		for(GroupMemberEntity entity: groupMemberRepository.findAll()) {
 			if(entity.getUserSeq()==requestDto.getUserSeq()&&entity.getGroup().getGroupSeq()==groupSeq)
-				throw new IllegalArgumentException("이미 참가 신청했습니다");
+				return "Fail";
 		}
 		UserEntity user = userRepository.findByUserSeq(requestDto.getUserSeq());
 	 	GroupEntity group = groupService.findGroup(groupSeq);

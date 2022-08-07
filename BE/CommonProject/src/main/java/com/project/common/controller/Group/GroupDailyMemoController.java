@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/group")
-@Api(tags = {" 모임 데일리메모 API"})
+@Api(tags = {"모임 데일리메모 API"})
 public class GroupDailyMemoController {
     private final GroupDailyMemoService groupDailyMemoService;
     
@@ -62,7 +62,7 @@ public class GroupDailyMemoController {
    	//메모 수정
   	@ApiOperation(value = "모임 데일리 메모 수정")
   	@PutMapping("/{groupSeq}/memo/modify")
-  	public ResponseEntity<GroupDailyMemoDto> modifyDailyMemo(@RequestBody GroupDailyMemoDto gdmDto, @PathVariable int groupSeq){
+  	public ResponseEntity<String> modifyDailyMemo(@RequestBody GroupDailyMemoDto gdmDto, @PathVariable int groupSeq){
   		return new ResponseEntity<>(groupDailyMemoService.modifyGroupMemo(groupSeq,gdmDto),HttpStatus.OK);
   	}
 }

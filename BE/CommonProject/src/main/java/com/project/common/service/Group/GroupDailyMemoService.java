@@ -34,8 +34,6 @@ public class GroupDailyMemoService{
 					groupList.add(entity.getGroup());
 				}
 			}
-		if(groupList.size()==0)
-			throw new IllegalArgumentException("가입한 모임이 없습니다");
 		
 			List<GroupDailyMemoDto> memoList= new ArrayList<>();
 			
@@ -54,8 +52,6 @@ public class GroupDailyMemoService{
 				list.add(new GroupDailyMemoDto(entity));
 			}
 		}
-		if(list.size()==0)
-			throw new IllegalArgumentException("등록된 메모가 없습니다");
 		return list;
 	}
 	
@@ -65,7 +61,7 @@ public class GroupDailyMemoService{
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDailyMemoEntity entity:group.getMemos()) {
 			if(entity.getGdmDate()==gdmDto.getGdmDate()) {
-				throw new IllegalArgumentException("해당 날짜에 등록한 메모가 있습니다");
+				return "Fail";
 			}
 		}
 		group.addGroupMemo(GroupDailyMemoEntity.builder()
@@ -82,7 +78,7 @@ public class GroupDailyMemoService{
 	public String deleteGroupMemo(int groupSeq, Date gdmDate) {
 		List<GroupDailyMemoEntity> memos= findMemo(groupSeq);
 		if(memos==null) 
-			throw new IllegalArgumentException("등록된 메모가 없습니다");
+			return "Fail";
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDailyMemoEntity entity : memos) {
 			if(entity.getGdmDate()==gdmDate) {
@@ -95,16 +91,16 @@ public class GroupDailyMemoService{
 	
 	//데일리 메모 수정
 	@Transactional
-	public GroupDailyMemoDto modifyGroupMemo(int groupSeq, GroupDailyMemoDto gdmDto) {
+	public String modifyGroupMemo(int groupSeq, GroupDailyMemoDto gdmDto) {
 		for(GroupDailyMemoEntity entity: findMemo(groupSeq)) {
 			if(entity !=null && entity.getGdmDate()==gdmDto.getGdmDate()) {
 				entity.setGdmContent(gdmDto.getGdmContent());
 				entity.setGdmUpdatedAt(new Date());
 				groupDailyMemoRepository.save(entity);
-				break;
+				return "Success";
 			}
 		}
-		return gdmDto;
+		return "Fail";
 	}
 	
 	//해당 모임 메모 찾기

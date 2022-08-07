@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/feed")
-@Api(tags = {" 피드 API"})
+@Api(tags = {"피드 API"})
 public class FeedController {
     private final FeedService feedService;
     
@@ -75,14 +75,14 @@ public class FeedController {
     //피드 수정
     @ApiOperation(value = "피드 수정")
     @PutMapping("/{feedSeq}/modify")
-    public ResponseEntity<FeedDto> updateFeed(@PathVariable("feedSeq") int feedSeq,@RequestBody FeedDto feedDto){
+    public ResponseEntity<String> updateFeed(@PathVariable("feedSeq") int feedSeq,@RequestBody FeedDto feedDto){
     	return new ResponseEntity<>(feedService.updateFeed(feedSeq,feedDto),HttpStatus.OK);
     }
     
     //피드 공개/비공개
     @ApiOperation(value = "피드 활성화 여부 - Y(공개), N(비공개)")
     @PutMapping("/{feedSeq}/active")
-    public ResponseEntity<FeedDto> openFeed(@PathVariable("feedSeq") int feedSeq, @Param("feedOpen") char feedOpen){
+    public ResponseEntity<String> openFeed(@PathVariable("feedSeq") int feedSeq, @Param("feedOpen") char feedOpen){
     	return new ResponseEntity<>(feedService.openFeed(feedSeq,feedOpen),HttpStatus.OK);
     }
 

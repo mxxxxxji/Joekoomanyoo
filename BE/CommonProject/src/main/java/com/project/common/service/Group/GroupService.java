@@ -32,9 +32,6 @@ public class GroupService{
 	@Transactional
 	public GroupDto addGroup(int userSeq,GroupDto groupDto) {
 		UserEntity user = userRepository.findByUserSeq(userSeq);
-		if(user==null)
-			throw new IllegalArgumentException("해당하는 사용자가 없습니다");
-		
 		GroupEntity saved= groupDto.toEntity();
 		saved.setGroupMaster(user.getUserNickname());
 	 	saved.setCreatedTime(new Date());
@@ -109,17 +106,12 @@ public class GroupService{
 			if(entity.getUserSeq()==userSeq)
 				groupList.add(new GroupMyListDto(entity));
 		}
-		if(groupList.size()==0)
-			throw new IllegalArgumentException("가입한 모임이 없습니다");
 		return groupList;
 	}
 	
 	//모임 찾기
 	public GroupEntity findGroup(int groupSeq) {
 		GroupEntity findGroup = groupRepository.findByGroupSeq(groupSeq);
-	    if (findGroup == null) {
-	    	throw new IllegalArgumentException("해당하는 모임이 없습니다.");
-		}
 		 return findGroup;
 	}
 

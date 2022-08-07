@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/feed/{feedSeq}/hashtag")
-@Api(tags = {" 피드 해쉬태그 API"})
+@Api(tags = {"피드 해쉬태그 API"})
 public class FeedHashtageController {
     private final FeedHashtagService feedHashtagService;
     

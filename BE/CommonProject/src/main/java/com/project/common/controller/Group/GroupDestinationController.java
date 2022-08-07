@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/group")
-@Api(tags = {" 모임 목적지 API"})
+@Api(tags = {"모임 목적지 API"})
 public class GroupDestinationController {
     private final GroupDestinationService groupDestinationService;
     

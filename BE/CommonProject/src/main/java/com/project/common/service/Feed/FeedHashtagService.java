@@ -39,8 +39,7 @@ public class FeedHashtagService{
 	@Transactional
 	public String addFeedHashtag(int feedSeq, List<FeedHashtagDto> fhList) {
 		if(fhList.size()==0)
-			throw new IllegalArgumentException("해쉬태그를 등록해주세요");
-
+			return "Fail";
 		FeedEntity feed = feedService.findFeed(feedSeq);
 		int cnt =0;
 		for(FeedHashtagDto dto : fhList) {
@@ -58,14 +57,14 @@ public class FeedHashtagService{
 		}
 		if(cnt>0)
 			return "Success";
-		throw new IllegalArgumentException("해쉬태그 등록에 실패했습니다");
+		return "Fail";
 	}
 	
 	//피드 해쉬태그 삭제
 	@Transactional
 	public String deleteFeedHashtag(int feedSeq, List<FeedHashtagDto> fhList) {
 		if(fhList.size()==0)
-			throw new IllegalArgumentException("삭제할 해쉬태그를 선택해주세요");
+			return "Fail";
 		FeedEntity feed = feedService.findFeed(feedSeq);
 		int cnt =0;
 		for(FeedHashtagDto dto : fhList) {
@@ -79,7 +78,7 @@ public class FeedHashtagService{
 		}
 		if(cnt>0)
 			return "Success";
-		throw new IllegalArgumentException("삭제할 해쉬태그가 존재하지 않습니다");
+		return "Fail";
 	}
 
 	//해쉬태그 찾기

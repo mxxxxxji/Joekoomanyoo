@@ -34,8 +34,6 @@ public class GroupScheduleService{
 				list.add(new GroupScheduleDto(entity));
 			}
 		}
-		if(list.size()==0)
-			throw new IllegalArgumentException("등록된 일정이 없습니다");
 		return list;
 	}
 
@@ -45,31 +43,26 @@ public class GroupScheduleService{
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
 			if(entity.getUserSeq()==userSeq) {
 					groupList.add(entity.getGroup());
-				}
 			}
-		if(groupList.size()==0)
-			throw new IllegalArgumentException("가입한 모임이 없습니다");
-		
+		}
 		List<GroupScheduleDto> scheduleList= new ArrayList<>();
 		
 		for(GroupEntity entity : groupList) {
 			for(int i=0;i<entity.getSchedules().size();i++)
 				scheduleList.add(new GroupScheduleDto(entity.getSchedules().get(i)));
 		}
-		if(scheduleList.size()==0)
-			throw new IllegalArgumentException("등록된 메모가 없습니다");
 		return scheduleList;
 	}
 	
 	//일정 등록
 	@Transactional
-	public GroupScheduleDto createGroupSchedule(int groupSeq, GroupScheduleDto gsDto) {
+	public String createGroupSchedule(int groupSeq, GroupScheduleDto gsDto) {
 		GroupEntity group = groupService.findGroup(groupSeq);
-		for(GroupScheduleEntity entity:group.getSchedules()) {
-			if(entity.getGsDateTime()==gsDto.getGsDateTime()) {
-				throw new IllegalArgumentException("같은 시간에 등록한 일정이 있습니다");
-			}
-		}
+//		for(GroupScheduleEntity entity:group.getSchedules()) {
+//			if(entity.getGsDateTime()==gsDto.getGsDateTime()) {
+//				return "Fail";
+//			}
+//		}
 		group.addGroupSchedule(GroupScheduleEntity.builder()
 				.gsContent(gsDto.getGsContent())
 				.gsDateTime(gsDto.getGsDateTime())
@@ -77,7 +70,8 @@ public class GroupScheduleService{
 				.gsUpdatedAt(new Date())
 				.build());
 		groupRepository.save(group);
-		return gsDto;
+		return "Success";
+		
 	}
 	
 	//일정 삭제
@@ -109,7 +103,7 @@ public class GroupScheduleService{
 			}
 		}
 		if(cnt==0)
-			throw new IllegalArgumentException("일정 수정에 실패했습니다");
+			return "Fail";
 		return "Success";
 	}
 	
