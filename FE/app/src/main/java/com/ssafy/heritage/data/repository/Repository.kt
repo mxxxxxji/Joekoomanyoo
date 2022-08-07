@@ -5,6 +5,7 @@ import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
+import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
@@ -17,7 +18,7 @@ import retrofit2.http.Path
 class Repository constructor(context: Context) {
 
     // group
-    suspend fun insertGroup(userSeq: Int, body: GroupListResponse): Response<GroupListResponse> =
+    suspend fun insertGroup(userSeq: Int, body: GroupAddRequest): Response<GroupListResponse> =
         groupApi.insertGroup(userSeq, body)
 
     suspend fun selectAllGroups(): Response<List<GroupListResponse>> = groupApi.selectAllGroups()

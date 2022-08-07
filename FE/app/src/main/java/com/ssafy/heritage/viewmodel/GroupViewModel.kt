@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.heritage.data.dto.Member
+import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
@@ -85,7 +86,8 @@ class GroupViewModel: ViewModel() {
                             _groupPermission.postValue(3)
                         }
                     }
-                    Log.d(TAG,"현재 유저 permission:${_groupPermission.value}")
+                    Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION_groupPermission: ${_groupPermission.value}")
+                    Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION groupPermission: ${groupPermission.value}")
                     _groupMemberList.postValue(list)
                 }else{
                     Log.d(TAG, "selectGroupMembers : ${response.code()}")
@@ -94,7 +96,7 @@ class GroupViewModel: ViewModel() {
         }
     }
 
-    fun insertGroup(userSeq: Int, groupInfo: GroupListResponse) {
+    fun insertGroup(userSeq: Int, groupInfo: GroupAddRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertGroup(userSeq, groupInfo).let { response ->
                 if(response.isSuccessful) {

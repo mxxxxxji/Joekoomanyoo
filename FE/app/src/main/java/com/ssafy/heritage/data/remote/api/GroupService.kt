@@ -3,6 +3,7 @@ package com.ssafy.heritage.data.remote.api
 import com.ssafy.heritage.data.dto.GroupAttribute
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.dto.User
+import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
@@ -15,7 +16,7 @@ interface GroupService {
     //모임 관리 API
     // 새로운 모임을 개설한다
     @POST("/api/group/add/{userSeq}")
-    suspend fun insertGroup(@Path("userSeq") userSeq: Int, @Body body: GroupListResponse): Response<GroupListResponse>
+    suspend fun insertGroup(@Path("userSeq") userSeq: Int, @Body body: GroupAddRequest): Response<GroupListResponse>
 
     // 모임 목록을 조회한다
     @GET("/api/group/list")
