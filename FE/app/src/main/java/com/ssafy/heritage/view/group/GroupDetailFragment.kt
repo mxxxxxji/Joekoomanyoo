@@ -9,6 +9,7 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.MemberAdapter
 import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
+import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
@@ -53,8 +54,21 @@ class GroupDetailFragment :
 //            recyclerviewApplicant.visibility = View.GONE
         }
         groupViewModel.groupMemberList.observe(viewLifecycleOwner) {
-            memberAdapter.submitList(it)
-            applicantAdapter.submitList(it)
+            var applicantList = mutableListOf<Member>()
+            var memberList = mutableListOf<Member>()
+            for(i in it){
+                // 신청자일 경우
+                if(i.memberStatus == 0){
+                    applicantList.add(i)
+                }
+                // 회원일 경우
+                if(i.memberStatus == 1){
+                    memberList.add(i)
+                }
+            }
+            applicantAdapter.submitList(applicantList)
+            memberAdapter.submitList(memberList)
+
         }
         groupViewModel.detailInfo.observe(viewLifecycleOwner) {
             groupDetailInfo = it
