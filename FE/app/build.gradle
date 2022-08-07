@@ -132,6 +132,12 @@ dependencies {
     // Provides ARCore Session and related resources.
     implementation 'com.google.ar:core:1.15.0'
 
+    // RecyclerView Animators https://github.com/wasabeef/recyclerview-animators
+    implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
+
+    // NiftyDialogEffects https://github.com/lopspower/RxAnimation
+    implementation 'com.mikhaellopez:rxanimation:2.1.0'
+
     // Provides ArFragment, and other UX resources.
     implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'
 

@@ -1,6 +1,7 @@
 package com.ssafy.heritage.view
 
 import android.view.View
+import android.view.animation.OvershootInterpolator
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,8 @@ import com.ssafy.heritage.view.heritage.HeritageDetailFragment
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
 private const val TAG = "HomeFragment__"
 
@@ -28,6 +31,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
     private val userViewModel by activityViewModels<UserViewModel>()
+
+    private val scaleInAnimationAdapter: ScaleInAnimationAdapter by lazy {
+        ScaleInAnimationAdapter(homeHeritageAdapter).apply {
+            setDuration(2000)
+            setInterpolator(OvershootInterpolator())
+            setFirstOnly(false)
+        }
+    }
 
 
     override fun init() {
@@ -68,7 +79,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
         // 추천 문화재 리스트
         recyclerviewHeritage.apply {
-            adapter = homeHeritageAdapter
+            adapter = scaleInAnimationAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
