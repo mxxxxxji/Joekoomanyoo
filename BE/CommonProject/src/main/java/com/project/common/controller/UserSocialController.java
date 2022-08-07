@@ -103,6 +103,7 @@ public class UserSocialController {
                 .isDeleted('N')
                 .roles(Collections.singletonList("ROLE_USER"))
                 .evalUpdatedAt(time)
+                .pushSettingStatus('Y')
                 .build());
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 
