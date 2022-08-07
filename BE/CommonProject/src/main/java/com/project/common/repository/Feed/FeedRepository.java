@@ -11,5 +11,7 @@ public interface FeedRepository extends JpaRepository<FeedEntity, Integer> {
 
 	FeedEntity findByFeedSeq(int feedSeq);
 
+//	void deleteByUserIdAndFeedSeq(String userId, int feedSeq);
+
 
 }

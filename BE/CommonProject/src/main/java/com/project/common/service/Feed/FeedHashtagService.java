@@ -37,10 +37,10 @@ public class FeedHashtagService{
 	
 	//피드 해쉬태그 등록
 	@Transactional
-	public String addFeedHashtag(int feedSeq, List<FeedHashtagDto> fhList) {
-		if(fhList.size()==0)
-			return "Fail";
+	public String addFeedHashtag(String userId,int feedSeq, List<FeedHashtagDto> fhList) {
 		FeedEntity feed = feedService.findFeed(feedSeq);
+		if(!feed.getUser().getUserId().equals(userId))
+			return "Fail";
 		int cnt =0;
 		for(FeedHashtagDto dto : fhList) {
 			boolean check=false;
@@ -62,10 +62,11 @@ public class FeedHashtagService{
 	
 	//피드 해쉬태그 삭제
 	@Transactional
-	public String deleteFeedHashtag(int feedSeq, List<FeedHashtagDto> fhList) {
-		if(fhList.size()==0)
-			return "Fail";
+	public String deleteFeedHashtag(String userId,int feedSeq, List<FeedHashtagDto> fhList) {
 		FeedEntity feed = feedService.findFeed(feedSeq);
+		if(!feed.getUser().getUserId().equals(userId))
+			return "Fail";
+
 		int cnt =0;
 		for(FeedHashtagDto dto : fhList) {
 			for(FeedHashtagEntity entity : findHashtag(feedSeq)) {

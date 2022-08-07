@@ -1,7 +1,8 @@
 package com.project.common.controller.Feed;
 
 
-import org.springframework.data.repository.query.Param;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.service.Feed.FeedLikeService;
 
 import io.swagger.annotations.Api;
@@ -24,26 +26,35 @@ import lombok.RequiredArgsConstructor;
 @Api(tags = {"피드 좋아요 API"})
 public class FeedLikeController {
     private final FeedLikeService feedLikeService;
+    private final JwtTokenProvider jwtTokenProvider;
     
     //좋아요 갯수 조회
     @ApiOperation(value = "좋아요 갯수 조회")
     @GetMapping("/count")
-    public ResponseEntity<Integer> getFeedLikeCount(@PathVariable("feedSeq") int feedSeq) throws Exception{
-    	return new ResponseEntity<>(feedLikeService.getFeedLikeCount(feedSeq),HttpStatus.OK);
+    public ResponseEntity<Integer> getFeedLikeCount(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq) throws Exception{
+    	String token = request.getHeader("X-AUTH-TOKEN");
+        if (token == null || !jwtTokenProvider.validateToken(token)) return null;
+        return new ResponseEntity<>(feedLikeService.getFeedLikeCount(feedSeq),HttpStatus.OK);
     }
     
     //피드 좋아요 등록
     @ApiOperation(value = "피드 좋아요 등록")
     @PostMapping("/add")
-    public ResponseEntity<String> addFeedLike(@PathVariable("feedSeq") int feedSeq, @Param("userSeq") int userSeq){
-    	return new ResponseEntity<>(feedLikeService.addFeedLike(feedSeq,userSeq),HttpStatus.CREATED);
+    public ResponseEntity<String> addFeedLike(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq){
+    	String token = request.getHeader("X-AUTH-TOKEN");
+        if (token == null || !jwtTokenProvider.validateToken(token)) return null;
+        String userId = jwtTokenProvider.getUserId(token);
+         return new ResponseEntity<>(feedLikeService.addFeedLike(userId,feedSeq),HttpStatus.CREATED);
     }
     
     //피드 좋아요 해제
    	@ApiOperation(value = "피드 좋아요 해제")
    	@DeleteMapping("/delete")
-   	public ResponseEntity<String> deleteFeedLike(@PathVariable("feedSeq") int feedSeq, @RequestParam("userSeq") int userSeq){
-   	 	return new ResponseEntity<>(feedLikeService.deleteFeedLike(feedSeq,userSeq),HttpStatus.OK);
+   	public ResponseEntity<String> deleteFeedLike(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq, @RequestParam("userSeq") int userSeq){
+   		String token = request.getHeader("X-AUTH-TOKEN");
+        if (token == null || !jwtTokenProvider.validateToken(token)) return null;
+        String userId = jwtTokenProvider.getUserId(token);
+        return new ResponseEntity<>(feedLikeService.deleteFeedLike(userId,feedSeq),HttpStatus.OK);
    	}
   
 }
