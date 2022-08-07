@@ -62,6 +62,9 @@ class GroupListFragment :
             btnMyGroup.setOnClickListener {
                 findNavController().navigate(R.id.action_groupListFragment_to_myGroupListFragment)
             }
+            btnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 

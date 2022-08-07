@@ -48,6 +48,7 @@ class GroupDetailFragment :
             adapter = memberAdapter
             memberAdapter.memberClickListener = object : MemberClickListener {
                 override fun onClick(position: Int, member: Member, view: View) {
+                    Log.d(TAG, "initAdapter : ${groupViewModel.groupPermission.value!!}")
                     val dialog = OtherProfileDialog(requireContext(), member, userPermission= groupViewModel.groupPermission.value!!,this@GroupDetailFragment)
                     dialog.show()
                 }
@@ -55,8 +56,9 @@ class GroupDetailFragment :
         }
         binding.recyclerviewApplicant.apply {
             adapter = applicantAdapter
-            memberAdapter.memberClickListener = object : MemberClickListener {
+            applicantAdapter.memberClickListener = object : MemberClickListener {
                 override fun onClick(position: Int, member: Member, view: View) {
+                    Log.d(TAG, "initAdapter : ${groupViewModel.groupPermission.value!!}")
                     val dialog = OtherProfileDialog(requireContext(), member,  userPermission= groupViewModel.groupPermission.value!!, this@GroupDetailFragment)
                     dialog.show()
                 }
