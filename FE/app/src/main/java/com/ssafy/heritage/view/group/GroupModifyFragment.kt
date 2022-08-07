@@ -1,6 +1,7 @@
 package com.ssafy.heritage.view.group
 
 import android.os.Build
+import android.text.format.DateFormat
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -9,17 +10,19 @@ import androidx.navigation.fragment.findNavController
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
-import com.ssafy.heritage.data.dto.GroupAttribute
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupModifyBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
-import java.time.LocalDateTime
+import java.time.LocalDate.now
+import java.util.*
+
 
 private const val TAG = "GroupModifyFragment___"
 
 class GroupModifyFragment :
     BaseFragment<FragmentGroupModifyBinding>(R.layout.fragment_group_modify) {
     val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
+    val userNickname: String = ApplicationClass.sharedPreferencesUtil.getUserNickName()!!
     private val groupViewModel by viewModels<GroupViewModel>()
     private lateinit var groupInfo: GroupListResponse
     private var region: String = ""
@@ -29,8 +32,8 @@ class GroupModifyFragment :
     private var global: Char = 'N'
     private var name: String = ""
     private var content: String = ""
-    private var startDate:Int = 0
-    private var endDate:Int = 0
+    private var startDate:String = ""
+    private var endDate:String = ""
     private var groupAccessType:Char = 'N'
     private var groupPwd: String=""
 
@@ -83,8 +86,8 @@ class GroupModifyFragment :
             //groupInfo = GroupListResponse(0,0,"",0,"",'N',"",'Y', 'R',2, groupAttribute = )
             name = etGroupName.text.toString()
             content = etGroupContent.text.toString()
-            startDate = etGroupStartDate.text.toString().toInt()
-            endDate = etGroupEndDate.text.toString().toInt()
+            startDate = etGroupStartDate.text.toString()
+            endDate = etGroupEndDate.text.toString()
 
             when {
                 name == "" -> {
@@ -93,15 +96,15 @@ class GroupModifyFragment :
                 content == "" -> {
                     Toast.makeText(context, "모임 설명을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
-                startDate == 0 -> {
+                startDate == "" -> {
                     Toast.makeText(context, "모임 시작일을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
-                endDate == 0 -> {
+                endDate == "" -> {
                     Toast.makeText(context, "모임 종료일을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            if (name != "" && content != "" && startDate != 0 && endDate != 0) {
+            if (name != "" && content != "" && startDate != "" && endDate != "") {
                 if (etGroupPassword.text.toString() != "") {
                     // 공개
                     groupAccessType = '0'
@@ -110,9 +113,12 @@ class GroupModifyFragment :
                     groupAccessType = '1'
                     groupPwd = etGroupPassword.text.toString()
                 }
-                // groupMaker : 현재 유저 번호로 넣어야함
-                groupInfo = GroupListResponse('0', 'Y', age,  content, endDate, 0, "잠만보",
-                    max, name, groupPwd, region, startDate, 'R', "",  child, global)
+                // 현재시간을 가져오기
+                val long_now = System.currentTimeMillis()
+                // 현재 시간을 Date 타입으로 변환
+                val t_date = Date(long_now)
+                groupInfo = GroupListResponse(0, name,"", userNickname,  content, 'Y',groupPwd, max,
+                    region, t_date,t_date, age, child, global,'Y', 'R', t_date, t_date)
                 groupViewModel.insertGroup(userSeq,groupInfo)
             }
         }

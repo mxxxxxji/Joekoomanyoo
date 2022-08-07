@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.ssafy.heritage.util.UtilsKt"/>
         <variable
             name="groupListResponse"
             type="com.ssafy.heritage.data.remote.response.GroupListResponse"/>
@@ -37,7 +38,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginVertical="5dp"
                 tools:text="방장 닉네임"
-                android:text="@{groupListResponse.master}"
+                android:text="@{groupListResponse.groupMaster}"
                 app:layout_constraintStart_toEndOf="@id/iv_member_img"
                 app:layout_constraintTop_toTopOf="parent"/>
             <TextView
@@ -46,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 tools:text="설명"
-                android:text="@{groupListResponse.name}"
+                android:text="@{groupListResponse.groupName}"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
@@ -58,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@{String.valueOf(groupListResponse.startDate)}"
+                android:text="@{}"
                 tools:text="0000.00.00"
                 app:layout_constraintTop_toBottomOf="@id/tv_group_name"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -77,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="@{String.valueOf(groupListResponse.endDate)}"
+                android:text="@{}"
                 tools:text="0000.00.00"
                 app:layout_constraintStart_toEndOf="@id/header_from"
                 app:layout_constraintTop_toTopOf="@id/tv_start_date"
@@ -112,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
                 android:layout_marginHorizontal="10dp"
-                android:text="@{String.valueOf(groupListResponse.ageRange)}"
+                android:text="@{String.valueOf(groupListResponse.groupAgeRange)}"
                 tools:text="나이대"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="@id/tv_global_check"

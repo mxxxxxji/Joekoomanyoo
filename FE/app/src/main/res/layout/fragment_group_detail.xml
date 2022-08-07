@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.ssafy.heritage.util.UtilsKt"/>
         <import type="android.view.View" />
         <variable
             name="groupDetailInfo"
@@ -68,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="@{groupDetailInfo.name}"
+            android:text="@{groupDetailInfo.groupName}"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="@{String.valueOf(groupDetailInfo.startDate)}"
+            android:text="@{}"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_group_name"
@@ -101,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="@{String.valueOf(groupDetailInfo.endDate)}"
+            android:text="@{}"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/header_from"
             app:layout_constraintTop_toBottomOf="@id/tv_group_name"
@@ -124,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:text="@{groupDetailInfo.description}"
+            android:text="@{groupDetailInfo.groupDescription}"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_group_content" />
@@ -171,7 +172,7 @@
             android:id="@+id/constraint_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="@{groupDetailInfo.status== 'R' ? View.VISIBLE : View.GONE}"
+            android:visibility="@{groupDetailInfo.groupStatus == 'R' ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">

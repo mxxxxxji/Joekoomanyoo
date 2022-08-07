@@ -13,6 +13,7 @@ class SharedPreferencesUtil(context: Context) {
     fun saveUser(user: User){
         val editor = preferences.edit()
         user.userSeq?.let { editor.putInt("userSeq", it) }
+        editor.putString("userNickName",user.userNickname)
         editor.commit()
     }
 
@@ -21,6 +22,10 @@ class SharedPreferencesUtil(context: Context) {
         return preferences.getInt("userSeq", 0)
     }
 
+    // 사용자 정보 불러오기
+    fun getUserNickName(): String? {
+        return preferences.getString("userNickName", "")
+    }
     // 토큰 저장
     fun saveToken(token: String) {
         val editor = preferences.edit()

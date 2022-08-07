@@ -46,7 +46,7 @@ class GroupListFragment :
             // 진행
             var list = mutableListOf<GroupListResponse>()
             for(i in it){
-                if(i.status == 'R'){
+                if(i.groupStatus == 'R'){
                     list.add(i)
                 }
             }
