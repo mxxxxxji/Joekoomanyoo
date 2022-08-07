@@ -10,8 +10,10 @@ import androidx.navigation.fragment.findNavController
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
+import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupModifyBinding
+import com.ssafy.heritage.util.formatterToDate
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import java.time.LocalDate.now
 import java.util.*
@@ -24,7 +26,7 @@ class GroupModifyFragment :
     val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
     val userNickname: String = ApplicationClass.sharedPreferencesUtil.getUserNickName()!!
     private val groupViewModel by viewModels<GroupViewModel>()
-    private lateinit var groupInfo: GroupListResponse
+    private lateinit var groupInfo: GroupAddRequest
     private var region: String = ""
     private var age: Int = 0
     private var max: Int = 0
@@ -117,8 +119,9 @@ class GroupModifyFragment :
                 val long_now = System.currentTimeMillis()
                 // 현재 시간을 Date 타입으로 변환
                 val t_date = Date(long_now)
-                groupInfo = GroupListResponse(0, name,"", userNickname,  content, 'Y',groupPwd, max,
-                    region, t_date,t_date, age, child, global,'Y', 'R')
+                groupInfo = GroupAddRequest( name,"", content, 'Y',groupPwd, max,
+                    region, startDate,
+                    endDate, age, child, global,'Y', 'R')
                 groupViewModel.insertGroup(userSeq,groupInfo)
             }
         }
