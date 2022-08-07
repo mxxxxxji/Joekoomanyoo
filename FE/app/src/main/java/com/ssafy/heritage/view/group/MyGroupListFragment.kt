@@ -36,7 +36,7 @@ class MyGroupListFragment :
         groupViewModel.myGroupList.observe(viewLifecycleOwner) {
             var lastGroupList = mutableListOf<MyGroupResponse>()
             for(i in it){
-                if(i.status == 'F'){
+                if(i.groupStatus == "F"){
                     Log.d(TAG, it.toString())
                     lastGroupList.add(i)
                 }
