@@ -50,6 +50,10 @@ class UserViewModel : ViewModel() {
     val myScheduleList: LiveData<MutableList<Schedule>>
         get() = _myScheduleList
 
+    private val _notiSetting = MutableLiveData<Char>()
+    val notiSetting: LiveData<Char>
+        get() = _notiSetting
+
     fun setUser(user: User) {
         _user.value = user
     }
@@ -389,4 +393,10 @@ class UserViewModel : ViewModel() {
             }
         }
     }
+
+    // 알림 설정 정보 불러오기
+
+    // 알림 설정 하기
+
+    // 토큰 서버에 보내기
 }

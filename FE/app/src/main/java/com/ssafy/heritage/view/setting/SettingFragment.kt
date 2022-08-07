@@ -1,11 +1,11 @@
 package com.ssafy.heritage.view.setting
 
+import android.content.Intent
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.awesomedialog.*
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.SettingListAdapter
 import com.ssafy.heritage.base.BaseFragment
@@ -13,7 +13,6 @@ import com.ssafy.heritage.databinding.FragmentSettingBinding
 import com.ssafy.heritage.listener.SettingListClickListener
 import com.ssafy.heritage.util.Setting.LANGUAGE_SETTING
 import com.ssafy.heritage.util.Setting.LICENSE
-import com.ssafy.heritage.util.Setting.NOTI_SETTING
 import com.ssafy.heritage.util.Setting.TERMS
 import com.ssafy.heritage.util.Setting.VERSION_INFO
 import com.ssafy.heritage.view.dialog.LanguageSettingDialog
@@ -32,6 +31,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
 
         initAdapter()
 
+        setSwitch()
     }
 
     private fun initAdapter() = with(binding) {
@@ -53,9 +53,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                 override fun onClick(position: Int, view: View) {
                     val name = settingListAdapter.currentList[position]
                     when (name) {
-                        NOTI_SETTING -> {
-                            findNavController().navigate(R.id.action_settingFragment_to_notiSettingFragment)
-                        }
                         LANGUAGE_SETTING -> {
                             languageSettingDialog.show(
                                 childFragmentManager,
@@ -82,19 +79,26 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                             termsDialog.show(childFragmentManager, "termsDialog")
                         }
                         LICENSE -> {
-                            AwesomeDialog.build(requireActivity())
-                                .title(LICENSE)
-                                .body("라이센스 입니다")
-                                .icon(R.drawable.ic_launcher_foreground)
-                                .position(AwesomeDialog.POSITIONS.CENTER)
-                                .onPositive(
-                                    "닫기",
-                                    buttonBackgroundColor = R.drawable.button_join,
-                                    textColor = ContextCompat.getColor(
-                                        requireContext(),
-                                        android.R.color.black
-                                    )
+                            OssLicensesMenuActivity.setActivityTitle("오픈소스 라이센스 목록")
+                            startActivity(
+                                Intent(
+                                    requireContext(),
+                                    OssLicensesMenuActivity::class.java
                                 )
+                            )
+//                            AwesomeDialog.build(requireActivity())
+//                                .title(LICENSE)
+//                                .body("라이센스 입니다")
+//                                .icon(R.drawable.ic_launcher_foreground)
+//                                .position(AwesomeDialog.POSITIONS.CENTER)
+//                                .onPositive(
+//                                    "닫기",
+//                                    buttonBackgroundColor = R.drawable.button_join,
+//                                    textColor = ContextCompat.getColor(
+//                                        requireContext(),
+//                                        android.R.color.black
+//                                    )
+//                                )
                         }
                     }
                 }
@@ -104,6 +108,20 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
     }
 
+
+    private fun setSwitch() = with(binding) {
+        // 알림
+        switchNoti.setOnCheckedChangeListener {
+            if (it) {
+                // 알림 설정 'Y'로 서버에 보냄
+
+            } else {
+                // 알림 설정 'N'으로 서버에 보냄
+
+            }
+        }
+    }
+
     val settingList =
-        arrayListOf<String>(NOTI_SETTING, LANGUAGE_SETTING, VERSION_INFO, TERMS, LICENSE)
+        arrayListOf<String>(LANGUAGE_SETTING, VERSION_INFO, TERMS, LICENSE)
 }

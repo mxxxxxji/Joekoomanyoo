@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/background_setting_list_item"
             android:paddingVertical="16dp"
-            android:paddingStart="20dp"
             android:text="@{name}"
             android:textColor="@color/cornflower"
             android:textSize="20sp"

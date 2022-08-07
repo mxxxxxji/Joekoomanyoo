@@ -4,6 +4,8 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.android.gms.oss-licenses-plugin'
 }
 
 android {
@@ -46,6 +48,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.6'
+    implementation platform('com.google.firebase:firebase-bom:29.3.1')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -121,4 +125,6 @@ dependencies {
     // foldingcell
     implementation 'com.ramotion.foldingcell:folding-cell:1.2.3'
 
+    // 라이선스 관리
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 }

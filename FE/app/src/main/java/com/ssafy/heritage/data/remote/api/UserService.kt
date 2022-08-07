@@ -90,4 +90,13 @@ interface UserService {
     @DELETE("/api/mypage/schedule/{myScheduleSeq}")
     suspend fun deleteMySchedule(@Path("myScheduleSeq") scheduleSeq: Int): Response<String>
 
+    // 내 알림 설정 불러오기
+    suspend fun getMyNotiSetting(): Response<String>
+
+    // 내 알림 설정하기
+    suspend fun setMyNotiSetting(): Response<String>
+
+    // 토큰 서버에 보내기
+    suspend fun pushToken(): Response<String>
+
 }
