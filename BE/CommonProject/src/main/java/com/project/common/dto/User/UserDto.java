@@ -31,6 +31,7 @@ public class UserDto {
     private int evalList4;
     private int evalList5;
     private String evalUpdatedAt;
+    private char pushSettingStatus;
 
 
 }

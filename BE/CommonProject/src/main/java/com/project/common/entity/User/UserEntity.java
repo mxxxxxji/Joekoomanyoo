@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -88,7 +89,9 @@ public class UserEntity implements UserDetails{
     private int evalList4;
     private int evalList5;
     private String evalUpdatedAt;
-
+    @Column(nullable = false)
+    @ColumnDefault("Y")
+    private char pushSettingStatus;
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.userPassword = passwordEncoder.encode(this.userPassword);

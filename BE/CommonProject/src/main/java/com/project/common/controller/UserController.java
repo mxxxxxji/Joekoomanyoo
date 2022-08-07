@@ -57,8 +57,7 @@ public class UserController {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
 
-
-        userRepository.save(UserEntity.builder()
+        UserEntity userEntity = UserEntity.builder()
                 .userSeq(0)
                 .userId(userSignDto.getUserId())
                 .userPassword(passwordEncoder.encode(userSignDto.getUserPassword()))
@@ -73,7 +72,10 @@ public class UserController {
                 .isDeleted('N')
                 .evalUpdatedAt(time)
                 .roles(Collections.singletonList("ROLE_USER"))
-                .build());
+                .pushSettingStatus('Y')
+                .build();
+
+        userRepository.save(userEntity);
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
 
