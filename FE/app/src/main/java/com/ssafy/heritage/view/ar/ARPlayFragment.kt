@@ -8,6 +8,6 @@ private const val TAG = "ARPlayFragment___"
 
 class ARPlayFragment : BaseFragment<FragmentARPlayBinding>(R.layout.fragment_a_r_play) {
     override fun init() {
-        TODO("Not yet implemented")
+
     }
 }

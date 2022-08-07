@@ -31,7 +31,7 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
         initClickListener()
     }
 
-    private fun initClickListener()= with(binding) {
+    private fun initClickListener() = with(binding) {
         btnBack.setOnClickListener{
             findNavController().popBackStack()
         }

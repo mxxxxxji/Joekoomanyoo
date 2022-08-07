@@ -176,11 +176,6 @@
             app:destination="@id/heritageDetailFragment" />
     </fragment>
 
-
-    <fragment
-        android:id="@+id/ARFragment"
-        android:name="com.ssafy.heritage.view.ar.ARFragment"
-        android:label="ARFragment" />
     <fragment
         android:id="@+id/notiFragment"
         android:name="com.ssafy.heritage.view.NotiFragment"
@@ -224,5 +219,33 @@
         android:id="@+id/myGroupListFragment"
         android:name="com.ssafy.heritage.view.group.MyGroupListFragment"
         android:label="MyGroupListFragment" />
+
+    <!-- ar -->
+    <fragment
+        android:id="@+id/ARFragment"
+        android:name="com.ssafy.heritage.view.ar.ARFragment"
+        android:label="ARFragment" >
+        <action
+            android:id="@+id/action_ARFragment_to_ARFoundFragment"
+            app:destination="@id/ARFoundFragment" />
+        <action
+            android:id="@+id/action_ARFragment_to_ARListFragment"
+            app:destination="@id/ARListFragment" />
+        <action
+            android:id="@+id/action_ARFragment_to_ARPlayFragment"
+            app:destination="@id/ARPlayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ARFoundFragment"
+        android:name="com.ssafy.heritage.view.ar.ARFoundFragment"
+        android:label="ARFoundFragment" />
+    <fragment
+        android:id="@+id/ARListFragment"
+        android:name="com.ssafy.heritage.view.ar.ARListFragment"
+        android:label="ARListFragment" />
+    <fragment
+        android:id="@+id/ARPlayFragment"
+        android:name="com.ssafy.heritage.view.ar.ARPlayFragment"
+        android:label="ARPlayFragment" />
 
 </navigation>

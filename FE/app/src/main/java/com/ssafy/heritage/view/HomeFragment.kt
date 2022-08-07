@@ -26,7 +26,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
     private val groupListAdapter: GroupListAdapter by lazy { GroupListAdapter(this) }
     private val homeHeritageAdapter: HomeHeritageAdapter by lazy { HomeHeritageAdapter() }
 
-    private val groupViewModel by activityViewModels<GroupViewModel>()
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
     private val userViewModel by activityViewModels<UserViewModel>()
 
