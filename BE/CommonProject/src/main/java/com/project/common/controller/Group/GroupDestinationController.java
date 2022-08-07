@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.dto.Group.GroupDestinationMapDto;
@@ -53,7 +54,7 @@ public class GroupDestinationController {
     //모임 목적지 삭제
    	@ApiOperation(value = "모임 목적지 삭제")
    	@DeleteMapping("/{groupSeq}/destination/delete")
-   	public ResponseEntity<String> deleteGroupDestination(@PathVariable int groupSeq, @Param("heritageSeq") int heritageSeq){
+   	public ResponseEntity<String> deleteGroupDestination(@PathVariable int groupSeq, @RequestParam("heritageSeq") int heritageSeq){
    	 	return new ResponseEntity<>(groupDestinationService.deleteGroupDestination(groupSeq, heritageSeq),HttpStatus.OK);
    	}
     

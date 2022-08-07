@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.dto.Group.GroupJoinReqDto;
@@ -46,7 +47,7 @@ public class GroupMemberController {
 	 //탈퇴
 	@ApiOperation(value = "모임 탈퇴 / 가입 거절 / 가입 취소 / 강제 퇴장 ")
 	@DeleteMapping("/member/leave")
-	public ResponseEntity<String> leaveGroup(@PathVariable("groupSeq") int groupSeq,@Param("userSeq") int userSeq){
+	public ResponseEntity<String> leaveGroup(@PathVariable("groupSeq") int groupSeq,@RequestParam("userSeq") int userSeq){
 	 	return new ResponseEntity<>(groupMemberService.leaveGroup(groupSeq,userSeq),HttpStatus.OK);
 	}
 	

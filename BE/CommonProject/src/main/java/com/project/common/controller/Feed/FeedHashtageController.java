@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.dto.Feed.FeedHashtagDto;
@@ -44,7 +45,7 @@ public class FeedHashtageController {
     //피드 해쉬태그 삭제
    	@ApiOperation(value = "피드 해쉬태그 삭제")
    	@DeleteMapping("/delete")
-   	public ResponseEntity<String> deleteFeedHashtag(@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
+   	public ResponseEntity<String> deleteFeedHashtag(@PathVariable("feedSeq") int feedSeq,@RequestParam List<FeedHashtagDto> fhList){
    	 	return new ResponseEntity<>(feedHashtagService.deleteFeedHashtag(feedSeq,fhList),HttpStatus.OK);
    	}
  

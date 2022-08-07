@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.service.Feed.FeedLikeService;
@@ -41,7 +42,7 @@ public class FeedLikeController {
     //피드 좋아요 해제
    	@ApiOperation(value = "피드 좋아요 해제")
    	@DeleteMapping("/delete")
-   	public ResponseEntity<String> deleteFeedLike(@PathVariable("feedSeq") int feedSeq, @Param("userSeq") int userSeq){
+   	public ResponseEntity<String> deleteFeedLike(@PathVariable("feedSeq") int feedSeq, @RequestParam("userSeq") int userSeq){
    	 	return new ResponseEntity<>(feedLikeService.deleteFeedLike(feedSeq,userSeq),HttpStatus.OK);
    	}
   

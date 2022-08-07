@@ -4,7 +4,6 @@ package com.project.common.controller.Group;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.dto.Group.GroupDailyMemoDto;
@@ -55,7 +55,7 @@ public class GroupDailyMemoController {
     //메모 삭제
    	@ApiOperation(value = "모임 데일리 메모 삭제")
    	@DeleteMapping("/{groupSeq}/memo/delete")
-   	public ResponseEntity<String> deleteDailyMemo(@PathVariable int groupSeq, @Param("gdmDate") Date gdmDate ){
+   	public ResponseEntity<String> deleteDailyMemo(@PathVariable int groupSeq, @RequestParam("gdmDate") Date gdmDate ){
    	 	return new ResponseEntity<>(groupDailyMemoService.deleteGroupMemo(groupSeq,gdmDate),HttpStatus.OK);
    	}
     
