@@ -10,17 +10,17 @@ data class MyGroupResponse(
     @SerializedName("groupName") var groupName: String,
     @SerializedName("groupMaster") var groupMaster: String,
     @SerializedName("groupDescriaption") var groupDescriaption: String,
-    @SerializedName("groupAccessType") var groupAccessType: String,
+    @SerializedName("groupAccessType") var groupAccessType: Char,
     @SerializedName("groupPassword") var groupPassword: String,
     @SerializedName("groupMaxCount") var groupMaxCount: Int,
     @SerializedName("groupRegion") var groupRegion: String,
     @SerializedName("groupStartDate") var groupStartDate: String,
     @SerializedName("groupEndDate") var groupEndDate: String,
     @SerializedName("groupAgeRange") var groupAgeRange: Int,
-    @SerializedName("groupWithChild") var groupWithChild: String,
-    @SerializedName("groupWithGlobal") var groupWithGlobal: String,
-    @SerializedName("groupActive") var groupActive: String,
-    @SerializedName("groupStatus") var groupStatus: String,
+    @SerializedName("groupWithChild") var groupWithChild: Char,
+    @SerializedName("groupWithGlobal") var groupWithGlobal: Char,
+    @SerializedName("groupActive") var groupActive: Char,
+    @SerializedName("groupStatus") var groupStatus: Char,
     @SerializedName("memberStatus") var memberStatus: Int,
-    @SerializedName("memberIsEvaluated") var memberIsEvaluated: String
+    @SerializedName("memberIsEvaluated") var memberIsEvaluated: Char
 ): Parcelable

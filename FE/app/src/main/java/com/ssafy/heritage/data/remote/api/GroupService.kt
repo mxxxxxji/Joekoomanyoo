@@ -90,6 +90,8 @@ interface GroupService {
     // 모임 데일리 메모를 삭제한다
 
     // 모임 목적지를 등록한다
+    @POST("/api/group/{groupSeq}/destination/add")
+    suspend fun insertGroupDestination(@Path("groupSeq") groupSeq: Int): Response<String>
 
     // 모임 목적지를 삭제한다
 

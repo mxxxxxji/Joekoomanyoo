@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.heritage.data.dto.GroupDestination
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupBasic
@@ -45,6 +46,9 @@ class GroupViewModel: ViewModel() {
 
     private val _myGroupList = SingleLiveEvent<MutableList<MyGroupResponse>>()
     val myGroupList:  LiveData<MutableList<MyGroupResponse>> get() = _myGroupList
+
+    private val _insertGroupDestination = SingleLiveEvent<String>()
+    val insertGroupDestination : LiveData<String> get() = _insertGroupDestination
 
     fun add(info : GroupListResponse){
         _detailInfo.postValue(info)
@@ -162,6 +166,19 @@ class GroupViewModel: ViewModel() {
                     _myGroupList.postValue(info)
                 }else{
                     Log.d(TAG, "selectMyGroups: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun insertGroupDestination(groupSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertGroupDestination(groupSeq).let { response ->
+                if(response.isSuccessful) {
+                    var info = response.body()!! as GroupDestination
+                    _insertGroupDestination.postValue(info.toString())
+                }else{
+                    Log.d(TAG, "insertGroupDestination: ${response.code()}")
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.ssafy.heritage.adpter
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
