@@ -114,7 +114,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 //        bottomNavigation.setOnItemReselectedListener { }
 
         // 뒤로가기 버튼 리스너
-        backPressedListener = object :BackPressedListener{
+        backPressedListener = object : BackPressedListener {
             override fun register() {
                 fromHeritageDetailFragment = true
             }

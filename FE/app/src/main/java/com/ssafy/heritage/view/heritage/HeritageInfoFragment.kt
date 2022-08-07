@@ -48,6 +48,10 @@ class HeritageInfoFragment :
     override fun init() {
         initObserver()
         initClickListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
         initMap()
     }
 
