@@ -43,7 +43,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private var backButtonTime = 0L
 
     override fun init() {
-        intent?.getParcelableExtra<User>("user")?.let { userViewModel.setUser(it) }
 
         initNavigation()
 
@@ -60,8 +59,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     override fun onStart() {
         super.onStart()
+        intent?.getParcelableExtra<User>("user")?.let { userViewModel.setUser(it) }
         heritageViewModel.getHeritageList()
-        userViewModel.getSchedule()
     }
 
     private fun initObserver() {

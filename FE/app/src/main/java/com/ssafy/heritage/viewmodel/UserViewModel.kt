@@ -56,6 +56,8 @@ class UserViewModel : ViewModel() {
 
     fun setUser(user: User) {
         _user.value = user
+        Log.d(TAG, "setUser: ${_user.value}")
+        getSchedule()
     }
 
     // 회원 탈퇴
