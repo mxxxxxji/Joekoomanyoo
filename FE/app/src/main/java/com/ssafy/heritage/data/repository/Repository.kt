@@ -39,6 +39,8 @@ class Repository constructor(context: Context) {
         groupApi.leaveGroupJoin(groupSeq, body)
     suspend fun selectMyGroups(userSeq: Int): Response<List<MyGroupResponse>> =
         groupApi.selectMyGroups(userSeq)
+    suspend fun insertGroupDestination(groupSeq: Int): Response<String> =
+        groupApi.insertGroupDestination(groupSeq)
 
     // user
     suspend fun checkEmail(userId: String): Response<String> = userApi.checkEmail(userId)
