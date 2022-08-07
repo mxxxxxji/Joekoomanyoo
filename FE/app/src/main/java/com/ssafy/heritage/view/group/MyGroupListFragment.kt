@@ -46,7 +46,7 @@ class MyGroupListFragment :
             var joinGroupList = mutableListOf<MyGroupResponse>()
             for(i in it){
                 // 끝난 스터디
-                if(i.groupStatus == "F"){
+                if(i.groupStatus == 'F'){
                     Log.d(TAG, "F : $i")
                     lastGroupList.add(i)
                 }

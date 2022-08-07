@@ -47,12 +47,12 @@ class HeritageViewModel : ViewModel() {
 
     // 전체 문화유산 목록 가져옴
     fun getHeritageList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             repository.selectAllHeritage().let { response ->
                 if (response.isSuccessful) {
                     var list = (response.body() as MutableList<Heritage>)
 //                    list.sortBy { it.heritageScrapCnt } // 스크랩순 정렬
-                    _heritageList.postValue(list)
+                    _heritageList.value = list
                 } else {
                     Log.d(TAG, "${response.code()}")
                 }

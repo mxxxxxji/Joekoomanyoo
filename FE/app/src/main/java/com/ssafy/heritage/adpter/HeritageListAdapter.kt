@@ -2,6 +2,7 @@ package com.ssafy.heritage.adpter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,8 @@ class HeritageListAdapter : ListAdapter<Heritage, HeritageListAdapter.ViewHolder
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Heritage) = with(binding) {
             heritage = data
+
+            ViewCompat.setTransitionName(ivHeritage, "album$bindingAdapterPosition")
 
             itemView.setOnClickListener {
                 heritageListClickListener.onClick(bindingAdapterPosition, data, ivHeritage)

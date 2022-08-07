@@ -21,9 +21,18 @@ class PasswordRequestFragment :
 
     override fun init() {
 
+        checkLoginType()
+
         initObserver()
 
         initClickListener()
+    }
+
+    private fun checkLoginType() {
+        // 소셜로그인 유저는 바로 보내줌
+        if (userViewModel.user.value?.socialLoginType == "social"){
+            findNavController().navigate(R.id.action_passwordRequestFragment_to_profileModifyFragment)
+        }
     }
 
     private fun initObserver() {

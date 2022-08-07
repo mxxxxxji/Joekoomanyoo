@@ -1,14 +1,14 @@
 package com.ssafy.heritage.view.heritage
 
 import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.content.Intent.getIntent
-import android.net.Uri
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.transition.Fade
+import androidx.transition.TransitionInflater
 import com.google.android.material.tabs.TabLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
@@ -16,6 +16,7 @@ import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.HeritageScrap
 import com.ssafy.heritage.data.remote.api.UserService
 import com.ssafy.heritage.databinding.FragmentHeritageDetailBinding
+import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.view.dialog.SharedMyGroupListDialog
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
@@ -35,22 +36,59 @@ class HeritageDetailFragment :
     private val heritageViewModel: HeritageViewModel by activityViewModels()
     private lateinit var heritageScrap: HeritageScrap
 
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        (requireActivity() as HomeActivity).backPressedListener.register()
+
+        // fragment에서 back버튼 조작하도록 콜백 등록
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                parentFragmentManager.popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
 
     @SuppressLint("LongLogTag")
     override fun init() {
 
-        arguments?.let {
-            heritage = it.getSerializable(ARG_HERITAGE) as Heritage
-            Log.d(TAG, "init: $heritage")
+        binding.heritage = heritage
 
-            binding.heritage = heritage
-        }
         initAdapter()
         initClickListener()
     }
 
     @SuppressLint("LongLogTag")
-    private fun initClickListener()= with(binding) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        sharedElementReturnTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        enterTransition = Fade()
+        exitTransition = Fade()
+
+        arguments?.let {
+            heritage = it.getSerializable(ARG_HERITAGE) as Heritage
+            Log.d(TAG, "init: $heritage")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        (requireActivity() as HomeActivity).backPressedListener.unregister()
+
+        // 뒤로가기 콜백 해제
+        callback.remove()
+    }
+
+    @SuppressLint("LongLogTag")
+    private fun initClickListener() = with(binding) {
 
         // 스크랩 버튼
         // 포함 여부 확인은 여기서 (any!!)
@@ -103,28 +141,30 @@ class HeritageDetailFragment :
     }
 
 
-    private fun initAdapter()=with(binding) {
+    private fun initAdapter() = with(binding) {
         heritageInfoFragment = HeritageInfoFragment()
         heritageReviewFragment = HeritageReviewFragment()
 
         childFragmentManager.beginTransaction()
             // heritageInfoFragment를 먼저 띄우는거다
-            .replace(R.id.fragment_container_view,heritageInfoFragment)
+            .replace(R.id.fragment_container_view, heritageInfoFragment)
             .commit()
 
         // 탭 클릭 시 이벤트
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 // 몇 번째 탭을 클릭했을 때
-                when(tab!!.position) {
+                when (tab!!.position) {
                     0 -> replaceView(heritageInfoFragment)
                     1 -> replaceView(heritageReviewFragment)
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
         })
     }
+
     companion object {
         fun newInstance(param: Heritage) = HeritageDetailFragment().apply {
             arguments = Bundle().apply {
@@ -135,10 +175,11 @@ class HeritageDetailFragment :
 
     private fun replaceView(tab: Fragment) {
         // 탭한 화면 변경
-        var selectedFragment: Fragment?=null
+        var selectedFragment: Fragment? = null
         selectedFragment = tab
         selectedFragment?.let {
-            childFragmentManager.beginTransaction().replace(R.id.fragment_container_view, it).commit()
+            childFragmentManager.beginTransaction().replace(R.id.fragment_container_view, it)
+                .commit()
         }
     }
 }

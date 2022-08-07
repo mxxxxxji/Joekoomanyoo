@@ -22,3 +22,9 @@ object Channel {
     const val CHANNEL_ID = "heritage"
     const val CHANNEL_NAME = "알림"
 }
+
+object SORT {
+    const val ASCENDING_REVIEW = "리뷰순"
+    const val ASCENDING_SCRAP = "스크랩순"
+    const val ASCENDING_DIST = "거리순"
+}
