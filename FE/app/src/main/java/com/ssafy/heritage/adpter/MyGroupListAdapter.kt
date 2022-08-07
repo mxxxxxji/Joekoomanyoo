@@ -50,10 +50,10 @@ class MyGroupListAdapter() :
         fun bind(position: Int) = with(binding) {
             val item = groupList[position]
             tvName.text = item.groupName
-            tvGroupDescription.text = item.descriaption
-            tvStartDate.text = item.startDate.toString()
-            tvEndDate.text = item.endDate.toString()
-            tvGroupRegion.text = item.region
+            tvGroupDescription.text = item.groupDescriaption
+            tvStartDate.text = item.groupStartDate.toString()
+            tvEndDate.text = item.groupEndDate.toString()
+            tvGroupRegion.text = item.groupRegion
 //            tvName.text = "그룹이름"
 //            tvGroupDescription.text =  "그룹 설명설명"
 //            tvStartDate.text =  "시작하는날"
