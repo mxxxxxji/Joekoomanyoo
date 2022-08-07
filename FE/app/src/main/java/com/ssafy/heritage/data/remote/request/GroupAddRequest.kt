@@ -1,4 +1,4 @@
-package com.ssafy.heritage.data.remote.response
+package com.ssafy.heritage.data.remote.request
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -6,11 +6,11 @@ import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize
-data class GroupListResponse(
-    @SerializedName("groupSeq") var groupSeq: Int,                          // 그룹 번호
+data class GroupAddRequest(
+//    @SerializedName("groupSeq") var groupSeq: Int,                          // 그룹 번호
     @SerializedName("groupName") var groupName: String,                     // 그룹 이름
     @SerializedName("bannerImgUrl") var bannerImgUrl: String,               // 이미지
-    @SerializedName("groupMaster") var groupMaster: String,                 // 그룹 방장
+//    @SerializedName("groupMaster") var groupMaster: String,                 // 그룹 방장
     @SerializedName("groupDescription") var groupDescription: String,       // 그룹 설명
     @SerializedName("groupAccessType") var groupAccessType: Char,           // 공개:Y, 비공개:N
     @SerializedName("groupPassword") var groupPassword: String,             // 그룹 비밀번호
