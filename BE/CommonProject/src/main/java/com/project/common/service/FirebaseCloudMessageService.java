@@ -3,8 +3,13 @@ package com.project.common.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.project.common.dto.Push.FcmHistoryDto;
 import com.project.common.dto.Push.FcmMessage;
+import com.project.common.dto.Push.FcmRequestDto;
+import com.project.common.entity.Push.FcmHistoryEntity;
 import com.project.common.entity.User.UserEntity;
+import com.project.common.mapper.FcmHistoryMapper;
+import com.project.common.repository.Push.FcmHistoryRepository;
 import com.project.common.repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
@@ -13,6 +18,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +30,12 @@ public class FirebaseCloudMessageService {
     
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
+
+    private final FcmHistoryRepository fcmHistoryRepository;
+
+    // 시간설정
+    private static LocalDateTime localDateTime = LocalDateTime.now();
+    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/d102-95c18/messages:send";
 
@@ -109,6 +122,49 @@ public class FirebaseCloudMessageService {
                 userRepository.save(userEntity);
             }
             return true;
+        }
+    }
+
+    // 알림 기록하기
+    public boolean createHistory(FcmHistoryDto fcmHistoryDto) {
+        // 사용자가 없으면 false
+        if(userRepository.findByUserSeq(fcmHistoryDto.getUserSeq()) == null){
+            return false;
+        }else{
+            FcmHistoryEntity fcmHistoryEntity = FcmHistoryMapper.MAPPER.toEntity(fcmHistoryDto);
+            fcmHistoryEntity.setPushSeq(0);
+            fcmHistoryEntity.setPushCreatedAt(time);
+
+            fcmHistoryRepository.save(fcmHistoryEntity);
+            return true;
+        }
+    }
+
+    // 알림 리스트 보기
+    public List<FcmHistoryDto> listHistory(int userSeq) {
+        List<FcmHistoryEntity> list = fcmHistoryRepository.findAllByUserSeq(userSeq);
+
+        // 알림이 없거나 사용자가 없는 경우
+        if(list.size() == 0 || userRepository.findByUserSeq(userSeq) == null){
+            return null;
+        }else{
+            List<FcmHistoryDto> listDto = new ArrayList<>();
+            for(FcmHistoryEntity fcmHistoryEntity : list){
+                listDto.add(FcmHistoryMapper.MAPPER.toDto(fcmHistoryEntity));
+            }
+            return listDto;
+        }
+    }
+
+    // 내 알림 설정 조회
+    public String settingInfo(int userSeq) {
+        UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+
+        // 사용자가 없는 경우
+        if(userEntity==null){
+            return null;
+        }else{
+            return String.valueOf(userEntity.getPushSettingStatus());
         }
     }
 }
