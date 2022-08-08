@@ -9,19 +9,43 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.ssafy.heritage.ApplicationClass
+import com.ssafy.heritage.data.dto.FCMToken
+import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.Channel.CHANNEL_ID
+import com.ssafy.heritage.util.JWTUtils
 import com.ssafy.heritage.view.login.LoginActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val TAG = "MyFireBaseMessageingService___"
 
 class MyFireBaseMessageingService : FirebaseMessagingService() {
+
+    private val repository = Repository.get()
+
     // 새로운 토큰이 생성될 때 마다 해당 콜백이 호출된다.
     @SuppressLint("LongLogTag")
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
-        // 새로운 토큰 로그 남기기
-        Log.d(TAG, "onNewFCMToken: $token")
+        val jwtToken = ApplicationClass.sharedPreferencesUtil.getToken()
+
+        // 유저가 로그인 되어있는 경우에만 FCM토큰 서버로 전송
+        token?.let {
+
+            val user = JWTUtils.decoded(token)
+
+            CoroutineScope(Dispatchers.Main).launch {
+
+                val fcmToken = FCMToken(user?.userSeq!!, token)
+                repository.pushToken(fcmToken)
+            }
+
+            // 새로운 토큰 로그 남기기
+            Log.d(TAG, "onNewFCMToken: $token")
+        }
     }
 
     // Foreground에서 Push Service를 받기위해 Notification 설정

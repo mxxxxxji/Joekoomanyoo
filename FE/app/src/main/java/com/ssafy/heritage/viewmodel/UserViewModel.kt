@@ -54,6 +54,10 @@ class UserViewModel : ViewModel() {
     val notiSetting: LiveData<Char>
         get() = _notiSetting
 
+    private val _notiList = MutableLiveData<MutableList<Noti>>()
+    val notiList: LiveData<MutableList<Noti>>
+        get() = _notiList
+
     fun setUser(user: User) {
         _user.value = user
         Log.d(TAG, "setUser: ${_user.value}")
@@ -396,9 +400,41 @@ class UserViewModel : ViewModel() {
         }
     }
 
+    // 토큰 서버에 보내기
+    fun pushToken(userSeq: Int, token: String) = viewModelScope.launch {
+
+        val fcmToken = FCMToken(userSeq, token)
+        repository.pushToken(fcmToken).let { response ->
+            Log.d(TAG, "pushToken response: $response")
+            if (response.isSuccessful) {
+                Log.d(TAG, "getScrapLIst: 토큰 보내기 성공}")
+            } else {
+                Log.d(TAG, "${response.code()}")
+            }
+        }
+    }
+
     // 알림 설정 정보 불러오기
 
     // 알림 설정 하기
 
-    // 토큰 서버에 보내기
+    // 내 알림 내역 리스트 불러오기
+    fun getNotiList() = viewModelScope.launch {
+        var response: Response<List<Schedule>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.selectAllMySchedule(_user.value?.userSeq!!)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "getSchedule response: $it")
+            if (it.isSuccessful) {
+                val list = it.body() as MutableList<Schedule>
+                Log.d(TAG, "getSchedule list: $list")
+                _myScheduleList.postValue(list)
+            } else {
+
+            }
+        }
+    }
 }
