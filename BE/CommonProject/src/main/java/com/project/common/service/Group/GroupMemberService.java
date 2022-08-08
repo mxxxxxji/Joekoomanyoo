@@ -32,7 +32,7 @@ public class GroupMemberService{
 		List<GroupMemberListDto> list = new ArrayList<>();
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
 			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
-				list.add(new GroupMemberListDto(entity));
+				list.add(new GroupMemberListDto(entity,userRepository.findByUserSeq(entity.getUserSeq())));
 			}
 		}
 		return list;
