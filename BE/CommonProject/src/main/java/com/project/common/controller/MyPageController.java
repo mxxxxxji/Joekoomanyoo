@@ -3,13 +3,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.project.common.dto.AR.StampDto;
 import com.project.common.dto.Heritage.HeritageDto;
@@ -203,6 +197,7 @@ public class MyPageController {
     @ApiOperation(value = "내 일정 생성", response = String.class)
     @PostMapping("/schedule")
     public ResponseEntity<String> createSchedule(@RequestBody MyScheduleDto myScheduleDto) {
+
         if (myPageService.createSchedule(myScheduleDto)) {
             return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
         } else {

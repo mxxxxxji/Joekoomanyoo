@@ -118,6 +118,7 @@ public class UserController {
     @PutMapping("/resign/{userId}")
     @ApiOperation(value = "회원탈퇴기능", response = String.class)
     public ResponseEntity<String> resign(@ApiParam(value = "사용자 ID ( Email )", required = true) @PathVariable("userId") String userId) {
+
         // 회원이 존재하지 X -> 삭제 불가
         if (!userService.resignUser(userId)) {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
