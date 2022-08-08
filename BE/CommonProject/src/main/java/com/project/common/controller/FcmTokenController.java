@@ -2,6 +2,7 @@ package com.project.common.controller;
 
 import com.project.common.dto.Push.FcmHistoryDto;
 import com.project.common.dto.Push.FcmRequestDto;
+import com.project.common.dto.Push.FcmToken;
 import com.project.common.entity.User.UserEntity;
 import com.project.common.repository.User.UserRepository;
 import com.project.common.service.FirebaseCloudMessageService;
@@ -61,18 +62,18 @@ public class FcmTokenController {
     /**
      * 토큰 받고 User DB에 저장
      *
-     * @param userSeq,fcmToken
+     * @param fcmToken
      * @return String
      */
 
-    @PostMapping("/token/{userSeq}/{fcmToken}")
+    @PostMapping("/token")
     @ApiOperation(value = "토큰 받고 User DB에 저장", response = String.class)
-    public ResponseEntity<String> saveToken(@PathVariable("userSeq") int userSeq, @PathVariable("fcmToken") String fcmToken) {
-        UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+    public ResponseEntity<String> saveToken(@RequestBody FcmToken fcmToken) {
+        UserEntity userEntity = userRepository.findByUserSeq(fcmToken.getUserSeq());
         if (userEntity == null) {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         } else {
-            userEntity.setFcmToken(fcmToken);
+            userEntity.setFcmToken(fcmToken.getFcmToken());
             userRepository.save(userEntity);
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
