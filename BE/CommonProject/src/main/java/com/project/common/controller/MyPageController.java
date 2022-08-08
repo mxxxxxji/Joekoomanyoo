@@ -57,7 +57,7 @@ public class MyPageController {
     @ApiOperation(value = "내 문화 유산 스크랩 목록 불러오기", response = List.class)
     public ResponseEntity<?> myScrapList(@PathVariable("userSeq") int userSeq) {
         List<HeritageDto> list = heritageService.myScrapList(userSeq);
-        if (list.size() == 0) {
+        if (list == null) {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<List<HeritageDto>>(list, HttpStatus.OK);
@@ -109,7 +109,7 @@ public class MyPageController {
     @GetMapping("/keyword/list/{userSeq}")
     public ResponseEntity<?> listKeyword(@PathVariable("userSeq") int userSeq) {
         List<UserKeywordDto> list = myPageService.listKeyword(userSeq);
-        if (list.size() == 0) {
+        if (list == null) {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<List<UserKeywordDto>>(list, HttpStatus.OK);

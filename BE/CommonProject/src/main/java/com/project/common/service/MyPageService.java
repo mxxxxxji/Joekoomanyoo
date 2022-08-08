@@ -64,14 +64,22 @@ public class MyPageService {
 
     // 키워드 리스트 보여주기
     public List<UserKeywordDto> listKeyword(int userSeq) {
-        List<UserKeywordDto> listDto = new ArrayList<>();
 
-        List<UserKeywordEntity> list = userKeywordRepository.findAllByUserSeq(userSeq);
-        for(UserKeywordEntity userKeywordEntity : list){
-            listDto.add(UserKeywordMapper.MAPPER.toDto(userKeywordEntity));
+        UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+        // 사용자가 없는 경우
+        if (userEntity == null) {
+            return null;
+        } else {
+
+            List<UserKeywordDto> listDto = new ArrayList<>();
+
+            List<UserKeywordEntity> list = userKeywordRepository.findAllByUserSeq(userSeq);
+            for (UserKeywordEntity userKeywordEntity : list) {
+                listDto.add(UserKeywordMapper.MAPPER.toDto(userKeywordEntity));
+            }
+
+            return listDto;
         }
-
-        return listDto;
     }
 
     // 키워드 삭제
@@ -157,8 +165,9 @@ public class MyPageService {
     // 일정 리스트 보여주기
     public List<MyScheduleDto> listSchedule(int userSeq) {
         List<MyScheduleEntity> list = myScheduleRepositoryCustom.findByUserSeq(userSeq);
-        // 리스트에 아무것도 없는 경우 ( 일정이 없다 )
-        if(list.size()==0){
+        UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+        // 사용자가 없을 때
+        if(userEntity==null){
             return null;
         }else {
             List<MyScheduleDto> listDto = new ArrayList<>();

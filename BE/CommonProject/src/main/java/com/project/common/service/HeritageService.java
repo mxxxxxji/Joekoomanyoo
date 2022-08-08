@@ -4,6 +4,7 @@ import com.project.common.dto.Heritage.*;
 import com.project.common.entity.Heritage.HeritageEntity;
 import com.project.common.entity.Heritage.HeritageReviewEntity;
 import com.project.common.entity.Heritage.HeritageScrapEntity;
+import com.project.common.entity.User.UserEntity;
 import com.project.common.repository.Heritage.HeritageRepository;
 import com.project.common.repository.Heritage.HeritageReviewRepository;
 import com.project.common.repository.Heritage.HeritageScrapRepository;
@@ -120,15 +121,21 @@ public class HeritageService {
     // 유저 scrap 리스트 반환
     @Transactional
     public List<HeritageDto> myScrapList(int userSeq) {
-        // 유저 번호로 스크랩 목록들 가져오기
-        // 그 목록들의 번호로 문화유산 DTO에 담아주기
-        // 그 리스트를 반환
-        List<HeritageScrapEntity> list = heritageScrapRepository.findAllByUserSeq(userSeq);
-        List<HeritageDto> listHeritageDto = new ArrayList<>();
-        for(HeritageScrapEntity heritageScrapEntity : list){
-            listHeritageDto.add(HeritageMapper.MAPPER.toDto(heritageRepository.findByHeritageSeq(heritageScrapEntity.getHeritageSeq())));
+        UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+        // 사용자가 없는경우 null 반환
+        if (userEntity == null) {
+            return null;
+        } else {
+            // 유저 번호로 스크랩 목록들 가져오기
+            // 그 목록들의 번호로 문화유산 DTO에 담아주기
+            // 그 리스트를 반환
+            List<HeritageScrapEntity> list = heritageScrapRepository.findAllByUserSeq(userSeq);
+            List<HeritageDto> listHeritageDto = new ArrayList<>();
+            for (HeritageScrapEntity heritageScrapEntity : list) {
+                listHeritageDto.add(HeritageMapper.MAPPER.toDto(heritageRepository.findByHeritageSeq(heritageScrapEntity.getHeritageSeq())));
+            }
+            return listHeritageDto;
         }
-        return listHeritageDto;
     }
     
     // 유저 scrap 삭제
