@@ -80,6 +80,14 @@ public class GroupDestinationService{
 		}
 		group.addGroupDestination(GroupDestinationEntity.builder().gdCompleted('N').heritageSeq(heritageSeq).build());
 		groupRepository.save(group);
+		
+		//알림 받을 인원들
+		List<UserEntity> users = new ArrayList<>();
+		for(GroupMemberEntity entity : groupMemberRepository.findAll())
+			if(entity.getGroup().getGroupSeq()==groupSeq)
+				users.add(userRepository.findByUserSeq(entity.getUserSeq()));
+		
+		
 		return "Success";
 	}
 	
