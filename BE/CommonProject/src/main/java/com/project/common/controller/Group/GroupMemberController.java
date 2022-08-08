@@ -55,6 +55,7 @@ public class GroupMemberController {
 	}
 	
 	//모임 가입 승인
+
 	@ApiOperation(value = "모임 가입 승인 - memberStatus 0(가입대기)->1(일반회원)")
 	@PutMapping("/member/approve")
 	public ResponseEntity<String> approveMember(HttpServletRequest request,@PathVariable("groupSeq") int groupSeq){	

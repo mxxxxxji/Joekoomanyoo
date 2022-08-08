@@ -38,7 +38,7 @@ public class GroupMemberService{
 		return list;
 	}
 	
-	//모임 참가
+	// 모임 참가
 	@Transactional
 	public String joinGroup(int groupSeq, GroupJoinReqDto requestDto) {
 		for(GroupMemberEntity entity: groupMemberRepository.findAll()) {
@@ -59,6 +59,10 @@ public class GroupMemberService{
 		user.addGroup(group);
 		groupRepository.save(group);
 	 	userRepository.save(user);
+
+		 // 그룹장한테 알림 보내기
+
+
 		return "Success";
 	}
 	
