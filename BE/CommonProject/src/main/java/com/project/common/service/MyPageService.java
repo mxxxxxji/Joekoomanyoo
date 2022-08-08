@@ -1,9 +1,12 @@
 package com.project.common.service;
 
+import com.project.common.controller.FcmTokenController;
 import com.project.common.dto.My.MyDailyMemoDto;
 import com.project.common.dto.My.MyDailyMemoMapper;
 import com.project.common.dto.My.MyScheduleDto;
 import com.project.common.dto.My.MyScheduleMapper;
+import com.project.common.dto.Push.FcmHistoryDto;
+import com.project.common.dto.Push.FcmRequestDto;
 import com.project.common.dto.User.UserEvalDto;
 import com.project.common.dto.User.UserKeywordDto;
 import com.project.common.dto.User.UserKeywordMapper;
@@ -23,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,6 +44,8 @@ public class MyPageService {
     private final MyScheduleRepositoryCustom myScheduleRepositoryCustom;
 
     private final UserRepository userRepository;
+
+    private final FcmTokenController fcmTokenController;
 
     // 시간설정
     private static LocalDateTime localDateTime = LocalDateTime.now();
@@ -158,6 +164,37 @@ public class MyPageService {
             myScheduleEntity.setMyScheduleUpdatedAt(time);
 
             myScheduleRepository.save(myScheduleEntity);
+
+
+            int userSeq = myScheduleDto.getUserSeq();
+            String pushTitle = "일정 등록 완료 알림";
+            String pushContent = "일정이 등록되었습니다.";
+
+            try {
+                // 일정이 등록되었다는 알림 보내기
+                // 토큰 받아오기 ( 사용자 DB 통해서 )
+                UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+                String fcmToken = userEntity.getFcmToken();
+                FcmRequestDto fcmRequestDto = FcmRequestDto.builder()
+                        .targetToken(fcmToken)
+                        .title(pushTitle)
+                        .body(pushContent)
+                        .build();
+                fcmTokenController.sendMessageTo(fcmRequestDto);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            // 알림 기록하기
+            FcmHistoryDto fcmHistoryDto = FcmHistoryDto.builder()
+                    .pushSeq(0)
+                    .userSeq(userSeq)
+                    .pushTitle(pushTitle)
+                    .pushContent(pushContent)
+                    .pushCreatedAt(time)
+                    .build();
+            fcmTokenController.createHistory(fcmHistoryDto);
+            
             return true;
         }
     }
