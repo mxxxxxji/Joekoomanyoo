@@ -122,7 +122,7 @@ class GroupModifyFragment :
                 groupInfo = GroupAddRequest( name,"", content, 'Y',groupPwd, max,
                     region, startDate,
                     endDate, age, child, global,'Y', 'R')
-                groupViewModel.insertGroup(userSeq,groupInfo)
+                groupViewModel.insertGroup(groupInfo)
             }
         }
 

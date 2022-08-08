@@ -1,6 +1,7 @@
 package com.ssafy.heritage.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import com.ssafy.heritage.data.repository.Repository
+import com.ssafy.heritage.event.Event
 import com.ssafy.heritage.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +25,11 @@ private const val TAG = "GroupViewModel___"
 class GroupViewModel: ViewModel() {
 
     private val repository = Repository.get()
+
+    // viewModel에서 Toast 메시지 띄우기 위한 Event
+    private val _message = MutableLiveData<Event<String>>()
+    val message: LiveData<Event<String>>
+        get() = _message
 
     private val _groupList = SingleLiveEvent<MutableList<GroupListResponse>>()
     val groupList: LiveData<MutableList<GroupListResponse>> get() = _groupList
@@ -105,9 +112,9 @@ class GroupViewModel: ViewModel() {
             }
     }
 
-    fun insertGroup(userSeq: Int, groupInfo: GroupAddRequest) {
+    fun insertGroup(groupInfo: GroupAddRequest) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertGroup(userSeq, groupInfo).let { response ->
+            repository.insertGroup(groupInfo).let { response ->
                 if(response.isSuccessful) {
                     var info = response.body()!! as GroupListResponse
                     _insertGroupInfo.postValue(info)
@@ -162,9 +169,9 @@ class GroupViewModel: ViewModel() {
         }
     }
 
-    fun selectMyGroups(userSeq: Int){
+    fun selectMyGroups(){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.selectMyGroups(userSeq).let { response ->
+            repository.selectMyGroups().let { response ->
                 if(response.isSuccessful) {
                     var info = response.body()!! as MutableList<MyGroupResponse>
                     Log.d(TAG, "selectMyGroups: ${response}")
@@ -176,16 +183,30 @@ class GroupViewModel: ViewModel() {
         }
     }
 
-    fun insertGroupDestination(groupSeq: Int, heritageSeq: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun insertGroupDestination(
+        groupSeq: Int,
+        heritageSeq: Int,
+        groupName: String,
+        heritageName: String
+    ) {
+        viewModelScope.launch(Dispatchers.Main) {
             repository.insertGroupDestination(groupSeq, heritageSeq).let { response ->
+                Log.d(TAG, "insertGroupDestination response: $response")
                 if(response.isSuccessful) {
-                    var info = response.body()!! as GroupDestination
-                    _insertGroupDestination.postValue(info.toString())
+                    Log.d(TAG, "insertGroupDestination isSuccessful: ${response.body()}")
+                    if (response.body() == "Success") {
+                        makeToast("${groupName}에 ${heritageName}이(가) 추가되었습니다.")
+                    } else{
+                        makeToast("이미 추가된 모임입니다.")
+                    }
                 }else{
                     Log.d(TAG, "insertGroupDestination: ${response.code()}")
                 }
             }
         }
+    }
+
+    fun makeToast(msg: String) {
+        _message.value = Event(msg)
     }
 }

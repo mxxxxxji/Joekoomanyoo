@@ -18,8 +18,8 @@ import retrofit2.http.Path
 class Repository constructor(context: Context) {
 
     // group
-    suspend fun insertGroup(userSeq: Int, body: GroupAddRequest): Response<GroupListResponse> =
-        groupApi.insertGroup(userSeq, body)
+    suspend fun insertGroup(body: GroupAddRequest): Response<GroupListResponse> =
+        groupApi.insertGroup(body)
 
     suspend fun selectAllGroups(): Response<List<GroupListResponse>> = groupApi.selectAllGroups()
     suspend fun deleteGroup(groupSeq: Int): Response<Boolean> = groupApi.deleteGroup(groupSeq)
@@ -39,8 +39,8 @@ class Repository constructor(context: Context) {
         groupApi.applyGroupJoin(groupSeq, body)
     suspend fun leaveGroupJoin(groupSeq: Int, userSeq: Int): Response<Boolean> =
         groupApi.leaveGroupJoin(groupSeq, userSeq)
-    suspend fun selectMyGroups(userSeq: Int): Response<List<MyGroupResponse>> =
-        groupApi.selectMyGroups(userSeq)
+    suspend fun selectMyGroups(): Response<List<MyGroupResponse>> =
+        groupApi.selectMyGroups()
     suspend fun insertGroupDestination(groupSeq: Int, heritageSeq: Int): Response<String> =
         groupApi.insertGroupDestination(groupSeq, heritageSeq)
 

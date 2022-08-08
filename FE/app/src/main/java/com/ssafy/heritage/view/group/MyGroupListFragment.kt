@@ -24,7 +24,7 @@ class MyGroupListFragment :
     val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
 
     override fun init() {
-        groupViewModel.selectMyGroups(userSeq)
+        groupViewModel.selectMyGroups()
         initAdapter()
         initObserver()
         initClickListener()

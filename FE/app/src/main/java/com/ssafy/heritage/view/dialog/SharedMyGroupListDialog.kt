@@ -1,31 +1,22 @@
 package com.ssafy.heritage.view.dialog
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.ssafy.heritage.ApplicationClass
-import com.ssafy.heritage.R
-import com.ssafy.heritage.adpter.HeritageReviewAdapter
 import com.ssafy.heritage.adpter.MyGroupListAdapter
 import com.ssafy.heritage.adpter.SharedMyGroupListAdapter
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
-import com.ssafy.heritage.databinding.DialogKeywordBinding
 import com.ssafy.heritage.databinding.DialogSharedMyGroupListBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.HeritageViewModel
-import com.ssafy.heritage.viewmodel.UserViewModel
-import kotlin.properties.Delegates
 
 private const val TAG = "SharedMyGroupListDialog___"
 
@@ -52,6 +43,13 @@ class SharedMyGroupListDialog(heritageSeq: Int) : DialogFragment() {
         groupViewModel.myGroupList.observe(viewLifecycleOwner) {
             sharedMyGroupListAdapter.submitList(it)
         }
+
+        groupViewModel.message.observe(viewLifecycleOwner){
+            // viewModel에서 Toast메시지 Event 발생시
+            it.getContentIfNotHandled()?.let {
+                makeToast(it)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -73,7 +71,7 @@ class SharedMyGroupListDialog(heritageSeq: Int) : DialogFragment() {
 //        setContentView(R.layout.dialog_shared_my_group_list)
 
         // 내 모임 목록
-        groupViewModel.selectMyGroups(userSeq)
+        groupViewModel.selectMyGroups()
 
         initAdapter()
         initOpserver()
@@ -94,8 +92,9 @@ class SharedMyGroupListDialog(heritageSeq: Int) : DialogFragment() {
         binding!!.btnSharing.setOnClickListener {
             // 선택한 모임이 있다면
             if (groupSeq != 0) {
-                groupViewModel.insertGroupDestination(groupSeq, heritageSeq)
-                makeToast("${groupName}에 ${heritageViewModel.heritage.value?.heritageName}이(가) 추가되었습니다.")
+                groupViewModel.insertGroupDestination(groupSeq, heritageSeq, groupName, heritageViewModel.heritage.value?.heritageName!!)
+
+
             } else {
                 makeToast("모임을 선택해주세요!")
             }

@@ -15,8 +15,8 @@ interface GroupService {
 
     //모임 관리 API
     // 새로운 모임을 개설한다
-    @POST("/api/group/add/{userSeq}")
-    suspend fun insertGroup(@Path("userSeq") userSeq: Int, @Body body: GroupAddRequest): Response<GroupListResponse>
+    @POST("/api/group/add")
+    suspend fun insertGroup(@Body body: GroupAddRequest): Response<GroupListResponse>
 
     // 모임 목록을 조회한다
     @GET("/api/group/list")
@@ -35,8 +35,8 @@ interface GroupService {
     suspend fun selectGroupDetail(@Path("groupSeq") groupSeq: Int): Response<GroupListResponse>
 
     // 나의 모임 정보만 조회한다
-    @GET("/api/group/my-group/{userSeq}")
-    suspend fun selectMyGroups(@Path("userSeq") userSeq: Int): Response<List<MyGroupResponse>>
+    @GET("/api/group/my-group")
+    suspend fun selectMyGroups(): Response<List<MyGroupResponse>>
 
 
 
@@ -91,7 +91,7 @@ interface GroupService {
 
     // 모임 목적지를 등록한다
     @POST("/api/group/{groupSeq}/destination/add")
-    suspend fun insertGroupDestination(@Path("groupSeq") groupSeq: Int, @Body heritageSeq: Int): Response<String>
+    suspend fun insertGroupDestination(@Path("groupSeq") groupSeq: Int, @Query("heritageSeq") heritageSeq: Int): Response<String>
 
     // 모임 목적지를 삭제한다
 
