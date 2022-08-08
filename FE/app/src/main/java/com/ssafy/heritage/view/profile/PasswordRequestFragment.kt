@@ -32,7 +32,6 @@ class PasswordRequestFragment :
         // 소셜로그인 유저는 바로 보내줌
         if (userViewModel.user.value?.socialLoginType == "social"){
             findNavController().navigate(R.id.action_passwordRequestFragment_to_profileModifyFragment)
-            findNavController().popBackStack(R.id.passwordRequestFragment,true)
         }
     }
 
