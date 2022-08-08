@@ -45,6 +45,12 @@ public class HeritageService {
         String nickname = userRepository.findByUserSeq(heritageReivewDto.getUserSeq()).getUserNickname();
         HeritageReviewEntity heritageReviewEntity = HeritageReviewMapper.MAPPER.toEntity(heritageReivewDto);
         heritageReviewEntity.setUserNickname(nickname);
+
+        // 리뷰 개수 하나 늘리기
+        int cnt = heritageReviewEntity.getHeritageReviewSeq() + 1;
+        // 개수 entity에 세팅하기
+        heritageReviewEntity.setHeritageReviewSeq(cnt);
+
         heritageReviewRepository.save(heritageReviewEntity);
         if (heritageReviewEntity == null) {
             return false;
