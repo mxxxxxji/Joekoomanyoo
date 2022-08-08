@@ -16,6 +16,7 @@ public class GroupMemberListDto {
 	private String memberAppeal;
 	private char memberIsEvaluated;
 	private long userSeq;
+	private String memberNickname;
 	
 	@Builder
 	public GroupMemberListDto(GroupMemberEntity member) {
@@ -25,6 +26,7 @@ public class GroupMemberListDto {
 		this.memberAppeal = member.getMemberAppeal();
 		this.memberIsEvaluated = member.getMemberIsEvaluated();
 		this.userSeq = member.getUserSeq();
+		this.memberNickname=member.getGroup().getUser().getUserNickname();
 	}
 	
 }

@@ -21,7 +21,7 @@ public class GroupMemberDto {
 	private int memberStatus;
 	private String memberAppeal;
 	private char memberIsEvaluated;
-
+	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private Date approveTime;
 
