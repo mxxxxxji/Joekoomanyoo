@@ -92,7 +92,7 @@ class Repository constructor(context: Context) {
 
     suspend fun getMyNotiSetting(userSeq: Int): Response<Char> = userApi.getMyNotiSetting(userSeq)
     suspend fun setMyNotiSetting(userSeq: Int, userSetting: Char): Response<String> = userApi.setMyNotiSetting(userSeq, userSetting)
-    suspend fun selectAllMyNoti(userSeq: Int): Response<String> = userApi.selectAllMyNoti(userSeq)
+    suspend fun selectAllMyNoti(userSeq: Int): Response<List<Noti>> = userApi.selectAllMyNoti(userSeq)
 
     suspend fun pushToken(token: FCMToken): Response<String> = userApi.pushToken(token)
 

@@ -100,7 +100,7 @@ interface UserService {
 
     // 내 알림 내역 리스트 불러오기
     @GET("/api/push/history/{userSeq}")
-    suspend fun selectAllMyNoti(@Path("userSeq") userSeq: Int): Response<String>
+    suspend fun selectAllMyNoti(@Path("userSeq") userSeq: Int): Response<List<Noti>>
 
     // 토큰 서버에 보내기
     @POST("/api/push/token")
