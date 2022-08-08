@@ -31,9 +31,7 @@ public class FeedLikeController {
     //좋아요 갯수 조회
     @ApiOperation(value = "좋아요 갯수 조회")
     @GetMapping("/count")
-    public ResponseEntity<Integer> getFeedLikeCount(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq) throws Exception{
-    	String token = request.getHeader("X-AUTH-TOKEN");
-        if (token == null || !jwtTokenProvider.validateToken(token)) return null;
+    public ResponseEntity<Integer> getFeedLikeCount(@PathVariable("feedSeq") int feedSeq) throws Exception{
         return new ResponseEntity<>(feedLikeService.getFeedLikeCount(feedSeq),HttpStatus.OK);
     }
     
@@ -41,9 +39,7 @@ public class FeedLikeController {
     @ApiOperation(value = "피드 좋아요 등록")
     @PostMapping("/add")
     public ResponseEntity<String> addFeedLike(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq){
-    	String token = request.getHeader("X-AUTH-TOKEN");
-        if (token == null || !jwtTokenProvider.validateToken(token)) return null;
-        String userId = jwtTokenProvider.getUserId(token);
+   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
          return new ResponseEntity<>(feedLikeService.addFeedLike(userId,feedSeq),HttpStatus.CREATED);
     }
     
@@ -51,9 +47,7 @@ public class FeedLikeController {
    	@ApiOperation(value = "피드 좋아요 해제")
    	@DeleteMapping("/delete")
    	public ResponseEntity<String> deleteFeedLike(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq, @RequestParam("userSeq") int userSeq){
-   		String token = request.getHeader("X-AUTH-TOKEN");
-        if (token == null || !jwtTokenProvider.validateToken(token)) return null;
-        String userId = jwtTokenProvider.getUserId(token);
+   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
         return new ResponseEntity<>(feedLikeService.deleteFeedLike(userId,feedSeq),HttpStatus.OK);
    	}
   

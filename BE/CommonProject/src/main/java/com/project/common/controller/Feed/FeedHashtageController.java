@@ -32,9 +32,7 @@ public class FeedHashtageController {
     //피드 해쉬태그 목록 조회
     @ApiOperation(value = "피드 해쉬태그 목록 조회")
     @GetMapping("/list")
-    public ResponseEntity<List<FeedHashtagDto>> getFeedHashtagList(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq) throws Exception{
-    	 String token = request.getHeader("X-AUTH-TOKEN");
-         if (token == null || !jwtTokenProvider.validateToken(token)) return null;
+    public ResponseEntity<List<FeedHashtagDto>> getFeedHashtagList(@PathVariable("feedSeq") int feedSeq) throws Exception{
     	return new ResponseEntity<>(feedHashtagService.getFeedHashtagList(feedSeq),HttpStatus.OK);
     }
     
@@ -42,9 +40,7 @@ public class FeedHashtageController {
     @ApiOperation(value = "피드 해쉬태그 등록")
     @PostMapping("/add")
     public ResponseEntity<String> addFeedHashtag(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
-    	 String token = request.getHeader("X-AUTH-TOKEN");
-         if (token == null || !jwtTokenProvider.validateToken(token)) return null;
-         String userId = jwtTokenProvider.getUserId(token);
+   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
     	return new ResponseEntity<>(feedHashtagService.addFeedHashtag(userId,feedSeq,fhList),HttpStatus.CREATED);
     }
 
@@ -53,9 +49,7 @@ public class FeedHashtageController {
    	@ApiOperation(value = "피드 해쉬태그 삭제")
    	@PostMapping("/delete")
    	public ResponseEntity<String> deleteFeedHashtag(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq,@RequestBody List<FeedHashtagDto> fhList){
-	   	 String token = request.getHeader("X-AUTH-TOKEN");
-	     if (token == null || !jwtTokenProvider.validateToken(token)) return null;
-	     String userId = jwtTokenProvider.getUserId(token);
+   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
    		return new ResponseEntity<>(feedHashtagService.deleteFeedHashtag(userId,feedSeq,fhList),HttpStatus.OK);
    	}
  
