@@ -1,6 +1,7 @@
 package com.project.common.service.Feed;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -30,17 +31,15 @@ public class FeedHashtagService{
 			if(entity.getFeed().getFeedSeq()==feedSeq)
 				feedList.add(entity);
 		}
-		if(feedList.size()==0)
-			throw new IllegalArgumentException("등록한 해쉬태그가 없습니다");
 		return FeedHashtagMapper.MAPPER.toDtoList(feedList);
 	}
 	
 	//피드 해쉬태그 등록
 	@Transactional
-	public String addFeedHashtag(int feedSeq, List<FeedHashtagDto> fhList) {
-		if(fhList.size()==0)
-			return "Fail";
+	public String addFeedHashtag(String userId,int feedSeq, List<FeedHashtagDto> fhList) {
 		FeedEntity feed = feedService.findFeed(feedSeq);
+		if(!feed.getUser().getUserId().equals(userId))
+			return "Fail";
 		int cnt =0;
 		for(FeedHashtagDto dto : fhList) {
 			boolean check=false;
@@ -50,7 +49,10 @@ public class FeedHashtagService{
 				}
 			}
 			if(check==false) {
-				feed.addFeedHashtag(FeedHashtagEntity.builder().fhTag(dto.getFhTag()).build());
+				feed.addFeedHashtag(
+						FeedHashtagEntity.builder()
+						.fhTag(dto.getFhTag())
+						.createdTime(new Date()).build());
 				feedRepository.save(feed);
 				cnt++;
 			}
@@ -62,10 +64,11 @@ public class FeedHashtagService{
 	
 	//피드 해쉬태그 삭제
 	@Transactional
-	public String deleteFeedHashtag(int feedSeq, List<FeedHashtagDto> fhList) {
-		if(fhList.size()==0)
-			return "Fail";
+	public String deleteFeedHashtag(String userId,int feedSeq, List<FeedHashtagDto> fhList) {
 		FeedEntity feed = feedService.findFeed(feedSeq);
+		if(!feed.getUser().getUserId().equals(userId))
+			return "Fail";
+
 		int cnt =0;
 		for(FeedHashtagDto dto : fhList) {
 			for(FeedHashtagEntity entity : findHashtag(feedSeq)) {

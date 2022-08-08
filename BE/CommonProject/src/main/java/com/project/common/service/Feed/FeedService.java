@@ -1,6 +1,7 @@
 package com.project.common.service.Feed;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -30,9 +31,11 @@ public class FeedService{
 	
 	//피드 등록
 	@Transactional
-	public FeedDto addFeed(int userSeq,FeedDto feedDto) {
+	public FeedDto addFeed(String userId,FeedDto feedDto) {
 		FeedEntity saved= feedRepository.save(feedDto.toEntity());
-		UserEntity user = userRepository.findByUserSeq(userSeq);
+		UserEntity user = userRepository.findByUserId(userId);
+		saved.setCreatedTime(new Date());
+		saved.setUpdatedTime(new Date());
 		user.addFeed(saved);
 	 	userRepository.save(user);
 		return FeedMapper.MAPPER.toDto(saved);
@@ -56,10 +59,10 @@ public class FeedService{
 	}
 	
 	//내 피드 조회
-	public List<FeedDto> getMyFeedList(int userSeq){
+	public List<FeedDto> getMyFeedList(String userId){
 		List<FeedDto> feedList=new ArrayList<>();
 		for(FeedEntity entity : feedRepository.findAll()) {
-			if(entity.getUser().getUserSeq()==userSeq)
+			if(entity.getUser().getUserId().equals(userId))
 				feedList.add(FeedMapper.MAPPER.toDto(entity));
 		}
 		return feedList;
@@ -72,31 +75,33 @@ public class FeedService{
 	}
 	
 	//피드 삭제
-	public String deleteFeed(int feedSeq){
-		for(FeedHashtagEntity entity : feedHashtagRepository.findAll()) 
-			if(entity.getFeed().getFeedSeq()==feedSeq) 
-				feedHashtagRepository.deleteById(entity.getFhSeq());
+	public String deleteFeed(String userId,int feedSeq){
+		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
 		
-		for(FeedLikeEntity entity : feedLikeRepository.findAll()) 
-			if(entity.getFeed().getFeedSeq()==feedSeq) 
-				feedLikeRepository.deleteById(entity.getFeedLikeSeq());
-
-		feedRepository.deleteById(feedSeq);
+		//해쉬태그 삭제
+		for(FeedHashtagEntity entity : feed.getHashtags())  
+			feedHashtagRepository.deleteById(entity.getFhSeq());
+		
+		//좋아요 삭제
+		for(FeedLikeEntity entity : feed.getFeedLikes())
+			feedLikeRepository.deleteById(entity.getFeedLikeSeq());
+	
+//		//userId, feedSeq로 삭제
+//		feedRepository.deleteByUserIdAndFeedSeq(userId,feedSeq);
 		
 		return "Success";
 	}
 	
 	//피드 수정
 	public String updateFeed(int feedSeq,FeedDto feedDto) {
-		FeedEntity Feed =feedRepository.findById(feedSeq).orElse(null);
-		if(Feed==null)
-			return "Fail";
+		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
 
-		Feed.setFeedContent(feedDto.getFeedContent());
-		Feed.setFeedImgUrl(feedDto.getFeedImgUrl());
-		Feed.setFeedTitle(feedDto.getFeedTitle());
-		Feed.setFeedOpen(feedDto.getFeedOpen());
-		feedRepository.save(Feed);
+		feed.setFeedContent(feedDto.getFeedContent());
+		feed.setFeedImgUrl(feedDto.getFeedImgUrl());
+		feed.setFeedTitle(feedDto.getFeedTitle());
+		feed.setFeedOpen(feedDto.getFeedOpen());
+		feed.setUpdatedTime(new Date());
+		feedRepository.save(feed);
 		
 		return "Success";
 	}
@@ -105,7 +110,7 @@ public class FeedService{
 	public String openFeed(int feedSeq,char feedOpen) {
 		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
 		feed.setFeedOpen(feedOpen);
-		feedRepository.save(feed);
+		feed.setUpdatedTime(new Date());
 		feedRepository.save(feed);
 		return "Success";
 	}

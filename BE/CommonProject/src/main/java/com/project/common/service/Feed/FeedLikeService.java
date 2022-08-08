@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedLikeEntity;
+import com.project.common.entity.User.UserEntity;
 import com.project.common.repository.Feed.FeedLikeRepository;
 import com.project.common.repository.Feed.FeedRepository;
+import com.project.common.repository.User.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,49 +22,51 @@ public class FeedLikeService {
 	private final FeedRepository feedRepository;
 	private final FeedLikeRepository feedLikeRepository;
 	private final FeedService feedService;
-
+	private final UserRepository userRepository;
+	
 	// 좋아요 갯수 조회
 	public int getFeedLikeCount(int feedSeq) {
-		List<FeedLikeEntity> list = new ArrayList<>();
+		int cnt=0;
 		for (FeedLikeEntity entity : feedLikeRepository.findAll()) {
 			if (entity.getFeed() != null && entity.getFeed().getFeedSeq() == feedSeq) {
-				list.add(entity);
+				cnt++;
 			}
 		}
-		return list.size();
+		return cnt;
 	}
 
 	// 피드 좋아요 등록
 	@Transactional
-	public String addFeedLike(int feedSeq, int userSeq) {
+	public String addFeedLike(String userId,int feedSeq) {
+		UserEntity user = userRepository.findByUserId(userId);
 		FeedEntity feed = feedService.findFeed(feedSeq);
 		for (FeedLikeEntity entity : feed.getFeedLikes()) {
-			if (entity.getUserSeq() == userSeq) {
-				return "Fail";
-			}
+			if (entity.getUserSeq() == user.getUserSeq()) return "Fail";
 		}
-		feed.addFeedLike(FeedLikeEntity.builder().userSeq(userSeq).build());
+		feed.addFeedLike(FeedLikeEntity.builder().userSeq(user.getUserSeq()).build());
 		feedRepository.save(feed);
 		return "Success";
 	}
 
 	// 피드 좋아요 해제
 	@Transactional
-	public String deleteFeedLike(int feedSeq, int userSeq) {
+	public String deleteFeedLike(String userId,int feedSeq) {
 		List<FeedLikeEntity> feedLikes = findFeedLike(feedSeq);
 		if (feedLikes.size() == 0)
 			return "Fail";
+
+		UserEntity user = userRepository.findByUserId(userId);
 		FeedEntity feed = feedService.findFeed(feedSeq);
-		for (FeedLikeEntity entity : feedLikes) {
-			if (entity.getUserSeq() == userSeq) {
-				feedLikeRepository.deleteByUserSeq(userSeq);
-				feed.removeFeedLike(userSeq);
+		for (FeedLikeEntity entity : feed.getFeedLikes()) {
+			if (entity.getUserSeq() == user.getUserSeq()) {
+	//			feedLikeRepository.deleteByUserIdAndFeedSeq(user.getUserId(),feedSeq);
+				feed.removeFeedLike(user.getUserSeq());
 			}
 		}
 		return "Success";
 	}
 
-	// 해당 모임 메모 찾기
+	// 피드 좋아요 리스트 찾기
 	public List<FeedLikeEntity> findFeedLike(int feedSeq) {
 		List<FeedLikeEntity> findFeedLike = new ArrayList<>();
 		for (FeedLikeEntity entity : feedLikeRepository.findAll()) {
