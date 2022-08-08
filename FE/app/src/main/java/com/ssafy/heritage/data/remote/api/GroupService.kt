@@ -1,11 +1,10 @@
 package com.ssafy.heritage.data.remote.api
 
-import com.ssafy.heritage.data.dto.GroupAttribute
 import com.ssafy.heritage.data.dto.Member
-import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
+import com.ssafy.heritage.data.remote.request.GroupSchedule
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import retrofit2.Response
@@ -41,10 +40,6 @@ interface GroupService {
 
 
 
-
-
-
-
     // 모임 활성화 여부를 등록한다
     @PUT("/api/group/{groupSeq}/active")
     suspend fun changeGroupActiveState(@Body body: Int): Response<Boolean>
@@ -61,11 +56,12 @@ interface GroupService {
     @DELETE("/api/group/{groupSeq}/member/leave")
     suspend fun leaveGroupJoin(@Path("groupSeq") groupSeq: Int, @Query("userSeq") userSeq: Int): Response<Boolean>
 
+
+
+
     // 회원 목록을 조회한다
     @GET("/api/group/{groupSeq}/member/list")
     suspend fun selectGroupMembers(@Path("groupSeq") groupSeq: Int): Response<List<Member>>
-
-
 
     // 회원 프로필을 조회한다
 
@@ -73,21 +69,21 @@ interface GroupService {
 
     // 회원을 평가한다
 
-    // 모임 일정을 등록한다
 
-    // 모임 일정을 수정한다
+
+    // 모임 일정을 등록한다
+    @POST("/api/group/{groupSeq}/schedule/add")
+    suspend fun insertGroupSchedule(@Path("groupSeq") groupSeq: Int, @Body body: GroupSchedule): Response<String>
 
     // 모임 일정을 삭제한다
+    @DELETE("/api/group/{groupSeq}/schedule/delete")
+    suspend fun deleteGroupSchedule(@Path("groupSeq") groupSeq: Int, @Query("gsDateTime") gsDateTime: String): Response<String>
 
     // 모임 일정을 조회한다
+    @GET("/api/group/{group}/schedule/list")
+    suspend fun selectGroupSchedule(@Path("groupSeq") groupSeq: Int) : Response<List<GroupSchedule>>
 
-    // 모임 데일리 메모를 등록한다
 
-    // 모임 데일리 메모를 조회한다
-
-    // 모임 데일리 메모를 수정한다
-
-    // 모임 데일리 메모를 삭제한다
 
     // 모임 목적지를 등록한다
     @POST("/api/group/{groupSeq}/destination/add")
@@ -96,6 +92,9 @@ interface GroupService {
     // 모임 목적지를 삭제한다
 
     // 모임 목적지 방문 여부를 등록한다
+
+
+
 
     // 채팅을 불러온다
 
