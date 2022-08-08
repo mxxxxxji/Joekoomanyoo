@@ -54,9 +54,10 @@ public class GroupDestinationController {
 
     //모임 목적지 추가
     @ApiOperation(value = "모임 목적지 추가")
-    @PostMapping("/{groupSeq}/destination/add")
-    public ResponseEntity<String> addGroupDestination(HttpServletRequest request,@PathVariable("groupSeq") int groupSeq,@Param("heritageSeq") int heritageSeq){
+    @PostMapping("/{groupSeq}/destination/add/{heritageSeq}")
+    public ResponseEntity<String> addGroupDestination(HttpServletRequest request,@PathVariable("groupSeq") int groupSeq,@PathVariable("heritageSeq") int heritageSeq){
     	String token = request.getHeader("X-AUTH-TOKEN");
+    	System.out.println(heritageSeq);
    	 	if (token == null || !jwtTokenProvider.validateToken(token)) return null;
     	return new ResponseEntity<>(groupDestinationService.addGroupDestination(groupSeq,heritageSeq),HttpStatus.CREATED);
     }
@@ -64,8 +65,8 @@ public class GroupDestinationController {
     
     //모임 목적지 삭제
    	@ApiOperation(value = "모임 목적지 삭제")
-   	@DeleteMapping("/{groupSeq}/destination/delete")
-   	public ResponseEntity<String> deleteGroupDestination(HttpServletRequest request,@PathVariable int groupSeq, @RequestParam("heritageSeq") int heritageSeq){
+   	@DeleteMapping("/{groupSeq}/destination/delete/{heritageSeq}")
+   	public ResponseEntity<String> deleteGroupDestination(HttpServletRequest request,@PathVariable int groupSeq, @PathVariable("heritageSeq") int heritageSeq){
     	String token = request.getHeader("X-AUTH-TOKEN");
    	 	if (token == null || !jwtTokenProvider.validateToken(token)) return null;
    		return new ResponseEntity<>(groupDestinationService.deleteGroupDestination(groupSeq, heritageSeq),HttpStatus.OK);
@@ -73,8 +74,8 @@ public class GroupDestinationController {
     
    	//모임 목적지 완료 표시
   	@ApiOperation(value = "모임 목적지 완료 표시 - gdCompleted N -> Y")
-  	@PutMapping("/{groupSeq}/destination/complete")
-  	public ResponseEntity<String> modifyGroupDestination(HttpServletRequest request,@PathVariable int groupSeq,@Param("heritageSeq") int heritageSeq){
+  	@PutMapping("/{groupSeq}/destination/complete/{heritageSeq}")
+  	public ResponseEntity<String> modifyGroupDestination(HttpServletRequest request,@PathVariable int groupSeq,@PathVariable("heritageSeq") int heritageSeq){
     	String token = request.getHeader("X-AUTH-TOKEN");
    	 	if (token == null || !jwtTokenProvider.validateToken(token)) return null;
   		return new ResponseEntity<>(groupDestinationService.modifyGroupDestination(groupSeq,heritageSeq),HttpStatus.OK);
