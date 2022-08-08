@@ -1,8 +1,14 @@
 package com.project.common.service.Group;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.project.common.controller.FcmTokenController;
+import com.project.common.dto.Push.FcmHistoryDto;
+import com.project.common.service.FirebaseCloudMessageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +30,8 @@ public class GroupSettingService{
 	private final UserRepository userRepository;
 
 	private final GroupMemberRepository groupMemberRepository;
+	private final FirebaseCloudMessageService firebaseCloudMessageService;
+	private final FcmTokenController fcmTokenController;
 	
 	
 	//모임 상태 변경
@@ -33,19 +41,52 @@ public class GroupSettingService{
 		groupRepository.save(group);
 		
 		//알림 받을 인원들
-		List<UserEntity> users = new ArrayList<>();
-		for(GroupMemberEntity entity : groupMemberRepository.findAll())
-			if(entity.getGroup().getGroupSeq()==groupSeq)
-				users.add(userRepository.findByUserSeq(entity.getUserSeq()));
-		
-		char status = groupSettingDto.getGroupStatus();
-		if(status=='R')
-			System.out.println("모집중");
-		else if(status=='O')
-			System.out.println("모임 진행");
-		else if(status=='F')
-			System.out.println("모임 종료");	
-		
+		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
+			if (entity.getGroup().getGroupSeq() == groupSeq) {
+				UserEntity userEntity = userRepository.findByUserSeq(entity.getUserSeq());
+
+				char status = groupSettingDto.getGroupStatus();
+				if (status == 'O') {
+					String fcmToken = userEntity.getFcmToken();
+					String title = "모임 진행 알림";
+					String body = userEntity.getUserNickname() + "님의 모임이 진행됩니다!";
+					try {
+						firebaseCloudMessageService.sendMessageTo(fcmToken, title, body);
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+
+					// 모임 기록하기
+					FcmHistoryDto fcmHistoryDto = FcmHistoryDto.builder()
+							.pushSeq(0)
+							.userSeq(userEntity.getUserSeq())
+							.pushTitle(title)
+							.pushContent(body)
+							.pushCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+							.build();
+					fcmTokenController.createHistory(fcmHistoryDto);
+				} else if (status == 'F') {
+					String fcmToken = userEntity.getFcmToken();
+					String title = "모임 종료 알림";
+					String body = userEntity.getUserNickname() + "님의 모임이 종료됩니다.";
+					try {
+						firebaseCloudMessageService.sendMessageTo(fcmToken, title, body);
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+
+					// 모임 기록하기
+					FcmHistoryDto fcmHistoryDto = FcmHistoryDto.builder()
+							.pushSeq(0)
+							.userSeq(userEntity.getUserSeq())
+							.pushTitle(title)
+							.pushContent(body)
+							.pushCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+							.build();
+					fcmTokenController.createHistory(fcmHistoryDto);
+				}
+			}
+		}
 		return "Success";
 	}
 	

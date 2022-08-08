@@ -1,9 +1,15 @@
 package com.project.common.service.Group;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.project.common.controller.FcmTokenController;
+import com.project.common.dto.Push.FcmHistoryDto;
+import com.project.common.service.FirebaseCloudMessageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +34,8 @@ public class GroupScheduleService{
 	private final GroupService groupService;
 	private final GroupMemberRepository groupMemberRepository;
 	private final UserRepository userRepository;
-	
+	private final FirebaseCloudMessageService firebaseCloudMessageService;
+	private final FcmTokenController fcmTokenController;
 	//일정 조회
 	public List<GroupScheduleDto> getScheduleList(int groupSeq){
 		List<GroupScheduleDto> list = new ArrayList<>();
@@ -77,11 +84,30 @@ public class GroupScheduleService{
 		
 		
 		//알림 받을 인원들
-		List<UserEntity> users = new ArrayList<>();
-		for(GroupMemberEntity entity : groupMemberRepository.findAll())
-			if(entity.getGroup().getGroupSeq()==groupSeq)
-				users.add(userRepository.findByUserSeq(entity.getUserSeq()));
-		
+		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
+			if (entity.getGroup().getGroupSeq() == groupSeq) {
+				UserEntity userEntity = userRepository.findByUserSeq(entity.getUserSeq());
+
+				String fcmToken = userEntity.getFcmToken();
+				String title = "일정 추가 알림";
+				String body = userEntity.getUserNickname() + "님의 모임에서 일정이 추가되었습니다";
+				try {
+					firebaseCloudMessageService.sendMessageTo(fcmToken, title, body);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+
+				// 모임 기록하기
+				FcmHistoryDto fcmHistoryDto = FcmHistoryDto.builder()
+						.pushSeq(0)
+						.userSeq(userEntity.getUserSeq())
+						.pushTitle(title)
+						.pushContent(body)
+						.pushCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+						.build();
+				fcmTokenController.createHistory(fcmHistoryDto);
+			}
+		}
 		return "Success";
 		
 	}

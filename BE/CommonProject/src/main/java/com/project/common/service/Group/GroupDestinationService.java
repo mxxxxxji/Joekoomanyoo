@@ -1,8 +1,14 @@
 package com.project.common.service.Group;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.project.common.controller.FcmTokenController;
+import com.project.common.dto.Push.FcmHistoryDto;
+import com.project.common.service.FirebaseCloudMessageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +37,8 @@ public class GroupDestinationService{
 	private final GroupDestinationRepository groupDestinationRepository;
 	private final GroupService groupService;
 	private final UserRepository userRepository;
+	private final FirebaseCloudMessageService firebaseCloudMessageService;
+	private final FcmTokenController fcmTokenController;
 	
 
 	//내 모임 목적지 조회
@@ -82,12 +90,30 @@ public class GroupDestinationService{
 		groupRepository.save(group);
 		
 		//알림 받을 인원들
-		List<UserEntity> users = new ArrayList<>();
-		for(GroupMemberEntity entity : groupMemberRepository.findAll())
-			if(entity.getGroup().getGroupSeq()==groupSeq)
-				users.add(userRepository.findByUserSeq(entity.getUserSeq()));
-		
-		
+		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
+			if (entity.getGroup().getGroupSeq() == groupSeq) {
+				UserEntity userEntity = userRepository.findByUserSeq(entity.getUserSeq());
+
+				String fcmToken = userEntity.getFcmToken();
+				String title = "목적지 추가 알림";
+				String body = userEntity.getUserNickname() + "님의 모임에서 목적지가 추가되었습니다";
+				try {
+					firebaseCloudMessageService.sendMessageTo(fcmToken, title, body);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+
+				// 모임 기록하기
+				FcmHistoryDto fcmHistoryDto = FcmHistoryDto.builder()
+						.pushSeq(0)
+						.userSeq(userEntity.getUserSeq())
+						.pushTitle(title)
+						.pushContent(body)
+						.pushCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+						.build();
+				fcmTokenController.createHistory(fcmHistoryDto);
+			}
+		}
 		return "Success";
 	}
 	

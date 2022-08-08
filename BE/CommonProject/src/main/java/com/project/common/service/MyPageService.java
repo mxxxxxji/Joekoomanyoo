@@ -161,37 +161,6 @@ public class MyPageService {
             myScheduleEntity.setMyScheduleUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             myScheduleRepository.save(myScheduleEntity);
-
-
-            int userSeq = myScheduleDto.getUserSeq();
-            String pushTitle = "일정 등록 완료 알림";
-            String pushContent = "일정이 등록되었습니다.";
-
-            try {
-                // 일정이 등록되었다는 알림 보내기
-                // 토큰 받아오기 ( 사용자 DB 통해서 )
-                UserEntity userEntity = userRepository.findByUserSeq(userSeq);
-                String fcmToken = userEntity.getFcmToken();
-                FcmRequestDto fcmRequestDto = FcmRequestDto.builder()
-                        .targetToken(fcmToken)
-                        .title(pushTitle)
-                        .body(pushContent)
-                        .build();
-                fcmTokenController.sendMessageTo(fcmRequestDto);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            // 알림 기록하기
-            FcmHistoryDto fcmHistoryDto = FcmHistoryDto.builder()
-                    .pushSeq(0)
-                    .userSeq(userSeq)
-                    .pushTitle(pushTitle)
-                    .pushContent(pushContent)
-                    .pushCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                    .build();
-            fcmTokenController.createHistory(fcmHistoryDto);
-            
             return true;
         }
     }
