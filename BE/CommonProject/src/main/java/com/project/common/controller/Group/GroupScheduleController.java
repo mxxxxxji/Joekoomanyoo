@@ -37,9 +37,7 @@ public class GroupScheduleController {
     //일정 조회
     @ApiOperation(value = "모임 일정 조회")
     @GetMapping("/{groupSeq}/schedule/list")
-    public ResponseEntity<List<GroupScheduleDto>> getScheduleList(HttpServletRequest request,@PathVariable("groupSeq") int groupSeq) throws Exception{
-    	String token = request.getHeader("X-AUTH-TOKEN");
-   	 	if (token == null || !jwtTokenProvider.validateToken(token)) return null;
+    public ResponseEntity<List<GroupScheduleDto>> getScheduleList(@PathVariable("groupSeq") int groupSeq) throws Exception{
     	return new ResponseEntity<>(groupScheduleService.getScheduleList(groupSeq),HttpStatus.OK);
     }
     
@@ -47,36 +45,28 @@ public class GroupScheduleController {
     @ApiOperation(value = "내 모임 일정 조회")
     @GetMapping("/my-schedule")
     public ResponseEntity<List<GroupScheduleDto>> getMyScheduleList(HttpServletRequest request) throws Exception{
-    	String token = request.getHeader("X-AUTH-TOKEN");
-   	 	if (token == null || !jwtTokenProvider.validateToken(token)) return null;
-   	 	String userId = jwtTokenProvider.getUserId(token);
+   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
     	return new ResponseEntity<>(groupScheduleService.getMyScheduleList(userId),HttpStatus.OK);
     }
     
     //일정 등록
     @ApiOperation(value = "모임 일정 생성")	
     @PostMapping("/{groupSeq}/schedule/add")
-    public ResponseEntity<String> createGroupSchedule(HttpServletRequest request,@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
-    	String token = request.getHeader("X-AUTH-TOKEN");
-   	 	if (token == null || !jwtTokenProvider.validateToken(token)) return null;
+    public ResponseEntity<String> createGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
     	return new ResponseEntity<>(groupScheduleService.createGroupSchedule(groupSeq,gsDto),HttpStatus.CREATED);
     }
     
     //일정 삭제
    	@ApiOperation(value = "모임 일정 삭제")
    	@DeleteMapping("/{groupSeq}/schedule/delete")
-   	public ResponseEntity<String> deleteGroupSchedule(HttpServletRequest request,@PathVariable int groupSeq, @RequestParam("gsDateTime") Date gsDateTime){
-   		String token = request.getHeader("X-AUTH-TOKEN");
-   	 	if (token == null || !jwtTokenProvider.validateToken(token)) return null;
+   	public ResponseEntity<String> deleteGroupSchedule(@PathVariable int groupSeq, @RequestParam("gsDateTime") Date gsDateTime){
    		return new ResponseEntity<>(groupScheduleService.deleteGroupSchedule(groupSeq,gsDateTime),HttpStatus.OK);
    	}
     
    	//메모 수정
   	@ApiOperation(value = "모임 일정 수정")
   	@PutMapping("/{groupSeq}/schedule/modify")
-  	public ResponseEntity<String> modifyGroupSchedule(HttpServletRequest request,@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
-  		String token = request.getHeader("X-AUTH-TOKEN");
-   	 	if (token == null || !jwtTokenProvider.validateToken(token)) return null;
+  	public ResponseEntity<String> modifyGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
   		return new ResponseEntity<>(groupScheduleService.modifyGroupSchedule(groupSeq,gsDto),HttpStatus.OK);
   	}
 }

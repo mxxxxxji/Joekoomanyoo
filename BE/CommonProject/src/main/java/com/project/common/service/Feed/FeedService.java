@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.common.dto.Feed.FeedDto;
 import com.project.common.entity.Feed.FeedEntity;
@@ -31,11 +32,17 @@ public class FeedService{
 	
 	//피드 등록
 	@Transactional
-	public FeedDto addFeed(String userId,FeedDto feedDto) {
+	public FeedDto addFeed(String userId,FeedDto feedDto,MultipartFile uploadFile) {
 		FeedEntity saved= feedRepository.save(feedDto.toEntity());
 		UserEntity user = userRepository.findByUserId(userId);
 		saved.setCreatedTime(new Date());
 		saved.setUpdatedTime(new Date());
+		
+		//upload
+		
+		
+		
+		feedRepository.save(saved);
 		user.addFeed(saved);
 	 	userRepository.save(user);
 		return FeedMapper.MAPPER.toDto(saved);
