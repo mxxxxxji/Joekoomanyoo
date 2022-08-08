@@ -47,9 +47,6 @@ public class MyPageService {
 
     private final FcmTokenController fcmTokenController;
 
-    // 시간설정
-    private static LocalDateTime localDateTime = LocalDateTime.now();
-    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
 
     // 키워드 생성
@@ -61,7 +58,7 @@ public class MyPageService {
             return false;
         }else{
             // 현재 날짜 , 인덱스 주기
-            userKeywordEntity.setMyKeywordRegistedAt(time);
+            userKeywordEntity.setMyKeywordRegistedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             userKeywordEntity.setMyKeywordSeq(0);
             userKeywordRepository.save(userKeywordEntity);
             return true;
@@ -105,8 +102,8 @@ public class MyPageService {
         if(myDailyMemoRepositoryCustom.findByUserSeqAndMyDailyMemoDate(myDailyMemoDto.getUserSeq(), myDailyMemoDto.getMyDailyMemoDate()) != null){
             return false;
         }else {
-            myDailyMemoDto.setMyDailyMemoRegistedAt(time);
-            myDailyMemoDto.setMyDailyMemoUpdatedAt(time);
+            myDailyMemoDto.setMyDailyMemoRegistedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            myDailyMemoDto.setMyDailyMemoUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             MyDailyMemoEntity myDailyMemoEntity = MyDailyMemoMapper.MAPPER.toEntity(myDailyMemoDto);
             myDailyMemoRepository.save(myDailyMemoEntity);
@@ -134,7 +131,7 @@ public class MyPageService {
         }else {
             // 메모 내용 수정
             myDailyMemoEntity.setMyDailyMemo(myDailyMemoDto.getMyDailyMemo());
-            myDailyMemoEntity.setMyDailyMemoUpdatedAt(time);
+            myDailyMemoEntity.setMyDailyMemoUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             myDailyMemoRepository.save(myDailyMemoEntity);
             return true;
@@ -160,8 +157,8 @@ public class MyPageService {
         }else {
             MyScheduleEntity myScheduleEntity = MyScheduleMapper.MAPPER.toEntity(myScheduleDto);
             // 시간 등록
-            myScheduleEntity.setMyScheduleRegistedAt(time);
-            myScheduleEntity.setMyScheduleUpdatedAt(time);
+            myScheduleEntity.setMyScheduleRegistedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            myScheduleEntity.setMyScheduleUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             myScheduleRepository.save(myScheduleEntity);
 
@@ -191,7 +188,7 @@ public class MyPageService {
                     .userSeq(userSeq)
                     .pushTitle(pushTitle)
                     .pushContent(pushContent)
-                    .pushCreatedAt(time)
+                    .pushCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                     .build();
             fcmTokenController.createHistory(fcmHistoryDto);
             
@@ -274,7 +271,7 @@ public class MyPageService {
             userEntity.setEvalList5((userEntity.getEvalList5() + userEvalDto.getEvalList5()));
 
             // 시간 등록
-            userEntity.setEvalUpdatedAt(time);
+            userEntity.setEvalUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             return true;
         }

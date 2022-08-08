@@ -28,10 +28,6 @@ public class ARService {
 
     private final MyARRepository myARRepository;
 
-    // 시간설정
-    private static LocalDateTime localDateTime = LocalDateTime.now();
-    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
 
     // 스탬프 리스트 반환
     public List<StampDto> listStamp() {
@@ -84,7 +80,7 @@ public class ARService {
                 .stampSeq(stampSeq)
                 .userSeq(userSeq)
                 .heritageSeq(heritageSeq)
-                .myStampRegistedAt(time).build();
+                .myStampRegistedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).build();
 
         myARRepository.save(MyStampMapper.MAPPER.toEntity(myStampDto));
         return true;

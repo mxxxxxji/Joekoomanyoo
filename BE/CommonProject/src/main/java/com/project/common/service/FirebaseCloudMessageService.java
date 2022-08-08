@@ -33,9 +33,6 @@ public class FirebaseCloudMessageService {
 
     private final FcmHistoryRepository fcmHistoryRepository;
 
-    // 시간설정
-    private static LocalDateTime localDateTime = LocalDateTime.now();
-    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/d102-95c18/messages:send";
 
@@ -133,7 +130,7 @@ public class FirebaseCloudMessageService {
         }else{
             FcmHistoryEntity fcmHistoryEntity = FcmHistoryMapper.MAPPER.toEntity(fcmHistoryDto);
             fcmHistoryEntity.setPushSeq(0);
-            fcmHistoryEntity.setPushCreatedAt(time);
+            fcmHistoryEntity.setPushCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             fcmHistoryRepository.save(fcmHistoryEntity);
             return true;

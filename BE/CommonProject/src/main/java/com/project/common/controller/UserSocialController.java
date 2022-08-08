@@ -35,9 +35,6 @@ public class UserSocialController {
     private final UserService userService;
 
     private final JwtTokenProvider jwtTokenProvider;
-    // 시간설정
-    private static LocalDateTime localDateTime = LocalDateTime.now();
-    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
 
     /**
@@ -95,14 +92,14 @@ public class UserSocialController {
                 .userBirth(userSignDto.getUserBirth())
                 .userNickname(userSignDto.getUserNickname())
                 .userGender(userSignDto.getUserGender())
-                .userRegistedAt(time)
-                .userUpdatedAt(time)
+                .userRegistedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .userUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .socialLoginType("social")
                 .fcmToken("")
                 .profileImgUrl("")
                 .isDeleted('N')
                 .roles(Collections.singletonList("ROLE_USER"))
-                .evalUpdatedAt(time)
+                .evalUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .pushSettingStatus('Y')
                 .build());
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

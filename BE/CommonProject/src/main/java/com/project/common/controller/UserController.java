@@ -39,9 +39,6 @@ public class UserController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // 시간설정
-    private static LocalDateTime localDateTime = LocalDateTime.now();
-    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     /**
      * 일반 회원 가입
@@ -66,13 +63,13 @@ public class UserController {
                 .userBirth(userSignDto.getUserBirth())
                 .userNickname(userSignDto.getUserNickname())
                 .userGender(userSignDto.getUserGender())
-                .userRegistedAt(time)
-                .userUpdatedAt(time)
+                .userRegistedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .userUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .socialLoginType("none")
                 .fcmToken("")
                 .profileImgUrl("")
                 .isDeleted('N')
-                .evalUpdatedAt(time)
+                .evalUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .roles(Collections.singletonList("ROLE_USER"))
                 .pushSettingStatus('Y')
                 .build();

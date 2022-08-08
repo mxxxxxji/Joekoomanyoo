@@ -1,7 +1,4 @@
 package com.project.common.controller;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -10,14 +7,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.dto.AR.StampDto;
 import com.project.common.dto.Heritage.HeritageDto;
-import com.project.common.dto.My.MyDailyMemoDto;
 import com.project.common.dto.My.MyScheduleDto;
 import com.project.common.dto.User.UserEvalDto;
 import com.project.common.dto.User.UserKeywordDto;
@@ -41,10 +36,6 @@ public class MyPageController {
     private final HeritageService heritageService;
     private final MyPageService myPageService;
     private final ARService arService;
-
-    // 시간설정
-    private static LocalDateTime localDateTime = LocalDateTime.now();
-    private static String time = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     /**
      * 내 문화 유산 스크랩 목록 불러오기
