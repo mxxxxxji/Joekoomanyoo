@@ -92,6 +92,10 @@ object RetrofitInstance {
     val heritageApi: HeritageService by lazy {
         retrofit.create(HeritageService::class.java)
     }
+
+    val feedApi: FeedService by lazy {
+        retrofit.create(FeedService::class.java)
+    }
 //    private fun getTrustManagerFactory(context: Context): TrustManagerFactory? {
 //        // 1. CA 로드
 //        val cf: CertificateFactory = CertificateFactory.getInstance("X.509")

@@ -2,6 +2,7 @@ package com.ssafy.heritage.data.repository
 
 import android.content.Context
 import com.ssafy.heritage.data.dto.*
+import com.ssafy.heritage.data.remote.api.RetrofitInstance.feedApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
@@ -99,6 +100,16 @@ class Repository constructor(context: Context) {
         heritageApi.selectAllHeritageReviews(heritageSeq)
     suspend fun deleteHeritageReview(heritageReviewSeq: Int, heritageSeq: Int): Response<String> =
         heritageApi.deleteHeritageReivew(heritageReviewSeq, heritageSeq)
+
+    // feed
+    suspend fun selectMyFeeds(): Response<List<Feed>> =
+        feedApi.selectMyFeeds()
+    suspend fun selectFeedsByHashtag(fhTag: String): Response<List<Feed>> =
+        feedApi.selectFeedsByHashtag(fhTag)
+    suspend fun selectAllFeeds(): Response<List<Feed>> =
+        feedApi.selectAllFeeds()
+    suspend fun insertFeed(body: Feed): Response<Feed> =
+        feedApi.insertFeed(body)
 
 
     companion object {
