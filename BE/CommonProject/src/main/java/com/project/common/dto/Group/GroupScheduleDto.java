@@ -34,8 +34,11 @@ public class GroupScheduleDto {
 	private GroupEntity group;
   
 	public GroupScheduleDto(GroupScheduleEntity schedule) {
+		this.gsSeq = schedule.getGsSeq();
 		this.gsContent = schedule.getGsContent();
 		this.gsDateTime = schedule.getGsDateTime();
+		this.gsRegisteredAt = schedule.getGsRegisteredAt();
+		this.gsUpdatedAt=schedule.getGsUpdatedAt();
 	}
 	
     public GroupScheduleEntity toEntity(){

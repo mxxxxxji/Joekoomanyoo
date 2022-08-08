@@ -39,6 +39,7 @@ public class GroupMyListDto {
    	private int memberStatus;
 	private char memberIsEvaluated;
 	
+	
 	@Builder
 	public GroupMyListDto(GroupMemberEntity member) {
 		this.groupSeq=member.getGroup().getGroupSeq();
