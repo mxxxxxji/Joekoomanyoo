@@ -10,5 +10,4 @@ public interface HeritageRepository extends JpaRepository<HeritageEntity, Intege
     List<HeritageEntity> findAll();
 
     HeritageEntity findByHeritageSeq(int heritageSeq);
-
 }
