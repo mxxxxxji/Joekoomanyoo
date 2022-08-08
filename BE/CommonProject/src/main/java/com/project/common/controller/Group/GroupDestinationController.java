@@ -35,7 +35,7 @@ public class GroupDestinationController {
     
     //내 모임 목적지 조회
     @ApiOperation(value = "내 모임 목적지 조회")
-    @GetMapping("/my-destination/{userSeq}")
+    @GetMapping("/my-destination")
     public ResponseEntity<List<GroupDestinationMapDto>> getMyDestinationList(HttpServletRequest request) throws Exception{
     	String token = request.getHeader("X-AUTH-TOKEN");
    	 	if (token == null || !jwtTokenProvider.validateToken(token)) return null;
