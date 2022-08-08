@@ -122,6 +122,12 @@
         <action
             android:id="@+id/action_feedListFragment_to_feedDetailFragment"
             app:destination="@id/feedDetailFragment" />
+        <action
+            android:id="@+id/action_feedListFragment_to_feedCreateFragment"
+            app:destination="@id/feedCreateFragment" />
+        <action
+            android:id="@+id/action_feedListFragment_to_feedDetailFragment2"
+            app:destination="@id/feedDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/feedDetailFragment"
@@ -247,5 +253,13 @@
         android:id="@+id/ARPlayFragment"
         android:name="com.ssafy.heritage.view.ar.ARPlayFragment"
         android:label="ARPlayFragment" />
+    <fragment
+        android:id="@+id/feedCreateFragment"
+        android:name="com.ssafy.heritage.view.feed.FeedCreateFragment"
+        android:label="FeedCreateFragment" >
+        <action
+            android:id="@+id/action_feedCreateFragment_to_feedDetailFragment"
+            app:destination="@id/feedDetailFragment" />
+    </fragment>
 
 </navigation>
