@@ -91,12 +91,19 @@ interface UserService {
     suspend fun deleteMySchedule(@Path("myScheduleSeq") scheduleSeq: Int): Response<String>
 
     // 내 알림 설정 불러오기
-    suspend fun getMyNotiSetting(): Response<String>
+    @GET("/api/push/{userSeq}")
+    suspend fun getMyNotiSetting(@Path("userSeq") userSeq: Int): Response<Char>
 
     // 내 알림 설정하기
-    suspend fun setMyNotiSetting(): Response<String>
+    @PUT("/api/push/{userSeq}/{userSetting}/push-setting")
+    suspend fun setMyNotiSetting(@Path("userSeq") userSeq: Int, @Path("userSetting") userSetting: Char): Response<String>
+
+    // 내 알림 내역 리스트 불러오기
+    @GET("/api/push/history/{userSeq}")
+    suspend fun selectAllMyNoti(@Path("userSeq") userSeq: Int): Response<String>
 
     // 토큰 서버에 보내기
-    suspend fun pushToken(): Response<String>
+    @POST("/api/push/token")
+    suspend fun pushToken(@Body token: FCMToken): Response<String>
 
 }

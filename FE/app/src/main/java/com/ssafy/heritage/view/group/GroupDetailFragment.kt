@@ -37,7 +37,7 @@ class GroupDetailFragment :
 
     override fun init() {
         binding.groupVM = groupViewModel
-
+        Log.d(TAG, "init: ${groupViewModel.groupPermission.value}")
         initAdapter()
         initObserver()
         initClickListener()

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,6 +29,7 @@ import com.ssafy.heritage.util.SORT.ASCENDING_DIST
 import com.ssafy.heritage.util.SORT.ASCENDING_REVIEW
 import com.ssafy.heritage.util.SORT.ASCENDING_SCRAP
 import com.ssafy.heritage.viewmodel.HeritageViewModel
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 
 
 private const val TAG = "HeritageListFragment___"
@@ -42,6 +44,14 @@ class HeritageListFragment :
     private var dataList: List<Heritage> = arrayListOf()
     private var selectedSort: String = ""
     private var searchedList = listOf<Heritage>()
+    private val alphaInAnimationAdapter: AlphaInAnimationAdapter by lazy {
+        AlphaInAnimationAdapter(heritageAdapter).apply {
+            setDuration(2000)
+            setInterpolator(OvershootInterpolator())
+            setFirstOnly(false)
+        }
+    }
+
 
     private lateinit var popupWindow: PopupWindow
 
@@ -75,7 +85,7 @@ class HeritageListFragment :
         recyclerview.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = heritageAdapter
+            adapter = alphaInAnimationAdapter
 
             addItemDecoration(DividerItemDecoration(5F, resources.getColor(R.color.link_water)))
 
@@ -105,7 +115,6 @@ class HeritageListFragment :
 //                        .commit()
                 }
             }
-            setHasFixedSize(true)
         }
     }
 
@@ -119,7 +128,6 @@ class HeritageListFragment :
                 if (selectedSort == "") {
                     dataList = it
                     heritageAdapter.submitList(it)
-                    binding.recyclerview.setItemViewCacheSize(it.size)
                 }
                 // DetailFragment에서 온 경우
                 else {

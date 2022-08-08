@@ -59,6 +59,7 @@ object RetrofitInstance {
     val client =
         OkHttpClient.Builder()
         .addInterceptor(interceptor)
+        .addInterceptor(AuthInterceptor())
         //.sslSocketFactory( context.socketFactory, tmf?.trustManagers?.get(0) as X509TrustManager)
         //.hostnameVerifier(hostnameVerifier)
         .connectTimeout(CONNECT_TIMEOUT_SEC, TimeUnit.SECONDS)

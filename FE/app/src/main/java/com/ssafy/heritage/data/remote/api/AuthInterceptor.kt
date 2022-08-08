@@ -15,7 +15,7 @@ class AuthInterceptor : Interceptor {
 
         var req =
             chain.request().newBuilder().addHeader(
-                "Authorization",
+                "X-AUTH-TOKEN",
                 token
             ).build()
         return chain.proceed(req)

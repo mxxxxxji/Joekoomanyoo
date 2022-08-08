@@ -16,6 +16,7 @@ import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val TAG = "GroupViewModel___"
 
@@ -73,31 +74,35 @@ class GroupViewModel: ViewModel() {
         }
     }
 
-    fun selectGroupMembers(userSeq:Int, groupSeq: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+    suspend fun selectGroupMembers(userSeq:Int, groupSeq: Int) = withContext(Dispatchers.Main) {
             repository.selectGroupMembers(groupSeq).let { response ->
                 if(response.isSuccessful) {
                     Log.d(TAG,"현재 유저 :${userSeq}")
                     var list = response.body()!! as MutableList<Member>
                     Log.d(TAG, "selectGroupMembers : ${list}")
                     Log.d(TAG,"현재 유저 :${userSeq}")
-                    for(i in list){
-                        if(i.userSeq == userSeq){
-                            Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION: ${i.memberStatus} ")
-                            _groupPermission.postValue(i.memberStatus)
-                        }else{ // 그 외의 경우
-                            Log.d(TAG,"현재 유저 :${userSeq}")
-                            _groupPermission.postValue(3)
-                        }
-                    }
-                    Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION_groupPermission: ${_groupPermission.value}")
-                    Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION groupPermission: ${groupPermission.value}")
-                    _groupMemberList.postValue(list)
+
+                    _groupPermission.value = list.find { it.userSeq == userSeq }?.memberStatus ?: 3
+
+//                    for(i in list){
+//                        if(i.userSeq == userSeq){
+//                            Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION: ${i.memberStatus} ")
+//                            _groupPermission.postValue(i.memberStatus)
+//                        }else{ // 그 외의 경우
+//                            Log.d(TAG,"현재 유저 :${userSeq}")
+//                            _groupPermission.postValue(3)
+//                        }
+//                    }
+
+//                    Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION_groupPermission: ${_groupPermission.value}")
+//                    Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION groupPermission: ${groupPermission.value}")
+//                    _groupMemberList.postValue(list)
+                    true
                 }else{
                     Log.d(TAG, "selectGroupMembers : ${response.code()}")
+                    null
                 }
             }
-        }
     }
 
     fun insertGroup(userSeq: Int, groupInfo: GroupAddRequest) {

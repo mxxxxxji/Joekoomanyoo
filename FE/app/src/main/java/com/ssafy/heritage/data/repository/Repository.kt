@@ -90,6 +90,13 @@ class Repository constructor(context: Context) {
     suspend fun insertMySchedule(schedule: Schedule): Response<String> = userApi.insertMySchedule(schedule)
     suspend fun deleteMySchedule(scheduleSeq: Int): Response<String> = userApi.deleteMySchedule(scheduleSeq)
 
+    suspend fun getMyNotiSetting(userSeq: Int): Response<Char> = userApi.getMyNotiSetting(userSeq)
+    suspend fun setMyNotiSetting(userSeq: Int, userSetting: Char): Response<String> = userApi.setMyNotiSetting(userSeq, userSetting)
+    suspend fun selectAllMyNoti(userSeq: Int): Response<String> = userApi.selectAllMyNoti(userSeq)
+
+    suspend fun pushToken(token: FCMToken): Response<String> = userApi.pushToken(token)
+
+
 
     // heritage
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()

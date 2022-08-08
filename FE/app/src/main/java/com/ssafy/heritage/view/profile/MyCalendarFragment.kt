@@ -106,7 +106,7 @@ class MyCalendarFragment : BaseFragment<FragmentMyCalendarBinding>(R.layout.frag
     }
 
     fun updateEvent() {
-        val it = userViewModel.myScheduleList.value!!
+        val it = userViewModel.myScheduleList.value ?: arrayListOf()
         it.forEach {
             val year = it.myScheduleDate.substring(0..3).toInt()
             val month = it.myScheduleDate.substring(4..5).toInt()
@@ -126,8 +126,7 @@ class MyCalendarFragment : BaseFragment<FragmentMyCalendarBinding>(R.layout.frag
                 val schedule = Schedule(
                     userSeq = userViewModel.user.value?.userSeq!!,
                     myScheduleContent = tilSchedule.editText?.text.toString(),
-                    myScheduleDate = getCurrentDate(),
-                    myScheduleTime = "0"
+                    myScheduleDate = getCurrentDate()
                 )
 
                 userViewModel.addSchedule(schedule)
@@ -156,7 +155,7 @@ class MyCalendarFragment : BaseFragment<FragmentMyCalendarBinding>(R.layout.frag
         } else {
             "${selectedDate?.get(Calendar.MONTH)?.plus(1)}"
         }
-        val day = if (selectedDate?.get(Calendar.DAY_OF_MONTH) < 10) {
+        val day = if (selectedDate?.get(Calendar.DAY_OF_MONTH)!! < 10) {
             "0${selectedDate?.get(Calendar.DAY_OF_MONTH)}"
         } else {
             "${selectedDate?.get(Calendar.DAY_OF_MONTH)}"
@@ -210,7 +209,7 @@ class MyCalendarFragment : BaseFragment<FragmentMyCalendarBinding>(R.layout.frag
         } else {
             "${selectedDate?.get(Calendar.MONTH)?.plus(1)}"
         }
-        val day = if (selectedDate?.get(Calendar.DAY_OF_MONTH) < 10) {
+        val day = if (selectedDate?.get(Calendar.DAY_OF_MONTH)!! < 10) {
             "0${selectedDate?.get(Calendar.DAY_OF_MONTH)}"
         } else {
             "${selectedDate?.get(Calendar.DAY_OF_MONTH)}"
@@ -229,7 +228,7 @@ class MyCalendarFragment : BaseFragment<FragmentMyCalendarBinding>(R.layout.frag
         updateScheduleList()
 
         // 프레임 뒤에 클릭 되는걸 방지
-        cardBinding!!.root.setOnClickListener { }
+        cardBinding!!.root.setOnClickListener { Log.d(TAG, "onDaySelected: cardBinding") }
 
         binding.motionlayout.transitionToEnd()
     }
