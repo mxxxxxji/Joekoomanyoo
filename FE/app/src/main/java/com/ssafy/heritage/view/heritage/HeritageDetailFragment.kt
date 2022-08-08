@@ -135,7 +135,7 @@ class HeritageDetailFragment :
         // 스터디로 공유하기
         btnLink.setOnClickListener {
             // 다이얼로그 띄우기
-            val dialog = SharedMyGroupListDialog()
+            val dialog = SharedMyGroupListDialog(heritage!!.heritageSeq)
             dialog.show(childFragmentManager, "SharedMyGroupListDialog")
         }
     }

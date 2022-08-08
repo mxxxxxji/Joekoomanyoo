@@ -25,10 +25,11 @@ import com.ssafy.heritage.databinding.DialogSharedMyGroupListBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
+import kotlin.properties.Delegates
 
 private const val TAG = "SharedMyGroupListDialog___"
 
-class SharedMyGroupListDialog() : DialogFragment() {
+class SharedMyGroupListDialog(heritageSeq: Int) : DialogFragment() {
 
     var binding: DialogSharedMyGroupListBinding? = null
     private val groupViewModel by activityViewModels<GroupViewModel>()
@@ -36,6 +37,10 @@ class SharedMyGroupListDialog() : DialogFragment() {
     private lateinit var lastGroupListAdapter: MyGroupListAdapter
     private lateinit var sharedMyGroupListAdapter: SharedMyGroupListAdapter
     val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
+    private var groupSeq = 0
+    private var groupName = ""
+    private val heritageSeq: Int = heritageSeq
+
 
     // 아이템 뿌려주는 거는 리뷰 리스트 참고하셈
     private fun initAdapter() {
@@ -75,15 +80,28 @@ class SharedMyGroupListDialog() : DialogFragment() {
 
         // 가입한 모임이 없으면 "모임에 가입해보세요!" 뭐 이런 멘트 쳐야할 듯
 
-        // 내 모임 아이템 클릭 -> 내 모임 선택? 지정?
+        // 내 모임 아이템 클릭 -> groupSeq 저장
+        // 작동 방식: 어댑터의 itemClickListener <-> OnItemClickListener <-> 프래그먼트의 setItemClickListener
+        sharedMyGroupListAdapter.setOnItemClickListener(object :
+        SharedMyGroupListAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, data: MyGroupResponse, pos: Int) {
+                groupSeq = data.groupSeq
+                groupName = data.groupName
+            }
+        })
 
         // 공유하기 클릭 -> 모임 목적지로 현재 문화유산 추가
         binding!!.btnSharing.setOnClickListener {
             // 선택한 모임이 있다면
+            if (groupSeq != 0) {
+                groupViewModel.insertGroupDestination(groupSeq, heritageSeq)
+                makeToast("${groupName}에 ${heritageViewModel.heritage.value?.heritageName}이(가) 추가되었습니다.")
+            } else {
+                makeToast("모임을 선택해주세요!")
+            }
             // 모임 목적지에 현재 문화유산 추가(path: groupSeq)
 //            groupViewModel.insertGroupDestination(groupSeq = )
             // toast 띄우기
-            makeToast("에 ${heritageViewModel.heritage.value?.heritageName}이(가) 추가되었습니다.")
         }
         // 돌아가기 클릭 -> 다이얼로그 닫힘
         binding!!.tvCloseDialog.setOnClickListener {

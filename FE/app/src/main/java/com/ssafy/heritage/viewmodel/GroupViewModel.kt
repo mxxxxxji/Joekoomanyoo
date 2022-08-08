@@ -171,9 +171,9 @@ class GroupViewModel: ViewModel() {
         }
     }
 
-    fun insertGroupDestination(groupSeq: Int) {
+    fun insertGroupDestination(groupSeq: Int, heritageSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertGroupDestination(groupSeq).let { response ->
+            repository.insertGroupDestination(groupSeq, heritageSeq).let { response ->
                 if(response.isSuccessful) {
                     var info = response.body()!! as GroupDestination
                     _insertGroupDestination.postValue(info.toString())

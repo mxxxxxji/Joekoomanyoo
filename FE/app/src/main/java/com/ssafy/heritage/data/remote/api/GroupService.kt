@@ -91,7 +91,7 @@ interface GroupService {
 
     // 모임 목적지를 등록한다
     @POST("/api/group/{groupSeq}/destination/add")
-    suspend fun insertGroupDestination(@Path("groupSeq") groupSeq: Int): Response<String>
+    suspend fun insertGroupDestination(@Path("groupSeq") groupSeq: Int, @Body heritageSeq: Int): Response<String>
 
     // 모임 목적지를 삭제한다
 
