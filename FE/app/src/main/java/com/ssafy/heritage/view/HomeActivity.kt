@@ -165,11 +165,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
             val token = task.result
 
-            // 서버로 토큰 전송
-            userViewModel.pushToken(userViewModel.user.value?.userSeq!!, token)
-
             // token log 남기기
             Log.d(TAG, "FCMToken: ${token ?: "task.result is null"}")
+
+            // 서버로 토큰 전송
+            userViewModel.pushToken(userViewModel.user.value?.userSeq!!, token)
         })
     }
 

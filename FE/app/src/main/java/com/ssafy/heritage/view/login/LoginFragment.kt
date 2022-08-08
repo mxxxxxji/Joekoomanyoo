@@ -175,10 +175,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     else if (result != null) {
                         val token = result
                         ApplicationClass.sharedPreferencesUtil.saveToken(token)
+                        Log.d(TAG, "handleSignInResult: $token")
 
                         val user = JWTUtils.decoded(token)
                         if (user != null) {
                             Intent(requireContext(), HomeActivity::class.java).apply {
+                                putExtra("user", user)
                                 startActivity(this)
                             }
                         } else {
