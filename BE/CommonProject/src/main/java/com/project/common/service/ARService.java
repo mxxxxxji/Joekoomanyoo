@@ -1,9 +1,9 @@
 package com.project.common.service;
 
 import com.project.common.dto.AR.MyStampDto;
-import com.project.common.dto.AR.MyStampMapper;
+import com.project.common.mapper.AR.MyStampMapper;
 import com.project.common.dto.AR.StampDto;
-import com.project.common.dto.AR.StampMapper;
+import com.project.common.mapper.AR.StampMapper;
 import com.project.common.entity.AR.MyStampEntity;
 import com.project.common.entity.AR.StampEntity;
 import com.project.common.repository.AR.ARRepository;

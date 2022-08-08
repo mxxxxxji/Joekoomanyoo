@@ -1,7 +1,7 @@
 package com.project.common.service;
 
 import com.project.common.dto.User.UserDto;
-import com.project.common.dto.User.UserMapper;
+import com.project.common.mapper.User.UserMapper;
 import com.project.common.dto.User.UserModifyDto;
 import com.project.common.entity.User.UserEntity;
 import com.project.common.repository.User.UserRepository;

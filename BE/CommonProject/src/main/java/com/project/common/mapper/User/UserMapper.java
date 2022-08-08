@@ -1,5 +1,6 @@
-package com.project.common.dto.User;
+package com.project.common.mapper.User;
 
+import com.project.common.dto.User.UserDto;
 import com.project.common.entity.User.UserEntity;
 import com.project.common.mapper.StructMapper;
 

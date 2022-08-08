@@ -24,4 +24,5 @@ public class HeritageDto {
     private String heritageClass;
     private int heritageScrapCnt;
     private int heritageReviewCnt;
+    private String heritageLocal;
 }

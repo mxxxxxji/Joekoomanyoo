@@ -1,5 +1,6 @@
-package com.project.common.dto.AR;
+package com.project.common.mapper.AR;
 
+import com.project.common.dto.AR.StampDto;
 import com.project.common.entity.AR.StampEntity;
 import com.project.common.mapper.StructMapper;
 import org.mapstruct.Mapper;

@@ -2,14 +2,12 @@ package com.project.common.service;
 
 import com.project.common.controller.FcmTokenController;
 import com.project.common.dto.My.MyDailyMemoDto;
-import com.project.common.dto.My.MyDailyMemoMapper;
+import com.project.common.mapper.My.MyDailyMemoMapper;
 import com.project.common.dto.My.MyScheduleDto;
-import com.project.common.dto.My.MyScheduleMapper;
-import com.project.common.dto.Push.FcmHistoryDto;
-import com.project.common.dto.Push.FcmRequestDto;
+import com.project.common.mapper.My.MyScheduleMapper;
 import com.project.common.dto.User.UserEvalDto;
 import com.project.common.dto.User.UserKeywordDto;
-import com.project.common.dto.User.UserKeywordMapper;
+import com.project.common.mapper.User.UserKeywordMapper;
 import com.project.common.dto.User.UserResponseEvalDto;
 import com.project.common.entity.My.MyDailyMemoEntity;
 import com.project.common.entity.My.MyScheduleEntity;
@@ -26,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

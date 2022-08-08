@@ -1,5 +1,6 @@
-package com.project.common.dto.Heritage;
+package com.project.common.mapper.Heritage;
 
+import com.project.common.dto.Heritage.HeritageReivewDto;
 import com.project.common.entity.Heritage.HeritageReviewEntity;
 import com.project.common.mapper.StructMapper;
 

@@ -1,6 +1,7 @@
-package com.project.common.dto.My;
+package com.project.common.mapper.My;
 
 
+import com.project.common.dto.My.MyScheduleDto;
 import com.project.common.entity.My.MyScheduleEntity;
 import com.project.common.mapper.StructMapper;
 import org.mapstruct.Mapper;

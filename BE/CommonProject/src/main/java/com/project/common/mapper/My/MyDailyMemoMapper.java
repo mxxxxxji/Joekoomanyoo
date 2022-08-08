@@ -1,5 +1,6 @@
-package com.project.common.dto.My;
+package com.project.common.mapper.My;
 
+import com.project.common.dto.My.MyDailyMemoDto;
 import com.project.common.entity.My.MyDailyMemoEntity;
 import com.project.common.mapper.StructMapper;
 

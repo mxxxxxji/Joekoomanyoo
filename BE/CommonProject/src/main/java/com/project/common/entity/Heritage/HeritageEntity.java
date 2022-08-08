@@ -48,6 +48,8 @@ public class HeritageEntity {
     private int heritageScrapCnt;
     @Column
     private int heritageReviewCnt;
+    @Column
+    private String heritageLocal;
 
 
 }
