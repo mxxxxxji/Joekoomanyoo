@@ -74,6 +74,14 @@ public class GroupScheduleService{
 				.gsUpdatedAt(new Date())
 				.build());
 		groupRepository.save(group);
+		
+		
+		//알림 받을 인원들
+		List<UserEntity> users = new ArrayList<>();
+		for(GroupMemberEntity entity : groupMemberRepository.findAll())
+			if(entity.getGroup().getGroupSeq()==groupSeq)
+				users.add(userRepository.findByUserSeq(entity.getUserSeq()));
+		
 		return "Success";
 		
 	}
@@ -107,6 +115,13 @@ public class GroupScheduleService{
 		}
 		if(cnt==0)
 			return "Fail";
+		
+		//알림 받을 인원들
+		List<UserEntity> users = new ArrayList<>();
+		for(GroupMemberEntity entity : groupMemberRepository.findAll())
+			if(entity.getGroup().getGroupSeq()==groupSeq)
+				users.add(userRepository.findByUserSeq(entity.getUserSeq()));
+		
 		return "Success";
 	}
 	

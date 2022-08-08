@@ -41,7 +41,11 @@ public class GroupMemberService{
 	//모임 참가
 	@Transactional
 	public String joinGroup(int groupSeq, GroupJoinReqDto requestDto) {
+		int masterUserSeq=0;
 		for(GroupMemberEntity entity: groupMemberRepository.findAll()) {
+			if(entity.getGroup().getGroupSeq()==groupSeq&&entity.getMemberStatus()==2) {
+				masterUserSeq=entity.getUserSeq();
+			}
 			if(entity.getUserSeq()==requestDto.getUserSeq()&&entity.getGroup().getGroupSeq()==groupSeq)
 				return "Fail";
 		}
@@ -59,6 +63,10 @@ public class GroupMemberService{
 		user.addGroup(group);
 		groupRepository.save(group);
 	 	userRepository.save(user);
+	 	
+	 	//모임장 
+		UserEntity master = userRepository.findByUserSeq(masterUserSeq);
+	 	
 		return "Success";
 	}
 	
@@ -75,6 +83,10 @@ public class GroupMemberService{
 				user.removeGroup(groupSeq);
 			}
 		}
+	 	//탈퇴인원
+		UserEntity leave = userRepository.findByUserId(userId);
+		
+		
 		return "Success";
 	}
 	
@@ -90,6 +102,8 @@ public class GroupMemberService{
 				break;
 			}
 		}
+		//승인인원
+		UserEntity approve = userRepository.findByUserId(userId);
 		return "Success";
 	}
 	
