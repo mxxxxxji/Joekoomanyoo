@@ -50,4 +50,5 @@ abstract class BaseFragment<T: ViewDataBinding>(
     //    loadingEnd()
         _binding = null
     }
+
 }

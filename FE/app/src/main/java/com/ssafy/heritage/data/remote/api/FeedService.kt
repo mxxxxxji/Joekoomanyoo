@@ -1,6 +1,8 @@
 package com.ssafy.heritage.data.remote.api
 
 import com.ssafy.heritage.data.dto.Feed
+import com.ssafy.heritage.data.remote.request.FeedAddRequest
+import com.ssafy.heritage.data.remote.response.FeedListResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -11,19 +13,19 @@ interface FeedService {
     // 피드 API
     // 내 피드 조회
     @GET("/api/feed/{feedSeq}/active/{feedOpen}")
-    suspend fun selectMyFeeds(): Response<List<Feed>>
+    suspend fun selectMyFeeds(): Response<List<FeedListResponse>>
 
     // 피드 조회 by 해시태그
     @GET("/api/feed/list-by-hashtag/{fhTag}")
-    suspend fun selectFeedsByHashtag(@Path("fhTag") fhTag: String): Response<List<Feed>>
+    suspend fun selectFeedsByHashtag(@Path("fhTag") fhTag: String): Response<List<FeedListResponse>>
 
     // 피드 전체 조회
     @GET("/api/feed/list")
-    suspend fun selectAllFeeds(): Response<List<Feed>>
+    suspend fun selectAllFeeds(): Response<List<FeedListResponse>>
 
     // 피드 등록
     @POST("/api/feed/add")
-    suspend fun insertFeed(@Body body: Feed): Response<Feed>
+    suspend fun insertFeed(@Body body: FeedAddRequest): Response<FeedListResponse>
 
     // 피드 수정
     // 피드 보기

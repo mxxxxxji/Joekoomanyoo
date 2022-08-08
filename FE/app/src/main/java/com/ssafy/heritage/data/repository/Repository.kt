@@ -6,9 +6,11 @@ import com.ssafy.heritage.data.remote.api.RetrofitInstance.feedApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
+import com.ssafy.heritage.data.remote.request.FeedAddRequest
 import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
+import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
@@ -102,13 +104,13 @@ class Repository constructor(context: Context) {
         heritageApi.deleteHeritageReivew(heritageReviewSeq, heritageSeq)
 
     // feed
-    suspend fun selectMyFeeds(): Response<List<Feed>> =
+    suspend fun selectMyFeeds(): Response<List<FeedListResponse>> =
         feedApi.selectMyFeeds()
-    suspend fun selectFeedsByHashtag(fhTag: String): Response<List<Feed>> =
+    suspend fun selectFeedsByHashtag(fhTag: String): Response<List<FeedListResponse>> =
         feedApi.selectFeedsByHashtag(fhTag)
-    suspend fun selectAllFeeds(): Response<List<Feed>> =
+    suspend fun selectAllFeeds(): Response<List<FeedListResponse>> =
         feedApi.selectAllFeeds()
-    suspend fun insertFeed(body: Feed): Response<Feed> =
+    suspend fun insertFeed(body: FeedAddRequest): Response<FeedListResponse> =
         feedApi.insertFeed(body)
 
 

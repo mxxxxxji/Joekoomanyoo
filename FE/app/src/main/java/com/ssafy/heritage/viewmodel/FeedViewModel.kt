@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.heritage.data.dto.Feed
+import com.ssafy.heritage.data.remote.request.FeedAddRequest
+import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
@@ -16,25 +18,23 @@ class FeedViewModel: ViewModel() {
 
     private val repository = Repository.get()
 
-    private val _myFeedList = SingleLiveEvent<MutableList<Feed>>()
-    val myFeedList: LiveData<MutableList<Feed>> get() = _myFeedList
+    private val _myFeedList = SingleLiveEvent<MutableList<FeedListResponse>>()
+    val myFeedList: LiveData<MutableList<FeedListResponse>> get() = _myFeedList
 
-    private val _feedListByHashTag = SingleLiveEvent<MutableList<Feed>>()
-    val feedListByHashTag: LiveData<MutableList<Feed>> get() = _feedListByHashTag
+    private val _feedListByHashTag = SingleLiveEvent<MutableList<FeedListResponse>>()
+    val feedListByHashTag: LiveData<MutableList<FeedListResponse>> get() = _feedListByHashTag
 
-    private val _feedListAll = SingleLiveEvent<MutableList<Feed>>()
-    val feedListAll: LiveData<MutableList<Feed>> get() = _feedListAll
+    private val _feedListAll = SingleLiveEvent<MutableList<FeedListResponse>>()
+    val feedListAll: LiveData<MutableList<FeedListResponse>> get() = _feedListAll
 
-    private val _insertFeedInfo = SingleLiveEvent<Feed>()
-    val insertFeedInfo: LiveData<Feed> get() = _insertFeedInfo
+    private val _insertFeedInfo = SingleLiveEvent<FeedListResponse>()
+    val insertFeedInfo: LiveData<FeedListResponse> get() = _insertFeedInfo
 
     fun getMyFeedList() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectMyFeeds().let { response ->
                 if(response.isSuccessful) {
-                    var list = response.body() as MutableList<Feed>
-                    // 일단 최신순 정렬?
-                    list.sortBy { it.feedCreatedAt }
+                    var list = response.body() as MutableList<FeedListResponse>
                     _myFeedList.postValue(list)
                 } else {
                     Log.d(TAG, "getMyFeedList: ${response.code()}")
@@ -47,9 +47,7 @@ class FeedViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectFeedsByHashtag(fhTag).let { response ->
                 if(response.isSuccessful) {
-                    var list = response.body() as MutableList<Feed>
-                    // 일단 최신순 정렬?
-                    list.sortBy { it.feedCreatedAt }
+                    var list = response.body() as MutableList<FeedListResponse>
                     _feedListByHashTag.postValue(list)
                 } else {
                     Log.d(TAG, "getFeedListByHashTag: ${response.code()}")
@@ -62,9 +60,7 @@ class FeedViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectAllFeeds().let { response ->
                 if(response.isSuccessful) {
-                    var list = response.body() as MutableList<Feed>
-                    // 일단 최신순 정렬?
-                    list.sortBy { it.feedCreatedAt }
+                    var list = response.body() as MutableList<FeedListResponse>
                     _feedListAll.postValue(list)
                 } else {
                     Log.d(TAG, "getFeedListAll: ${response.code()}")
@@ -73,7 +69,7 @@ class FeedViewModel: ViewModel() {
         }
     }
 
-    fun insertFeed(feedInfo: Feed) {
+    fun insertFeed(feedInfo: FeedAddRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertFeed(feedInfo).let { response ->
                 if(response.isSuccessful) {
