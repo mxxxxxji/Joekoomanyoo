@@ -64,14 +64,14 @@ public class GroupMemberService{
 	
 	//모임 탈퇴
 	@Transactional
-	public String leaveGroup(int groupSeq, int userSeq) {
+	public String leaveGroup(int groupSeq,String userId) {
 		List<GroupMemberEntity> member = findMember(groupSeq);
 		GroupEntity group = groupService.findGroup(groupSeq);
-		UserEntity user = userRepository.findByUserSeq(userSeq);
+		UserEntity user = userRepository.findByUserId(userId);
 		for(GroupMemberEntity entity : member) {
-			if(entity.getUserSeq()==userSeq) {
-				groupMemberRepository.deleteByUserSeq(userSeq);
-				group.removeGroupMember(userSeq);
+			if(entity.getUserSeq()==user.getUserSeq()) {
+				groupMemberRepository.deleteByUserSeq(user.getUserSeq());
+				group.removeGroupMember(user.getUserSeq());
 				user.removeGroup(groupSeq);
 			}
 		}
@@ -79,9 +79,10 @@ public class GroupMemberService{
 	}
 	
 	//모임 가입 승인
-	public String approveMember(int groupSeq, int userSeq) {
+	public String approveMember(int groupSeq, String userId) {
+		UserEntity user = userRepository.findByUserId(userId);
 		for(GroupMemberEntity entity: findMember(groupSeq)) {
-			if(entity.getUserSeq()==userSeq) {
+			if(entity.getUserSeq()==user.getUserSeq()) {
 				entity.setMemberStatus(1);
 				entity.setApproveTime(new Date());
 				entity.setUpdatedTime(new Date());

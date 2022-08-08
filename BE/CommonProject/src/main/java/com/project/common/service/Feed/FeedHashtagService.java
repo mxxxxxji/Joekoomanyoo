@@ -31,8 +31,6 @@ public class FeedHashtagService{
 			if(entity.getFeed().getFeedSeq()==feedSeq)
 				feedList.add(entity);
 		}
-		if(feedList.size()==0)
-			throw new IllegalArgumentException("등록한 해쉬태그가 없습니다");
 		return FeedHashtagMapper.MAPPER.toDtoList(feedList);
 	}
 	

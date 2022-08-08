@@ -30,15 +30,15 @@ public class GroupService{
 	
 	//모임 개설
 	@Transactional
-	public GroupDto addGroup(int userSeq,GroupDto groupDto) {
-		UserEntity user = userRepository.findByUserSeq(userSeq);
+	public GroupDto addGroup(String userId,GroupDto groupDto) {
+		UserEntity user = userRepository.findByUserId(userId);
 		GroupEntity saved= groupDto.toEntity();
 		saved.setGroupMaster(user.getUserNickname());
 	 	saved.setCreatedTime(new Date());
 		saved.setUpdatedTime(new Date());
 		saved.addGroupMember(GroupMemberEntity.builder()
 				.memberAppeal("방장")
-				.userSeq(userSeq)
+				.userSeq(user.getUserSeq())
 				.memberStatus(2)
 				.memberIsEvaluated('N')
 				.createdTime(new Date())
@@ -64,14 +64,16 @@ public class GroupService{
 	}
 	
 	//모임 삭제
-	public String deleteGroup(int groupSeq){
+	public String deleteGroup(String userId,int groupSeq){
+		UserEntity user = userRepository.findByUserId(userId);
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
-			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
-				groupMemberRepository.deleteByUserSeq(entity.getUserSeq());
+			if(entity.getGroup().getGroupSeq()==groupSeq && entity.getUserSeq()==user.getUserSeq()) {
+		//		groupMemberRepository.deleteByGroupSeqAndUserSeq(groupSeq,user.getUserSeq());
+				groupRepository.deleteById(groupSeq);
+				return "Success";			
 			}
 		}
-		groupRepository.deleteById(groupSeq);
-		return "Success";
+		return "Fail";
 	}
 	
 	//모임 정보 수정
@@ -100,10 +102,11 @@ public class GroupService{
 	}
 	
 	//내 모임 조회
-	public List<GroupMyListDto> getMyGroupList(int userSeq){
+	public List<GroupMyListDto> getMyGroupList(String userId){
 		List<GroupMyListDto> groupList=new ArrayList<>();
+		UserEntity user = userRepository.findByUserId(userId);
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
-			if(entity.getUserSeq()==userSeq)
+			if(entity.getUserSeq()==user.getUserSeq())
 				groupList.add(new GroupMyListDto(entity));
 		}
 		return groupList;

@@ -92,7 +92,6 @@ public class FeedController {
     	 String token = request.getHeader("X-AUTH-TOKEN");
 	     if (token == null || !jwtTokenProvider.validateToken(token))  return null;
 	     String userId = jwtTokenProvider.getUserId(token);
-	     
 	     return new ResponseEntity<>(feedService.deleteFeed(userId,feedSeq),HttpStatus.OK);
     }
     
@@ -102,9 +101,7 @@ public class FeedController {
     public ResponseEntity<String> updateFeed(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq,@RequestBody FeedDto feedDto){
     	 String token = request.getHeader("X-AUTH-TOKEN");
 	     if (token == null || !jwtTokenProvider.validateToken(token))  return null;
-	     String userId = jwtTokenProvider.getUserId(token);
-	     
-	     return new ResponseEntity<>(feedService.updateFeed(userId,feedSeq,feedDto),HttpStatus.OK);
+	     return new ResponseEntity<>(feedService.updateFeed(feedSeq,feedDto),HttpStatus.OK);
     }
     
     //피드 공개/비공개
@@ -114,9 +111,7 @@ public class FeedController {
     	System.out.println(feedOpen); 
     	String token = request.getHeader("X-AUTH-TOKEN");
 	     if (token == null || !jwtTokenProvider.validateToken(token))  return null;
-	     String userId = jwtTokenProvider.getUserId(token);
-	    
-	     return new ResponseEntity<>(feedService.openFeed(userId,feedSeq,feedOpen),HttpStatus.OK);
+	     return new ResponseEntity<>(feedService.openFeed(feedSeq,feedOpen),HttpStatus.OK);
     }
 
 }

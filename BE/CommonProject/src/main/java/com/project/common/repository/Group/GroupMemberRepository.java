@@ -10,5 +10,7 @@ public interface GroupMemberRepository extends JpaRepository<GroupMemberEntity, 
 
 	GroupMemberEntity findByUserSeq(int userSeq);
 
-	void deleteByUserSeq(int userSeq);  
+	void deleteByUserSeq(int userSeq);
+
+//	void deleteByGroupSeqAndUserSeq(int groupSeq, int userSeq);  
 }

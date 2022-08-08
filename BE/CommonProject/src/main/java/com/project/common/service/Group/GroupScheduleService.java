@@ -11,9 +11,11 @@ import com.project.common.dto.Group.GroupScheduleDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.Group.GroupScheduleEntity;
+import com.project.common.entity.User.UserEntity;
 import com.project.common.repository.Group.GroupMemberRepository;
 import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.Group.GroupScheduleRepository;
+import com.project.common.repository.User.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +27,7 @@ public class GroupScheduleService{
 	private final GroupScheduleRepository groupScheduleRepository;
 	private final GroupService groupService;
 	private final GroupMemberRepository groupMemberRepository;
+	private final UserRepository userRepository;
 	
 	//일정 조회
 	public List<GroupScheduleDto> getScheduleList(int groupSeq){
@@ -38,10 +41,11 @@ public class GroupScheduleService{
 	}
 
 	//내 모임 일정 조회
-	public List<GroupScheduleDto> getMyScheduleList (int userSeq){
+	public List<GroupScheduleDto> getMyScheduleList (String userId){
 		List<GroupEntity> groupList= new ArrayList<>();
+		UserEntity user = userRepository.findByUserId(userId);
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
-			if(entity.getUserSeq()==userSeq) {
+			if(entity.getUserSeq()==user.getUserSeq()) {
 					groupList.add(entity.getGroup());
 			}
 		}
@@ -78,7 +82,6 @@ public class GroupScheduleService{
 	@Transactional
 	public String deleteGroupSchedule(int groupSeq, Date gsDateTime) {
 		List<GroupScheduleEntity> schedules= findSchedule(groupSeq);
-		System.out.println(groupSeq);
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupScheduleEntity entity : schedules) {
 			if(entity.getGsDateTime()==gsDateTime) {

@@ -77,8 +77,6 @@ public class FeedService{
 	//피드 삭제
 	public String deleteFeed(String userId,int feedSeq){
 		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
-		if(!feed.getUser().getUserId().equals(userId))
-			return "Fail";
 		
 		//해쉬태그 삭제
 		for(FeedHashtagEntity entity : feed.getHashtags())  
@@ -95,10 +93,8 @@ public class FeedService{
 	}
 	
 	//피드 수정
-	public String updateFeed(String userId,int feedSeq,FeedDto feedDto) {
+	public String updateFeed(int feedSeq,FeedDto feedDto) {
 		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
-		if(!feed.getUser().getUserId().equals(userId))
-			return "Fail";
 
 		feed.setFeedContent(feedDto.getFeedContent());
 		feed.setFeedImgUrl(feedDto.getFeedImgUrl());
@@ -111,10 +107,8 @@ public class FeedService{
 	}
 	
 	//피드 공개/비공개
-	public String openFeed(String userId,int feedSeq,char feedOpen) {
+	public String openFeed(int feedSeq,char feedOpen) {
 		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
-		if(!feed.getUser().getUserId().equals(userId))
-			return "Fail";
 		feed.setFeedOpen(feedOpen);
 		feed.setUpdatedTime(new Date());
 		feedRepository.save(feed);

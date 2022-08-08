@@ -11,10 +11,12 @@ import com.project.common.entity.Group.GroupDestinationEntity;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.Heritage.HeritageEntity;
+import com.project.common.entity.User.UserEntity;
 import com.project.common.repository.Group.GroupDestinationRepository;
 import com.project.common.repository.Group.GroupMemberRepository;
 import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.Heritage.HeritageRepository;
+import com.project.common.repository.User.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,13 +30,15 @@ public class GroupDestinationService{
 	private final HeritageRepository heritageRepository;
 	private final GroupDestinationRepository groupDestinationRepository;
 	private final GroupService groupService;
-
+	private final UserRepository userRepository;
+	
 
 	//내 모임 목적지 조회
-	public List<GroupDestinationMapDto> getMyDestinationList(int userSeq){
+	public List<GroupDestinationMapDto> getMyDestinationList(String userId){
 		List<GroupEntity> groupList= new ArrayList<>();
+		UserEntity user = userRepository.findByUserId(userId);
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
-			if(entity.getUserSeq()==userSeq) {
+			if(entity.getUserSeq()==user.getUserSeq()) {
 					groupList.add(entity.getGroup());
 				}
 			}
@@ -68,7 +72,6 @@ public class GroupDestinationService{
 	//모임 목적지 추가
 	@Transactional
 	public String addGroupDestination(int groupSeq, int heritageSeq) {
-		System.out.println(heritageSeq);
 		GroupEntity group = groupService.findGroup(groupSeq);
 		for(GroupDestinationEntity entity:group.getDestinations()) {
 			if(entity!=null&&entity.getHeritageSeq()==heritageSeq) {
@@ -107,7 +110,6 @@ public class GroupDestinationService{
 			}
 		}
 		return "Fail";
-		
 	}
 	
 	//해당 모임 메모 찾기
