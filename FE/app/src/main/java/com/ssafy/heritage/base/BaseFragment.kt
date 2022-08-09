@@ -50,4 +50,8 @@ abstract class BaseFragment<T: ViewDataBinding>(
     //    loadingEnd()
         _binding = null
     }
+<<<<<<< .merge_file_a00856
+=======
+
+>>>>>>> .merge_file_a17988
 }
