@@ -121,7 +121,7 @@ public class HeritageController {
      * @return List
      */
     @ApiOperation(value = "문화 유산 본인 위치 기준으로 가까운 순으로 정렬", response = List.class)
-    @GetMapping("/heritage-info")
+    @PostMapping("/heritage-info")
     public ResponseEntity<?> sortHeritage(@RequestBody MyLocationDto myLocationDto){
         List<HeritageDto> list = heritageService.sortHeritage(myLocationDto);
         if(list.size() == 0){

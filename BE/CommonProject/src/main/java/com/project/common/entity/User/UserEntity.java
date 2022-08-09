@@ -69,7 +69,7 @@ public class UserEntity implements UserDetails{
     @Column(length = 1, nullable = false)
     private char userGender;
 
-    @Column(length = 100)
+    @Column(length = 250)
     private String profileImgUrl;
 
     @Column(length = 1000)
