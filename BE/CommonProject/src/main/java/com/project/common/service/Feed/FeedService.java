@@ -112,7 +112,7 @@ public class FeedService{
 
 	
 	//피드 수정
-	public String updateFeed(int feedSeq,FeedDto feedDto) {
+	public String updateFeed(int feedSeq,ReqFeedDto feedDto) {
 		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
 
 		feed.setFeedContent(feedDto.getFeedContent());

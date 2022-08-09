@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Group.GroupScheduleDto;
 import com.project.common.dto.Group.Request.ReqGroupScheduleDto;
+import com.project.common.dto.Group.Response.ResGroupScheduleDto;
 import com.project.common.service.Group.GroupScheduleService;
 
 import io.swagger.annotations.Api;
@@ -38,14 +39,14 @@ public class GroupScheduleController {
     //일정 조회
     @ApiOperation(value = "모임 일정 조회")
     @GetMapping("/{groupSeq}/schedule/list")
-    public ResponseEntity<List<GroupScheduleDto>> getScheduleList(@PathVariable("groupSeq") int groupSeq) throws Exception{
+    public ResponseEntity<List<ResGroupScheduleDto>> getScheduleList(@PathVariable("groupSeq") int groupSeq) throws Exception{
     	return new ResponseEntity<>(groupScheduleService.getScheduleList(groupSeq),HttpStatus.OK);
     }
     
     //내 모임 일정 조회
     @ApiOperation(value = "내 모임 일정 조회")
     @GetMapping("/my-schedule")
-    public ResponseEntity<List<GroupScheduleDto>> getMyScheduleList(HttpServletRequest request) throws Exception{
+    public ResponseEntity<List<ResGroupScheduleDto>> getMyScheduleList(HttpServletRequest request) throws Exception{
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
     	return new ResponseEntity<>(groupScheduleService.getMyScheduleList(userId),HttpStatus.OK);
     }

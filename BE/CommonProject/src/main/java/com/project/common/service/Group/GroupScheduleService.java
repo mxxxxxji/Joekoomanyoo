@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.common.dto.Group.GroupScheduleDto;
 import com.project.common.dto.Group.Request.ReqGroupScheduleDto;
+import com.project.common.dto.Group.Response.ResGroupScheduleDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.Group.GroupScheduleEntity;
@@ -38,7 +39,7 @@ public class GroupScheduleService{
 	private final FirebaseCloudMessageService firebaseCloudMessageService;
 	private final FcmTokenController fcmTokenController;
 	//일정 조회
-	public List<GroupScheduleDto> getScheduleList(int groupSeq){
+	public List<ResGroupScheduleDto> getScheduleList(int groupSeq){
 		List<GroupScheduleDto> list = new ArrayList<>();
 		for(GroupScheduleEntity entity : groupScheduleRepository.findAll()) {
 			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
@@ -49,7 +50,7 @@ public class GroupScheduleService{
 	}
 
 	//내 모임 일정 조회
-	public List<GroupScheduleDto> getMyScheduleList (String userId){
+	public List<ResGroupScheduleDto> getMyScheduleList (String userId){
 		List<GroupEntity> groupList= new ArrayList<>();
 		UserEntity user = userRepository.findByUserId(userId);
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {

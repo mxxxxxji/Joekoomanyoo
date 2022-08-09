@@ -82,7 +82,7 @@ public class FeedController {
     //피드 수정
     @ApiOperation(value = "피드 수정")
     @PutMapping("/{feedSeq}/modify")
-    public ResponseEntity<String> updateFeed(@PathVariable("feedSeq") int feedSeq,@RequestBody FeedDto feedDto){
+    public ResponseEntity<String> updateFeed(@PathVariable("feedSeq") int feedSeq,@RequestBody ReqFeedDto feedDto){
 	     return new ResponseEntity<>(feedService.updateFeed(feedSeq,feedDto),HttpStatus.OK);
     }
     
