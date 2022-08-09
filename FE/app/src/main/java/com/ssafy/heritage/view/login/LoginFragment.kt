@@ -123,6 +123,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         btnLoginSocial.setOnClickListener {
             signIn()
         }
+
+        //
+        btnFindPw.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_findPasswordFragment)
+        }
     }
 
     private fun signIn() {
