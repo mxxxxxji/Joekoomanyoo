@@ -86,9 +86,6 @@ public class ARService {
     public List<StampDto> listMyStamp(int userSeq) {
         // 내 스탬프 리스트 받아옴
         List<MyStampEntity> list = myARRepository.findAllByUserSeq(userSeq);
-        if (list.size() == 0) {
-            return null;
-        }
 
         // 내 스탬프 리스트의 스탬프 번호를 통해 스탬프Dto 받아오기
         List<StampDto> listDto = new ArrayList<>();

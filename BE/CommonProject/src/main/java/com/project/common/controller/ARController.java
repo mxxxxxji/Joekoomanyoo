@@ -64,11 +64,7 @@ public class ARController {
     @GetMapping("/stamp/list/{userSeq}")
     public ResponseEntity<?> listMyStamp(@PathVariable("userSeq") int userSeq) {
         List<StampDto> list = arService.listMyStamp(userSeq);
-        if (list == null) {
-            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<List<StampDto>>(list, HttpStatus.OK);
-        }
+        return new ResponseEntity<List<StampDto>>(list, HttpStatus.OK);
     }
 
 
