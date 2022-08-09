@@ -3,7 +3,7 @@ package com.ssafy.heritage.adpter
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.ssafy.heritage.R
+import com.ssafy.heritage.ApplicationClass
 
 object MyBindingAdapter {
 
@@ -11,9 +11,8 @@ object MyBindingAdapter {
     @BindingAdapter("image")
     @JvmStatic
     fun ImageView.setImage (imageUrl: String?){
-        //.load("${ApplicationClass.IMG_URL}${imageUrl}")
         Glide.with(this.context)
-            .load(R.drawable.monster)
+            .load("${ApplicationClass.IMG_URL}${imageUrl}")
             .circleCrop()
             .into(this)
     }
