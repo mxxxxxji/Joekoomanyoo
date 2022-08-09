@@ -27,7 +27,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Feed.FeedDto;
-import com.project.common.service.FileService;
 import com.project.common.service.Feed.FeedService;
 
 import io.swagger.annotations.Api;
@@ -41,34 +40,14 @@ import lombok.RequiredArgsConstructor;
 public class FeedController {
     private final FeedService feedService;
     private final JwtTokenProvider jwtTokenProvider;
-    private final FileService fileService;
-
-//    //피드 등록
-//    @ApiOperation(value = "피드 등록")
-//    @PostMapping("/add")
-//    public ResponseEntity<FeedDto> addFeed(HttpServletRequest request, @RequestBody FeedDto feedDto){
-//   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-//        return new ResponseEntity<>(feedService.addFeed(userId,feedDto), HttpStatus.CREATED);
-//    }
-//    
-    
 
     //피드 등록
     @ApiOperation(value = "피드 등록")
     @PostMapping("/add")
-    public ResponseEntity<FeedDto> addFeed(HttpServletRequest request,@RequestParam("file") MultipartFile file, @RequestBody FeedDto feedDto){
+    public ResponseEntity<FeedDto> addFeed(HttpServletRequest request, @RequestBody FeedDto feedDto){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-   	 	String fileName=fileService.fileUpload(file);
-   	 	String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-              .path("/downloadFile/")
-              .path(fileName)
-              .toUriString();
-   	 	FeedDto feed = feedDto;
-   	 	feed.setFeedImgUrl(fileDownloadUri);
-   	 	
-        return new ResponseEntity<>(feedService.addFeed(userId,feed),HttpStatus.CREATED);
+        return new ResponseEntity<>(feedService.addFeed(userId,feedDto), HttpStatus.CREATED);
     }
-    
     
     //피드 전체 조회
     @ApiOperation(value = "피드 전체 조회")

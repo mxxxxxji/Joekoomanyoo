@@ -1,25 +1,30 @@
 package com.project.common.controller.Group;
 
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.project.common.config.Jwt.JwtTokenProvider;
-import com.project.common.dto.Feed.FeedDto;
 import com.project.common.dto.Group.GroupDto;
 import com.project.common.dto.Group.GroupMyListDto;
-import com.project.common.service.FileService;
 import com.project.common.service.Group.GroupService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor   
@@ -28,7 +33,6 @@ import javax.servlet.http.HttpServletRequest;
 public class GroupController {
     private final GroupService groupService;
     private final JwtTokenProvider jwtTokenProvider;
-    private final FileService fileService;
     
     //모임 개설
     @ApiOperation(value = "모임 개설")
@@ -78,14 +82,8 @@ public class GroupController {
     //모임 테마 변경
     @ApiOperation(value = "모임 테마 변경")
     @PutMapping("/{groupSeq}/modify/image")
-    public ResponseEntity<String> updateGroup(@PathVariable("groupSeq") int groupSeq,@RequestParam("file") MultipartFile file){
-	 	String fileName=fileService.fileUpload(file);
-	 	String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-          .path("/downloadFile/")
-          .path(fileName)
-          .toUriString();
-    	
-    	return new ResponseEntity<>(groupService.updateGroupImage(groupSeq,fileDownloadUri),HttpStatus.OK);
+    public ResponseEntity<String> updateGroup(@PathVariable("groupSeq") int groupSeq,@RequestParam("groupImgUrl") String groupImgUrl){
+    	return new ResponseEntity<>(groupService.updateGroupImage(groupSeq,groupImgUrl),HttpStatus.OK);
     }
 
 }
