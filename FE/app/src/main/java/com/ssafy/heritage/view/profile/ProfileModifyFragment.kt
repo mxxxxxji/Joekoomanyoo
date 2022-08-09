@@ -4,11 +4,8 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -17,7 +14,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
@@ -29,8 +25,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
-import java.io.File
-import java.io.FileOutputStream
 
 private const val TAG = "ProfileModifyFragment___"
 private val PERMISSIONS_REQUIRED = arrayOf(
@@ -62,11 +56,6 @@ class ProfileModifyFragment :
         userViewModel.user.observe(viewLifecycleOwner) {
             Log.d(TAG, "initObserver: $it")
             binding.user = it.copy()
-            if (it.profileImgUrl != "0") {
-                Glide.with(ivProfile.context)
-                    .load(it.profileImgUrl)
-                    .into(ivProfile)
-            }
 
             oldNickname = it.userNickname
             spinnerYear.text = it.userBirth
