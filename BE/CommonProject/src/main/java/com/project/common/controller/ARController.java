@@ -1,5 +1,6 @@
 package com.project.common.controller;
 
+import com.project.common.dto.AR.MyLocationDto;
 import com.project.common.dto.AR.StampDto;
 import com.project.common.service.ARService;
 import io.swagger.annotations.Api;
@@ -86,5 +87,22 @@ public class ARController {
         } else {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    /**
+     * 내 위치 받아와서 나와 가까운 스탬프 목록 반환하기
+     *
+     * @param myLocationDto
+     * @return String
+     */
+
+    @ApiOperation(value = "내 위치 받아와서 나와 가까운 스탬프 목록 반환하기", response = String.class)
+    @PostMapping("/location")
+    public ResponseEntity<String> myLocationStampList(@RequestBody MyLocationDto myLocationDto) {
+        if(myLocationDto == null){
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
+        arService.myLocationStampList(myLocationDto);
+        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
 }

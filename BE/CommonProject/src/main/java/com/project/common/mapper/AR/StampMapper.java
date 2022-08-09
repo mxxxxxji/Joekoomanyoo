@@ -15,5 +15,4 @@ public interface StampMapper extends StructMapper<StampDto, StampEntity> {
 
     @Override
     StampDto toDto(final StampEntity stampEntity);
-
 }

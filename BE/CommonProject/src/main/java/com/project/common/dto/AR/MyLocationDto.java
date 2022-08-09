@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MyLocationDto {
     private int userSeq;
-    private String Lng;
-    private String Lat;
+    private String lng;
+    private String lat;
 }

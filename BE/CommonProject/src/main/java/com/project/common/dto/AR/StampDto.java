@@ -15,4 +15,7 @@ public class StampDto {
     private String stampTitle;
     private String stampText;
     private int heritageSeq;
+    private String heritageLocal;
+    private String heritageLng;
+    private String heritageLat;
 }

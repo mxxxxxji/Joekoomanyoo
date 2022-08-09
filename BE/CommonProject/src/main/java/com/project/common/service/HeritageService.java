@@ -1,5 +1,6 @@
 package com.project.common.service;
 
+import com.project.common.dto.AR.MyLocationDto;
 import com.project.common.dto.Heritage.*;
 import com.project.common.entity.Heritage.HeritageEntity;
 import com.project.common.entity.Heritage.HeritageReviewEntity;
@@ -168,5 +169,12 @@ public class HeritageService {
 
             return heritageScrapRepositoryCustom.deleteByUserSeqAndHeritageSeq(userSeq, heritageSeq);
         }
+    }
+
+    // 내 위치 기준으로 정렬해서 문화재 리스트 보내주기
+    public List<HeritageDto> sortHeritage(MyLocationDto myLocationDto) {
+        int userSeq = myLocationDto.getUserSeq();
+        double lat = Double.parseDouble(myLocationDto.getLat());
+        double lng = Double.parseDouble(myLocationDto.getLng());
     }
 }
