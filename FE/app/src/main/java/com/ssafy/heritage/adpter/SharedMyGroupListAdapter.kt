@@ -67,6 +67,7 @@ class SharedMyGroupListAdapter() :
                 if (pos != RecyclerView.NO_POSITION) {
                     itemView.setOnClickListener {
                         listener?.onItemClick(itemView, item, pos)
+                        imagebtnCheck.visibility = View.VISIBLE
                     }
                 }
             }
