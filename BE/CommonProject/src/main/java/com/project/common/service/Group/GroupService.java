@@ -12,7 +12,7 @@ import com.project.common.dto.Group.GroupMyListDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.User.UserEntity;
-import com.project.common.mapper.GroupMapper;
+import com.project.common.mapper.Group.GroupMapper;
 import com.project.common.repository.Group.GroupMemberRepository;
 import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.User.UserRepository;

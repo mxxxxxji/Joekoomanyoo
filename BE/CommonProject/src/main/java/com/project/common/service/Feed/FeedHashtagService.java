@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.common.dto.Feed.FeedHashtagDto;
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedHashtagEntity;
-import com.project.common.mapper.FeedHashtagMapper;
+import com.project.common.mapper.Feed.FeedHashtagMapper;
 import com.project.common.repository.Feed.FeedHashtagRepository;
 import com.project.common.repository.Feed.FeedRepository;
 

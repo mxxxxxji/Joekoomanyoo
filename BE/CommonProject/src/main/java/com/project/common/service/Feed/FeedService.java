@@ -13,7 +13,7 @@ import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedHashtagEntity;
 import com.project.common.entity.Feed.FeedLikeEntity;
 import com.project.common.entity.User.UserEntity;
-import com.project.common.mapper.FeedMapper;
+import com.project.common.mapper.Feed.FeedMapper;
 import com.project.common.repository.Feed.FeedHashtagRepository;
 import com.project.common.repository.Feed.FeedLikeRepository;
 import com.project.common.repository.Feed.FeedRepository;

@@ -1,4 +1,4 @@
-package com.project.common.mapper;
+package com.project.common.mapper.Group;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import com.project.common.dto.Group.GroupDailyMemoDto;
 import com.project.common.dto.Group.GroupMemberDto;
 import com.project.common.entity.Group.GroupDailyMemoEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
+import com.project.common.mapper.StructMapper;
 
 @Mapper
 public interface GroupDailyMemoMapper extends StructMapper<GroupDailyMemoDto,GroupDailyMemoEntity>{
