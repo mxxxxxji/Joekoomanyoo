@@ -3,6 +3,8 @@ package com.ssafy.heritage.data.remote.api
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.HeritageScrap
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -24,8 +26,13 @@ interface HeritageService {
     @DELETE("/api/heritage/review/{heritageReviewSeq}/{heritageSeq}")
     suspend fun deleteHeritageReivew(@Path("heritageReviewSeq") heritageReviewSeq: Int, @Path("heritageSeq") heritageSeq: Int): Response<String>
 
+
     // 스터디에 공유한다
 
     // 문화유산 정렬해서 져오기??
     // 문화유산 상세정보 가져오기??
+
+    @Multipart
+    @POST("/uploadFile")
+    suspend fun saveImage(@Part file: MultipartBody.Part): Response<Boolean>
 }
