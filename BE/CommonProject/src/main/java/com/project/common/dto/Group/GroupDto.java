@@ -21,7 +21,7 @@ public class GroupDto {
 	
 	// 모임 기본 정보 //
     private String groupName;
-    private String bannerImgUrl;
+    private int groupImgUrl;
     private String groupMaster;
     private String groupDescription;
     private char groupAccessType;
@@ -51,14 +51,14 @@ public class GroupDto {
    // private UserEntity user;
 
     @Builder
-    public GroupDto(int groupSeq, String groupName, String bannerImgUrl, String groupMaster, String groupDescription,
+    public GroupDto(int groupSeq, String groupName, int groupImgUrl, String groupMaster, String groupDescription,
     		char groupAccessType, String groupPassword, int groupMaxCount, String groupRegion, Date groupStartDate,
     		Date groupEndDate, int groupAgeRange, char groupWithChild, char groupWithGlobal, char groupActive,
     		char groupStatus, Date createdTime, Date updatedTime) {
     	super();
     	this.groupSeq = groupSeq;
     	this.groupName = groupName;
-    	this.bannerImgUrl = bannerImgUrl;
+    	this.groupImgUrl = groupImgUrl;
     	this.groupMaster = groupMaster;
     	this.groupDescription = groupDescription;
     	this.groupAccessType = groupAccessType;
@@ -81,7 +81,7 @@ public class GroupDto {
     	super();
     	this.groupSeq = group.getGroupSeq();
     	this.groupName = group.getGroupName();
-    	this.bannerImgUrl = group.getBannerImgUrl();
+    	this.groupImgUrl = group.getGroupImgUrl();
     	this.groupMaster = group.getGroupMaster();
     	this.groupDescription = group.getGroupDescription();
     	this.groupAccessType = group.getGroupAccessType();
@@ -104,7 +104,7 @@ public class GroupDto {
         return GroupEntity.builder()
                 .groupSeq(groupSeq)
                 .groupName(groupName)
-                .bannerImgUrl(bannerImgUrl)
+                .groupImgUrl(groupImgUrl)
                 .groupMaster(groupMaster)
                 .groupDescription(groupDescription)
                 .groupAccessType(groupAccessType)

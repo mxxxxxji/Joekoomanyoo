@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Feed.FeedDto;
@@ -37,9 +35,9 @@ public class FeedController {
     //피드 등록
     @ApiOperation(value = "피드 등록")
     @PostMapping("/add")
-    public ResponseEntity<FeedDto> addFeed(HttpServletRequest request, @RequestParam(value = "image") MultipartFile image, @RequestBody FeedDto feedDto){
+    public ResponseEntity<FeedDto> addFeed(HttpServletRequest request, @RequestBody FeedDto feedDto){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-        return new ResponseEntity<>(feedService.addFeed(userId,feedDto,image), HttpStatus.CREATED);
+        return new ResponseEntity<>(feedService.addFeed(userId,feedDto), HttpStatus.CREATED);
     }
     
     //피드 전체 조회

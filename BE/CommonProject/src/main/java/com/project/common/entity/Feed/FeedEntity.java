@@ -41,8 +41,8 @@ public class FeedEntity {
 	@Column(name="feed_title")
     private String feedTitle;
     
-    @Column(name="attach_seq")
-    private String feedImgUrl;
+    @Column(name="feed_img_url")
+    private int feedImgUrl;
  
     @Column(name="feed_content")
     private String feedContent;
