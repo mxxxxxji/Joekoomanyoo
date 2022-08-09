@@ -2,6 +2,7 @@ package com.project.common.controller;
 
 import com.project.common.dto.User.UserDto;
 import com.project.common.dto.User.UserModifyDto;
+import com.project.common.dto.User.UserPasswordDto;
 import com.project.common.service.UserModifyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -60,6 +61,24 @@ public class UserModifyController {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * 사용자 비밀번호 찾기 -> 비밀번호 재 생성
+     * @param userPasswordDto
+     * @return success / fail
+     */
+    @PutMapping("/find-password")
+    @ApiOperation(value = "사용자 비밀번호 찾기 -> 비밀번호 재 생성", response = String.class)
+    public ResponseEntity<String> findPassword(@RequestBody UserPasswordDto userPasswordDto){
+        if(userModifyService.findPassword(userPasswordDto)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 
     /**
      * 사용자 비밀번호 확인하기

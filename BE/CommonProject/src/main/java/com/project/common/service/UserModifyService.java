@@ -1,6 +1,7 @@
 package com.project.common.service;
 
 import com.project.common.dto.User.UserDto;
+import com.project.common.dto.User.UserPasswordDto;
 import com.project.common.mapper.User.UserMapper;
 import com.project.common.dto.User.UserModifyDto;
 import com.project.common.entity.User.UserEntity;
@@ -83,5 +84,22 @@ public class UserModifyService{
         else{
             return true;
         }
+    }
+
+    // 비밀번호 찾기 -> 바꾸기
+    public boolean findPassword(UserPasswordDto userPasswordDto) {
+        // 유저 정보 가져오기
+        UserEntity userEntity = userRepository.findByUserId(userPasswordDto.getUserId());
+        // 유저가 없는 경우 or 유저가 삭제된 경우 false
+        if(userEntity == null || userEntity.getIsDeleted() == 'Y'){
+            return false;
+        }
+
+        userEntity.setUserPassword(userPasswordDto.getUserPassword());
+        // 패스워드 암호화
+        userEntity.encodePassword(this.passwordEncoder);
+        userRepository.save(userEntity);
+        return true;
+
     }
 }
