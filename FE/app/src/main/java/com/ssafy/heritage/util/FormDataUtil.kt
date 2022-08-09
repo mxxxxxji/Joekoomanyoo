@@ -1,4 +1,6 @@
-package com.ssafy.smartstore.utils
+
+package com.ssafy.heritage.util
+
 
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
