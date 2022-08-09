@@ -161,7 +161,8 @@
         android:label="PasswordRequestFragment">
         <action
             android:id="@+id/action_passwordRequestFragment_to_profileModifyFragment"
-            app:destination="@id/profileModifyFragment" />
+            app:destination="@id/profileModifyFragment"
+            app:popUpTo="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileModifyFragment"
@@ -189,7 +190,7 @@
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.ssafy.heritage.view.setting.SettingFragment"
-        android:label="SettingFragment" >
+        android:label="SettingFragment">
         <action
             android:id="@+id/action_settingFragment_to_notiSettingFragment"
             app:destination="@id/notiSettingFragment" />
@@ -197,7 +198,7 @@
     <fragment
         android:id="@+id/heritageInfoFragment"
         android:name="com.ssafy.heritage.view.heritage.HeritageInfoFragment"
-        android:label="HeritageInfoFragment" >
+        android:label="HeritageInfoFragment">
 
     </fragment>
     <fragment
@@ -230,7 +231,7 @@
     <fragment
         android:id="@+id/ARFragment"
         android:name="com.ssafy.heritage.view.ar.ARFragment"
-        android:label="ARFragment" >
+        android:label="ARFragment">
         <action
             android:id="@+id/action_ARFragment_to_ARFoundFragment"
             app:destination="@id/ARFoundFragment" />

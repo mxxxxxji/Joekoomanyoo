@@ -95,24 +95,24 @@ class HeritageListFragment :
                     heritageViewModel.setHeritage(heritage)
 
                     // 해당 문화유산의 상세페이지로 이동
-                    requireActivity().supportFragmentManager
-                        .commit {
-                            addToBackStack(null)
-                            addSharedElement(view, "heritage")
-                            replace(
-                                R.id.fragment_container_main,
-                                HeritageDetailFragment.newInstance(heritage)
-                            )
-                        }
-//                    parentFragmentManager
-//                        .beginTransaction()
-//                        .addSharedElement(view, "heritage")
-//                        .addToBackStack(null)
-//                        .replace(
-//                            R.id.fragment_container_main,
-//                            HeritageDetailFragment.newInstance(heritage)
-//                        )
-//                        .commit()
+//                    requireActivity().supportFragmentManager
+//                        .commit {
+//                            addSharedElement(view, "heritage")
+//                            replace(
+//                                R.id.fragment_container_main,
+//                                HeritageDetailFragment.newInstance(heritage)
+//                            )
+//                            addToBackStack(null)
+//                        }
+                    parentFragmentManager
+                        .beginTransaction()
+                        .addSharedElement(view, "heritage")
+                        .addToBackStack(null)
+                        .replace(
+                            R.id.fragment_container_main,
+                            HeritageDetailFragment.newInstance(heritage)
+                        )
+                        .commit()
                 }
             }
         }

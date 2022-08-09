@@ -62,6 +62,7 @@ class UserViewModel : ViewModel() {
         _user.value = user
         Log.d(TAG, "setUser: ${_user.value}")
         getSchedule()
+        getNotiList()
     }
 
     // 회원 탈퇴
@@ -420,18 +421,18 @@ class UserViewModel : ViewModel() {
 
     // 내 알림 내역 리스트 불러오기
     fun getNotiList() = viewModelScope.launch {
-        var response: Response<List<Schedule>>? = null
+        var response: Response<List<Noti>>? = null
         job = launch(Dispatchers.Main) {
-            response = repository.selectAllMySchedule(_user.value?.userSeq!!)
+            response = repository.selectAllMyNoti(_user.value?.userSeq!!)
         }
         job?.join()
 
         response?.let {
-            Log.d(TAG, "getSchedule response: $it")
+            Log.d(TAG, "getNotiList response: $it")
             if (it.isSuccessful) {
-                val list = it.body() as MutableList<Schedule>
-                Log.d(TAG, "getSchedule list: $list")
-                _myScheduleList.postValue(list)
+                val list = it.body() as MutableList<Noti>
+                Log.d(TAG, "getNotiList list: $list")
+                _notiList.postValue(list)
             } else {
 
             }
