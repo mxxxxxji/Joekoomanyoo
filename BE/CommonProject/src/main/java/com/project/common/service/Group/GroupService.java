@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.common.dto.Group.GroupDto;
-import com.project.common.dto.Group.GroupMyListDto;
+import com.project.common.dto.Group.Request.ReqGroupDto;
+import com.project.common.dto.Group.Response.ResGroupMyListDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.User.UserEntity;
@@ -30,12 +31,14 @@ public class GroupService{
 	
 	//모임 개설
 	@Transactional
-	public GroupDto addGroup(String userId,GroupDto groupDto) {
+	public GroupDto addGroup(String userId,ReqGroupDto groupDto) {
 		UserEntity user = userRepository.findByUserId(userId);
 		GroupEntity saved= groupDto.toEntity();
 		saved.setGroupMaster(user.getUserNickname());
 	 	saved.setCreatedTime(new Date());
 		saved.setUpdatedTime(new Date());
+		saved.setGroupStatus('R');
+		saved.setGroupActive('Y');
 		saved.addGroupMember(GroupMemberEntity.builder()
 				.memberAppeal("방장")
 				.userSeq(user.getUserSeq())
@@ -77,20 +80,17 @@ public class GroupService{
 	}
 	
 	//모임 정보 수정
-	public GroupDto updateGroup(int groupSeq,GroupDto groupDto) {
+	public GroupDto updateGroup(int groupSeq,ReqGroupDto groupDto) {
 		GroupEntity Group =groupRepository.findById(groupSeq).orElse(null);
 		Group.setGroupAccessType(groupDto.getGroupAccessType());
-		Group.setGroupActive(groupDto.getGroupActive());
 		Group.setGroupAgeRange(groupDto.getGroupAgeRange());
 		Group.setGroupDescription(groupDto.getGroupDescription());
 		Group.setGroupEndDate(groupDto.getGroupEndDate());
-		Group.setGroupMaster(groupDto.getGroupMaster());
 		Group.setGroupMaxCount(groupDto.getGroupMaxCount());
 		Group.setGroupName(groupDto.getGroupName());
 		Group.setGroupPassword(groupDto.getGroupPassword());
 		Group.setGroupRegion(groupDto.getGroupRegion());
 		Group.setGroupStartDate(groupDto.getGroupStartDate());
-		Group.setGroupStatus(groupDto.getGroupStatus());
 		Group.setGroupWithGlobal(Group.getGroupWithGlobal());
 		Group.setGroupWithChild(Group.getGroupWithChild());
 		Group.setUpdatedTime(new Date());
@@ -101,12 +101,12 @@ public class GroupService{
 	}
 	
 	//내 모임 조회
-	public List<GroupMyListDto> getMyGroupList(String userId){
-		List<GroupMyListDto> groupList=new ArrayList<>();
+	public List<ResGroupMyListDto> getMyGroupList(String userId){
+		List<ResGroupMyListDto> groupList=new ArrayList<>();
 		UserEntity user = userRepository.findByUserId(userId);
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
 			if(entity.getUserSeq()==user.getUserSeq())
-				groupList.add(new GroupMyListDto(entity));
+				groupList.add(new ResGroupMyListDto(entity));
 		}
 		return groupList;
 	}

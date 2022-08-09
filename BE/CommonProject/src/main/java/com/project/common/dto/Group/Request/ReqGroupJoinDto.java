@@ -1,4 +1,4 @@
-package com.project.common.dto.Group;
+package com.project.common.dto.Group.Request;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,12 +10,12 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class GroupJoinReqDto {
+public class ReqGroupJoinDto {
 	private int userSeq;
 	private String memberAppeal;
 
 	@Builder
-	public GroupJoinReqDto(int userSeq, String memberAppeal) {
+	public ReqGroupJoinDto(int userSeq, String memberAppeal) {
 		super();
 		this.userSeq = userSeq;
 		this.memberAppeal = memberAppeal;

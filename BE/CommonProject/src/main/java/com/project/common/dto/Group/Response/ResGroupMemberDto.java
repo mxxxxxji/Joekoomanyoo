@@ -1,4 +1,4 @@
-package com.project.common.dto.Group;
+package com.project.common.dto.Group.Response;
 
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.User.UserEntity;
@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-public class GroupMemberListDto {
+public class ResGroupMemberDto {
 
 	private int memberSeq;
 	private int groupSeq;
@@ -28,7 +28,7 @@ public class GroupMemberListDto {
 	//private int mystamp;
 	
 	@Builder
-	public GroupMemberListDto(GroupMemberEntity member,UserEntity user) {
+	public ResGroupMemberDto(GroupMemberEntity member,UserEntity user) {
 		this.memberSeq = member.getMemberSeq();
 		this.groupSeq = member.getGroup().getGroupSeq();
 		this.memberStatus = member.getMemberStatus();

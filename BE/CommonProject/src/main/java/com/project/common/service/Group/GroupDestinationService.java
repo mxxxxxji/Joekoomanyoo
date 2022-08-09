@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.project.common.controller.FcmTokenController;
+import com.project.common.dto.Group.Response.ResGroupDestinationDto;
 import com.project.common.dto.Push.FcmHistoryDto;
 import com.project.common.service.FirebaseCloudMessageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.common.dto.Group.GroupDestinationMapDto;
 import com.project.common.entity.Group.GroupDestinationEntity;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
@@ -42,7 +42,7 @@ public class GroupDestinationService{
 	
 
 	//내 모임 목적지 조회
-	public List<GroupDestinationMapDto> getMyDestinationList(String userId){
+	public List<ResGroupDestinationDto> getMyDestinationList(String userId){
 		List<GroupEntity> groupList= new ArrayList<>();
 		UserEntity user = userRepository.findByUserId(userId);
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
@@ -50,28 +50,28 @@ public class GroupDestinationService{
 					groupList.add(entity.getGroup());
 				}
 			}
-			List<GroupDestinationMapDto> destinationList= new ArrayList<>();
+			List<ResGroupDestinationDto> destinationList= new ArrayList<>();
 			
 			for(GroupEntity entity : groupList) {
 				for(int i=0;i<entity.getDestinations().size();i++) {
 					HeritageEntity heritage=heritageRepository.findByHeritageSeq(entity.getDestinations().get(i).getHeritageSeq());
 					if(heritage!=null)
-						destinationList.add(new GroupDestinationMapDto(entity.getDestinations().get(i),heritage));
+						destinationList.add(new ResGroupDestinationDto(entity.getDestinations().get(i),heritage));
 				}
 			}
 			return destinationList;
 	}
 	
 	//모임 목적지 조회
-	public List<GroupDestinationMapDto> getGroupDestinationList(int groupSeq){
-		List<GroupDestinationMapDto> list = new ArrayList<>();
+	public List<ResGroupDestinationDto> getGroupDestinationList(int groupSeq){
+		List<ResGroupDestinationDto> list = new ArrayList<>();
 		HeritageEntity herritage;
 		for(GroupDestinationEntity entity : groupDestinationRepository.findAll()) {
 			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
 				herritage=heritageRepository.findByHeritageSeq(entity.getHeritageSeq());
 				if(herritage!=null)
 
-					list.add(new GroupDestinationMapDto(entity,herritage));
+					list.add(new ResGroupDestinationDto(entity,herritage));
 			}
 		}
 		return list;

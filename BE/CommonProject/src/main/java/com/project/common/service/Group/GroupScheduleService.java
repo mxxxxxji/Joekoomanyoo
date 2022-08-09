@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.common.dto.Group.GroupScheduleDto;
+import com.project.common.dto.Group.Request.ReqGroupScheduleDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.Group.GroupScheduleEntity;
@@ -67,7 +68,7 @@ public class GroupScheduleService{
 	
 	//일정 등록
 	@Transactional
-	public String createGroupSchedule(int groupSeq, GroupScheduleDto gsDto) {
+	public String createGroupSchedule(int groupSeq, ReqGroupScheduleDto gsDto) {
 		GroupEntity group = groupService.findGroup(groupSeq);
 //		for(GroupScheduleEntity entity:group.getSchedules()) {
 //			if(entity.getGsDateTime()==gsDto.getGsDateTime()) {
@@ -129,7 +130,7 @@ public class GroupScheduleService{
 	
 	//일정 수정
 	@Transactional
-	public String modifyGroupSchedule(int groupSeq, GroupScheduleDto gsDto) {
+	public String modifyGroupSchedule(int groupSeq, ReqGroupScheduleDto gsDto) {
 		int cnt=0;
 		for(GroupScheduleEntity entity: findSchedule(groupSeq)) {
 			if(entity !=null && entity.getGsDateTime()==gsDto.getGsDateTime()) {

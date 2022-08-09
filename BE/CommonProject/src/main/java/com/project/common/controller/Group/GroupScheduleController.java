@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Group.GroupScheduleDto;
+import com.project.common.dto.Group.Request.ReqGroupScheduleDto;
 import com.project.common.service.Group.GroupScheduleService;
 
 import io.swagger.annotations.Api;
@@ -52,7 +53,7 @@ public class GroupScheduleController {
     //일정 등록
     @ApiOperation(value = "모임 일정 생성")	
     @PostMapping("/{groupSeq}/schedule/add")
-    public ResponseEntity<String> createGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
+    public ResponseEntity<String> createGroupSchedule(@RequestBody ReqGroupScheduleDto gsDto, @PathVariable int groupSeq){
     	return new ResponseEntity<>(groupScheduleService.createGroupSchedule(groupSeq,gsDto),HttpStatus.CREATED);
     }
     
@@ -66,7 +67,7 @@ public class GroupScheduleController {
    	//메모 수정
   	@ApiOperation(value = "모임 일정 수정")
   	@PutMapping("/{groupSeq}/schedule/modify")
-  	public ResponseEntity<String> modifyGroupSchedule(@RequestBody GroupScheduleDto gsDto, @PathVariable int groupSeq){
+  	public ResponseEntity<String> modifyGroupSchedule(@RequestBody ReqGroupScheduleDto gsDto, @PathVariable int groupSeq){
   		return new ResponseEntity<>(groupScheduleService.modifyGroupSchedule(groupSeq,gsDto),HttpStatus.OK);
   	}
 }
