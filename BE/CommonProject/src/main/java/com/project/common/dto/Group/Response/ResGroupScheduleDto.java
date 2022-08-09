@@ -3,6 +3,7 @@ package com.project.common.dto.Group.Response;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.common.entity.Group.GroupScheduleEntity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,13 @@ public class ResGroupScheduleDto {
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Date gsUpdatedAt;
+	
+	
+	public ResGroupScheduleDto(GroupScheduleEntity schedule) {
+		this.gsSeq = schedule.getGsSeq();
+		this.gsContent = schedule.getGsContent();
+		this.gsDateTime = schedule.getGsDateTime();
+		this.gsRegisteredAt = schedule.getGsRegisteredAt();
+		this.gsUpdatedAt=schedule.getGsUpdatedAt();
+	}
 }

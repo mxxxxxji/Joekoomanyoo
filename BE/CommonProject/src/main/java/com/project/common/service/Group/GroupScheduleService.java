@@ -40,10 +40,10 @@ public class GroupScheduleService{
 	private final FcmTokenController fcmTokenController;
 	//일정 조회
 	public List<ResGroupScheduleDto> getScheduleList(int groupSeq){
-		List<GroupScheduleDto> list = new ArrayList<>();
+		List<ResGroupScheduleDto> list = new ArrayList<>();
 		for(GroupScheduleEntity entity : groupScheduleRepository.findAll()) {
 			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
-				list.add(new GroupScheduleDto(entity));
+				list.add(new ResGroupScheduleDto(entity));
 			}
 		}
 		return list;
@@ -58,11 +58,11 @@ public class GroupScheduleService{
 					groupList.add(entity.getGroup());
 			}
 		}
-		List<GroupScheduleDto> scheduleList= new ArrayList<>();
+		List<ResGroupScheduleDto> scheduleList= new ArrayList<>();
 		
 		for(GroupEntity entity : groupList) {
 			for(int i=0;i<entity.getSchedules().size();i++)
-				scheduleList.add(new GroupScheduleDto(entity.getSchedules().get(i)));
+				scheduleList.add(new ResGroupScheduleDto(entity.getSchedules().get(i)));
 		}
 		return scheduleList;
 	}
