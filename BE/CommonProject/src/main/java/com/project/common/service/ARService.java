@@ -201,7 +201,7 @@ public class ARService {
         for(StampEntity stampEntity : listStamp){
             double stampLat = Double.parseDouble(stampEntity.getHeritageLat());
             double stampLng = Double.parseDouble(stampEntity.getHeritageLng());
-            double dis = distance(lat,lng,stampLat, stampLng, "meter");
+            double dis = distance(lat,lng,stampLat,stampLng, "meter");
             System.out.println(stampEntity.getStampTitle() +" 와의 거리는 " + (int)dis + "m입니다.");
 
             // 100m 안에 있으면 알림 울리기
