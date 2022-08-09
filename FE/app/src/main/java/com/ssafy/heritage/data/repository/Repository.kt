@@ -89,6 +89,8 @@ class Repository constructor(context: Context) {
     suspend fun checkPassword(map: HashMap<String, String>): Response<String> =
         userApi.checkPassword(map)
 
+    suspend fun findPassword(@Body map: HashMap<String, String>): Response<String> = userApi.findPassword(map)
+
     suspend fun insertHeritageScrap(scrap: HeritageScrap): Response<String> =
         userApi.insertHeritageScrap(scrap)
 

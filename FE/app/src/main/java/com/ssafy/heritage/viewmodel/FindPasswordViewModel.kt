@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.event.Event
@@ -158,5 +159,29 @@ class FindPasswordViewModel : ViewModel() {
 
         // 유효성 검사를 다 통과한 경우
         return true
+    }
+
+    // 비밀번호 재설정하기
+    @SuppressLint("LongLogTag")
+    suspend fun findPassword() = withContext(Dispatchers.Main) {
+        val map = HashMap<String, String>()
+        map.put("userId", id.value!!)
+        map.put("userPassword", pw.value!!)
+
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.findPassword(map)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "findPassword response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "findPassword Success: ${it.body()}")
+                true
+            } else {
+                false
+            }
+        }
     }
 }

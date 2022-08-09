@@ -54,6 +54,10 @@ interface UserService {
     @POST("/api/modify/check-password")
     suspend fun checkPassword(@Body map: HashMap<String, String>): Response<String>
 
+    // 사용자 비밀번호 변경하기
+    @PUT("/api/modify/find-password")
+    suspend fun findPassword(@Body map: HashMap<String, String>): Response<String>
+
     // 문화유산 스크랩을 추가한다
     @POST("/api/heritage/scrap")
     suspend fun insertHeritageScrap(@Body scrap: HeritageScrap): Response<String>

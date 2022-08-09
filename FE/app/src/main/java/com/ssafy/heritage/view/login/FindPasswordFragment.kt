@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
@@ -121,6 +122,14 @@ class FindPasswordFragment :
             }
 
             // 비밀번호 변경 요청
+            CoroutineScope(Dispatchers.Main).launch {
+                if (findPasswordViewModel.findPassword() == true) {
+                    makeToast("비밀번호 변경이 완료되었습니다")
+                    findNavController().popBackStack()
+                } else {
+                    makeToast("비밀번호 변경에 실패했습니다")
+                }
+            }
         }
     }
 
