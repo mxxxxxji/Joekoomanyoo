@@ -33,16 +33,10 @@ public class GroupController {
     //모임 개설
     @ApiOperation(value = "모임 개설")
     @PostMapping("/add")
-    public ResponseEntity<GroupDto> addGroup(HttpServletRequest request,@RequestParam("file") MultipartFile file,  @RequestBody GroupDto groupDto){
+    public ResponseEntity<GroupDto> addGroup(HttpServletRequest request, @RequestBody GroupDto groupDto){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-   	 	String fileName=fileService.fileUpload(file);
-   	 	String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-              .path("/downloadFile/")
-              .path(fileName)
-              .toUriString();
-   	 	GroupDto group = groupDto;
-   	 	group.setGroupImgUrl(fileDownloadUri);
-    	return new ResponseEntity<>(groupService.addGroup(userId,group), HttpStatus.CREATED);
+
+    	return new ResponseEntity<>(groupService.addGroup(userId,groupDto), HttpStatus.CREATED);
     }
     
     //모임 목록 조회
@@ -81,5 +75,17 @@ public class GroupController {
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
    	 	return new ResponseEntity<>(groupService.getMyGroupList(userId),HttpStatus.OK);
     }
-    
+    //모임 테마 변경
+    @ApiOperation(value = "모임 테마 변경")
+    @PutMapping("/{groupSeq}/modify/image")
+    public ResponseEntity<GroupDto> updateGroup(@PathVariable("groupSeq") int groupSeq,@RequestParam("file") MultipartFile file){
+	 	String fileName=fileService.fileUpload(file);
+	 	String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+          .path("/downloadFile/")
+          .path(fileName)
+          .toUriString();
+    	
+    	return new ResponseEntity<>(groupService.updateGroupImage(groupSeq,fileDownloadUri),HttpStatus.OK);
+    }
+
 }

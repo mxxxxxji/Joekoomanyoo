@@ -93,7 +93,6 @@ public class GroupService{
 		Group.setGroupStatus(groupDto.getGroupStatus());
 		Group.setGroupWithGlobal(Group.getGroupWithGlobal());
 		Group.setGroupWithChild(Group.getGroupWithChild());
-		Group.setGroupImgUrl(Group.getGroupImgUrl());
 		Group.setUpdatedTime(new Date());
 		
 		groupRepository.save(Group);
@@ -116,6 +115,14 @@ public class GroupService{
 	public GroupEntity findGroup(int groupSeq) {
 		GroupEntity findGroup = groupRepository.findByGroupSeq(groupSeq);
 		 return findGroup;
+	}
+	
+	//모임 정보 수정
+	public GroupDto updateGroupImage(int groupSeq,String fileDownloadUri) {
+		GroupEntity Group =groupRepository.findById(groupSeq).orElse(null);
+		Group.setGroupImgUrl(fileDownloadUri);
+		groupRepository.save(Group);
+		return GroupMapper.MAPPER.toDto(Group);
 	}
 
 }

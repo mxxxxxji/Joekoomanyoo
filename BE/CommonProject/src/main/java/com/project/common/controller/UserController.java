@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -49,13 +51,13 @@ public class UserController {
 
     @ApiOperation(value = "일반 회원가입", response = String.class)
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@ApiParam(value = "회원 가입 : 회원정보 ( 아이디, 비밀번호, 닉네임, 성별, 생년월일 ) ", required = true) @RequestBody UserSignDto userSignDto, BindingResult bindingResult) {
+    public ResponseEntity<String> signup(@RequestParam("file") MultipartFile file,@ApiParam(value = "회원 가입 : 회원정보 ( 아이디, 비밀번호, 닉네임, 성별, 생년월일 ) ", required = true) @RequestBody UserSignDto userSignDto, BindingResult bindingResult) {
 
         // validation
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
-
+    
         UserEntity userEntity = UserEntity.builder()
                 .userSeq(0)
                 .userId(userSignDto.getUserId())
