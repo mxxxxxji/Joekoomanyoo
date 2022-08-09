@@ -32,7 +32,7 @@ public class FeedService{
 	
 	//피드 등록
 	@Transactional
-	public FeedDto addFeed(String userId,FeedDto feedDto,MultipartFile uploadFile) {
+	public FeedDto addFeed(String userId,FeedDto feedDto) {
 		FeedEntity saved= feedRepository.save(feedDto.toEntity());
 		UserEntity user = userRepository.findByUserId(userId);
 		saved.setCreatedTime(new Date());

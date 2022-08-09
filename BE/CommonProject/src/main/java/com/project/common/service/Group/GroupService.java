@@ -93,7 +93,7 @@ public class GroupService{
 		Group.setGroupStatus(groupDto.getGroupStatus());
 		Group.setGroupWithGlobal(Group.getGroupWithGlobal());
 		Group.setGroupWithChild(Group.getGroupWithChild());
-		Group.setBannerImgUrl(Group.getBannerImgUrl());
+		Group.setGroupImgUrl(Group.getGroupImgUrl());
 		Group.setUpdatedTime(new Date());
 		
 		groupRepository.save(Group);

@@ -21,7 +21,7 @@ public class FeedDto {
 	private int feedSeq;  
 	
 	// 모임 기본 정보 //
-    private String feedImgUrl;
+    private int feedImgUrl;
    	private String feedTitle;
    	private String feedContent;
    	private char feedOpen;
@@ -35,7 +35,7 @@ public class FeedDto {
     private Date updatedTime;
 
     @Builder
-    public FeedDto(int feedSeq, String feedImgUrl, String feedTitle, String feedContent, char feedOpen,
+    public FeedDto(int feedSeq, int feedImgUrl, String feedTitle, String feedContent, char feedOpen,
     		Date createdTime, Date updatedTime,UserEntity user) {
     	super();
     	this.feedSeq = feedSeq;
