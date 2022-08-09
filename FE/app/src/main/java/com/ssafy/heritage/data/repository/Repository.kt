@@ -2,6 +2,7 @@ package com.ssafy.heritage.data.repository
 
 import android.content.Context
 import com.ssafy.heritage.data.dto.*
+import com.ssafy.heritage.data.remote.api.RetrofitInstance.ARApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.feedApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.fileApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
@@ -19,6 +20,7 @@ import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Url
@@ -143,6 +145,11 @@ class Repository constructor(context: Context) {
 
     // file
     suspend fun sendImage(url: String, file: MultipartBody.Part): Response<String> = fileApi.saveImage(url, file)
+
+    // stamp
+    suspend fun selectAllStamp(): Response<List<Stamp>> = ARApi.selectAllStamp()
+    suspend fun getMyStamp(userSeq: Int): Response<List<Stamp>> = ARApi.getMyStamp(userSeq)
+    suspend fun addStamp(userSeq: Int, stampSeq: Int): Response<String> = ARApi.addStamp(userSeq, stampSeq)
 
 
     companion object {

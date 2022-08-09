@@ -58,11 +58,16 @@ class UserViewModel : ViewModel() {
     val notiList: LiveData<MutableList<Noti>>
         get() = _notiList
 
+    private val _myStampList = MutableLiveData<MutableList<Stamp>>()
+    val myStampList: LiveData<MutableList<Stamp>>
+        get() = _myStampList
+
     suspend fun setUser(user: User) = coroutineScope {
         getUserInfo(user.userSeq!!)
         Log.d(TAG, "setUser: ${_user.value}")
         getSchedule()
         getNotiList()
+        getMyStamp()
         true
     }
 
@@ -217,7 +222,7 @@ class UserViewModel : ViewModel() {
         response?.let {
             Log.d(TAG, "modify response: ${it}")
             if (it.isSuccessful) {
-
+                Log.d(TAG, "modify Successful: ${it.body()}")
                 // 성공하면 회원정보 불러옴
                 getUserInfo(user.userSeq!!)
 
@@ -250,7 +255,8 @@ class UserViewModel : ViewModel() {
                     null,
                     userBirth = result.userBirth,
                     socialLoginType = result.socialLoginType,
-                    userGender = result.userGender
+                    userGender = result.userGender,
+                    profileImgUrl = result.profileImgUrl
                 )
                 _user.value = user
                 true
@@ -496,6 +502,46 @@ class UserViewModel : ViewModel() {
                 true
             } else {
                 false
+            }
+        }
+    }
+
+    // 내가 보유한 스탬프 불러오기
+    fun getMyStamp() = viewModelScope.launch {
+        var response: Response<List<Stamp>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.getMyStamp(_user.value?.userSeq!!)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "getMyStamp response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "getMyStamp body: ${it.body()}")
+                _myStampList.value = it.body() as MutableList<Stamp>?
+            } else {
+                Log.d(TAG, "getMyStamp: ${it.errorBody()}")
+            }
+        }
+    }
+
+    // 획득한 스탬프 등록
+    fun addStamp(stampSeq: Int) = viewModelScope.launch {
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.addStamp(_user.value?.userSeq!!, stampSeq)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "addStamp response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "addStamp body: ${it.body()}")
+
+                // 새로 등록하고 다시 내 스탬프 목록 갱신
+                getMyStamp()
+            } else {
+                Log.d(TAG, "addStamp: ${it.errorBody()}")
             }
         }
     }

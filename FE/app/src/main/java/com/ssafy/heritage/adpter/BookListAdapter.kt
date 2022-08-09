@@ -1,35 +1,34 @@
 package com.ssafy.heritage.adpter
 
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.heritage.data.dto.Heritage
-import com.ssafy.heritage.databinding.ItemHeritageBinding
-import com.ssafy.heritage.listener.HeritageListClickListener
+import com.ssafy.heritage.R
+import com.ssafy.heritage.data.dto.Stamp
+import com.ssafy.heritage.databinding.ItemBookBinding
 
-class HeritageListAdapter : ListAdapter<Heritage, HeritageListAdapter.ViewHolder>(DiffCallback()) {
+class BookListAdapter() : ListAdapter<Stamp, BookListAdapter.ViewHolder>(DiffCallback()) {
 
-    lateinit var heritageListClickListener: HeritageListClickListener
-
-    inner class ViewHolder(private val binding: ItemHeritageBinding) :
+    inner class ViewHolder(private val binding: ItemBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Heritage) = with(binding) {
-            heritage = data
+        fun bind(data: Stamp) = with(binding) {
+            stamp = data
 
-            ViewCompat.setTransitionName(ivHeritage, "album$bindingAdapterPosition")
-
-            itemView.setOnClickListener {
-                heritageListClickListener.onClick(bindingAdapterPosition, data, ivHeritage)
+            // 내가 찾은 것들은 흐릿하게
+            if (data.found == 'Y') {
+                itemView.background = ContextCompat.getDrawable(itemView.context, R.color.black)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemHeritageBinding.inflate(
+            ItemBookBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -41,12 +40,12 @@ class HeritageListAdapter : ListAdapter<Heritage, HeritageListAdapter.ViewHolder
         holder.bind(getItem(position))
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<Heritage>() {
-        override fun areItemsTheSame(oldItem: Heritage, newItem: Heritage): Boolean {
+    class DiffCallback : DiffUtil.ItemCallback<Stamp>() {
+        override fun areItemsTheSame(oldItem: Stamp, newItem: Stamp): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
-        override fun areContentsTheSame(oldItem: Heritage, newItem: Heritage): Boolean {
+        override fun areContentsTheSame(oldItem: Stamp, newItem: Stamp): Boolean {
             return oldItem == newItem
         }
     }

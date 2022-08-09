@@ -117,6 +117,10 @@ object RetrofitInstance {
         retrofit.create(FileService::class.java)
     }
 
+    val ARApi: ARService by lazy{
+        retrofit.create(ARService::class.java)
+    }
+
 //    private fun getTrustManagerFactory(context: Context): TrustManagerFactory? {
 //        // 1. CA 로드
 //        val cf: CertificateFactory = CertificateFactory.getInstance("X.509")

@@ -1,9 +1,10 @@
 package com.ssafy.heritage.data.dto
 
 data class Stamp(
-    val heritageSeq: Int,
-    val stampImgUrl: String,
-    val stampSeq: Int,
-    val stampText: String,
-    val stampTitle: String
+    val stampSeq: Int = 0,
+    val stampImgUrl: String = "",
+    val stampTitle: String = "",
+    val stampText: String = "",
+    val heritageSeq: Int = 0,
+    var found: Char = 'N'
 )
