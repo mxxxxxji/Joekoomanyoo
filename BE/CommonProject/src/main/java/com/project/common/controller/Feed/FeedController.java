@@ -27,6 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Feed.FeedDto;
+import com.project.common.dto.Feed.reqFeedDto;
 import com.project.common.service.Feed.FeedService;
 
 import io.swagger.annotations.Api;
@@ -44,7 +45,7 @@ public class FeedController {
     //피드 등록
     @ApiOperation(value = "피드 등록")
     @PostMapping("/add")
-    public ResponseEntity<FeedDto> addFeed(HttpServletRequest request, @RequestBody FeedDto feedDto){
+    public ResponseEntity<FeedDto> addFeed(HttpServletRequest request, @RequestBody reqFeedDto feedDto){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
         return new ResponseEntity<>(feedService.addFeed(userId,feedDto), HttpStatus.CREATED);
     }

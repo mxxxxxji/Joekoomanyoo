@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.common.dto.Feed.FeedDto;
+import com.project.common.dto.Feed.FeedHashtagDto;
+import com.project.common.dto.Feed.reqFeedDto;
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedHashtagEntity;
 import com.project.common.entity.Feed.FeedLikeEntity;
@@ -32,17 +34,30 @@ public class FeedService{
 	
 	//피드 등록
 	@Transactional
-	public FeedDto addFeed(String userId,FeedDto feedDto) {
-		FeedEntity saved= feedRepository.save(feedDto.toEntity());
+	public FeedDto addFeed(String userId,reqFeedDto feedDto) {
+		FeedEntity feed =new FeedEntity();
+		feed.setFeedContent(feedDto.getFeedContent());
+		feed.setFeedImgUrl(feedDto.getFeedImgUrl());
+		feed.setFeedTitle(feedDto.getFeedTitle());
+		feed.setFeedOpen(feedDto.getFeedOpen());
+		feed.setCreatedTime(new Date());
+		feed.setUpdatedTime(new Date());
+		
+		for(String tag : feedDto.getHashtags()) {
+			feed.addFeedHashtag(
+					FeedHashtagEntity.builder()
+					.fhTag(tag)
+					.createdTime(new Date()).build());
+			feedRepository.save(feed);
+		}
+		
 		UserEntity user = userRepository.findByUserId(userId);
-		saved.setCreatedTime(new Date());
-		saved.setUpdatedTime(new Date());
 		
 		//upload
-		feedRepository.save(saved);
-		user.addFeed(saved);
+		feedRepository.save(feed);
+		user.addFeed(feed);
 	 	userRepository.save(user);
-		return FeedMapper.MAPPER.toDto(saved);
+		return FeedMapper.MAPPER.toDto(feed);
 	}
 	
 	//피드 전체 조회
@@ -95,6 +110,8 @@ public class FeedService{
 		
 		return "Success";
 	}
+	
+
 	
 	//피드 수정
 	public String updateFeed(int feedSeq,FeedDto feedDto) {
