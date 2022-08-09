@@ -118,11 +118,11 @@ public class GroupService{
 	}
 	
 	//모임 정보 수정
-	public GroupDto updateGroupImage(int groupSeq,String fileDownloadUri) {
+	public String updateGroupImage(int groupSeq,String fileDownloadUri) {
 		GroupEntity Group =groupRepository.findById(groupSeq).orElse(null);
 		Group.setGroupImgUrl(fileDownloadUri);
 		groupRepository.save(Group);
-		return GroupMapper.MAPPER.toDto(Group);
+		return fileDownloadUri;
 	}
 
 }

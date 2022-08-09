@@ -78,7 +78,7 @@ public class GroupController {
     //모임 테마 변경
     @ApiOperation(value = "모임 테마 변경")
     @PutMapping("/{groupSeq}/modify/image")
-    public ResponseEntity<GroupDto> updateGroup(@PathVariable("groupSeq") int groupSeq,@RequestParam("file") MultipartFile file){
+    public ResponseEntity<String> updateGroup(@PathVariable("groupSeq") int groupSeq,@RequestParam("file") MultipartFile file){
 	 	String fileName=fileService.fileUpload(file);
 	 	String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
           .path("/downloadFile/")
