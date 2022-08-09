@@ -5,6 +5,7 @@ import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.feedApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
+import com.ssafy.heritage.data.remote.api.RetrofitInstance.testApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
 import com.ssafy.heritage.data.remote.request.FeedAddRequest
 import com.ssafy.heritage.data.remote.request.GroupAddRequest
@@ -15,6 +16,7 @@ import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
+import okhttp3.MultipartBody
 import retrofit2.Response
 
 class Repository constructor(context: Context) {
@@ -109,7 +111,7 @@ class Repository constructor(context: Context) {
     suspend fun selectAllMyNoti(userSeq: Int): Response<List<Noti>> = userApi.selectAllMyNoti(userSeq)
 
     suspend fun pushToken(token: FCMToken): Response<String> = userApi.pushToken(token)
-
+    suspend fun saveImage(img: MultipartBody.Part) = testApi.saveImage(img)
 
 
     // heritage

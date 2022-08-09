@@ -247,6 +247,14 @@
                     app:layout_constraintTop_toBottomOf="@id/header_feed"
                     tools:listitem="@layout/item_home" />
 
+                <Button
+                    android:id="@+id/btn_test"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이미지서버test"
+                    app:layout_constraintTop_toBottomOf="@id/recyclerview_feed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -1,11 +1,13 @@
 package com.ssafy.heritage.view
 
+import android.content.Intent
 import android.view.View
 import android.view.animation.OvershootInterpolator
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.heritage.R
+import com.ssafy.heritage.TestActivity
 import com.ssafy.heritage.adpter.GroupListAdapter
 import com.ssafy.heritage.adpter.HomeHeritageAdapter
 import com.ssafy.heritage.adpter.OnItemClickListener
@@ -111,6 +113,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
     }
 
     private fun initClickListener() = with(binding) {
+
+        // 이미지서버 테스트
+        btnTest.setOnClickListener {
+            val intent = Intent(requireContext(),  TestActivity::class.java)
+            startActivity(intent)
+        }
 
         // 나의 모임 더보기 클릭시
         tvGoMyGroup.setOnClickListener {

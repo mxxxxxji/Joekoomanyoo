@@ -17,12 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Heritage"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".TestActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
         <service
             android:name=".service.MyFireBaseMessageingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
@@ -47,7 +52,7 @@
             android:exported="false" />
         <activity
             android:name=".view.HomeActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

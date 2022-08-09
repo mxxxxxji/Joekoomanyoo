@@ -3,6 +3,7 @@ package com.ssafy.heritage.data.remote.api
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.ssafy.heritage.ApplicationClass.Companion.BASE_URL
+import com.ssafy.heritage.ApplicationClass.Companion.IMG_URL
 import com.ssafy.heritage.util.NullOnEmptyConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -80,7 +81,16 @@ object RetrofitInstance {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
+    private val retrofit2 by lazy {
+        Retrofit.Builder()
+            .baseUrl(IMG_URL)
+            .addConverterFactory(NullOnEmptyConverterFactory())
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
     // 인터페이스를 사용한 인스턴스 설정
     val groupApi: GroupService by lazy {
         retrofit.create(GroupService::class.java)
@@ -94,8 +104,13 @@ object RetrofitInstance {
         retrofit.create(HeritageService::class.java)
     }
 
+
     val feedApi: FeedService by lazy {
         retrofit.create(FeedService::class.java)
+    }
+
+    val testApi: HeritageService by lazy{
+        retrofit2.create(HeritageService::class.java)
     }
 
 //    private fun getTrustManagerFactory(context: Context): TrustManagerFactory? {
