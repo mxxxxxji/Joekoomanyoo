@@ -6,11 +6,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.project.common.dto.Feed.FeedDto;
-import com.project.common.dto.Feed.FeedHashtagDto;
-import com.project.common.dto.Feed.reqFeedDto;
+import com.project.common.dto.Feed.ReqFeedDto;
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedHashtagEntity;
 import com.project.common.entity.Feed.FeedLikeEntity;
@@ -34,7 +32,7 @@ public class FeedService{
 	
 	//피드 등록
 	@Transactional
-	public FeedDto addFeed(String userId,reqFeedDto feedDto) {
+	public FeedDto addFeed(String userId,ReqFeedDto feedDto) {
 		FeedEntity feed =new FeedEntity();
 		feed.setFeedContent(feedDto.getFeedContent());
 		feed.setFeedImgUrl(feedDto.getFeedImgUrl());

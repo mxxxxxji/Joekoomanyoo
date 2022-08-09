@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
-import com.project.common.dto.Group.GroupDestinationMapDto;
+import com.project.common.dto.Group.Response.ResGroupDestinationDto;
 import com.project.common.service.Group.GroupDestinationService;
 
 import io.swagger.annotations.Api;
@@ -35,7 +35,7 @@ public class GroupDestinationController {
     //내 모임 목적지 조회
     @ApiOperation(value = "내 모임 목적지 조회")
     @GetMapping("/my-destination")
-    public ResponseEntity<List<GroupDestinationMapDto>> getMyDestinationList(HttpServletRequest request) throws Exception{
+    public ResponseEntity<List<ResGroupDestinationDto>> getMyDestinationList(HttpServletRequest request) throws Exception{
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
     	return new ResponseEntity<>(groupDestinationService.getMyDestinationList(userId),HttpStatus.OK);
     }
@@ -43,7 +43,7 @@ public class GroupDestinationController {
     //모임 목적지 조회
     @ApiOperation(value = "모임 목적지 조회")
     @GetMapping("/{groupSeq}/destination/list")
-    public ResponseEntity<List<GroupDestinationMapDto>> getGroupDestinationList(@PathVariable("groupSeq") int groupSeq) throws Exception{
+    public ResponseEntity<List<ResGroupDestinationDto>> getGroupDestinationList(@PathVariable("groupSeq") int groupSeq) throws Exception{
     	return new ResponseEntity<>(groupDestinationService.getGroupDestinationList(groupSeq),HttpStatus.OK);
     }
 

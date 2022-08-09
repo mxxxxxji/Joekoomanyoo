@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class reqFeedDto {
+public class ReqFeedDto {
 	
 	// 피드 정보 //
     private String feedImgUrl;

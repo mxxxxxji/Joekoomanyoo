@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Group.GroupDto;
-import com.project.common.dto.Group.GroupMyListDto;
+import com.project.common.dto.Group.Request.ReqGroupDto;
+import com.project.common.dto.Group.Response.ResGroupMyListDto;
 import com.project.common.service.Group.GroupService;
 
 import io.swagger.annotations.Api;
@@ -37,7 +38,7 @@ public class GroupController {
     //모임 개설
     @ApiOperation(value = "모임 개설")
     @PostMapping("/add")
-    public ResponseEntity<GroupDto> addGroup(HttpServletRequest request, @RequestBody GroupDto groupDto){
+    public ResponseEntity<GroupDto> addGroup(HttpServletRequest request, @RequestBody ReqGroupDto groupDto){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
 
     	return new ResponseEntity<>(groupService.addGroup(userId,groupDto), HttpStatus.CREATED);
@@ -68,14 +69,14 @@ public class GroupController {
     //모임 정보 수정
     @ApiOperation(value = "모임 정보 수정")
     @PutMapping("/{groupSeq}/modify")
-    public ResponseEntity<GroupDto> updateGroup(@PathVariable("groupSeq") int groupSeq, @RequestBody GroupDto groupDto){
+    public ResponseEntity<GroupDto> updateGroup(@PathVariable("groupSeq") int groupSeq, @RequestBody ReqGroupDto groupDto){
     	return new ResponseEntity<>(groupService.updateGroup(groupSeq,groupDto),HttpStatus.OK);
     }
     
     //내 모임 목록 조회
     @ApiOperation(value = "내 모임 조회")
     @GetMapping("/my-group")
-    public ResponseEntity<List<GroupMyListDto>> getMyGroupList(HttpServletRequest request) throws Exception{
+    public ResponseEntity<List<ResGroupMyListDto>> getMyGroupList(HttpServletRequest request) throws Exception{
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
    	 	return new ResponseEntity<>(groupService.getMyGroupList(userId),HttpStatus.OK);
     }

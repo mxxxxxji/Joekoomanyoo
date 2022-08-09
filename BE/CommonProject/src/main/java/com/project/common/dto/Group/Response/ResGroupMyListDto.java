@@ -1,4 +1,4 @@
-package com.project.common.dto.Group;
+package com.project.common.dto.Group.Response;
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-public class GroupMyListDto {
+public class ResGroupMyListDto {
 
 
 	private int groupSeq;
@@ -41,7 +41,7 @@ public class GroupMyListDto {
 	
 	
 	@Builder
-	public GroupMyListDto(GroupMemberEntity member) {
+	public ResGroupMyListDto(GroupMemberEntity member) {
 		this.groupSeq=member.getGroup().getGroupSeq();
 		this.groupName = member.getGroup().getGroupName();
 		this.groupMaster = member.getGroup().getGroupMaster();

@@ -1,6 +1,5 @@
 package com.project.common.dto.Feed;
 
-import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedLikeEntity;
 
 import lombok.Builder;
@@ -16,21 +15,18 @@ import lombok.ToString;
 
 public class FeedLikeDto {
     private int feedLikeSeq;
-    private FeedEntity feed;
     private int userSeq;
     
     @Builder
-    public FeedLikeDto(int feedLikeSeq, FeedEntity feed, int userSeq) {
+    public FeedLikeDto(int feedLikeSeq, int userSeq) {
 		super();
 		this.feedLikeSeq = feedLikeSeq;
-		this.feed = feed;
 		this.userSeq = userSeq;
 	}
 	
     public FeedLikeEntity toEntity(){
         return FeedLikeEntity.builder()
                 .feedLikeSeq(feedLikeSeq)
-                .feed(feed)
                 .userSeq(userSeq)
                 .build();
     }

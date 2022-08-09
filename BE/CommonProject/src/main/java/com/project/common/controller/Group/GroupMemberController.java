@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
-import com.project.common.dto.Group.GroupJoinReqDto;
-import com.project.common.dto.Group.GroupMemberListDto;
+import com.project.common.dto.Group.Request.ReqGroupJoinDto;
+import com.project.common.dto.Group.Response.ResGroupMemberDto;
 import com.project.common.service.Group.GroupMemberService;
 
 import io.swagger.annotations.Api;
@@ -35,14 +35,14 @@ public class GroupMemberController {
     //모임 멤버 목록 조회
     @ApiOperation(value = "모임 멤버 목록 조회")
     @GetMapping("/member/list")
-    public ResponseEntity<List<GroupMemberListDto>> getMemberList(@PathVariable("groupSeq") int groupSeq) throws Exception{
+    public ResponseEntity<List<ResGroupMemberDto>> getMemberList(@PathVariable("groupSeq") int groupSeq) throws Exception{
     	return new ResponseEntity<>(groupMemberService.getMemberList(groupSeq),HttpStatus.OK);
     }
     
 	//참가 신청
     @ApiOperation(value = "모임 참가 신청")
 	@PostMapping("/member/join")
-	public ResponseEntity<String> joinGroup(@RequestBody GroupJoinReqDto groupJoinRequestDto, @PathVariable int groupSeq){
+	public ResponseEntity<String> joinGroup(@RequestBody ReqGroupJoinDto groupJoinRequestDto, @PathVariable int groupSeq){
     	return new ResponseEntity<>(groupMemberService.joinGroup(groupSeq,groupJoinRequestDto),HttpStatus.CREATED);
 	}
 		

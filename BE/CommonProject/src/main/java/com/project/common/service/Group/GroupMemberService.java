@@ -14,8 +14,8 @@ import com.project.common.service.FirebaseCloudMessageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.common.dto.Group.GroupJoinReqDto;
-import com.project.common.dto.Group.GroupMemberListDto;
+import com.project.common.dto.Group.Request.ReqGroupJoinDto;
+import com.project.common.dto.Group.Response.ResGroupMemberDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.User.UserEntity;
@@ -37,11 +37,11 @@ public class GroupMemberService {
 	private final FcmTokenController fcmTokenController;
 
     //모임 멤버 조회
-    public List<GroupMemberListDto> getMemberList(int groupSeq) {
-        List<GroupMemberListDto> list = new ArrayList<>();
+    public List<ResGroupMemberDto> getMemberList(int groupSeq) {
+        List<ResGroupMemberDto> list = new ArrayList<>();
         for (GroupMemberEntity entity : groupMemberRepository.findAll()) {
             if (entity.getGroup() != null && entity.getGroup().getGroupSeq() == groupSeq) {
-                list.add(new GroupMemberListDto(entity, userRepository.findByUserSeq(entity.getUserSeq())));
+                list.add(new ResGroupMemberDto(entity, userRepository.findByUserSeq(entity.getUserSeq())));
             }
         }
         return list;
@@ -49,7 +49,7 @@ public class GroupMemberService {
 
     // 모임 참가
     @Transactional
-    public String joinGroup(int groupSeq, GroupJoinReqDto requestDto) {
+    public String joinGroup(int groupSeq, ReqGroupJoinDto requestDto) {
         int masterUserSeq = 0;
         for (GroupMemberEntity entity : groupMemberRepository.findAll()) {
             if (entity.getGroup().getGroupSeq() == groupSeq && entity.getMemberStatus() == 2) {
