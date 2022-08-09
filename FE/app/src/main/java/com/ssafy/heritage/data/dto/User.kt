@@ -1,5 +1,6 @@
 package com.ssafy.heritage.data.dto
 
+import android.os.Build.VERSION_CODES.N
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.io.Serializable
@@ -13,9 +14,9 @@ data class User(
     var userBirth: String,          // 출생년도 월일
     var socialLoginType: String,    // 로그인타입
     var userGender: Char,           // 성별(M,F)
-    var profileImgUrl: String,      // 프로필 사진 링크
-    var fcmToken: String,           // fcm 토큰
-    var userRegisteredAt: String,   // 가입 시간
-    var userUpdatedAt: String,      // 수정 시간
-    var isDeleted: Char,            // 회원 탈퇴 여부(N,Y)
+    var profileImgUrl: String = "",      // 프로필 사진 링크
+    var fcmToken: String = "",           // fcm 토큰
+    var userRegisteredAt: String = "",   // 가입 시간
+    var userUpdatedAt: String = "",      // 수정 시간
+    var isDeleted: Char = 'N',            // 회원 탈퇴 여부(N,Y)
 ) : Parcelable

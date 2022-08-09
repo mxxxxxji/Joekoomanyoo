@@ -11,10 +11,7 @@ import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.event.Event
 import com.ssafy.heritage.util.SingleLiveEvent
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import okhttp3.MultipartBody
 import org.json.JSONObject
 import retrofit2.Response
@@ -61,11 +58,12 @@ class UserViewModel : ViewModel() {
     val notiList: LiveData<MutableList<Noti>>
         get() = _notiList
 
-    fun setUser(user: User) {
-        _user.value = user
+    suspend fun setUser(user: User) = coroutineScope {
+        getUserInfo(user.userSeq!!)
         Log.d(TAG, "setUser: ${_user.value}")
         getSchedule()
         getNotiList()
+        true
     }
 
     // 회원 탈퇴
@@ -197,6 +195,7 @@ class UserViewModel : ViewModel() {
         }
     }
 
+
     suspend fun modify(user: User, pw: String?) = withContext(Dispatchers.Main) {
         // 서버에 요청
         val userModify = UserModify(
@@ -216,10 +215,46 @@ class UserViewModel : ViewModel() {
         job?.join()
 
         response?.let {
+            Log.d(TAG, "modify response: ${it}")
             if (it.isSuccessful) {
+
+                // 성공하면 회원정보 불러옴
+                getUserInfo(user.userSeq!!)
+
                 true
             } else {
                 Log.d(TAG, "${it.code()}")
+                false
+            }
+        }
+    }
+
+    // 내 정보 불러오기
+    suspend fun getUserInfo(userSeq: Int) = withContext(Dispatchers.Main) {
+        var response: Response<User>? = null
+
+        job = launch(Dispatchers.Main) {
+            response = repository.getUserInfo(userSeq)
+        }
+        job?.join()
+
+        response?.let { it ->
+            Log.d(TAG, "getUserInfo response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "getUserInfo response: ${it.body()}")
+                val result = it.body()
+                val user = User(
+                    userSeq = result!!.userSeq,
+                    userId = result.userId,
+                    userNickname = result.userNickname,
+                    null,
+                    userBirth = result.userBirth,
+                    socialLoginType = result.socialLoginType,
+                    userGender = result.userGender
+                )
+                _user.value = user
+                true
+            } else {
                 false
             }
         }

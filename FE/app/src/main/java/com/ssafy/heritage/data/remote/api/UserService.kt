@@ -42,7 +42,11 @@ interface UserService {
     @POST("/api/user/social/signup")
     suspend fun socialSignup(@Body user: User): Response<String>
 
-    // 사용자 정보 수정하기
+    // 사용자 정보 불러오기
+    @GET("/api/modify/{userSeq}")
+    suspend fun getUserInfo(@Path("userSeq") userSeq: Int): Response<User>
+
+   // 사용자 정보 수정하기
     @PUT("/api/modify")
     suspend fun modifyProfile(@Body userModify: UserModify): Response<String>
 

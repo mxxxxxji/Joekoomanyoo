@@ -20,6 +20,7 @@ import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Url
 
 class Repository constructor(context: Context) {
@@ -77,6 +78,8 @@ class Repository constructor(context: Context) {
         userApi.socialLogin(map)
 
     suspend fun socialSignup(user: User): Response<String> = userApi.socialSignup(user)
+
+    suspend fun getUserInfo(userSeq: Int): Response<User> = userApi.getUserInfo(userSeq)
 
     suspend fun resign(userId: String): Response<String> = userApi.resign(userId)
 

@@ -30,6 +30,9 @@ import com.ssafy.heritage.util.Channel.CHANNEL_ID
 import com.ssafy.heritage.util.Channel.CHANNEL_NAME
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -46,23 +49,25 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     var fromHeritageDetailFragment = false
 
     override fun init() {
+        CoroutineScope(Dispatchers.Main).launch{
+            intent?.getParcelableExtra<User>("user")?.let { userViewModel.setUser(it) }
 
-        initNavigation()
+            initNavigation()
 
-        initObserver()
+            initObserver()
 
-        getHashKey()
+            getHashKey()
 
-        getFCMToken()
+            getFCMToken()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel(CHANNEL_ID, CHANNEL_NAME)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                createNotificationChannel(CHANNEL_ID, CHANNEL_NAME)
+            }
         }
     }
 
     override fun onStart() {
         super.onStart()
-        intent?.getParcelableExtra<User>("user")?.let { userViewModel.setUser(it) }
         heritageViewModel.getHeritageList()
     }
 

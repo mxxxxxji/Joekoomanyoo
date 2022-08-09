@@ -60,6 +60,7 @@ class ProfileModifyFragment :
     @SuppressLint("LongLogTag")
     private fun initObserver() = with(binding) {
         userViewModel.user.observe(viewLifecycleOwner) {
+            Log.d(TAG, "initObserver: $it")
             binding.user = it.copy()
             if (it.profileImgUrl != "0") {
                 Glide.with(ivProfile.context)
