@@ -19,7 +19,8 @@ class ApplicationClass : Application() {
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
 
         // 주소
-        const val BASE_URL = "http://i7d102.p.ssafy.io:8081"
+        const val BASE_URL = "http://i7d102.p.ssafy.io:8081"    // 서버 주소
+        const val IMG_URL = "http://i7d102.p.ssafy.io:8082"     // 파일 서버 주소
 
 
 

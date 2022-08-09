@@ -2,6 +2,7 @@ package com.ssafy.heritage.adpter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,8 @@ class FeedListAdapter : ListAdapter<Feed, FeedListAdapter.ViewHolder>(DiffCallba
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Feed) = with(binding) {
             feed = data
+
+            ViewCompat.setTransitionName(ivFeed, "album$bindingAdapterPosition")
 
             itemView.setOnClickListener {
                 feedListClickListener.onClick(bindingAdapterPosition, data)

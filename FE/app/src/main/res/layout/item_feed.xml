@@ -22,6 +22,7 @@
             android:id="@+id/iv_feed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@{feed.feedImgUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />

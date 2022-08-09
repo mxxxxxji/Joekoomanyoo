@@ -21,7 +21,7 @@ interface FeedService {
 
     // 피드 전체 조회
     @GET("/api/feed/list")
-    suspend fun selectAllFeeds(): Response<List<FeedListResponse>>
+    suspend fun selectAllFeeds(): Response<List<Feed>>
 
     // 피드 등록
     @POST("/api/feed/add")

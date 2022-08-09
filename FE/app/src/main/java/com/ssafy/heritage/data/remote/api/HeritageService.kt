@@ -3,6 +3,7 @@ package com.ssafy.heritage.data.remote.api
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.HeritageScrap
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 

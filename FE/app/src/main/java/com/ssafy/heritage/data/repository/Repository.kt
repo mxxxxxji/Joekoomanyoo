@@ -3,6 +3,7 @@ package com.ssafy.heritage.data.repository
 import android.content.Context
 import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.feedApi
+import com.ssafy.heritage.data.remote.api.RetrofitInstance.fileApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
@@ -15,6 +16,7 @@ import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
+import okhttp3.MultipartBody
 import retrofit2.Response
 
 class Repository constructor(context: Context) {
@@ -110,8 +112,6 @@ class Repository constructor(context: Context) {
 
     suspend fun pushToken(token: FCMToken): Response<String> = userApi.pushToken(token)
 
-
-
     // heritage
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()
     suspend fun insertHeritageReview(body: HeritageReviewListResponse): Response<String> =
@@ -126,10 +126,13 @@ class Repository constructor(context: Context) {
         feedApi.selectMyFeeds()
     suspend fun selectFeedsByHashtag(fhTag: String): Response<List<FeedListResponse>> =
         feedApi.selectFeedsByHashtag(fhTag)
-    suspend fun selectAllFeeds(): Response<List<FeedListResponse>> =
+    suspend fun selectAllFeeds(): Response<List<Feed>> =
         feedApi.selectAllFeeds()
     suspend fun insertFeed(body: FeedAddRequest): Response<FeedListResponse> =
         feedApi.insertFeed(body)
+
+    // file
+    suspend fun sendImage(url: String, file: MultipartBody.Part): Response<String> = fileApi.saveImage(url, file)
 
 
     companion object {
