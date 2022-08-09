@@ -2,8 +2,10 @@ package com.project.common.controller.Group;
 
 
 import com.project.common.config.Jwt.JwtTokenProvider;
+import com.project.common.dto.Feed.FeedDto;
 import com.project.common.dto.Group.GroupDto;
 import com.project.common.dto.Group.GroupMyListDto;
+import com.project.common.service.FileService;
 import com.project.common.service.Group.GroupService;
 
 import io.swagger.annotations.Api;
@@ -12,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -24,13 +28,21 @@ import javax.servlet.http.HttpServletRequest;
 public class GroupController {
     private final GroupService groupService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final FileService fileService;
     
     //모임 개설
     @ApiOperation(value = "모임 개설")
     @PostMapping("/add")
-    public ResponseEntity<GroupDto> addGroup(HttpServletRequest request, @RequestBody GroupDto groupDto){
+    public ResponseEntity<GroupDto> addGroup(HttpServletRequest request,@RequestParam("file") MultipartFile file,  @RequestBody GroupDto groupDto){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-    	return new ResponseEntity<>(groupService.addGroup(userId,groupDto), HttpStatus.CREATED);
+   	 	String fileName=fileService.fileUpload(file);
+   	 	String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+              .path("/downloadFile/")
+              .path(fileName)
+              .toUriString();
+   	 	GroupDto group = groupDto;
+   	 	group.setGroupImgUrl(fileDownloadUri);
+    	return new ResponseEntity<>(groupService.addGroup(userId,group), HttpStatus.CREATED);
     }
     
     //모임 목록 조회

@@ -39,9 +39,6 @@ public class FeedService{
 		saved.setUpdatedTime(new Date());
 		
 		//upload
-		
-		
-		
 		feedRepository.save(saved);
 		user.addFeed(saved);
 	 	userRepository.save(user);

@@ -42,7 +42,7 @@ public class FeedEntity {
     private String feedTitle;
     
     @Column(name="feed_img_url")
-    private int feedImgUrl;
+    private String feedImgUrl;
  
     @Column(name="feed_content")
     private String feedContent;

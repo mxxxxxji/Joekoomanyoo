@@ -56,6 +56,9 @@ dependencies {
 	// fcm
 	implementation "com.google.firebase:firebase-admin:6.8.1"
 	implementation group: "com.squareup.okhttp3", name: "okhttp", version: "4.2.2"
+	
+	// https://mvnrepository.com/artifact/org.webjars/stomp-websocket
+	implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3-1'
 }
 
 tasks.named('test') {

@@ -5,8 +5,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Feed.FeedDto;
+import com.project.common.service.FileService;
 import com.project.common.service.Feed.FeedService;
 
 import io.swagger.annotations.Api;
@@ -31,14 +41,34 @@ import lombok.RequiredArgsConstructor;
 public class FeedController {
     private final FeedService feedService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final FileService fileService;
+
+//    //피드 등록
+//    @ApiOperation(value = "피드 등록")
+//    @PostMapping("/add")
+//    public ResponseEntity<FeedDto> addFeed(HttpServletRequest request, @RequestBody FeedDto feedDto){
+//   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
+//        return new ResponseEntity<>(feedService.addFeed(userId,feedDto), HttpStatus.CREATED);
+//    }
+//    
+    
 
     //피드 등록
     @ApiOperation(value = "피드 등록")
     @PostMapping("/add")
-    public ResponseEntity<FeedDto> addFeed(HttpServletRequest request, @RequestBody FeedDto feedDto){
+    public ResponseEntity<FeedDto> addFeed(HttpServletRequest request,@RequestParam("file") MultipartFile file, @RequestBody FeedDto feedDto){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-        return new ResponseEntity<>(feedService.addFeed(userId,feedDto), HttpStatus.CREATED);
+   	 	String fileName=fileService.fileUpload(file);
+   	 	String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+              .path("/downloadFile/")
+              .path(fileName)
+              .toUriString();
+   	 	FeedDto feed = feedDto;
+   	 	feed.setFeedImgUrl(fileDownloadUri);
+   	 	
+        return new ResponseEntity<>(feedService.addFeed(userId,feed),HttpStatus.CREATED);
     }
+    
     
     //피드 전체 조회
     @ApiOperation(value = "피드 전체 조회")

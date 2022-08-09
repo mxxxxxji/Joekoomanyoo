@@ -21,7 +21,7 @@ public class GroupDto {
 	
 	// 모임 기본 정보 //
     private String groupName;
-    private int groupImgUrl;
+    private String groupImgUrl;
     private String groupMaster;
     private String groupDescription;
     private char groupAccessType;
@@ -51,7 +51,7 @@ public class GroupDto {
    // private UserEntity user;
 
     @Builder
-    public GroupDto(int groupSeq, String groupName, int groupImgUrl, String groupMaster, String groupDescription,
+    public GroupDto(int groupSeq, String groupName, String groupImgUrl, String groupMaster, String groupDescription,
     		char groupAccessType, String groupPassword, int groupMaxCount, String groupRegion, Date groupStartDate,
     		Date groupEndDate, int groupAgeRange, char groupWithChild, char groupWithGlobal, char groupActive,
     		char groupStatus, Date createdTime, Date updatedTime) {

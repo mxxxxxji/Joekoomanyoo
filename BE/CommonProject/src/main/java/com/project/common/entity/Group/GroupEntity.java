@@ -44,7 +44,7 @@ public class GroupEntity {
     private String groupName;
     
     @Column(name="group_img_url")
-    private int groupImgUrl;
+    private String groupImgUrl;
  
     @Column(name="group_master")
     private String groupMaster;
