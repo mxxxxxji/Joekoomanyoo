@@ -7,6 +7,8 @@ import com.project.common.mapper.StructMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface HeritageMapper extends StructMapper<HeritageDto, HeritageEntity> {
 
@@ -17,5 +19,11 @@ public interface HeritageMapper extends StructMapper<HeritageDto, HeritageEntity
 
         @Override
         HeritageDto toDto(final HeritageEntity heritageEntity);
+
+        @Override
+        List<HeritageDto> toDtoList(List<HeritageEntity> entityList);
+
+        @Override
+        List<HeritageEntity> toEntityList(List<HeritageDto> dtoList);
 
 }

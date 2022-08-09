@@ -25,4 +25,7 @@ public class StampEntity {
     private String stampText;
     @Column(nullable = false)
     private int heritageSeq;
+    private String heritageLocal;
+    private String heritageLng;
+    private String heritageLat;
 }

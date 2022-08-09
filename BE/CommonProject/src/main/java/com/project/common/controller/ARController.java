@@ -1,5 +1,6 @@
 package com.project.common.controller;
 
+import com.project.common.dto.AR.MyLocationDto;
 import com.project.common.dto.AR.StampDto;
 import com.project.common.service.ARService;
 import io.swagger.annotations.Api;
@@ -21,6 +22,18 @@ public class ARController {
     private static final String FAIL = "fail";
     private final ARService arService;
 
+    /**
+     * 스탬프 추가하기
+     *
+     * @param
+     * @return
+     */
+
+    @PostMapping("/stamp/list")
+    public void createStamp(){
+        arService.createStamp();
+    }
+
 
     /**
      * 스탬프 리스트 불러오기
@@ -41,6 +54,25 @@ public class ARController {
     }
 
     /**
+     * 내 스탬프 리스트 불러오기
+     *
+     * @param userSeq
+     * @return List
+     */
+
+    @ApiOperation(value = "내 스탬프 리스트 불러오기", response = List.class)
+    @GetMapping("/stamp/list/{userSeq}")
+    public ResponseEntity<?> listMyStamp(@PathVariable("userSeq") int userSeq) {
+        List<StampDto> list = arService.listMyStamp(userSeq);
+        if (list == null) {
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<List<StampDto>>(list, HttpStatus.OK);
+        }
+    }
+
+
+    /**
      * 스탬프 나의 목록에 추가하기
      *
      * @param userSeq, stampSeq
@@ -57,4 +89,20 @@ public class ARController {
         }
     }
 
+    /**
+     * 내 위치 받아와서 나와 가까운 스탬프 목록 반환하기
+     *
+     * @param myLocationDto
+     * @return String
+     */
+
+    @ApiOperation(value = "내 위치 받아와서 나와 가까운 스탬프 목록 반환하기", response = String.class)
+    @PostMapping("/location")
+    public ResponseEntity<String> myLocationStampList(@RequestBody MyLocationDto myLocationDto) {
+        if(myLocationDto == null){
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        }
+        arService.myLocationStampList(myLocationDto);
+        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+    }
 }

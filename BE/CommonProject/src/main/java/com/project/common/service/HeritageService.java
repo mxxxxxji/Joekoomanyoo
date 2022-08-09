@@ -1,5 +1,6 @@
 package com.project.common.service;
 
+import com.project.common.dto.AR.MyLocationDto;
 import com.project.common.dto.Heritage.*;
 import com.project.common.entity.Heritage.HeritageEntity;
 import com.project.common.entity.Heritage.HeritageReviewEntity;
@@ -8,10 +9,7 @@ import com.project.common.entity.User.UserEntity;
 import com.project.common.mapper.Heritage.HeritageMapper;
 import com.project.common.mapper.Heritage.HeritageReviewMapper;
 import com.project.common.mapper.Heritage.HeritageScrapMapper;
-import com.project.common.repository.Heritage.HeritageRepository;
-import com.project.common.repository.Heritage.HeritageReviewRepository;
-import com.project.common.repository.Heritage.HeritageScrapRepository;
-import com.project.common.repository.Heritage.HeritageScrapRepositoryCustom;
+import com.project.common.repository.Heritage.*;
 import com.project.common.repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -169,4 +167,33 @@ public class HeritageService {
             return heritageScrapRepositoryCustom.deleteByUserSeqAndHeritageSeq(userSeq, heritageSeq);
         }
     }
+
+    // 내 위치 기준으로 정렬해서 문화재 리스트 보내주기
+    public List<HeritageDto> sortHeritage(MyLocationDto myLocationDto) {
+        double lat = Double.parseDouble(myLocationDto.getLat());
+        double lng = Double.parseDouble(myLocationDto.getLng());
+
+        List<HeritageEntity> list = heritageRepository.findAll();
+        List<HeritageDto> listDto = HeritageMapper.MAPPER.toDtoList(list);
+        // 거리 정보 저장
+        List<HeritageDto> sortList = new ArrayList<>();
+
+        // 10km, 20km, 30km ... 순으로 증가
+        double distance = 0.05;
+        while (listDto.size() > 0) {
+            for (int i = 0; i < 1540; i++) {
+                // 문화재 위치가 위도 경도 다 범위안에 있는 경우
+                if (((lat - distance) <= Double.parseDouble(listDto.get(i).getHeritageLat())) && ((lat + distance) >= Double.parseDouble(listDto.get(i).getHeritageLat())) && ((lng - distance) <= Double.parseDouble(listDto.get(i).getHeritageLng())) && ((lng + distance) >= Double.parseDouble(listDto.get(i).getHeritageLng()))) {
+                    sortList.add(listDto.get(i));
+                    listDto.remove(i);
+                    if (i == 0) i = 0;
+                    else i--;
+                }
+                if(listDto.size()==0)break;
+                if(i==listDto.size()-1) break;
+            }
+            distance += 0.05;
+        }
+            return sortList;
+        }
 }
