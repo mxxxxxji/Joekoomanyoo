@@ -3,6 +3,7 @@ package com.ssafy.heritage.data.repository
 import android.content.Context
 import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.feedApi
+import com.ssafy.heritage.data.remote.api.RetrofitInstance.fileApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.testApi
@@ -18,6 +19,8 @@ import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
+import retrofit2.http.Part
+import retrofit2.http.Url
 
 class Repository constructor(context: Context) {
 
@@ -132,6 +135,9 @@ class Repository constructor(context: Context) {
         feedApi.selectAllFeeds()
     suspend fun insertFeed(body: FeedAddRequest): Response<FeedListResponse> =
         feedApi.insertFeed(body)
+
+    // file
+    suspend fun sendImage(url: String, file: MultipartBody.Part): Response<String> = fileApi.saveImage(url, file)
 
 
     companion object {

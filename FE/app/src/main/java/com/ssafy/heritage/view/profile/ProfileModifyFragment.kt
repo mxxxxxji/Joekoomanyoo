@@ -4,11 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.ImageDecoder
-import android.os.Build
-import android.provider.MediaStore
+import android.net.Uri
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -17,14 +17,20 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentProfileModifyBinding
+import com.ssafy.heritage.util.FileUtil
+import com.ssafy.heritage.util.FormDataUtil
 import com.ssafy.heritage.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import java.io.File
+import java.io.FileOutputStream
 
 private const val TAG = "ProfileModifyFragment___"
 private val PERMISSIONS_REQUIRED = arrayOf(
@@ -37,6 +43,7 @@ class ProfileModifyFragment :
     //    private val profileViewModel by viewModels<ProfileViewModel>()
     private val userViewModel by activityViewModels<UserViewModel>()
     lateinit var oldNickname: String
+    var img_multipart: MultipartBody.Part? = null
 
     override fun init() {
 
@@ -45,12 +52,20 @@ class ProfileModifyFragment :
         initClickListener()
 
         setTextChangedListener()
+
+        setItemSelectedListener()
     }
 
 
+    @SuppressLint("LongLogTag")
     private fun initObserver() = with(binding) {
         userViewModel.user.observe(viewLifecycleOwner) {
             binding.user = it.copy()
+            if (it.profileImgUrl != "0") {
+                Glide.with(ivProfile.context)
+                    .load(it.profileImgUrl)
+                    .into(ivProfile)
+            }
 
             oldNickname = it.userNickname
             spinnerYear.text = it.userBirth
@@ -96,14 +111,18 @@ class ProfileModifyFragment :
                 Log.d(TAG, "비밀번호 유효성 검사 확인")
 
                 // 유효성 검사 통과하면 회원정보 수정
-                if (userViewModel.modify(user!!, pw) == true) {
-                    // 수정완료후 마이페이지로 이동
-                    makeToast("회원정보 수정 성공")
-                    findNavController().navigate(R.id.action_profileModifyFragment_to_profileFragment)
+                // 먼저 파일 서버로 사진 보냄
+                if (img_multipart == null || img_multipart?.let { userViewModel.sendImage(it) } == true) {
+                    if (userViewModel.modify(user!!, pw) == true) {
+                        // 수정완료후 마이페이지로 이동
+                        makeToast("회원정보 수정 성공")
+                        findNavController().navigate(R.id.action_profileModifyFragment_to_profileFragment)
+                    } else {
+                        makeToast("회원정보 수정에 실패하였습니다")
+                    }
                 } else {
-                    makeToast("회원정보 수정에 실패하였습니다")
+                    makeToast("사진 등록에 실패했습니다")
                 }
-
             }
         }
     }
@@ -119,29 +138,12 @@ class ProfileModifyFragment :
     private val filterActivityLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK && it.data != null) {
-                var currentImageUri = it.data?.data
-                try {
-                    currentImageUri?.let {
-                        if (Build.VERSION.SDK_INT < 28) {
-                            val bitmap = MediaStore.Images.Media.getBitmap(
-                                requireActivity().contentResolver,
-                                currentImageUri
-                            )
-                            binding.ivProfile.setImageBitmap(bitmap)
-                        } else {
-                            val source = ImageDecoder.createSource(
-                                requireActivity().contentResolver,
-                                currentImageUri
-                            )
-                            val bitmap = ImageDecoder.decodeBitmap(source)
-                            binding.ivProfile.setImageBitmap(bitmap)
-                        }
-                    }
 
+                val imagePath = it.data!!.data
+                binding.ivProfile.setImageURI(imagePath)
+                val file = FileUtil.toFile(requireContext(), imagePath!!)
+                img_multipart = FormDataUtil.getImageBody("file", file)
 
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
             } else if (it.resultCode == RESULT_CANCELED) {
                 makeToast("사진 선택 취소")
             } else {

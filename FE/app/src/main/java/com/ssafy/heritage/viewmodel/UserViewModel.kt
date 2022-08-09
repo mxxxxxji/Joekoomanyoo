@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputLayout
+import com.ssafy.heritage.ApplicationClass.Companion.IMG_URL
 import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.event.Event
@@ -14,6 +15,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import org.json.JSONObject
 import retrofit2.Response
 import java.util.regex.Pattern
 
@@ -202,9 +205,9 @@ class UserViewModel : ViewModel() {
             userPassword = pw,
             userBirth = user.userBirth,
             userGender = user.userGender,
-            profileImgUrl = ""
+            profileImgUrl = _user.value!!.profileImgUrl
         )
-
+        Log.d(TAG, "modify: $userModify")
         // 회원정보 수정하는 요청 보냄
         var response: Response<String>? = null
         job = launch(Dispatchers.Main) {
@@ -435,6 +438,29 @@ class UserViewModel : ViewModel() {
                 _notiList.postValue(list)
             } else {
 
+            }
+        }
+    }
+
+    // 사진 전송하기
+    suspend fun sendImage(img: MultipartBody.Part) = withContext(Dispatchers.Main) {
+
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.sendImage("${IMG_URL}/uploadFile", img)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "sendImage response: $it")
+            if (it.isSuccessful) {
+                val body = JSONObject(it.body())
+                val url = body.get("fileDownloadUri")
+                Log.d(TAG, "sendImage body: ${url}")
+                _user.value?.profileImgUrl = url as String
+                true
+            } else {
+                false
             }
         }
     }

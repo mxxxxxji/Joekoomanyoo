@@ -29,6 +29,7 @@ class TestViewModel : ViewModel() {
             repository.saveImage(
                 img
             ).let { response ->
+                Log.d(TAG, "saveImage: ${response.body()}")
                 if(response.isSuccessful){
                     _reviewState.postValue(response.body())
                     Log.d(TAG, "성공uploadChat: ${response.code()}")
