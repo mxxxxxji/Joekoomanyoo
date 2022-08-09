@@ -16,14 +16,26 @@
         android:layout_height="match_parent"
         app:layoutDescription="@xml/fragment_heritage_detail_scene">
 
-        <FrameLayout
-            android:id="@+id/map"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_map"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@id/gl_hori_80_map"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:id="@+id/map"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_hori_80_map"
@@ -89,6 +101,21 @@
                 tools:text="경북 안동시 서후면 봉정사기 222, 봉정사 (태장리)" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.scalified.fab.FloatingActionButton
+            android:id="@+id/btn_my_location"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            app:button_color="@color/link_water"
+            app:button_colorPressed="@color/cornflower"
+            app:hide_animation="@anim/fab_roll_to_down"
+            app:image="@drawable/ic_my_location"
+            app:image_size="20dp"
+            app:layout_constraintBottom_toTopOf="@id/constraint_scroll"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:show_animation="@anim/fab_roll_from_down" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_scroll"

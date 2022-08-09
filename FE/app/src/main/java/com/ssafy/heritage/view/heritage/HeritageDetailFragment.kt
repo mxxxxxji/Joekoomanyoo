@@ -5,15 +5,23 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.ImageDecoder
+import android.location.LocationManager
+import android.media.AudioFocusRequest
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
 import androidx.transition.Fade
 import androidx.transition.TransitionInflater
@@ -58,7 +66,19 @@ class HeritageDetailFragment :
     private lateinit var heritageReview: HeritageReviewListResponse
     private lateinit var heritageReviewAdapter: HeritageReviewAdapter
 
+    private lateinit var btnPlayAudio: Button
+    var mediaPlayer: MediaPlayer? = null
+    var audioCheck = false
+    var audioManager: AudioManager? = null
+    var focusRequest: AudioFocusRequest? = null
+
     private lateinit var callback: OnBackPressedCallback
+
+    private val locationManager by lazy {
+        requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    }
+    private var lat = 0.0    // 위도
+    private var lng = 0.0    // 경도
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -106,6 +126,8 @@ class HeritageDetailFragment :
         initObserver()
 
         initClickListener()
+
+        setMotion()
     }
 
     @SuppressLint("LongLogTag")
@@ -123,6 +145,25 @@ class HeritageDetailFragment :
     override fun onStart() {
         super.onStart()
         heritageViewModel.getHeritageReviewList()
+    }
+
+    // 앱을 일시적으로 숨겼을 때 일시정지
+    override fun onPause() {
+        super.onPause()
+        try {
+            mediaPlayer?.pause()
+        } catch (e: IllegalStateException) {
+            e.printStackTrace()
+        }
+    }
+
+    // Destroys the MediaPlayer instance when the app is closed
+    override fun onStop() {
+        super.onStop()
+        if (mediaPlayer != null) {
+            mediaPlayer!!.release()
+            mediaPlayer = null
+        }
     }
 
     private fun initAdapter() = with(binding) {
@@ -248,6 +289,41 @@ class HeritageDetailFragment :
 //            }
 //        }
 
+        val audioURL = "http://116.67.83.213/media/voice/krVoice/11/kr-11-00030000-11.mp3"
+        Log.d(TAG, audioURL)
+        mediaPlayer = MediaPlayer()
+        mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
+
+
+        imagebtnHeritageDetailVoicePlay.setOnClickListener {
+            if (mediaPlayer!!.isPlaying) {
+                try {
+                    // 재생을 일시정지
+                    mediaPlayer!!.pause()
+                } catch (e: IllegalStateException) {
+                    e.printStackTrace()
+                }
+            } else {
+                try {
+                    mediaPlayer!!.setDataSource(audioURL)
+                    mediaPlayer!!.prepare()
+                    mediaPlayer!!.setOnPreparedListener {
+                        mediaPlayer!!.start()
+                    }
+                } catch (e: IllegalStateException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
+        imagebtnHeritageDetailVoicePause.setOnClickListener {
+            if (mediaPlayer!!.isPlaying) {
+                mediaPlayer!!.pause()
+                audioCheck = true
+                Log.d(TAG, "Audio pause")
+            }
+        }
+
         // 스터디로 공유하기
         btnLink.setOnClickListener {
             // 다이얼로그 띄우기
@@ -282,20 +358,85 @@ class HeritageDetailFragment :
         // 정보 탭 클릭시
         constraintContent1.setOnClickListener {
             motionlayout1.transitionToEnd()
-            setLocation(
-                heritage?.heritageLat!!.toDouble(),
-                heritage?.heritageLng!!.toDouble(),
-                -1
-            )
         }
         constraintContent2.setOnClickListener {
             motionlayout1.transitionToStart()
-            setLocation(
-                heritage?.heritageLat!!.toDouble(),
-                heritage?.heritageLng!!.toDouble(),
-                1
-            )
         }
+
+        // 내 위치 클릭시
+        btnMyLocation.setOnClickListener {
+            getLastLocation()
+            setLocation(lat, lng, -1)
+        }
+    }
+
+    private fun setMotion() = with(binding) {
+        // 모션레이아웃 설정
+        motionlayout1.addTransitionListener(object : MotionLayout.TransitionListener {
+            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {}
+
+            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {}
+
+            override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                if (p0?.progress == 1.0F) {
+                    setLocation(
+                        heritage?.heritageLat!!.toDouble(),
+                        heritage?.heritageLng!!.toDouble(),
+                        -1
+                    )
+                } else if (p0?.progress == 0.0F) {
+                    setLocation(
+                        heritage?.heritageLat!!.toDouble(),
+                        heritage?.heritageLng!!.toDouble(),
+                        1
+                    )
+                }
+            }
+
+            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {}
+
+        })
+    }
+
+    private fun getLastLocation() {
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestLocationPermissionLancher.launch(PERMISSIONS_REQUIRED)
+            return
+        }
+        locationManager
+            .getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            .apply {
+                if (this != null) {
+                    lat = latitude
+                    lng = longitude
+                }
+            }
+
+        locationManager
+            .getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            .apply {
+                if (this != null) {
+                    lat = latitude
+                    lng = longitude
+                }
+            }
+
+        locationManager
+            .getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
+            .apply {
+                if (this != null) {
+                    lat = latitude
+                    lng = longitude
+                }
+            }
     }
 
     val requestStoragePermissionLauncher = registerForActivityResult(
