@@ -1,13 +1,16 @@
 package com.project.common.service;
 
 import com.project.common.dto.AR.MyStampDto;
+import com.project.common.entity.Heritage.HeritageEntity;
 import com.project.common.mapper.AR.MyStampMapper;
 import com.project.common.dto.AR.StampDto;
 import com.project.common.mapper.AR.StampMapper;
 import com.project.common.entity.AR.MyStampEntity;
 import com.project.common.entity.AR.StampEntity;
 import com.project.common.repository.AR.ARRepository;
+import com.project.common.repository.AR.ARRepositoryCustom;
 import com.project.common.repository.AR.MyARRepository;
+import com.project.common.repository.Heritage.HeritageRepository;
 import com.project.common.repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,9 @@ public class ARService {
     private final UserRepository userRepository;
 
     private final MyARRepository myARRepository;
+    private final HeritageRepository heritageRepository;
+    private final ARRepositoryCustom arRepositoryCustom;
+
 
 
     // 스탬프 리스트 반환
@@ -72,6 +78,11 @@ public class ARService {
             return false;
         }
 
+        // 이미 그 사용자가 그 스탬프가 있다면 false
+        if(arRepositoryCustom.findByUserSeqAndStampSeq(userSeq,stampSeq) != null){
+            return false;
+        };
+
         // 문화유산 번호
         int heritageSeq = stampEntity.getHeritageSeq();
 
@@ -84,5 +95,21 @@ public class ARService {
 
         myARRepository.save(MyStampMapper.MAPPER.toEntity(myStampDto));
         return true;
+    }
+
+    public void createStamp() {
+        List<HeritageEntity> list = heritageRepository.findAll();
+        for(HeritageEntity heritageEntity : list){
+            if(heritageEntity.getStampExist() == 'Y'){
+                StampDto stampDto = StampDto.builder()
+                        .stampSeq(0)
+                        .stampImgUrl("")
+                        .stampTitle(heritageEntity.getHeritageName())
+                        .stampText("")
+                        .heritageSeq(heritageEntity.getHeritageSeq())
+                        .build();
+                arRepository.save(StampMapper.MAPPER.toEntity(stampDto));
+            }
+        }
     }
 }

@@ -21,6 +21,18 @@ public class ARController {
     private static final String FAIL = "fail";
     private final ARService arService;
 
+    /**
+     * 스탬프 추가하기
+     *
+     * @param
+     * @return
+     */
+
+    @PostMapping("/stamp/list")
+    public void createStamp(){
+        arService.createStamp();
+    }
+
 
     /**
      * 스탬프 리스트 불러오기
@@ -41,6 +53,25 @@ public class ARController {
     }
 
     /**
+     * 내 스탬프 리스트 불러오기
+     *
+     * @param userSeq
+     * @return List
+     */
+
+    @ApiOperation(value = "내 스탬프 리스트 불러오기", response = List.class)
+    @GetMapping("/stamp/list/{userSeq}")
+    public ResponseEntity<?> listMyStamp(@PathVariable("userSeq") int userSeq) {
+        List<StampDto> list = arService.listMyStamp(userSeq);
+        if (list == null) {
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<List<StampDto>>(list, HttpStatus.OK);
+        }
+    }
+
+
+    /**
      * 스탬프 나의 목록에 추가하기
      *
      * @param userSeq, stampSeq
@@ -56,5 +87,4 @@ public class ARController {
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
     }
-
 }
