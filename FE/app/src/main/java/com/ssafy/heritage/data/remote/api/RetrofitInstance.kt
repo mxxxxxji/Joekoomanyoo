@@ -58,11 +58,8 @@ object RetrofitInstance {
     // OKHttpClient에 로깅인터셉터 등록
     val client =
         OkHttpClient.Builder()
-        .addInterceptor(interceptor)
-<<<<<<< .merge_file_a25316
+//        .addInterceptor(interceptor)
         .addInterceptor(AuthInterceptor())
-=======
->>>>>>> .merge_file_a24904
         //.sslSocketFactory( context.socketFactory, tmf?.trustManagers?.get(0) as X509TrustManager)
         //.hostnameVerifier(hostnameVerifier)
         .connectTimeout(CONNECT_TIMEOUT_SEC, TimeUnit.SECONDS)
@@ -96,13 +93,11 @@ object RetrofitInstance {
     val heritageApi: HeritageService by lazy {
         retrofit.create(HeritageService::class.java)
     }
-<<<<<<< .merge_file_a25316
-=======
 
     val feedApi: FeedService by lazy {
         retrofit.create(FeedService::class.java)
     }
->>>>>>> .merge_file_a24904
+
 //    private fun getTrustManagerFactory(context: Context): TrustManagerFactory? {
 //        // 1. CA 로드
 //        val cf: CertificateFactory = CertificateFactory.getInstance("X.509")

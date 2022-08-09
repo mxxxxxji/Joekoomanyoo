@@ -67,10 +67,7 @@ class SharedMyGroupListAdapter() :
                 if (pos != RecyclerView.NO_POSITION) {
                     itemView.setOnClickListener {
                         listener?.onItemClick(itemView, item, pos)
-<<<<<<< .merge_file_a23936
-=======
                         imagebtnCheck.visibility = View.VISIBLE
->>>>>>> .merge_file_a25324
                     }
                 }
             }
