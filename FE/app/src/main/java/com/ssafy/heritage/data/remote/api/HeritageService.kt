@@ -35,4 +35,8 @@ interface HeritageService {
     @Multipart
     @POST("/uploadFile")
     suspend fun saveImage(@Part file: MultipartBody.Part): Response<Boolean>
+
+    // 문화유산 본인 위치 기준으로 가까운순 정렬
+    @POST("/api/heritage/heritage-info")
+    suspend fun orderByLocation(@Body map: HashMap<String, String>): Response<List<Heritage>>
 }

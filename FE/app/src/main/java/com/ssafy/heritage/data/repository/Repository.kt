@@ -9,11 +9,7 @@ import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.testApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
-import com.ssafy.heritage.data.remote.request.FeedAddRequest
-import com.ssafy.heritage.data.remote.request.GroupAddRequest
-import com.ssafy.heritage.data.remote.request.GroupBasic
-import com.ssafy.heritage.data.remote.request.GroupJoin
-import com.ssafy.heritage.data.remote.request.GroupSchedule
+import com.ssafy.heritage.data.remote.request.*
 import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
@@ -21,9 +17,6 @@ import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Part
-import retrofit2.http.Path
-import retrofit2.http.Url
 
 class Repository constructor(context: Context) {
 
@@ -38,14 +31,17 @@ class Repository constructor(context: Context) {
 
     suspend fun selectGroupMembers(groupSeq: Int): Response<List<Member>> =
         groupApi.selectGroupMembers(groupSeq)
+
     suspend fun selectGroupDetail(groupSeq: Int): Response<GroupListResponse> =
         groupApi.selectGroupDetail(groupSeq)
 
     // group - 가입/신청/승인/취소/탈퇴
     suspend fun approveGroupJoin(groupSeq: Int, body: GroupBasic): Response<Boolean> =
         groupApi.approveGroupJoin(groupSeq, body)
+
     suspend fun applyGroupJoin(groupSeq: Int, body: GroupJoin): Response<Boolean> =
         groupApi.applyGroupJoin(groupSeq, body)
+
     suspend fun leaveGroupJoin(groupSeq: Int, userSeq: Int): Response<Boolean> =
         groupApi.leaveGroupJoin(groupSeq, userSeq)
 
@@ -60,8 +56,10 @@ class Repository constructor(context: Context) {
     // group - 일정
     suspend fun insertGroupSchedule(groupSeq: Int, body: GroupSchedule): Response<String> =
         groupApi.insertGroupSchedule(groupSeq, body)
+
     suspend fun deleteGroupSchedule(groupSeq: Int, date: String): Response<String> =
         groupApi.deleteGroupSchedule(groupSeq, date)
+
     suspend fun selectGroupSchedule(groupSeq: Int): Response<List<GroupSchedule>> =
         groupApi.selectGroupSchedule(groupSeq)
 
@@ -91,7 +89,8 @@ class Repository constructor(context: Context) {
     suspend fun checkPassword(map: HashMap<String, String>): Response<String> =
         userApi.checkPassword(map)
 
-    suspend fun findPassword(@Body map: HashMap<String, String>): Response<String> = userApi.findPassword(map)
+    suspend fun findPassword(@Body map: HashMap<String, String>): Response<String> =
+        userApi.findPassword(map)
 
     suspend fun insertHeritageScrap(scrap: HeritageScrap): Response<String> =
         userApi.insertHeritageScrap(scrap)
@@ -112,13 +111,21 @@ class Repository constructor(context: Context) {
     suspend fun selectAllMyDestination(userSeq: Int): Response<List<GroupDestinationMap>> =
         userApi.selectAllMyDestination(userSeq)
 
-    suspend fun selectAllMySchedule(userSeq: Int): Response<List<Schedule>> = userApi.selectAllMySchedule(userSeq)
-    suspend fun insertMySchedule(schedule: Schedule): Response<String> = userApi.insertMySchedule(schedule)
-    suspend fun deleteMySchedule(scheduleSeq: Int): Response<String> = userApi.deleteMySchedule(scheduleSeq)
+    suspend fun selectAllMySchedule(userSeq: Int): Response<List<Schedule>> =
+        userApi.selectAllMySchedule(userSeq)
+
+    suspend fun insertMySchedule(schedule: Schedule): Response<String> =
+        userApi.insertMySchedule(schedule)
+
+    suspend fun deleteMySchedule(scheduleSeq: Int): Response<String> =
+        userApi.deleteMySchedule(scheduleSeq)
 
     suspend fun getMyNotiSetting(userSeq: Int): Response<Char> = userApi.getMyNotiSetting(userSeq)
-    suspend fun setMyNotiSetting(userSeq: Int, userSetting: Char): Response<String> = userApi.setMyNotiSetting(userSeq, userSetting)
-    suspend fun selectAllMyNoti(userSeq: Int): Response<List<Noti>> = userApi.selectAllMyNoti(userSeq)
+    suspend fun setMyNotiSetting(userSeq: Int, userSetting: Char): Response<String> =
+        userApi.setMyNotiSetting(userSeq, userSetting)
+
+    suspend fun selectAllMyNoti(userSeq: Int): Response<List<Noti>> =
+        userApi.selectAllMyNoti(userSeq)
 
     suspend fun pushToken(token: FCMToken): Response<String> = userApi.pushToken(token)
     suspend fun saveImage(img: MultipartBody.Part) = testApi.saveImage(img)
@@ -128,28 +135,39 @@ class Repository constructor(context: Context) {
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()
     suspend fun insertHeritageReview(body: HeritageReviewListResponse): Response<String> =
         heritageApi.insertHeritageReview(body)
+
     suspend fun selectAllHeritageReviews(heritageSeq: Int): Response<List<HeritageReviewListResponse>> =
         heritageApi.selectAllHeritageReviews(heritageSeq)
+
     suspend fun deleteHeritageReview(heritageReviewSeq: Int, heritageSeq: Int): Response<String> =
         heritageApi.deleteHeritageReivew(heritageReviewSeq, heritageSeq)
+
+    suspend fun orderByLocation(map: HashMap<String, String>): Response<List<Heritage>> =
+        heritageApi.orderByLocation(map)
+
 
     // feed
     suspend fun selectMyFeeds(): Response<List<FeedListResponse>> =
         feedApi.selectMyFeeds()
+
     suspend fun selectFeedsByHashtag(fhTag: String): Response<List<FeedListResponse>> =
         feedApi.selectFeedsByHashtag(fhTag)
+
     suspend fun selectAllFeeds(): Response<List<FeedListResponse>> =
         feedApi.selectAllFeeds()
+
     suspend fun insertFeed(body: FeedAddRequest): Response<FeedListResponse> =
         feedApi.insertFeed(body)
 
     // file
-    suspend fun sendImage(url: String, file: MultipartBody.Part): Response<String> = fileApi.saveImage(url, file)
+    suspend fun sendImage(url: String, file: MultipartBody.Part): Response<String> =
+        fileApi.saveImage(url, file)
 
     // stamp
     suspend fun selectAllStamp(): Response<List<Stamp>> = ARApi.selectAllStamp()
     suspend fun getMyStamp(userSeq: Int): Response<List<Stamp>> = ARApi.getMyStamp(userSeq)
-    suspend fun addStamp(userSeq: Int, stampSeq: Int): Response<String> = ARApi.addStamp(userSeq, stampSeq)
+    suspend fun addStamp(userSeq: Int, stampSeq: Int): Response<String> =
+        ARApi.addStamp(userSeq, stampSeq)
 
 
     companion object {

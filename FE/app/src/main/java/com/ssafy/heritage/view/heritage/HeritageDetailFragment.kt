@@ -366,7 +366,11 @@ class HeritageDetailFragment :
         // 내 위치 클릭시
         btnMyLocation.setOnClickListener {
             getLastLocation()
-            setLocation(lat, lng, -1)
+            mapView.setMapCenterPoint(
+                MapPoint.mapPointWithGeoCoord(
+                    lat, lng
+                ), true
+            )
         }
     }
 
@@ -504,7 +508,11 @@ class HeritageDetailFragment :
 
         val data = poiItem?.tag?.let { heritageViewModel.heritageList.value?.get(it) }
 
-        setLocation(data?.heritageLat!!.toDouble(), data?.heritageLng!!.toDouble(), -1)
+        mapView.setMapCenterPoint(
+            MapPoint.mapPointWithGeoCoord(
+                data?.heritageLat!!.toDouble(), data?.heritageLng!!.toDouble()
+            ), true
+        )
         heritage = data
         binding.heritage = data
     }

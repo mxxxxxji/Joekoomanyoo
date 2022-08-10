@@ -1,6 +1,9 @@
 package com.ssafy.heritage.view.heritage
 
 import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +14,10 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.commit
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.HeritageListAdapter
@@ -29,7 +31,11 @@ import com.ssafy.heritage.util.SORT.ASCENDING_DIST
 import com.ssafy.heritage.util.SORT.ASCENDING_REVIEW
 import com.ssafy.heritage.util.SORT.ASCENDING_SCRAP
 import com.ssafy.heritage.viewmodel.HeritageViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 private const val TAG = "HeritageListFragment___"
@@ -41,6 +47,7 @@ class HeritageListFragment :
 
     private val heritageAdapter: HeritageListAdapter by lazy { HeritageListAdapter() }
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
     private var dataList: List<Heritage> = arrayListOf()
     private var selectedSort: String = ""
     private var searchedList = listOf<Heritage>()
@@ -50,6 +57,12 @@ class HeritageListFragment :
             setInterpolator(OvershootInterpolator())
             setFirstOnly(false)
         }
+    }
+
+    private var lat = 0.0    // 위도
+    private var lng = 0.0    // 경도
+    private val locationManager by lazy {
+        requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
 
@@ -127,7 +140,8 @@ class HeritageListFragment :
             } else {
                 if (selectedSort == "") {
                     dataList = it
-                    heritageAdapter.submitList(it)
+                    selectedSort = ASCENDING_DIST
+                    filterList(ASCENDING_DIST)
                 }
                 // DetailFragment에서 온 경우
                 else {
@@ -178,12 +192,8 @@ class HeritageListFragment :
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_sort -> {
-                    val view = requireActivity().findViewById<View>(R.id.menu_map)
+                    val view = requireActivity().findViewById<View>(R.id.menu_sort)
                     popupWindow.showAsDropDown(view)
-                    true
-                }
-                R.id.menu_map -> {
-                    requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
                     true
                 }
                 else -> {
@@ -218,6 +228,7 @@ class HeritageListFragment :
     }
 
     private fun filterList(sortType: String) {
+        heritageAdapter.submitList(arrayListOf<Heritage>())
         when (sortType) {
             ASCENDING_REVIEW -> {
                 // 우선 리뷰 내림차순, 그 다음 seq 오름차순
@@ -240,9 +251,7 @@ class HeritageListFragment :
                 )
             }
             ASCENDING_DIST -> {
-                /*
-                거리순 정렬 해야됨
-                 */
+                requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
             }
         }
     }
@@ -252,12 +261,64 @@ class HeritageListFragment :
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
                 // PERMISSION GRANTED
-                findNavController().navigate(R.id.action_heritageListFragment_to_heritageMapFragment)
+                getLastLocation()
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    val map = HashMap<String, String>()
+                    map.put("userSeq", userViewModel.user.value?.userSeq!!.toString())
+                    map.put("lat", lat.toString())
+                    map.put("lng", lng.toString())
+                    val dataList = heritageViewModel.orderByLocation(map)
+                    heritageAdapter.submitList(
+                        dataList
+                    )
+                }
             } else {
                 // PERMISSION NOT GRANTED
                 makeToast("위치 권한이 필요합니다")
             }
         }
+
+    private fun getLastLocation() {
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
+            return
+        }
+        locationManager
+            .getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            .apply {
+                if (this != null) {
+                    lat = latitude
+                    lng = longitude
+                }
+            }
+
+        locationManager
+            .getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            .apply {
+                if (this != null) {
+                    lat = latitude
+                    lng = longitude
+                }
+            }
+
+        locationManager
+            .getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
+            .apply {
+                if (this != null) {
+                    lat = latitude
+                    lng = longitude
+                }
+            }
+    }
 
     private fun makeToast(msg: String) {
         Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
