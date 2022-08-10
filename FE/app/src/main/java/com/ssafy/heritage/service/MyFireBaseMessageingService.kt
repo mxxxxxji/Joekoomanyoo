@@ -33,9 +33,9 @@ class MyFireBaseMessageingService : FirebaseMessagingService() {
         val jwtToken = ApplicationClass.sharedPreferencesUtil.getToken()
 
         // 유저가 로그인 되어있는 경우에만 FCM토큰 서버로 전송
-        token?.let {
+        jwtToken?.let {
 
-            val user = JWTUtils.decoded(token)
+            val user = JWTUtils.decoded(jwtToken)
 
             CoroutineScope(Dispatchers.Main).launch {
 
