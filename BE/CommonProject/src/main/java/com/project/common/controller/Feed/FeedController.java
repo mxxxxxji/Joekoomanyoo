@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Feed.FeedDto;
 import com.project.common.dto.Feed.ReqFeedDto;
+import com.project.common.dto.Feed.ResFeedDto;
 import com.project.common.service.Feed.FeedService;
 
 import io.swagger.annotations.Api;
@@ -67,7 +68,7 @@ public class FeedController {
     //피드 보기
     @ApiOperation(value = "피드 보기")
     @GetMapping("/{feedSeq}/info")
-    public ResponseEntity<FeedDto> getFeedInfo(@PathVariable("feedSeq") int feedSeq){
+    public ResponseEntity<ResFeedDto> getFeedInfo(@PathVariable("feedSeq") int feedSeq){
 	     return new ResponseEntity<>(feedService.getFeedInfo(feedSeq),HttpStatus.OK);
     }
     

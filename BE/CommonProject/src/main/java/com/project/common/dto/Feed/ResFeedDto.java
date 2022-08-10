@@ -1,12 +1,9 @@
 package com.project.common.dto.Feed;
 
 import java.util.Date;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.project.common.entity.Feed.FeedEntity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +23,8 @@ public class ResFeedDto {
    	private String feedContent;
    	private char feedOpen;
 
+   	private String userImgUrl;
+   	private String userNickname;
    
    	// 모임 설정 정보 //
 
