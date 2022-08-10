@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.common.dto.Feed.FeedDto;
 import com.project.common.dto.Feed.ReqFeedDto;
+import com.project.common.dto.Feed.ResFeedDto;
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedHashtagEntity;
 import com.project.common.entity.Feed.FeedLikeEntity;
@@ -86,9 +87,18 @@ public class FeedService{
 	}
 	
 	//피드 보기
-	public FeedDto getFeedInfo(int feedSeq) {
+	public ResFeedDto getFeedInfo(int feedSeq) {
 		FeedEntity feedInfo=feedRepository.findById(feedSeq).orElse(null);
-		return FeedMapper.MAPPER.toDto(feedInfo);
+		ResFeedDto feed=new ResFeedDto();
+		feed.setCreatedTime(feedInfo.getCreatedTime());
+		feed.setFeedSeq(feedSeq);
+		feed.setFeedImgUrl(feedInfo.getFeedImgUrl());
+		feed.setFeedContent(feedInfo.getFeedContent());
+		feed.setFeedTitle(feedInfo.getFeedTitle());
+		feed.setFeedOpen(feedInfo.getFeedOpen());
+		feed.setUserImgUrl(feedInfo.getUser().getProfileImgUrl());
+		feed.setUserNickname(feedInfo.getUser().getUserNickname());
+		return feed;
 	}
 	
 	//피드 삭제
