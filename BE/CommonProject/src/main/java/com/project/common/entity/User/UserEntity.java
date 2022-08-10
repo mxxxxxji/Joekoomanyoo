@@ -92,6 +92,8 @@ public class UserEntity implements UserDetails{
     @Column(nullable = false)
     @ColumnDefault("Y")
     private char pushSettingStatus;
+    @ColumnDefault("0")
+    private int myStampCnt;
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.userPassword = passwordEncoder.encode(this.userPassword);
