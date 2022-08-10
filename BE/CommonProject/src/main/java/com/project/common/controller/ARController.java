@@ -4,6 +4,7 @@ import com.project.common.dto.AR.MyLocationDto;
 import com.project.common.dto.AR.MyStampResponseDto;
 import com.project.common.dto.AR.StampCategoryDto;
 import com.project.common.dto.AR.StampDto;
+import com.project.common.dto.AR.UserStampRankDto;
 import com.project.common.service.ARService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -147,9 +148,24 @@ public class ARController {
     public ResponseEntity<?> listCategoryMyStamp(@PathVariable("userSeq") int userSeq, @PathVariable("categorySeq") int categorySeq) {
         List<MyStampResponseDto> list = arService.listCategoryMyStamp(userSeq, categorySeq);
         if(list.size()==0){
-            return new ResponseEntity<String>("리스트 없음", HttpStatus.OK);
+            return new ResponseEntity<String>("no list", HttpStatus.OK);
         }else {
             return new ResponseEntity<List<MyStampResponseDto>>(list, HttpStatus.OK);
         }
     }
-}
+
+
+    /**
+     * 사용자 스탬프 순위
+     *
+     * @param
+     * @return List
+     */
+
+    @ApiOperation(value = "사용자 스탬프 순위", response = List.class)
+    @GetMapping("/stamp/rank")
+    public ResponseEntity<List<UserStampRankDto>> userStampRank() {
+        List<UserStampRankDto> list = arService.userStampRank();
+        return new ResponseEntity<List<UserStampRankDto>>(list, HttpStatus.OK);
+        }
+    }

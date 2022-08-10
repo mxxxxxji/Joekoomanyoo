@@ -4,6 +4,7 @@ import com.project.common.controller.FcmTokenController;
 import com.project.common.dto.AR.*;
 import com.project.common.dto.Push.FcmHistoryDto;
 import com.project.common.entity.AR.StampCategoryEntity;
+import com.project.common.dto.AR.UserStampRankDto;
 import com.project.common.entity.Heritage.HeritageEntity;
 import com.project.common.entity.User.UserEntity;
 import com.project.common.mapper.AR.MyStampMapper;
@@ -18,6 +19,7 @@ import com.project.common.repository.AR.StampCategoryRepository;
 import com.project.common.repository.Heritage.HeritageRepository;
 import com.project.common.repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -332,6 +334,37 @@ public class ARService {
             }
         }
 
+        return list;
+    }
+
+    // 사용자 스탬프 순위
+    public List<UserStampRankDto> userStampRank() {
+        List<UserStampRankDto> list = new ArrayList<>();
+        List<UserEntity> userList = userRepository.findAll(Sort.by(Sort.Direction.DESC,"myStampCnt"));
+        int idx = 1;
+        // 처음 값의 스탬프 개수를 받는다.
+        int before_cnt = userList.get(0).getMyStampCnt();
+        // 처음 user를 list에 저장
+        list.add(UserStampRankDto.builder()
+                .userNickname(userList.get(0).getUserNickname())
+                .myStampCnt(before_cnt)
+                .userRank(idx)
+                .build());
+
+        for(int i=1; i<userList.size(); i++){
+            int cnt = userList.get(i).getMyStampCnt();
+            // 만약 그 전값이랑 다르면 순위 추가 ( 스탬프 개수가 )
+            if(cnt != before_cnt){
+                idx++;
+            }
+            before_cnt = cnt;
+            UserStampRankDto userStampRankDto = UserStampRankDto.builder()
+                    .userNickname(userList.get(i).getUserNickname())
+                    .myStampCnt(cnt)
+                    .userRank(idx)
+                    .build();
+            list.add(userStampRankDto);
+        }
         return list;
     }
 }
