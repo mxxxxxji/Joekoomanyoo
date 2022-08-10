@@ -9,6 +9,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.ApplicationClass.Companion.IMG_URL
 import com.ssafy.heritage.data.dto.Feed
 import com.ssafy.heritage.data.remote.request.FeedAddRequest
+import com.ssafy.heritage.data.remote.response.FeedDetailResponse
 import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.FormDataUtil
@@ -44,6 +45,13 @@ class FeedViewModel: ViewModel() {
 
     private val _insertFeedInfo = SingleLiveEvent<String>()
     val insertFeedInfo: LiveData<String> get() = _insertFeedInfo
+
+    private val _feedInfodetail = MutableLiveData<FeedListResponse>()
+    val feedInfoDetailL: LiveData<FeedListResponse> get() = _feedInfodetail
+
+    fun add(info: FeedListResponse) {
+        _feedInfodetail.postValue(info)
+    }
 
     fun getMyFeedList() {
         viewModelScope.launch(Dispatchers.IO) {

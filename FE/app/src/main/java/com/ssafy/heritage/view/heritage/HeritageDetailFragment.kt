@@ -15,14 +15,18 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
 import androidx.transition.TransitionInflater
 import com.ssafy.heritage.R
@@ -34,6 +38,7 @@ import com.ssafy.heritage.data.dto.HeritageScrap
 import com.ssafy.heritage.data.remote.api.UserService
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.databinding.FragmentHeritageDetail2Binding
+import com.ssafy.heritage.databinding.ItemReviewBinding
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.view.dialog.SharedMyGroupListDialog
 import com.ssafy.heritage.viewmodel.HeritageViewModel
@@ -241,7 +246,12 @@ class HeritageDetailFragment :
     }
 
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+        // 리뷰 삭제 버튼 동작
+        heritageViewModel.deleteHeritageReview(
+            // adapter에서 position 번째 아이템을 가져온당
+            heritageReviewAdapter.currentList.get(position).heritageReviewSeq,
+            heritageReviewAdapter.currentList.get(position).heritageSeq
+        )
     }
 
     @SuppressLint("LongLogTag")
@@ -349,6 +359,15 @@ class HeritageDetailFragment :
                     userNickname = userViewModel.user.value?.userNickname!!
                 )
                 heritageViewModel.insertHeritageReview(heritageReview)
+                val binding: ItemReviewBinding? = null
+                // 이미지 없으면 공간이 안 보이게 하고 싶다,,,,
+                if (heritageReview.attachSeq == 0) {
+                    binding?.ivHeritageReviewImg?.visibility = View.VISIBLE
+                    Log.d(TAG, "bind: review img visible")
+                } else {
+                    binding?.ivHeritageReviewImg?.visibility = View.GONE
+                    Log.d(TAG, "bind: review img gone")
+                }
                 etReviewContent.setText("")
             } else {
                 makeToast("리뷰를 작성해보세요")

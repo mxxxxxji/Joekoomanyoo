@@ -64,8 +64,15 @@ class FeedListFragment :
         }
     }
 
-    override fun onItemClick(Position: Int) {
-//        val action = FeedListFragmentDirections.actionFeedListFragmentToFeedDetailFragment(feedAdapter.getItem(position))
+//    override fun onItemClick(position: Int) {
+//        TODO("Not yet implemented")
+//    }
+
+ // 네비게이션에 아규먼트 추가해야함 (보낼 데이터)
+    override fun onItemClick(position: Int) {
+        Log.d(TAG, "onItemClick: $position")
+        val action = FeedListFragmentDirections.actionFeedListFragmentToFeedDetailFragment(feedAdapter.currentList[position])
+        findNavController().navigate(action)
 
     }
 

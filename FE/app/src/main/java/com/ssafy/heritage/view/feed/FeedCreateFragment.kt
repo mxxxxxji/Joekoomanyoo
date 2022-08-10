@@ -16,6 +16,7 @@ import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -53,7 +54,7 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
 
     var img_multipart: MultipartBody.Part? = null
     private var title: String = ""
-    private var hashTag: String = ""
+    private var hashTags: String = ""
     private var content: String = ""
     private var feedOpen: Char = 'Y'
 
@@ -71,13 +72,13 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
                     .into(ivFeedImage)
             }
 
-            if (it != null) {
-                makeToast("피드가 등록되었습니다.")
-//                val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedDetailFragment()
-//                findNavController().navigate(action)
-            } else {
-                makeToast("피드 등록에 실패했습니다. 다시 확인해주세요.")
-            }
+//            if (it != null) {
+//                makeToast("피드가 등록되었습니다.")
+////                val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedDetailFragment()
+////                findNavController().navigate(action)
+//            } else {
+//                makeToast("피드 등록에 실패했습니다. 다시 확인해주세요.")
+//            }
         }
     }
 
@@ -111,7 +112,12 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
             CoroutineScope(Dispatchers.Main).launch {
                 title = etFeedCreateTitle.editText?.text.toString()
                 // 해시태그는 리스트로 받게 수정해야함
-                hashTag = etFeedCreateTag.editText?.text.toString()
+                var tags = getHashTags(binding.etFeedCreateTag.editText?.text.toString())
+                var tagResult = listOf<String>()
+
+                tags.forEach { tag ->
+                    tagResult = tagResult.plus("${tag.value}")
+                }
                 content = etFeedCreateContent.editText?.text.toString()
 
                 when {
@@ -125,8 +131,10 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
 
                 // imageUrl을 필수값으로 하자..사진 피드니까!!
                 if (img_multipart == null || img_multipart?.let { feedViewModel.sendImage(it) } == true) {
-                    feedInfo = FeedAddRequest( userSeq, feedViewModel.insertFeedInfo.value!!, title, content, feedOpen )
+                    feedInfo = FeedAddRequest( userSeq, feedViewModel.insertFeedInfo.value!!, title, content, feedOpen, tagResult )
                     feedViewModel.insertFeed(feedInfo)
+                    val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedDetailFragment()
+                    findNavController().navigate(action)
                     Log.d(TAG, "initClickListener: ${feedInfo}")
                     Log.d(TAG, "initClickListener: 클릭했니?")
 
@@ -175,6 +183,14 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
             // PERMISSION NOT GRANTED
             makeToast("권한이 거부됨")
         }
+    }
+
+    private fun getHashTags(text: String): Sequence<MatchResult> {
+        val pattern = """#([^#\s]+)""" // 태그 추출 정규식
+        val regex = pattern.toRegex()
+        val matches = regex.findAll(text)
+
+        return matches
     }
 
     fun hasPermissions() = PERMISSIONS_REQUIRED.all {

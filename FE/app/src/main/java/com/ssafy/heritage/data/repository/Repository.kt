@@ -14,6 +14,12 @@ import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
+import com.ssafy.heritage.data.remote.request.FeedAddRequest
+import com.ssafy.heritage.data.remote.request.GroupAddRequest
+import com.ssafy.heritage.data.remote.request.GroupBasic
+import com.ssafy.heritage.data.remote.request.GroupJoin
+import com.ssafy.heritage.data.remote.request.GroupSchedule
+import com.ssafy.heritage.data.remote.response.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -157,6 +163,9 @@ class Repository constructor(context: Context) {
 
     suspend fun insertFeed(body: FeedAddRequest): Response<FeedListResponse> =
         feedApi.insertFeed(body)
+        
+    suspend fun selectFeedDetail(feedSeq: Int): Response<FeedListResponse> =
+        feedApi.selectFeedDetail(feedSeq)
 
     // file
     suspend fun sendImage(url: String, file: MultipartBody.Part): Response<String> =
