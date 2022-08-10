@@ -50,6 +50,7 @@ class HeritageListFragment :
     private val userViewModel by activityViewModels<UserViewModel>()
     private var dataList: List<Heritage> = arrayListOf()
     private var selectedSort: String = ""
+    private var selectedChip: Int = 0
     private var searchedList = listOf<Heritage>()
     private val alphaInAnimationAdapter: AlphaInAnimationAdapter by lazy {
         AlphaInAnimationAdapter(heritageAdapter).apply {
@@ -77,6 +78,62 @@ class HeritageListFragment :
         setToolbar()
 
         setSearchView()
+
+        setChip()
+    }
+
+    private fun setChip() = with(binding) {
+        chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
+            when (checkedIds[0]) {
+                1 -> {
+                    selectedChip = 1
+                    val newList = dataList.filter { it.heritageCategory == "탑" }
+                    heritageAdapter.submitList(newList)
+                }
+                2 -> {
+                    val newList = dataList.filter { it.heritageCategory == "비" }
+                    heritageAdapter.submitList(newList)
+                }
+                3 -> {
+                    val newList = dataList.filter { it.heritageCategory == "불교" }
+                    heritageAdapter.submitList(newList)
+                }
+                4 -> {
+                    val newList = dataList.filter { it.heritageCategory == "공예품" }
+                    heritageAdapter.submitList(newList)
+                }
+                5 -> {
+                    val newList = dataList.filter { it.heritageCategory == "궁궐" }
+                    heritageAdapter.submitList(newList)
+                }
+                6 -> {
+                    val newList = dataList.filter { it.heritageCategory == "기록유산" }
+                    heritageAdapter.submitList(newList)
+                }
+                7 -> {
+                    val newList = dataList.filter { it.heritageCategory == "왕릉" }
+                    heritageAdapter.submitList(newList)
+                }
+                8 -> {
+                    val newList = dataList.filter { it.heritageCategory == "건축" }
+                    heritageAdapter.submitList(newList)
+                }
+                9 -> {
+                    val newList = dataList.filter { it.heritageCategory == "종" }
+                    heritageAdapter.submitList(newList)
+                }
+                10 -> {
+                    val newList = dataList.filter { it.heritageCategory == "기타" }
+                    heritageAdapter.submitList(newList)
+                }
+                else -> {
+                    val newList = dataList.filter { true }
+                    heritageAdapter.submitList(newList)
+                }
+            }
+        }
+
+        chipGroup.check(R.id.chip_all)
     }
 
     override fun onCreateView(
