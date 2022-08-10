@@ -8,9 +8,15 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-feature android:name="android.hardware.camera.ar" android:required="true"/>
-    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature
+        android:name="android.hardware.camera.ar"
+        android:required="true" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".ApplicationClass"
@@ -22,6 +28,10 @@
         android:theme="@style/Theme.Heritage"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".view.ar.ARGeoActivity"
+            android:exported="true"
+            android:screenOrientation="locked"/>
         <activity
             android:name=".TestActivity"
             android:exported="true"
@@ -57,19 +67,16 @@
             android:exported="false" />
         <activity
             android:name=".view.HomeActivity"
-            android:exported="true" />
-        <!-- Indicates whether "Google Play Services for AR" (ARCore) is "required" or "optional". -->
-        <meta-data android:name="com.google.ar.core" android:value="required" />
-
-        <!-- Geospatial API 사용-->
+            android:exported="true" /> <!-- Indicates whether "Google Play Services for AR" (ARCore) is "required" or "optional". -->
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" /> <!-- Geospatial API 사용 -->
         <meta-data
             android:name="com.google.android.ar.API_KEY"
-            android:value="AIzaSyBMKkHXTQs1V7daVrj-KeEddS8WUwhuMdM"/>
-        <!-- Google 지도 SDK 사용-->
+            android:value="AIzaSyBMKkHXTQs1V7daVrj-KeEddS8WUwhuMdM" /> <!-- Google 지도 SDK 사용 -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBMKkHXTQs1V7daVrj-KeEddS8WUwhuMdM" />
-
     </application>
 
 </manifest>

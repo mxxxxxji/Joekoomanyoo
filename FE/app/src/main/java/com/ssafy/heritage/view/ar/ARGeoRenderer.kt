@@ -14,8 +14,8 @@ import com.ssafy.heritage.samplerender.*
 import com.ssafy.heritage.samplerender.arcore.BackgroundRenderer
 import java.io.IOException
 
-private const val TAG = "HelloGeoRenderer___"
-class GeoRenderer(val fragment: ARPlayFragment) :
+private const val TAG = "ARGeoRenderer___"
+class ARGeoRenderer(val activity: ARGeoActivity) :
     SampleRender.Renderer, DefaultLifecycleObserver {
     companion object {
         private val Z_NEAR = 0.1f
@@ -26,12 +26,12 @@ class GeoRenderer(val fragment: ARPlayFragment) :
     lateinit var virtualSceneFramebuffer: Framebuffer
     var hasSetTextureNames = false
 
-    // 가상 객체
+    // Virtual object (ARCore pawn)
     lateinit var virtualObjectMesh: Mesh
     lateinit var virtualObjectShader: Shader
     lateinit var virtualObjectTexture: Texture
 
-    // 각 프레임에 대한 할당 수를 줄이기 위해 여기에 할당된 임시 행렬
+    // Temporary matrix allocated here to reduce number of allocations for each frame.
     val modelMatrix = FloatArray(16)
     val viewMatrix = FloatArray(16)
     val projectionMatrix = FloatArray(16)
@@ -40,11 +40,10 @@ class GeoRenderer(val fragment: ARPlayFragment) :
     val modelViewProjectionMatrix = FloatArray(16) // projection x view x model
 
     val session
-        get() = fragment.arCoreSessionHelper.session
+        get() = activity.arCoreSessionHelper.session
 
-    val displayRotationHelper = DisplayRotationHelper(fragment.requireActivity())
-    val trackingStateHelper = TrackingStateHelper(fragment.requireActivity())
-
+    val displayRotationHelper = DisplayRotationHelper(activity)
+    val trackingStateHelper = TrackingStateHelper(activity)
     override fun onResume(owner: LifecycleOwner) {
         displayRotationHelper.onResume()
         hasSetTextureNames = false
@@ -53,6 +52,7 @@ class GeoRenderer(val fragment: ARPlayFragment) :
     override fun onPause(owner: LifecycleOwner) {
         displayRotationHelper.onPause()
     }
+
     override fun onSurfaceCreated(render: SampleRender) {
         // Prepare the rendering objects.
         // This involves reading shaders and 3D model files, so may throw an IOException.
@@ -75,7 +75,8 @@ class GeoRenderer(val fragment: ARPlayFragment) :
                     render,
                     "shaders/ar_unlit_object.vert",
                     "shaders/ar_unlit_object.frag",
-                    /*defines=*/ null)
+                    /*defines=*/ null
+                )
                     .setTexture("u_Texture", virtualObjectTexture)
 
             backgroundRenderer.setUseDepthVisualization(render, false)
@@ -86,10 +87,9 @@ class GeoRenderer(val fragment: ARPlayFragment) :
         }
     }
 
-    override fun onSurfaceChanged(render: SampleRender?, width: Int, height: Int) {
+    override fun onSurfaceChanged(render: SampleRender, width: Int, height: Int) {
         displayRotationHelper.onSurfaceChanged(width, height)
         virtualSceneFramebuffer.resize(width, height)
-
     }
 
     override fun onDrawFrame(render: SampleRender) {
@@ -153,8 +153,6 @@ class GeoRenderer(val fragment: ARPlayFragment) :
         //</editor-fold>
 
 
-
-
         // 지리 정보를 얻어 지도에 표시
         val earth = session.earth
         // earth 객체 사용 가능
@@ -163,7 +161,7 @@ class GeoRenderer(val fragment: ARPlayFragment) :
             // 위도와 경도로 표현된 위치(GeospatialPose)를 변수에 저장
             val cameraGeospatialPose = earth.cameraGeospatialPose
             // 지도의 위치를 지속적으로 업데이트
-            fragment.view.mapView?.updateMapPosition(
+            activity.view.mapView?.updateMapPosition(
                 latitude = cameraGeospatialPose.latitude,
                 longitude = cameraGeospatialPose.longitude,
                 heading = cameraGeospatialPose.heading
@@ -175,14 +173,10 @@ class GeoRenderer(val fragment: ARPlayFragment) :
         earthAnchor?.let {
             render.renderCompassAtAnchor(it)
         }
-
-        // 베경으로 가상장면 구성
+// 베경으로 가상장면 구성
         backgroundRenderer.drawVirtualScene(render, virtualSceneFramebuffer, Z_NEAR, Z_FAR)
-
     }
-
     var earthAnchor: Anchor? = null
-
     fun onMapClick(latLng: LatLng) {
         // 어스 객체의 TrackingState가 TRACKING인지 확인 = 어스의 위치를 알고 있어야함
         val latTest = LatLng(36.1000378,128.427956)
@@ -206,7 +200,7 @@ class GeoRenderer(val fragment: ARPlayFragment) :
             earth.createAnchor(latTest.latitude, latTest.longitude, altitude, qx, qy, qz, qw)
 
         // 지도에 마커 표시
-        fragment.view.mapView?.earthMarker?.apply {
+        activity.view.mapView?.earthMarker?.apply {
             position = latTest
             isVisible = true
         }
@@ -225,8 +219,7 @@ class GeoRenderer(val fragment: ARPlayFragment) :
         draw(virtualObjectMesh, virtualObjectShader, virtualSceneFramebuffer)
     }
     private fun showError(errorMessage: String) =
-        fragment.view.snackbarHelper.showError(fragment.activity, errorMessage)
-
+        activity.view.snackbarHelper.showError(activity, errorMessage)
 
 
 }

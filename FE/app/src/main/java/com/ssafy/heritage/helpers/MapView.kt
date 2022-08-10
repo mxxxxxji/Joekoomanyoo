@@ -32,10 +32,10 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 import com.ssafy.heritage.R
+import com.ssafy.heritage.view.HomeActivity
 
-import com.ssafy.heritage.view.ar.ARPlayFragment
 
-class MapView(val fragment: ARPlayFragment, val googleMap: GoogleMap) {
+class MapView(val activity: HomeActivity, val googleMap: GoogleMap) {
   private val CAMERA_MARKER_COLOR: Int = Color.argb(255, 0, 255, 0)
   private val EARTH_MARKER_COLOR: Int = Color.argb(255, 125, 125, 125)
 
@@ -63,7 +63,7 @@ class MapView(val fragment: ARPlayFragment, val googleMap: GoogleMap) {
 
   fun updateMapPosition(latitude: Double, longitude: Double, heading: Double) {
     val position = LatLng(latitude, longitude)
-    fragment.requireActivity().runOnUiThread {
+    activity.runOnUiThread {
       // If the map is already in the process of a camera update, then don't move it.
       if (!cameraIdle) {
         return@runOnUiThread
@@ -105,7 +105,7 @@ class MapView(val fragment: ARPlayFragment, val googleMap: GoogleMap) {
     val opt = BitmapFactory.Options()
     opt.inMutable = true
     val navigationIcon =
-      BitmapFactory.decodeResource(fragment.requireActivity().resources, R.color.gray, opt)
+      BitmapFactory.decodeResource(activity.resources, R.color.gray, opt)
     val p = Paint()
     p.colorFilter = LightingColorFilter(color,  /* add= */1)
     val canvas = Canvas(navigationIcon)

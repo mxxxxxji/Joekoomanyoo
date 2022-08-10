@@ -74,11 +74,7 @@ public class SampleRender {
     draw(mesh, shader, /*framebuffer=*/ null);
   }
 
-  /**
-   * Draw a {@link Mesh} with the specified {@link Shader} to the given {@link Framebuffer}.
-   *
-   * <p>The {@code framebuffer} argument may be null, in which case the default framebuffer is used.
-   */
+
   public void draw(Mesh mesh, Shader shader, Framebuffer framebuffer) {
     useFramebuffer(framebuffer);
     shader.lowLevelUse();
