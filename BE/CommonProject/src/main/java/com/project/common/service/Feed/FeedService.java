@@ -90,6 +90,8 @@ public class FeedService{
 	public ResFeedDto getFeedInfo(int feedSeq) {
 		FeedEntity feedInfo=feedRepository.findById(feedSeq).orElse(null);
 		ResFeedDto feed=new ResFeedDto();
+		feed.setCreatedTime(feedInfo.getCreatedTime());
+		feed.setFeedSeq(feedSeq);
 		feed.setFeedImgUrl(feedInfo.getFeedImgUrl());
 		feed.setFeedContent(feedInfo.getFeedContent());
 		feed.setFeedTitle(feedInfo.getFeedTitle());
