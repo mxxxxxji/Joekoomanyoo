@@ -12,11 +12,16 @@ import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 private const val TAG = "HeritageViewModel___"
 
 class HeritageViewModel : ViewModel() {
+
+    var job: Job? = null
 
     private val repository = Repository.get()
 
@@ -75,12 +80,12 @@ class HeritageViewModel : ViewModel() {
     fun getHeritageReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectAllHeritageReviews(heritage.value!!.heritageSeq!!).let { response ->
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     var list = response.body()!! as MutableList<HeritageReviewListResponse>
 //                    list.sortBy { it.heritageReviewRegistedAt }  // 등록최신순
                     _heritageReviewList.postValue(list)
                     Log.d(TAG, "getHeritageReviewList: ${list}")
-                }else{
+                } else {
                     Log.d(TAG, "${response.code()}")
                 }
             }
@@ -113,6 +118,26 @@ class HeritageViewModel : ViewModel() {
                 } else {
                     Log.d(TAG, "deleteHeritageReview: ${response.code()}")
                 }
+            }
+        }
+    }
+
+    // 거리순으로 문화유산 정렬 리스트 받기
+    suspend fun orderByLocation(map: HashMap<String, String>) = withContext(Dispatchers.Main) {
+        var response: Response<List<Heritage>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.orderByLocation(map)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "orderByLocation response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "orderByLocation body: ${it.body()}")
+                it.body()
+            } else {
+                Log.d(TAG, "orderByLocation: ${it.errorBody()}")
+                null
             }
         }
     }

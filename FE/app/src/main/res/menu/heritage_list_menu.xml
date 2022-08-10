@@ -7,10 +7,4 @@
         android:icon="@drawable/ic_sort"
         android:title="정렬"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/menu_map"
-        android:enabled="true"
-        android:icon="@drawable/ic_map"
-        android:title="지도"
-        app:showAsAction="always" />
 </menu>

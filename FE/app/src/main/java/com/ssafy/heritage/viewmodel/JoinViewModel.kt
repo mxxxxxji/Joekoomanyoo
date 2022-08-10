@@ -74,6 +74,7 @@ class JoinViewModel : ViewModel() {
                         if (it.isSuccessful) {
                             // 요청 전송 성공시 인증번호 저장
                             id_verification_code_check.value = it.body()
+                            Log.d(TAG, "sendIdVeroficationCode: ${it.body()}")
                             true
                         } else {
                             Log.d(TAG, "${it.code()}")
