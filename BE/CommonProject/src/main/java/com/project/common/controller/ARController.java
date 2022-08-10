@@ -119,9 +119,6 @@ public class ARController {
     }
 
 
-
-
-
     /**
      * 스탬프 카테고리 DB 저장
      *
@@ -135,4 +132,8 @@ public class ARController {
         arService.stampCategory();
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
+
+
+
+
 }
