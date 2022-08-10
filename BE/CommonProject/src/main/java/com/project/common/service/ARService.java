@@ -1,15 +1,12 @@
 package com.project.common.service;
 
 import com.project.common.controller.FcmTokenController;
-import com.project.common.dto.AR.MyLocationDto;
-import com.project.common.dto.AR.MyStampDto;
-import com.project.common.dto.AR.StampCategoryDto;
+import com.project.common.dto.AR.*;
 import com.project.common.dto.Push.FcmHistoryDto;
 import com.project.common.entity.AR.StampCategoryEntity;
 import com.project.common.entity.Heritage.HeritageEntity;
 import com.project.common.entity.User.UserEntity;
 import com.project.common.mapper.AR.MyStampMapper;
-import com.project.common.dto.AR.StampDto;
 import com.project.common.mapper.AR.StampCategoryMapper;
 import com.project.common.mapper.AR.StampMapper;
 import com.project.common.entity.AR.MyStampEntity;
@@ -306,6 +303,35 @@ public class ARService {
     public List<StampCategoryDto> stampCategoryCnt() {
         List<StampCategoryEntity> stampCategoryEntityList = stampCategoryRepository.findAll();
         List<StampCategoryDto> list = StampCategoryMapper.MAPPER.toDtoList(stampCategoryEntityList);
+        return list;
+    }
+
+    public List<MyStampResponseDto> listCategoryMyStamp(int userSeq, int categorySeq) {
+        // 먼저 내 스탬프 리스트 받기
+        List<MyStampEntity> myStampList = myARRepository.findAllByUserSeq(userSeq);
+
+        // 반환할 리스트
+        List<MyStampResponseDto> list = new ArrayList<>();
+
+        for(MyStampEntity myStampEntity : myStampList){
+            // 스탬프 번호
+            int stampSeq = myStampEntity.getStampSeq();
+
+            // 스탬프의 카테고리 명과 받은 카테고리번호의 카테고리 명이 같으면 List에 추가
+            if(arRepository.findByStampSeq(stampSeq).getStampCategory().equals(stampCategoryRepository.findByCategorySeq(categorySeq).getCategoryName())){
+                StampDto stampDto = StampMapper.MAPPER.toDto(arRepository.findByStampSeq(stampSeq));
+
+                MyStampResponseDto myStampResponseDto = MyStampResponseDto.builder()
+                        .stampTitle(stampDto.getStampTitle())
+                        .stampImgUrl("")
+                        .stampCategory(stampDto.getStampCategory())
+                        .stampText(stampDto.getStampText())
+                        .build();
+
+                list.add(myStampResponseDto);
+            }
+        }
+
         return list;
     }
 }

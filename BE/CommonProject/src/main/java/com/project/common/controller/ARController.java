@@ -1,6 +1,7 @@
 package com.project.common.controller;
 
 import com.project.common.dto.AR.MyLocationDto;
+import com.project.common.dto.AR.MyStampResponseDto;
 import com.project.common.dto.AR.StampCategoryDto;
 import com.project.common.dto.AR.StampDto;
 import com.project.common.service.ARService;
@@ -37,13 +38,13 @@ public class ARController {
 
 
     /**
-     * 스탬프 리스트 불러오기
+     * 스탬프 전체 리스트 불러오기
      *
      * @param
      * @return List
      */
 
-    @ApiOperation(value = "스탬프 리스트 불러오기", response = List.class)
+    @ApiOperation(value = "스탬프 전체 리스트 불러오기", response = List.class)
     @GetMapping("/stamp/list")
     public ResponseEntity<?> listStamp() {
         List<StampDto> list = arService.listStamp();
@@ -55,13 +56,13 @@ public class ARController {
     }
 
     /**
-     * 내 스탬프 리스트 불러오기
+     * 내 스탬프 전체 리스트 불러오기
      *
      * @param userSeq
      * @return List
      */
 
-    @ApiOperation(value = "내 스탬프 리스트 불러오기", response = List.class)
+    @ApiOperation(value = "내 스탬프 전체 리스트 불러오기", response = List.class)
     @GetMapping("/stamp/list/{userSeq}")
     public ResponseEntity<?> listMyStamp(@PathVariable("userSeq") int userSeq) {
         List<StampDto> list = arService.listMyStamp(userSeq);
@@ -134,6 +135,21 @@ public class ARController {
     }
 
 
+    /**
+     * 카테고리 별 내 스탬프 정보 전달
+     *
+     * @param userSeq, categorySeq
+     * @return List
+     */
 
-
+    @ApiOperation(value = "카테고리 별 내 스탬프 정보 전달", response = List.class)
+    @GetMapping("/stamp/category/{userSeq}/{categorySeq}")
+    public ResponseEntity<?> listCategoryMyStamp(@PathVariable("userSeq") int userSeq, @PathVariable("categorySeq") int categorySeq) {
+        List<MyStampResponseDto> list = arService.listCategoryMyStamp(userSeq, categorySeq);
+        if(list.size()==0){
+            return new ResponseEntity<String>("리스트 없음", HttpStatus.OK);
+        }else {
+            return new ResponseEntity<List<MyStampResponseDto>>(list, HttpStatus.OK);
+        }
+    }
 }
