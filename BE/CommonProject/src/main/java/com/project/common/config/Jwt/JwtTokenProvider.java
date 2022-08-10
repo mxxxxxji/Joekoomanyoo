@@ -24,7 +24,7 @@ public class JwtTokenProvider {
 
     private String secretKey = "ssafycommonproject";
 
-    // 토큰 유효시간 1시간
+    // 토큰 유효시간 100일
     private long tokenValidTime = 100 * 24 * 60 * 60 * 1000L;
 
     private final UserDetailsService userDetailsService;

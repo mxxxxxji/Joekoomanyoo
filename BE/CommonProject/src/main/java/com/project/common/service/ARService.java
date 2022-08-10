@@ -3,17 +3,21 @@ package com.project.common.service;
 import com.project.common.controller.FcmTokenController;
 import com.project.common.dto.AR.MyLocationDto;
 import com.project.common.dto.AR.MyStampDto;
+import com.project.common.dto.AR.StampCategoryDto;
 import com.project.common.dto.Push.FcmHistoryDto;
+import com.project.common.entity.AR.StampCategoryEntity;
 import com.project.common.entity.Heritage.HeritageEntity;
 import com.project.common.entity.User.UserEntity;
 import com.project.common.mapper.AR.MyStampMapper;
 import com.project.common.dto.AR.StampDto;
+import com.project.common.mapper.AR.StampCategoryMapper;
 import com.project.common.mapper.AR.StampMapper;
 import com.project.common.entity.AR.MyStampEntity;
 import com.project.common.entity.AR.StampEntity;
 import com.project.common.repository.AR.ARRepository;
 import com.project.common.repository.AR.ARRepositoryCustom;
 import com.project.common.repository.AR.MyARRepository;
+import com.project.common.repository.AR.StampCategoryRepository;
 import com.project.common.repository.Heritage.HeritageRepository;
 import com.project.common.repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +46,7 @@ public class ARService {
 
     private final FirebaseCloudMessageService firebaseCloudMessageService;
     private final FcmTokenController fcmTokenController;
+    private final StampCategoryRepository stampCategoryRepository;
 
     // 지역 위도, 경도
     public Map Local(){
@@ -268,5 +273,38 @@ public class ARService {
     // This function converts radians to decimal degrees
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
+    }
+
+    // 스탬프 카테고리 DB에 저장
+    public void stampCategory() {
+        String[] list = {"탑", "비", "불교", "공예품", "궁궐", "기록유산", "왕릉", "건축", "종", "기타"};
+        // 스탬프에 저장되어 있는 문화유산 리스트를 찾아온다
+        List<StampEntity> stampList = arRepository.findAll();
+        for(StampEntity stampEntity : stampList) {
+            // 문화유산 번호 가져와서
+            int heritageSeq = stampEntity.getHeritageSeq();
+            // 문화유산 가져온다
+            HeritageEntity heritageEntity = heritageRepository.findByHeritageSeq(heritageSeq);
+            // 그 문화유산의 카테고리를 가져온다
+            String category = heritageEntity.getHeritageCategory();
+            
+            // 문화유산 개수 추가해준다
+            for(int i=0; i<list.length; i++){
+                if(category.equals(list[i])){
+                    StampCategoryEntity stampCategoryEntity = stampCategoryRepository.findByCategoryName(category);
+                    int cnt = stampCategoryEntity.getCategoryCnt() + 1;
+                    stampCategoryEntity.setCategoryCnt(cnt);
+                    stampCategoryRepository.save(stampCategoryEntity);
+                    break;
+                }
+            }
+        }
+    }
+
+    // 스탬프 카테고리 별 개수 반환 ( 리스트로 )
+    public List<StampCategoryDto> stampCategoryCnt() {
+        List<StampCategoryEntity> stampCategoryEntityList = stampCategoryRepository.findAll();
+        List<StampCategoryDto> list = StampCategoryMapper.MAPPER.toDtoList(stampCategoryEntityList);
+        return list;
     }
 }

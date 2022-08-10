@@ -54,6 +54,7 @@ public class UserService{
         }else{
             // 사용자가 존재하면 삭제표시
             userEntity.setIsDeleted('Y');
+            userRepository.save(userEntity);
 
             int userSeq = userEntity.getUserSeq();
             // 탈퇴 처리 되면서 같이 바뀌는 것들
