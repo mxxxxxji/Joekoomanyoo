@@ -1,5 +1,6 @@
 package com.ssafy.heritage.data.remote.api
 
+import FeedDetailResponse
 import com.ssafy.heritage.data.dto.Feed
 import com.ssafy.heritage.data.remote.request.FeedAddRequest
 import com.ssafy.heritage.data.remote.response.FeedListResponse
@@ -29,6 +30,8 @@ interface FeedService {
 
     // 피드 수정
     // 피드 보기
+    @GET("/api/feed/{feedSeq)/info")
+    suspend fun selectFeedDetail(@Path("feedSeq") feedSeq: Int): Response<FeedDetailResponse>
     // 피드 삭제
     // 피드 활성화 여부 (Y: 공개, N: 비공개)
 

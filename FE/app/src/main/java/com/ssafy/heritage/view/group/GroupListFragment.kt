@@ -69,6 +69,7 @@ class GroupListFragment :
     }
 
     override fun onItemClick(position: Int) {
+        Log.d(TAG, "onItemClick: ${position}")
         val action = GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(groupListAdapter.getItem(position))
         findNavController().navigate(action)
     }

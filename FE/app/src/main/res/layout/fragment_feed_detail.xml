@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="feed"
+            type="com.ssafy.heritage.data.remote.response.FeedDetailResponse" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,6 +53,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
+            glide="${}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraint_top"
             tools:srcCompat="@tools:sample/avatars" />
@@ -56,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="동굴속불상"
+            android:text="@{feed.userNickname}"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
@@ -80,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="22.7.30"
+            android:text="@{feed.feedCreatedAt}"
             android:textColor="#aeaeb2"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
@@ -121,7 +128,7 @@
                 android:layout_width="362dp"
                 android:layout_height="362dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/feed_img_2" />
+                 />
         </LinearLayout>
 
         <TextView
@@ -130,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="24dp"
-            android:text="경복궁 근정전"
+            android:text="@{feed.feedTitle}"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -150,10 +157,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="1"
             android:textSize="11sp"
             android:textColor="#8e8e93"
             android:textAlignment="center"
+            tools:text="1"
             app:layout_constraintEnd_toEndOf="@+id/imagebtn_feed_detail_like"
             app:layout_constraintStart_toStartOf="@+id/imagebtn_feed_detail_like"
             app:layout_constraintTop_toBottomOf="@+id/imagebtn_feed_detail_like" />
@@ -164,10 +171,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="24dp"
-            android:text="#경복궁 #광화문 #겨울 #한복"
+            android:text=""
             android:textColor="#88bbde"
             android:textSize="14sp"
             android:textStyle="bold"
+            tools:text="#경복궁 #광화문 #겨울 #한복"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_feed_heritage_name" />
 
@@ -176,7 +184,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="8dp"
-            android:text="겨울에 경복궁 갔을 때 찍었어요. 맘에 들어서 공유합니다."
+            android:text="@{feed.feedContent}"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintWidth_max="365dp"

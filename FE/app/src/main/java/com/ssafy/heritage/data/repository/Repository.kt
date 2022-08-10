@@ -1,5 +1,6 @@
 package com.ssafy.heritage.data.repository
 
+import FeedDetailResponse
 import android.content.Context
 import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.ARApi
@@ -141,6 +142,8 @@ class Repository constructor(context: Context) {
         feedApi.selectAllFeeds()
     suspend fun insertFeed(body: FeedAddRequest): Response<FeedListResponse> =
         feedApi.insertFeed(body)
+    suspend fun selectFeedDetail(feedSeq: Int): Response<FeedDetailResponse> =
+        feedApi.selectFeedDetail(feedSeq)
 
     // file
     suspend fun sendImage(url: String, file: MultipartBody.Part): Response<String> = fileApi.saveImage(url, file)

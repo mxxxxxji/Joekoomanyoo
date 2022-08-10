@@ -13,6 +13,9 @@ import com.ssafy.heritage.listener.FeedListClickListener
 class FeedListAdapter(private val listener: OnItemClickListener) :
     ListAdapter<FeedListResponse, FeedListAdapter.ViewHolder>(DiffCallback()) {
 
+    private var feedList = mutableListOf<FeedListResponse>()
+    lateinit var feedListClickListener: FeedListClickListener
+
     inner class ViewHolder(private val binding: ItemFeedBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
@@ -54,4 +57,8 @@ class FeedListAdapter(private val listener: OnItemClickListener) :
             return oldItem == newItem
         }
     }
+
+//    fun getItem(position: Int): FeedListResponse {
+//        return feedList[position]
+//    }
 }
