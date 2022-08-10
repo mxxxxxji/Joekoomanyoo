@@ -51,7 +51,7 @@ public class UserController {
 
     @ApiOperation(value = "일반 회원가입", response = String.class)
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestParam("file") MultipartFile file,@ApiParam(value = "회원 가입 : 회원정보 ( 아이디, 비밀번호, 닉네임, 성별, 생년월일 ) ", required = true) @RequestBody UserSignDto userSignDto, BindingResult bindingResult) {
+    public ResponseEntity<String> signup(@ApiParam(value = "회원 가입 : 회원정보 ( 아이디, 비밀번호, 닉네임, 성별, 생년월일 ) ", required = true) @RequestBody UserSignDto userSignDto, BindingResult bindingResult) {
 
         // validation
         if (bindingResult.hasErrors()) {
