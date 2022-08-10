@@ -16,6 +16,7 @@ import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -71,13 +72,13 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
                     .into(ivFeedImage)
             }
 
-            if (it != null) {
-                makeToast("피드가 등록되었습니다.")
-//                val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedDetailFragment()
-//                findNavController().navigate(action)
-            } else {
-                makeToast("피드 등록에 실패했습니다. 다시 확인해주세요.")
-            }
+//            if (it != null) {
+//                makeToast("피드가 등록되었습니다.")
+////                val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedDetailFragment()
+////                findNavController().navigate(action)
+//            } else {
+//                makeToast("피드 등록에 실패했습니다. 다시 확인해주세요.")
+//            }
         }
     }
 
@@ -132,6 +133,8 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
                 if (img_multipart == null || img_multipart?.let { feedViewModel.sendImage(it) } == true) {
                     feedInfo = FeedAddRequest( userSeq, feedViewModel.insertFeedInfo.value!!, title, content, feedOpen, tagResult )
                     feedViewModel.insertFeed(feedInfo)
+                    val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedDetailFragment()
+                    findNavController().navigate(action)
                     Log.d(TAG, "initClickListener: ${feedInfo}")
                     Log.d(TAG, "initClickListener: 클릭했니?")
 

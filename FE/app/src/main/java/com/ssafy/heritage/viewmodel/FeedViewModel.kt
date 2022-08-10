@@ -46,10 +46,10 @@ class FeedViewModel: ViewModel() {
     private val _insertFeedInfo = SingleLiveEvent<String>()
     val insertFeedInfo: LiveData<String> get() = _insertFeedInfo
 
-    private val _feedInfodetail = MutableLiveData<FeedDetailResponse>()
-    val feedInfoDetailL: LiveData<FeedDetailResponse> get() = _feedInfodetail
+    private val _feedInfodetail = MutableLiveData<FeedListResponse>()
+    val feedInfoDetailL: LiveData<FeedListResponse> get() = _feedInfodetail
 
-    fun add(info: FeedDetailResponse) {
+    fun add(info: FeedListResponse) {
         _feedInfodetail.postValue(info)
     }
 

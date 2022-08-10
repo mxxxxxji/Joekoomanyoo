@@ -6,14 +6,16 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class FeedListResponse(
-    @SerializedName("feedSeq") val feedSeq: Int,               // 게시글 번호
-    @SerializedName("userSeq") val userSeq: Int,               // 사용자 번호
-    @SerializedName("feedImgUrl") var feedImgUrl: String = "",         // 피드 첨부파일 Url
-    @SerializedName("feedTitle") val feedTitle: String,          // 제목
-    @SerializedName("feedContent") val feedContent: String,        // 본문
-    @SerializedName("feedOpen") val feedOpen: Char,             // 공개 여부 (N,Y)
-    @SerializedName("feedCreatedAt") val feedCreatedAt: String,      // 등록 시간
-    @SerializedName("feedUpdatedAt") val feedUpdatedAt: String       // 수정 시간
+    @SerializedName("feedSeq") val feedSeq: Int,                    // 게시글 번호
+//    @SerializedName("userSeq") val userSeq: Int,               // 사용자 번호
+    @SerializedName("feedImgUrl") var feedImgUrl: String = "",      // 피드 첨부파일 Url
+    @SerializedName("feedTitle") val feedTitle: String,             // 제목
+    @SerializedName("feedContent") val feedContent: String,         // 본문
+    @SerializedName("feedOpen") val feedOpen: Char,                 // 공개 여부 (N,Y)
+    @SerializedName("userImgUrl") val userImgUrl: String,           // 사용자 프사
+    @SerializedName("userNickname") val userNickname: String,       // 사용자 닉네임
+    @SerializedName("feedCreatedAt") val feedCreatedAt: String,     // 등록 시간
+//    @SerializedName("feedUpdatedAt") val feedUpdatedAt: String       // 수정 시간
 ) : Parcelable {
     // 해시코드 충돌 해결
     override fun hashCode(): Int {

@@ -19,7 +19,7 @@ class FeedDetailFragment :
     BaseFragment<FragmentFeedDetailBinding>(R.layout.fragment_feed_detail) {
 
 //    private var feed: Feed? = null
-    private var feed: FeedDetailResponse? = null
+    private var feed: FeedListResponse? = null
     private val feedViewModel by activityViewModels<FeedViewModel>()
     private val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
     private lateinit var feedInfo: FeedListResponse

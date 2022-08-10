@@ -6,7 +6,7 @@
     <data>
         <variable
             name="feed"
-            type="com.ssafy.heritage.data.remote.response.FeedDetailResponse" />
+            type="com.ssafy.heritage.data.remote.response.FeedListResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,7 +53,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            glide="${}"
+            glide="@{feed.userImgUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraint_top"
             tools:srcCompat="@tools:sample/avatars" />
@@ -128,6 +128,7 @@
                 android:layout_width="362dp"
                 android:layout_height="362dp"
                 android:scaleType="centerCrop"
+                glide="@{feed.feedImgUrl}"
                  />
         </LinearLayout>
 
