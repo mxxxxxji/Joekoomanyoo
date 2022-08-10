@@ -32,7 +32,6 @@ public class UserDto {
     private int evalList5;
     private String evalUpdatedAt;
     private char pushSettingStatus;
-
     private int myStampCnt;
 
 }
