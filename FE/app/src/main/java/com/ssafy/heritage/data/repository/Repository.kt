@@ -120,7 +120,7 @@ class Repository constructor(context: Context) {
     suspend fun deleteMySchedule(scheduleSeq: Int): Response<String> =
         userApi.deleteMySchedule(scheduleSeq)
 
-    suspend fun getMyNotiSetting(userSeq: Int): Response<Char> = userApi.getMyNotiSetting(userSeq)
+    suspend fun getMyNotiSetting(userSeq: Int): Response<String> = userApi.getMyNotiSetting(userSeq)
     suspend fun setMyNotiSetting(userSeq: Int, userSetting: Char): Response<String> =
         userApi.setMyNotiSetting(userSeq, userSetting)
 

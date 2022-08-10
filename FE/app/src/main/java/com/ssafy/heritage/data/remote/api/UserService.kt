@@ -100,7 +100,7 @@ interface UserService {
 
     // 내 알림 설정 불러오기
     @GET("/api/push/{userSeq}")
-    suspend fun getMyNotiSetting(@Path("userSeq") userSeq: Int): Response<Char>
+    suspend fun getMyNotiSetting(@Path("userSeq") userSeq: Int): Response<String>
 
     // 내 알림 설정하기
     @PUT("/api/push/{userSeq}/{userSetting}/push-setting")

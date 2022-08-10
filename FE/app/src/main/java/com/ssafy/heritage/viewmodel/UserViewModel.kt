@@ -51,6 +51,10 @@ class UserViewModel : ViewModel() {
     val myScheduleList: LiveData<MutableList<Schedule>>
         get() = _myScheduleList
 
+    private val _isNotiLoading = MutableLiveData<Boolean>().apply { value = false }
+    val isNotiLoading: LiveData<Boolean>
+        get() = _isNotiLoading
+
     private val _notiSetting = MutableLiveData<Char>()
     val notiSetting: LiveData<Char>
         get() = _notiSetting
@@ -462,8 +466,46 @@ class UserViewModel : ViewModel() {
     }
 
     // 알림 설정 정보 불러오기
+    fun getNotiSetting() = viewModelScope.launch {
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.getMyNotiSetting(_user.value?.userSeq!!)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "getNotiSetting response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "getNotiSetting Success: ${it.body()}")
+                _notiSetting.postValue(it.body()?.toCharArray()!![0])
+            } else {
+                Log.d(TAG, "getNotiSetting error: ${it.errorBody()}")
+            }
+            _isNotiLoading.value = false
+        }
+    }
 
     // 알림 설정 하기
+    fun setNotiSetting(flag : Char) = viewModelScope.launch {
+        _notiSetting.value = flag
+        _isNotiLoading.value = true
+
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.setMyNotiSetting(_user.value?.userSeq!!, flag)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "setNotiSetting response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "setNotiSetting Success: ${it.body()}")
+                getNotiSetting()
+            } else {
+                Log.d(TAG, "setNotiSetting error: ${it.errorBody()}")
+            }
+        }
+    }
 
     // 내 알림 내역 리스트 불러오기
     fun getNotiList() = viewModelScope.launch {

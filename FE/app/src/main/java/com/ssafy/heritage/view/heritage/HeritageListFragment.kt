@@ -158,8 +158,6 @@ class HeritageListFragment :
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = alphaInAnimationAdapter
 
-            addItemDecoration(DividerItemDecoration(5F, resources.getColor(R.color.link_water)))
-
             heritageAdapter.heritageListClickListener = object : HeritageListClickListener {
                 override fun onClick(position: Int, heritage: Heritage, view: View) {
 

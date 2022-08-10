@@ -3,6 +3,7 @@ package com.ssafy.heritage.view.setting
 import android.content.Intent
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.awesomedialog.*
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
@@ -17,11 +18,14 @@ import com.ssafy.heritage.util.Setting.TERMS
 import com.ssafy.heritage.util.Setting.VERSION_INFO
 import com.ssafy.heritage.view.dialog.LanguageSettingDialog
 import com.ssafy.heritage.view.dialog.TermsDialog
+import com.ssafy.heritage.viewmodel.UserViewModel
 
 
 private const val TAG = "SettingFragment___"
 
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
+
+    private val userViewModel by activityViewModels<UserViewModel>()
 
     private val settingListAdapter: SettingListAdapter by lazy { SettingListAdapter() }
 
@@ -31,7 +35,24 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
 
         initAdapter()
 
+        initObserver()
+
         setSwitch()
+    }
+
+    private fun initObserver() {
+        userViewModel.notiSetting.observe(viewLifecycleOwner) {
+            when (it) {
+                'Y' -> binding.switchNoti.setChecked(true)
+                'N' -> binding.switchNoti.setChecked(false)
+            }
+        }
+        userViewModel.isNotiLoading.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> binding.switchNoti.isClickable = false
+                false -> binding.switchNoti.isClickable = true
+            }
+        }
     }
 
     private fun initAdapter() = with(binding) {
@@ -53,12 +74,12 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                 override fun onClick(position: Int, view: View) {
                     val name = settingListAdapter.currentList[position]
                     when (name) {
-                        LANGUAGE_SETTING -> {
-                            languageSettingDialog.show(
-                                childFragmentManager,
-                                "languageSettingDialog"
-                            )
-                        }
+//                        LANGUAGE_SETTING -> {
+//                            languageSettingDialog.show(
+//                                childFragmentManager,
+//                                "languageSettingDialog"
+//                            )
+//                        }
                         VERSION_INFO -> {
                             AwesomeDialog.build(requireActivity())
                                 .title(VERSION_INFO)
@@ -114,14 +135,14 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         switchNoti.setOnCheckedChangeListener {
             if (it) {
                 // 알림 설정 'Y'로 서버에 보냄
-
+                userViewModel.setNotiSetting('Y')
             } else {
                 // 알림 설정 'N'으로 서버에 보냄
-
+                userViewModel.setNotiSetting('N')
             }
         }
     }
 
     val settingList =
-        arrayListOf<String>(LANGUAGE_SETTING, VERSION_INFO, TERMS, LICENSE)
+        arrayListOf<String>(VERSION_INFO, TERMS, LICENSE)
 }
