@@ -39,6 +39,8 @@
     <color name="link_water">#FFDDEBF4</color>
     <!--포인트 텍스트-->
     <color name="cornflower">#FF88BBDE</color>
+    <color name="cornflower_20">#3388BBDE</color>
+    <color name="cornflower_10">#3388BBDE</color>
     <!--사진 피드 상태바-->
     <color name="skyblue">#88bbde</color>
     <color name="blue">#88aade</color>
