@@ -121,7 +121,8 @@
         android:label="fragment_feed_list">
         <action
             android:id="@+id/action_feedListFragment_to_feedDetailFragment"
-            app:destination="@id/feedDetailFragment" />
+            app:destination="@id/feedDetailFragment" >
+        </action>
         <action
             android:id="@+id/action_feedListFragment_to_feedCreateFragment"
             app:destination="@id/feedCreateFragment" />

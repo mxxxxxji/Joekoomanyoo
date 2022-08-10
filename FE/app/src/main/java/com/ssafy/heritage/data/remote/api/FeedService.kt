@@ -1,8 +1,8 @@
 package com.ssafy.heritage.data.remote.api
 
-import FeedDetailResponse
 import com.ssafy.heritage.data.dto.Feed
 import com.ssafy.heritage.data.remote.request.FeedAddRequest
+import com.ssafy.heritage.data.remote.response.FeedDetailResponse
 import com.ssafy.heritage.data.remote.response.FeedListResponse
 import retrofit2.Response
 import retrofit2.http.Body
