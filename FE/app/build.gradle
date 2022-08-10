@@ -147,5 +147,4 @@ dependencies {
 
     // TedPermission
     implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
-
 }

@@ -17,7 +17,7 @@
             android:text="앨범으로 갈것이다"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:background="@color/material_dynamic_neutral20"
+            android:background="#2E3133"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

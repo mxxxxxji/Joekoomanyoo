@@ -91,6 +91,7 @@ object RetrofitInstance {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
     // 인터페이스를 사용한 인스턴스 설정
     val groupApi: GroupService by lazy {
         retrofit.create(GroupService::class.java)
@@ -103,7 +104,6 @@ object RetrofitInstance {
     val heritageApi: HeritageService by lazy {
         retrofit.create(HeritageService::class.java)
     }
-
 
     val feedApi: FeedService by lazy {
         retrofit.create(FeedService::class.java)
@@ -119,6 +119,10 @@ object RetrofitInstance {
 
     val ARApi: ARService by lazy{
         retrofit.create(ARService::class.java)
+    }
+
+    val fileApi: FileService by lazy {
+        retrofit.create(FileService::class.java)
     }
 
 //    private fun getTrustManagerFactory(context: Context): TrustManagerFactory? {

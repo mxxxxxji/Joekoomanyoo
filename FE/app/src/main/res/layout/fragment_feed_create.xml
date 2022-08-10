@@ -78,7 +78,7 @@
                     android:layout_width="362dp"
                     android:layout_height="362dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/feed_img_2" />
+                    tools:srcCompat="@drawable/feed_img_2" />
             </LinearLayout>
 
             <TextView
@@ -113,6 +113,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_feed_create_title">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="제목을 입력하세요" />
@@ -150,6 +151,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_feed_create_tag">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="태그를 입력하세요" />
@@ -187,6 +189,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_feed_create_content">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="내용을 입력하세요" />

@@ -123,7 +123,6 @@ class Repository constructor(context: Context) {
     suspend fun pushToken(token: FCMToken): Response<String> = userApi.pushToken(token)
     suspend fun saveImage(img: MultipartBody.Part) = testApi.saveImage(img)
 
-
     // heritage
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()
     suspend fun insertHeritageReview(body: HeritageReviewListResponse): Response<String> =

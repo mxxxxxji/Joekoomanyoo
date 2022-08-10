@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="feed"
-            type="com.ssafy.heritage.data.dto.Feed" />
+            name="feedListResponse"
+            type="com.ssafy.heritage.data.remote.response.FeedListResponse" />
 
     </data>
 
@@ -20,9 +20,13 @@
 
         <ImageView
             android:id="@+id/iv_feed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            glide="@{feedListResponse.feedImgUrl}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
+            android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
     </androidx.constraintlayout.widget.ConstraintLayout>
