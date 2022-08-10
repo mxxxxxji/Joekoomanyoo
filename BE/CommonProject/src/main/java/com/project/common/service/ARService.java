@@ -141,18 +141,21 @@ public class ARService {
         List<HeritageEntity> list = heritageRepository.findAll();
         for(HeritageEntity heritageEntity : list){
             if(heritageEntity.getStampExist() == 'Y'){
-                StampDto stampDto = StampDto.builder()
-                        .stampSeq(0)
-                        .stampImgUrl("")
-                        .stampTitle(heritageEntity.getHeritageName())
-                        .stampText("")
-                        .heritageSeq(heritageEntity.getHeritageSeq())
-                        .heritageLocal(heritageEntity.getHeritageLocal())
-                        .heritageLng(heritageEntity.getHeritageLng())
-                        .heritageLat(heritageEntity.getHeritageLat())
-                        .stampCategory(heritageEntity.getHeritageCategory())
-                        .build();
-                arRepository.save(StampMapper.MAPPER.toEntity(stampDto));
+                // 만약 이미 있는 경우 통과
+                if(arRepository.findByHeritageSeq(heritageEntity.getHeritageSeq()) == null) {
+                    StampDto stampDto = StampDto.builder()
+                            .stampSeq(0)
+                            .stampImgUrl("")
+                            .stampTitle(heritageEntity.getHeritageName())
+                            .stampText("")
+                            .heritageSeq(heritageEntity.getHeritageSeq())
+                            .heritageLocal(heritageEntity.getHeritageLocal())
+                            .heritageLng(heritageEntity.getHeritageLng())
+                            .heritageLat(heritageEntity.getHeritageLat())
+                            .stampCategory(heritageEntity.getHeritageCategory())
+                            .build();
+                    arRepository.save(StampMapper.MAPPER.toEntity(stampDto));
+                }
             }
         }
     }

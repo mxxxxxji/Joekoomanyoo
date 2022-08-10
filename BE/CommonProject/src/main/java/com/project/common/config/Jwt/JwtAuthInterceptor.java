@@ -27,12 +27,9 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        System.out.println(userEntity.getUserId());
-        System.out.println(jwtTokenProvider.getUserId(token));
 
         // token에서 가져온 userSeq로 찾은 userId 와 token의 userId가 같다면 같은 유저
         if(userEntity.getUserId().equals(jwtTokenProvider.getUserId(token))){
-            System.out.println("같다");
             return true;
         }else{
             return false;

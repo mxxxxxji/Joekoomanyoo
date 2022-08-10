@@ -10,4 +10,6 @@ public interface ARRepository extends JpaRepository<StampEntity, Integer> {
     StampEntity findByStampSeq(int stampSeq);
 
     List<StampEntity> findByHeritageLocal(String local);
+
+    StampEntity findByHeritageSeq(int heritageSeq);
 }
