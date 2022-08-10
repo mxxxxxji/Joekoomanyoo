@@ -46,7 +46,7 @@ public class FeedLikeController {
     //피드 좋아요 해제
    	@ApiOperation(value = "피드 좋아요 해제")
    	@DeleteMapping("/delete")
-   	public ResponseEntity<String> deleteFeedLike(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq, @RequestParam("userSeq") int userSeq){
+   	public ResponseEntity<String> deleteFeedLike(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
         return new ResponseEntity<>(feedLikeService.deleteFeedLike(userId,feedSeq),HttpStatus.OK);
    	}
