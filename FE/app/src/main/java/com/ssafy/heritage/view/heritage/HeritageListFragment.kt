@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,13 +26,12 @@ import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.databinding.FragmentHeritageListBinding
 import com.ssafy.heritage.databinding.PopupHeritageSortBinding
 import com.ssafy.heritage.listener.HeritageListClickListener
-import com.ssafy.heritage.util.DividerItemDecoration
 import com.ssafy.heritage.util.SORT.ASCENDING_DIST
 import com.ssafy.heritage.util.SORT.ASCENDING_REVIEW
 import com.ssafy.heritage.util.SORT.ASCENDING_SCRAP
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,9 +51,9 @@ class HeritageListFragment :
     private var selectedSort: String = ""
     private var selectedChip: Int = 0
     private var searchedList = listOf<Heritage>()
-    private val alphaInAnimationAdapter: AlphaInAnimationAdapter by lazy {
-        AlphaInAnimationAdapter(heritageAdapter).apply {
-            setDuration(2000)
+    private val alphaInAnimationAdapter: ScaleInAnimationAdapter by lazy {
+        ScaleInAnimationAdapter(heritageAdapter).apply {
+            setDuration(300)
             setInterpolator(OvershootInterpolator())
             setFirstOnly(false)
         }

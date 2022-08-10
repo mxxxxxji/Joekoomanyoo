@@ -1,6 +1,7 @@
 package com.ssafy.heritage.data.remote.api
 
 import com.ssafy.heritage.data.dto.Stamp
+import com.ssafy.heritage.data.dto.StampCategory
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -19,4 +20,8 @@ interface ARService {
     // 스탬프 나의 목록에 추가하기
     @POST("/api/ar/stamp/{userSeq}/{stampSeq}")
     suspend fun addStamp(@Path("userSeq") userSeq: Int, @Path("stampSeq") stampSeq: Int): Response<String>
+
+    // 스탬프 카테고리별 개수 조회
+    @GET("/api/ar/stamp/category")
+    suspend fun selectStampCategory(): Response<List<StampCategory>>
 }

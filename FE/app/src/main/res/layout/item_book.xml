@@ -7,42 +7,65 @@
 
         <variable
             name="stamp"
-            type="com.ssafy.heritage.data.dto.Stamp" />
+            type="com.ssafy.heritage.data.dto.StampCategory" />
     </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="8dp"
+        android:background="@drawable/background_stamp_category_item"
+        android:elevation="2dp"
+        android:padding="8dp"
+        android:translationZ="1dp">
 
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_heritage"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
+            android:src="@color/black"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_heritage"
+            android:id="@+id/tv_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="4dp"
             android:gravity="center"
-            android:text="@{stamp.stampTitle}"
+            android:text="@{stamp.categoryName}"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_heritage"
             tools:text="문화유산" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_cnt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@{stamp.myCnt + `/` + stamp.categoryCnt}"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_category"
+            tools:text="개수" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

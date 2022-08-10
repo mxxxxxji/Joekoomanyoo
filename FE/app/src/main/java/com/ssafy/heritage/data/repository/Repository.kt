@@ -167,6 +167,8 @@ class Repository constructor(context: Context) {
     suspend fun getMyStamp(userSeq: Int): Response<List<Stamp>> = ARApi.getMyStamp(userSeq)
     suspend fun addStamp(userSeq: Int, stampSeq: Int): Response<String> =
         ARApi.addStamp(userSeq, stampSeq)
+    suspend fun selectStampCategory(): Response<List<StampCategory>> = ARApi.selectStampCategory()
+
 
 
     companion object {

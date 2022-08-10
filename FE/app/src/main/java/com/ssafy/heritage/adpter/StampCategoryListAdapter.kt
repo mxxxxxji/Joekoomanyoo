@@ -1,27 +1,29 @@
 package com.ssafy.heritage.adpter
 
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.heritage.R
-import com.ssafy.heritage.data.dto.Stamp
+import com.ssafy.heritage.data.dto.StampCategory
 import com.ssafy.heritage.databinding.ItemBookBinding
+import com.ssafy.heritage.listener.CategoryListClickListener
 
-class BookListAdapter() : ListAdapter<Stamp, BookListAdapter.ViewHolder>(DiffCallback()) {
+class StampCategoryListAdapter() :
+    ListAdapter<StampCategory, StampCategoryListAdapter.ViewHolder>(DiffCallback()) {
 
-
+    lateinit var categoryListClickListener: CategoryListClickListener
 
     inner class ViewHolder(private val binding: ItemBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Stamp) = with(binding) {
-//            stamp = data
-//
-//            // 내가 찾은 것들은 흐릿하게
+        fun bind(data: StampCategory) = with(binding) {
+            stamp = data
+
+            itemView.setOnClickListener {
+                categoryListClickListener.onClick(bindingAdapterPosition, data)
+            }
+
+            // 내가 찾은 것들은 흐릿하게
 //            if (data.found == 'Y') {
 //                itemView.background = ContextCompat.getDrawable(itemView.context, R.color.black)
 //            }
@@ -42,12 +44,12 @@ class BookListAdapter() : ListAdapter<Stamp, BookListAdapter.ViewHolder>(DiffCal
         holder.bind(getItem(position))
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<Stamp>() {
-        override fun areItemsTheSame(oldItem: Stamp, newItem: Stamp): Boolean {
+    class DiffCallback : DiffUtil.ItemCallback<StampCategory>() {
+        override fun areItemsTheSame(oldItem: StampCategory, newItem: StampCategory): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
-        override fun areContentsTheSame(oldItem: Stamp, newItem: Stamp): Boolean {
+        override fun areContentsTheSame(oldItem: StampCategory, newItem: StampCategory): Boolean {
             return oldItem == newItem
         }
     }

@@ -79,11 +79,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/gl_hori_20">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_profile_img"
+                glide="@{String.valueOf(user.profileImgUrl)}"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_foreground"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -252,9 +255,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="이미지서버test"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerview_feed"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@id/recyclerview_feed" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

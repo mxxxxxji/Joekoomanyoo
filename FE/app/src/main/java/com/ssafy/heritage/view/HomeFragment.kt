@@ -17,10 +17,8 @@ import com.ssafy.heritage.databinding.FragmentHomeBinding
 import com.ssafy.heritage.listener.HeritageListClickListener
 import com.ssafy.heritage.view.group.GroupListFragmentDirections
 import com.ssafy.heritage.view.heritage.HeritageDetailFragment
-import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
 private const val TAG = "HomeFragment__"
@@ -44,7 +42,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
 
     override fun init() {
-        binding.user = userViewModel.user.value
 
         initObserver()
 
@@ -69,6 +66,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
                         { it.heritageSeq })
                 )
             )
+        }
+
+        userViewModel.user.observe(viewLifecycleOwner) {
+            binding.user = it
         }
     }
 
@@ -116,7 +117,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
         // 이미지서버 테스트
         btnTest.setOnClickListener {
-            val intent = Intent(requireContext(),  TestActivity::class.java)
+            val intent = Intent(requireContext(), TestActivity::class.java)
             startActivity(intent)
         }
 
