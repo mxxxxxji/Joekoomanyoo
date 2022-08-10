@@ -1,9 +1,8 @@
-package com.project.common.dto.Group;
+package com.project.common.temp;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.project.common.entity.Group.GroupDailyMemoEntity;
 import com.project.common.entity.Group.GroupEntity;
 
 import lombok.Builder;

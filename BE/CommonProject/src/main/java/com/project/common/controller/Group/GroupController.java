@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Group.GroupDto;
 import com.project.common.dto.Group.Request.ReqGroupDto;
-import com.project.common.dto.Group.Response.ResGroupMyListDto;
+import com.project.common.dto.Group.Response.ResMyGroupDto;
 import com.project.common.service.Group.GroupService;
 
 import io.swagger.annotations.Api;
@@ -40,7 +40,6 @@ public class GroupController {
     @PostMapping("/add")
     public ResponseEntity<GroupDto> addGroup(HttpServletRequest request, @RequestBody ReqGroupDto groupDto){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-
     	return new ResponseEntity<>(groupService.addGroup(userId,groupDto), HttpStatus.CREATED);
     }
     
@@ -61,9 +60,8 @@ public class GroupController {
     //모임 삭제
     @ApiOperation(value = "모임 삭제")
     @DeleteMapping("/{groupSeq}/delete")
-    public ResponseEntity<String> deleteGroup(HttpServletRequest request,@PathVariable("groupSeq") int groupSeq){  
-   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-   	 	return new ResponseEntity<>(groupService.deleteGroup(userId,groupSeq),HttpStatus.OK);
+    public ResponseEntity<String> deleteGroup(@PathVariable("groupSeq") int groupSeq){  
+   	 	return new ResponseEntity<>(groupService.deleteGroup(groupSeq),HttpStatus.OK);
     }
     
     //모임 정보 수정
@@ -74,12 +72,13 @@ public class GroupController {
     }
     
     //내 모임 목록 조회
-    @ApiOperation(value = "내 모임 조회")
+    @ApiOperation(value = "내 모임 목록 조회")
     @GetMapping("/my-group")
-    public ResponseEntity<List<ResGroupMyListDto>> getMyGroupList(HttpServletRequest request) throws Exception{
+    public ResponseEntity<List<ResMyGroupDto>> getMyGroupList(HttpServletRequest request) throws Exception{
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
    	 	return new ResponseEntity<>(groupService.getMyGroupList(userId),HttpStatus.OK);
     }
+    
     //모임 테마 변경
     @ApiOperation(value = "모임 테마 변경")
     @PutMapping("/{groupSeq}/modify/image")

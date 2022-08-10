@@ -3,7 +3,10 @@ package com.project.common.dto.Feed;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.common.entity.Feed.FeedEntity;
+import com.project.common.entity.User.UserEntity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,7 +34,16 @@ public class ResFeedDto {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Date createdTime;
 
-
+	@Builder
+	public ResFeedDto(FeedEntity feed,UserEntity user) {
+		this.feedSeq = feed.getFeedSeq();
+		this.feedImgUrl=feed.getFeedImgUrl();
+		this.feedTitle=feed.getFeedTitle();
+		this.feedContent=feed.getFeedContent();
+		this.feedOpen=feed.getFeedOpen();
+		this.userImgUrl=user.getProfileImgUrl();
+		this.userNickname=user.getUserNickname();
+	}
 	
     
 

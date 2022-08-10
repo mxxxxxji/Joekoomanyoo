@@ -8,9 +8,5 @@ import com.project.common.entity.Group.GroupDestinationEntity;
 
 public interface GroupDestinationRepository extends JpaRepository<GroupDestinationEntity, Integer> {
 
-	void deleteByHeritageSeq(int heritageSeq);
-
-
-
-
+	void deleteByGdSeq(int gdSeq);
 }

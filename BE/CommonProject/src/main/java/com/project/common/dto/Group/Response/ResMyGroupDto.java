@@ -11,8 +11,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-public class ResGroupMyListDto {
-
+public class ResMyGroupDto {
 
 	private int groupSeq;
     private String groupName;
@@ -41,7 +40,7 @@ public class ResGroupMyListDto {
 	
 	
 	@Builder
-	public ResGroupMyListDto(GroupMemberEntity member) {
+	public ResMyGroupDto(GroupMemberEntity member) {
 		this.groupSeq=member.getGroup().getGroupSeq();
 		this.groupName = member.getGroup().getGroupName();
 		this.groupMaster = member.getGroup().getGroupMaster();

@@ -15,10 +15,10 @@ import com.project.common.entity.Feed.FeedHashtagEntity;
 import com.project.common.entity.Feed.FeedLikeEntity;
 import com.project.common.entity.User.UserEntity;
 import com.project.common.mapper.Feed.FeedMapper;
-import com.project.common.repository.Feed.FeedHashtagRepository;
 import com.project.common.repository.Feed.FeedLikeRepository;
 import com.project.common.repository.Feed.FeedRepository;
 import com.project.common.repository.User.UserRepository;
+import com.project.common.temp.FeedHashtagRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,8 +51,6 @@ public class FeedService{
 		}
 		
 		UserEntity user = userRepository.findByUserId(userId);
-		
-		//upload
 		feedRepository.save(feed);
 		user.addFeed(feed);
 	 	userRepository.save(user);
@@ -60,35 +58,38 @@ public class FeedService{
 	}
 	
 	//피드 전체 조회
-	public List<FeedDto> getFeedList(){
-		List<FeedEntity> feedList=feedRepository.findAll();
-		return FeedMapper.MAPPER.toDtoList(feedList);
+	public List<ResFeedDto> getFeedList(){
+		List<ResFeedDto> feedList =new ArrayList<>();
+		for(FeedEntity entity : feedRepository.findAll()) {
+			feedList.add(new ResFeedDto(entity,entity.getUser()));
+		}
+		return feedList;
 	}
 	
 	//피드 전체 조회 (By 해쉬태그)
-	public List<FeedDto> getFeedListByTag(String fhTag){
-		List<FeedEntity> feedList=new ArrayList<>();
+	public List<ResFeedDto> getFeedListByTag(String fhTag){
+		List<ResFeedDto> feedList=new ArrayList<>();
 		for(FeedHashtagEntity entity : feedHashtagRepository.findAll()) {
 			if(entity.getFhTag().equals(fhTag)) {
-				feedList.add(findFeed(entity.getFeed().getFeedSeq()));
+				feedList.add(new ResFeedDto(entity.getFeed(),entity.getFeed().getUser()));
 			}
 		}
-		return FeedMapper.MAPPER.toDtoList(feedList);
+		return feedList;
 	}
 	
 	//내 피드 조회
-	public List<FeedDto> getMyFeedList(String userId){
-		List<FeedDto> feedList=new ArrayList<>();
-		for(FeedEntity entity : feedRepository.findAll()) {
-			if(entity.getUser().getUserId().equals(userId))
-				feedList.add(FeedMapper.MAPPER.toDto(entity));
+	public List<ResFeedDto> getMyFeedList(String userId){
+		List<ResFeedDto> feedList=new ArrayList<>();
+		UserEntity user = userRepository.findByUserId(userId);
+		for(FeedEntity entity : user.getFeeds()) {
+			feedList.add(new ResFeedDto(entity,user));
 		}
 		return feedList;
 	}
 	
 	//피드 보기
-	public ResFeedDto getFeedInfo(int feedSeq) {
-		FeedEntity feedInfo=feedRepository.findById(feedSeq).orElse(null);
+	public ResFeedDto getFeedDetail(int feedSeq) {
+		FeedEntity feedInfo=feedRepository.findByFeedSeq(feedSeq);
 		ResFeedDto feed=new ResFeedDto();
 		feed.setCreatedTime(feedInfo.getCreatedTime());
 		feed.setFeedSeq(feedSeq);
@@ -103,41 +104,39 @@ public class FeedService{
 	
 	//피드 삭제
 	public String deleteFeed(String userId,int feedSeq){
-		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
+		FeedEntity feed =feedRepository.findByFeedSeq(feedSeq);
+		UserEntity user = userRepository.findByUserId(userId);
 		
 		//해쉬태그 삭제
 		for(FeedHashtagEntity entity : feed.getHashtags())  
-			feedHashtagRepository.deleteById(entity.getFhSeq());
+			feedHashtagRepository.deleteByFhSeq(entity.getFhSeq());
 		
 		//좋아요 삭제
 		for(FeedLikeEntity entity : feed.getFeedLikes())
-			feedLikeRepository.deleteById(entity.getFeedLikeSeq());
+			feedLikeRepository.deleteByFeedLikeSeq(entity.getFeedLikeSeq());
 	
-//		//userId, feedSeq로 삭제
-//		feedRepository.deleteByUserIdAndFeedSeq(userId,feedSeq);
+		for(FeedEntity entity: user.getFeeds()) {
+			feedRepository.deleteByFeedSeq(entity.getFeedSeq());
+		}
 		
 		return "Success";
 	}
 	
-
-	
 	//피드 수정
-	public String updateFeed(int feedSeq,ReqFeedDto feedDto) {
-		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
-
+	public String modifyFeed(int feedSeq,ReqFeedDto feedDto) {
+		FeedEntity feed =feedRepository.findByFeedSeq(feedSeq);
 		feed.setFeedContent(feedDto.getFeedContent());
 		feed.setFeedImgUrl(feedDto.getFeedImgUrl());
 		feed.setFeedTitle(feedDto.getFeedTitle());
 		feed.setFeedOpen(feedDto.getFeedOpen());
 		feed.setUpdatedTime(new Date());
 		feedRepository.save(feed);
-		
 		return "Success";
 	}
 	
 	//피드 공개/비공개
-	public String openFeed(int feedSeq,char feedOpen) {
-		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
+	public String setFeedOpen(int feedSeq,char feedOpen) {
+		FeedEntity feed =feedRepository.findByFeedSeq(feedSeq);
 		feed.setFeedOpen(feedOpen);
 		feed.setUpdatedTime(new Date());
 		feedRepository.save(feed);

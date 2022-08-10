@@ -35,44 +35,33 @@ public class GroupDestinationService{
 	private final GroupRepository groupRepository;
 	private final HeritageRepository heritageRepository;
 	private final GroupDestinationRepository groupDestinationRepository;
-	private final GroupService groupService;
 	private final UserRepository userRepository;
 	private final FirebaseCloudMessageService firebaseCloudMessageService;
 	private final FcmTokenController fcmTokenController;
 	
 
 	//내 모임 목적지 조회
-	public List<ResGroupDestinationDto> getMyDestinationList(String userId){
-		List<GroupEntity> groupList= new ArrayList<>();
-		UserEntity user = userRepository.findByUserId(userId);
-		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
-			if(entity.getUserSeq()==user.getUserSeq()) {
-					groupList.add(entity.getGroup());
-				}
+	public List<ResGroupDestinationDto> getMyDestination(String userId){
+		UserEntity user = userRepository.findByUserId(userId);	
+		List<ResGroupDestinationDto> destinationList= new ArrayList<>();
+		for(GroupEntity entity : user.getGroups()) {
+			for(int i=0; i<entity.getDestinations().size();i++) {
+				HeritageEntity heritage = heritageRepository.findByHeritageSeq(entity.getDestinations().get(i).getHeritageSeq());
+				if(heritage!=null)
+					destinationList.add(new ResGroupDestinationDto(entity.getDestinations().get(i),heritage));
 			}
-			List<ResGroupDestinationDto> destinationList= new ArrayList<>();
-			
-			for(GroupEntity entity : groupList) {
-				for(int i=0;i<entity.getDestinations().size();i++) {
-					HeritageEntity heritage=heritageRepository.findByHeritageSeq(entity.getDestinations().get(i).getHeritageSeq());
-					if(heritage!=null)
-						destinationList.add(new ResGroupDestinationDto(entity.getDestinations().get(i),heritage));
-				}
-			}
+		}
 			return destinationList;
 	}
 	
 	//모임 목적지 조회
-	public List<ResGroupDestinationDto> getGroupDestinationList(int groupSeq){
+	public List<ResGroupDestinationDto> getGroupDestination(int groupSeq){
 		List<ResGroupDestinationDto> list = new ArrayList<>();
 		HeritageEntity herritage;
-		for(GroupDestinationEntity entity : groupDestinationRepository.findAll()) {
-			if(entity.getGroup()!=null&&entity.getGroup().getGroupSeq()==groupSeq) {
-				herritage=heritageRepository.findByHeritageSeq(entity.getHeritageSeq());
-				if(herritage!=null)
-
-					list.add(new ResGroupDestinationDto(entity,herritage));
-			}
+		for(GroupDestinationEntity entity : groupRepository.findByGroupSeq(groupSeq).getDestinations()) {
+			herritage=heritageRepository.findByHeritageSeq(entity.getHeritageSeq());
+			if(herritage!=null)
+				list.add(new ResGroupDestinationDto(entity,herritage));
 		}
 		return list;
 	}
@@ -80,16 +69,16 @@ public class GroupDestinationService{
 	//모임 목적지 추가
 	@Transactional
 	public String addGroupDestination(int groupSeq, int heritageSeq) {
-		GroupEntity group = groupService.findGroup(groupSeq);
+		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
 		for(GroupDestinationEntity entity:group.getDestinations()) {
 			if(entity!=null&&entity.getHeritageSeq()==heritageSeq) {
-				return "Fail";
+				return "Fail - Already Registered";
 			}
 		}
 		group.addGroupDestination(GroupDestinationEntity.builder().gdCompleted('N').heritageSeq(heritageSeq).build());
 		groupRepository.save(group);
 		
-		//알림 받을 인원들
+		//FCM 알림
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
 			if (entity.getGroup().getGroupSeq() == groupSeq) {
 				UserEntity userEntity = userRepository.findByUserSeq(entity.getUserSeq());
@@ -120,14 +109,11 @@ public class GroupDestinationService{
 	//모임 목적지 삭제
 	@Transactional
 	public String deleteGroupDestination(int groupSeq, int heritageSeq) {
-		List<GroupDestinationEntity> destinations= findDestination(groupSeq);
-		if(destinations==null) 
-			return "Fail";
-		GroupEntity group = groupService.findGroup(groupSeq);
-		for(GroupDestinationEntity entity : destinations) {
+		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
+		for(GroupDestinationEntity entity : group.getDestinations()) {
 			if(entity.getHeritageSeq()==heritageSeq) {
-				groupDestinationRepository.deleteByHeritageSeq(heritageSeq);
-				group.removeGroupDestination(heritageSeq);
+				groupDestinationRepository.deleteByGdSeq(entity.getGdSeq());
+				group.removeGroupDestination(entity.getGdSeq());
 			}
 		}
 		return "Success";
@@ -135,9 +121,9 @@ public class GroupDestinationService{
 	
 	//모임 목적지 완료 표시
 	@Transactional
-	public String modifyGroupDestination(int groupSeq,int heritageSeq) {
-		for(GroupDestinationEntity entity: findDestination(groupSeq)) {
-			if(entity !=null && entity.getHeritageSeq()==heritageSeq) {
+	public String completeGroupDestination(int groupSeq,int heritageSeq) {
+		for(GroupDestinationEntity entity: groupRepository.findByGroupSeq(groupSeq).getDestinations()) {
+			if(entity.getHeritageSeq()==heritageSeq) {
 				entity.setGdCompleted('Y');
 				groupDestinationRepository.save(entity);
 				return "Success";
@@ -146,15 +132,4 @@ public class GroupDestinationService{
 		return "Fail";
 	}
 	
-	//해당 모임 메모 찾기
-	public List<GroupDestinationEntity> findDestination(int groupSeq) {
-		List<GroupDestinationEntity> findDestination = new ArrayList<>();
-		for(GroupDestinationEntity entity: groupDestinationRepository.findAll()) {
-			if(entity.getGroup().getGroupSeq()==groupSeq) {
-				findDestination.add(entity);
-			}
-		}
-		return findDestination;
-	}
-
 }

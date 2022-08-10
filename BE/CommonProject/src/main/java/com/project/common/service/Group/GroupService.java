@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.common.dto.Group.GroupDto;
 import com.project.common.dto.Group.Request.ReqGroupDto;
-import com.project.common.dto.Group.Response.ResGroupMyListDto;
+import com.project.common.dto.Group.Response.ResMyGroupDto;
 import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.User.UserEntity;
@@ -26,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 public class GroupService{
 	private final GroupRepository groupRepository;
 	private final GroupMemberRepository groupMemberRepository;
-
 	private final UserRepository userRepository;
 	
 	//모임 개설
@@ -62,26 +61,24 @@ public class GroupService{
 	
 	//모임 정보 보기
 	public GroupDto getGroupInfo(int groupSeq) {
-		GroupEntity groupInfo=groupRepository.findById(groupSeq).orElse(null);
+		GroupEntity groupInfo=groupRepository.findByGroupSeq(groupSeq);
 		return GroupMapper.MAPPER.toDto(groupInfo);
 	}
 	
 	//모임 삭제
-	public String deleteGroup(String userId,int groupSeq){
-		UserEntity user = userRepository.findByUserId(userId);
-		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
-			if(entity.getGroup().getGroupSeq()==groupSeq && entity.getUserSeq()==user.getUserSeq()) {
-		//		groupMemberRepository.deleteByGroupSeqAndUserSeq(groupSeq,user.getUserSeq());
-				groupRepository.deleteById(groupSeq);
-				return "Success";			
-			}
+	public String deleteGroup(int groupSeq){
+		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
+		for(GroupMemberEntity entity : group.getMembers()) {
+			groupMemberRepository.deleteByMemberSeq(entity.getMemberSeq());
 		}
-		return "Fail";
+		groupRepository.deleteById(groupSeq);
+		return "Success";
 	}
 	
 	//모임 정보 수정
 	public GroupDto updateGroup(int groupSeq,ReqGroupDto groupDto) {
-		GroupEntity Group =groupRepository.findById(groupSeq).orElse(null);
+		GroupEntity Group =groupRepository.findByGroupSeq(groupSeq);
+		
 		Group.setGroupAccessType(groupDto.getGroupAccessType());
 		Group.setGroupAgeRange(groupDto.getGroupAgeRange());
 		Group.setGroupDescription(groupDto.getGroupDescription());
@@ -96,30 +93,23 @@ public class GroupService{
 		Group.setUpdatedTime(new Date());
 		
 		groupRepository.save(Group);
-		
 		return GroupMapper.MAPPER.toDto(Group);
 	}
 	
 	//내 모임 조회
-	public List<ResGroupMyListDto> getMyGroupList(String userId){
-		List<ResGroupMyListDto> groupList=new ArrayList<>();
+	public List<ResMyGroupDto> getMyGroupList(String userId){
+		List<ResMyGroupDto> groupList=new ArrayList<>();
 		UserEntity user = userRepository.findByUserId(userId);
 		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
 			if(entity.getUserSeq()==user.getUserSeq())
-				groupList.add(new ResGroupMyListDto(entity));
+				groupList.add(new ResMyGroupDto(entity));
 		}
 		return groupList;
 	}
 	
-	//모임 찾기
-	public GroupEntity findGroup(int groupSeq) {
-		GroupEntity findGroup = groupRepository.findByGroupSeq(groupSeq);
-		 return findGroup;
-	}
-	
-	//모임 정보 수정
+	//모임 이미지 수정
 	public String updateGroupImage(int groupSeq,String fileDownloadUri) {
-		GroupEntity Group =groupRepository.findById(groupSeq).orElse(null);
+		GroupEntity Group =groupRepository.findByGroupSeq(groupSeq);
 		Group.setGroupImgUrl(fileDownloadUri);
 		groupRepository.save(Group);
 		return fileDownloadUri;

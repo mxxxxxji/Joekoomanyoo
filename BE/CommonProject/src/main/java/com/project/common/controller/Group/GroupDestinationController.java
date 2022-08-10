@@ -35,16 +35,16 @@ public class GroupDestinationController {
     //내 모임 목적지 조회
     @ApiOperation(value = "내 모임 목적지 조회")
     @GetMapping("/my-destination")
-    public ResponseEntity<List<ResGroupDestinationDto>> getMyDestinationList(HttpServletRequest request) throws Exception{
+    public ResponseEntity<List<ResGroupDestinationDto>> getMyDestination(HttpServletRequest request) throws Exception{
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-    	return new ResponseEntity<>(groupDestinationService.getMyDestinationList(userId),HttpStatus.OK);
+    	return new ResponseEntity<>(groupDestinationService.getMyDestination(userId),HttpStatus.OK);
     }
     
     //모임 목적지 조회
     @ApiOperation(value = "모임 목적지 조회")
     @GetMapping("/{groupSeq}/destination/list")
-    public ResponseEntity<List<ResGroupDestinationDto>> getGroupDestinationList(@PathVariable("groupSeq") int groupSeq) throws Exception{
-    	return new ResponseEntity<>(groupDestinationService.getGroupDestinationList(groupSeq),HttpStatus.OK);
+    public ResponseEntity<List<ResGroupDestinationDto>> getGroupDestination(@PathVariable("groupSeq") int groupSeq) throws Exception{
+    	return new ResponseEntity<>(groupDestinationService.getGroupDestination(groupSeq),HttpStatus.OK);
     }
 
     //모임 목적지 추가
@@ -65,7 +65,7 @@ public class GroupDestinationController {
    	//모임 목적지 완료 표시
   	@ApiOperation(value = "모임 목적지 완료 표시 - gdCompleted N -> Y")
   	@PutMapping("/{groupSeq}/destination/complete")
-  	public ResponseEntity<String> modifyGroupDestination(@PathVariable int groupSeq,@RequestParam("heritageSeq") int heritageSeq){
-  		return new ResponseEntity<>(groupDestinationService.modifyGroupDestination(groupSeq,heritageSeq),HttpStatus.OK);
+  	public ResponseEntity<String> completeGroupDestination(@PathVariable int groupSeq,@RequestParam("heritageSeq") int heritageSeq){
+  		return new ResponseEntity<>(groupDestinationService.completeGroupDestination(groupSeq,heritageSeq),HttpStatus.OK);
   	}
 }
