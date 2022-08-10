@@ -123,6 +123,13 @@ public class ARService {
                 .myStampRegistedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).build();
 
         myARRepository.save(MyStampMapper.MAPPER.toEntity(myStampDto));
+        
+        // 스탬프 카운팅 해주기
+        UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+        int cnt = userEntity.getMyStampCnt() + 1;
+        userEntity.setMyStampCnt(cnt);
+        userRepository.save(userEntity);
+        
         return true;
     }
 
