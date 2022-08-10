@@ -2,6 +2,7 @@ package com.ssafy.heritage
 
 import android.app.Application
 import android.content.Context
+import com.google.firebase.FirebaseApp
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.SharedPreferencesUtil
 import okhttp3.OkHttpClient
@@ -31,6 +32,8 @@ class ApplicationClass : Application() {
 
         // shared preference 초기화
         sharedPreferencesUtil = SharedPreferencesUtil(this)
+
+        FirebaseApp.initializeApp(this)
     }
 
     private fun initRepository() {
