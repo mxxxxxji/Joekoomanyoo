@@ -2,6 +2,7 @@ package com.ssafy.heritage.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputLayout
@@ -32,14 +33,14 @@ class FeedViewModel: ViewModel() {
     private val _reviewState = SingleLiveEvent<Boolean>()
     val reviewState: LiveData<Boolean> get() = _reviewState
 
-    private val _myFeedList = SingleLiveEvent<MutableList<FeedListResponse>>()
-    val myFeedList: LiveData<MutableList<FeedListResponse>> get() = _myFeedList
+    private val _myFeedList = MutableLiveData<List<FeedListResponse>>()
+    val myFeedList: MutableLiveData<List<FeedListResponse>> get() = _myFeedList
 
-    private val _feedListAll = SingleLiveEvent<MutableList<Feed>>()
-    val feedListAll: LiveData<MutableList<Feed>> get() = _feedListAll
+    private val _feedListAll = MutableLiveData<List<FeedListResponse>>()
+    val feedListAll: MutableLiveData<List<FeedListResponse>> get() = _feedListAll
 
-    private val _feedListByHashTag = SingleLiveEvent<MutableList<FeedListResponse>>()
-    val feedListByHashTag: LiveData<MutableList<FeedListResponse>> get() = _feedListByHashTag
+    private val _feedListByHashTag = MutableLiveData<List<FeedListResponse>>()
+    val feedListByHashTag: MutableLiveData<List<FeedListResponse>> get() = _feedListByHashTag
 
     private val _insertFeedInfo = SingleLiveEvent<String>()
     val insertFeedInfo: LiveData<String> get() = _insertFeedInfo
@@ -48,7 +49,7 @@ class FeedViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectMyFeeds().let { response ->
                 if(response.isSuccessful) {
-                    var list = response.body() as MutableList<Feed>
+                    var list = response.body() as MutableList<FeedListResponse>
                     _feedListAll.postValue(list)
                     Log.d(TAG, "getMyFeedList: 내 피드 목록 조회 성공")
                 } else {
@@ -62,7 +63,7 @@ class FeedViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectFeedsByHashtag(fhTag).let { response ->
                 if(response.isSuccessful) {
-                    var list = response.body() as MutableList<Feed>
+                    var list = response.body() as MutableList<FeedListResponse>
                     _feedListAll.postValue(list)
                 } else {
                     Log.d(TAG, "getFeedListByHashTag: ${response.code()}")
@@ -75,7 +76,7 @@ class FeedViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectAllFeeds().let { response ->
                 if(response.isSuccessful) {
-                    var list = response.body() as MutableList<Feed>
+                    var list = response.body() as MutableList<FeedListResponse>
                     _feedListAll.postValue(list)
                     Log.d(TAG, "getFeedListAll: 모든 피드 목록 조회 성공")
                 } else {

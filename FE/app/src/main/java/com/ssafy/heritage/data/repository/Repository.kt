@@ -126,7 +126,7 @@ class Repository constructor(context: Context) {
         feedApi.selectMyFeeds()
     suspend fun selectFeedsByHashtag(fhTag: String): Response<List<FeedListResponse>> =
         feedApi.selectFeedsByHashtag(fhTag)
-    suspend fun selectAllFeeds(): Response<List<Feed>> =
+    suspend fun selectAllFeeds(): Response<List<FeedListResponse>> =
         feedApi.selectAllFeeds()
     suspend fun insertFeed(body: FeedAddRequest): Response<FeedListResponse> =
         feedApi.insertFeed(body)

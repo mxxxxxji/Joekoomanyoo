@@ -6,23 +6,27 @@ import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.heritage.data.dto.Feed
+import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.databinding.ItemFeedBinding
 import com.ssafy.heritage.listener.FeedListClickListener
 
-class FeedListAdapter : ListAdapter<Feed, FeedListAdapter.ViewHolder>(DiffCallback()) {
-
-    lateinit var feedListClickListener: FeedListClickListener
+class FeedListAdapter(private val listener: OnItemClickListener) :
+    ListAdapter<FeedListResponse, FeedListAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: ItemFeedBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Feed) = with(binding) {
-            feed = data
+        init {
+            binding.root.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
+        }
 
-            ViewCompat.setTransitionName(ivFeed, "album$bindingAdapterPosition")
+        fun bind(data: FeedListResponse) = with(binding) {
+            binding.apply {
+                feedListResponse = data
 
-            itemView.setOnClickListener {
-                feedListClickListener.onClick(bindingAdapterPosition, data)
+                ViewCompat.setTransitionName(ivFeed, "album$bindingAdapterPosition")
+
             }
         }
     }
@@ -41,12 +45,12 @@ class FeedListAdapter : ListAdapter<Feed, FeedListAdapter.ViewHolder>(DiffCallba
         holder.bind(getItem(position))
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<Feed>() {
-        override fun areItemsTheSame(oldItem: Feed, newItem: Feed): Boolean {
+    class DiffCallback : DiffUtil.ItemCallback<FeedListResponse>() {
+        override fun areItemsTheSame(oldItem: FeedListResponse, newItem: FeedListResponse): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
-        override fun areContentsTheSame(oldItem: Feed, newItem: Feed): Boolean {
+        override fun areContentsTheSame(oldItem: FeedListResponse, newItem: FeedListResponse): Boolean {
             return oldItem == newItem
         }
     }

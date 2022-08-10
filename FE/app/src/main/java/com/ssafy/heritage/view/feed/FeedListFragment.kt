@@ -3,9 +3,11 @@ package com.ssafy.heritage.view.feed
 import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.adpter.FeedListAdapter
 import com.ssafy.heritage.R
+import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Feed
 import com.ssafy.heritage.databinding.FragmentFeedListBinding
@@ -14,46 +16,34 @@ import com.ssafy.heritage.viewmodel.FeedViewModel
 private const val TAG = "FeedListFragment___"
 
 class FeedListFragment :
-    BaseFragment<FragmentFeedListBinding>(R.layout.fragment_feed_list) {
+    BaseFragment<FragmentFeedListBinding>(R.layout.fragment_feed_list), OnItemClickListener {
 
-    private val feedAdapter: FeedListAdapter by lazy { FeedListAdapter() }
+    private lateinit var feedAdapter: FeedListAdapter
     private val feedViewModel by activityViewModels<FeedViewModel>()
     val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
-    private var feedList: List<Feed> = arrayListOf()
-    private var myList: List<Feed> = arrayListOf()
     private var clickMyList: Int = 0
     private var searchedList = listOf<Feed>()
 
 
     override fun init() {
 
+        feedViewModel.getFeedListAll()
         initAdapter()
         initObserver()
         initClickListener()
     }
 
-    private fun initAdapter() = with(binding) {
-//        recyclerview.adapter = feedAdapter
-        recyclerview.apply {
-//            feedAdapter.feedListClickListener = object : FeedListAdapter {
-//                override fun onClick(position: Int, feed: Feed, view: View) {
-//                }
-//            }
-        }
+    private fun initAdapter() {
+        feedAdapter = FeedListAdapter(this)
+        binding.recyclerviewFeedList.adapter = feedAdapter
+        binding.recyclerviewFeedList.layoutManager = GridLayoutManager(requireContext(),3)
+
     }
 
     private fun initObserver() {
         feedViewModel.feedListAll.observe(viewLifecycleOwner) {
-            if (searchedList.isNotEmpty()) {
-                feedAdapter.submitList(searchedList)
-            } else if (clickMyList == 0) {
-                feedViewModel.getFeedListAll()
-                feedList = it
-                feedAdapter.submitList(it)
-            } else {
-                feedViewModel.getMyFeedList()
-            }
-            Log.d(TAG, "initObserver: 아이템 뜨니?")
+            Log.d(TAG, "initObserver feedListAll: $it")
+            feedAdapter.submitList(it)
         }
     }
 
@@ -68,9 +58,15 @@ class FeedListFragment :
             clickMyList = 1
             feedViewModel.getMyFeedList()
         }
+
+        tvFeedAll.setOnClickListener {
+            feedViewModel.getFeedListAll()
+        }
     }
 
-//    override fun onItemClick(Position: Int) {
-//    }
+    override fun onItemClick(Position: Int) {
+//        val action = FeedListFragmentDirections.actionFeedListFragmentToFeedDetailFragment(feedAdapter.getItem(position))
+
+    }
 
 }

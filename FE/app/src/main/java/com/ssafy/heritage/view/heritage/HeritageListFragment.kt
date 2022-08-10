@@ -2,6 +2,7 @@ package com.ssafy.heritage.view.heritage
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -128,6 +129,7 @@ class HeritageListFragment :
                 if (selectedSort == "") {
                     dataList = it
                     heritageAdapter.submitList(it)
+                    Log.d(TAG, "initObserver: ${dataList}")
                 }
                 // DetailFragment에서 온 경우
                 else {
