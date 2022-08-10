@@ -1,7 +1,7 @@
 package com.project.common.entity.Group;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,8 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.common.entity.User.UserEntity;
+import com.project.common.temp.GroupDailyMemoEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -112,9 +112,9 @@ public class GroupEntity {
     	groupMember.setGroup(this);
     }
 
-    public void removeGroupMember(int userSeq) {
+    public void removeGroupMember(int memberSeq) {
         this.members.removeIf(groupMember ->
-                groupMember.getUserSeq()==userSeq);
+                groupMember.getMemberSeq()==memberSeq);
     }
     
     // 모임 데일리 메모 //
@@ -144,9 +144,9 @@ public class GroupEntity {
     	groupSchedule.setGroup(this);
     }
 
-    public void removeGroupSchedule(Date gsDateTime) {
+    public void removeGroupSchedule(int gsSeq) {
         this.schedules.removeIf(groupSchedule ->
-        groupSchedule.getGsDateTime()==gsDateTime);
+        groupSchedule.getGsSeq()==gsSeq);
     }
     
     // 모임 목적지 //
@@ -160,9 +160,9 @@ public class GroupEntity {
     	groupDestination.setGroup(this);
     }
 
-    public void removeGroupDestination(int heritageSeq) {
+    public void removeGroupDestination(int gdSeq) {
         this.destinations.removeIf(groupDestination ->
-        groupDestination.getHeritageSeq()==heritageSeq);
+        groupDestination.getGdSeq()==gdSeq);
     }
     
     

@@ -1,11 +1,10 @@
-package com.project.common.mapper.Feed;
+package com.project.common.temp;
 
 import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import com.project.common.dto.Feed.FeedHashtagDto;
 import com.project.common.entity.Feed.FeedHashtagEntity;
 import com.project.common.mapper.StructMapper;
 

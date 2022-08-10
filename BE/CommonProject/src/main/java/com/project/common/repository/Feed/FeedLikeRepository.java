@@ -8,9 +8,6 @@ import com.project.common.entity.Feed.FeedLikeEntity;
 
 public interface FeedLikeRepository extends JpaRepository<FeedLikeEntity, Integer> {
 
-
-	void deleteByUserSeq(int userSeq);
-
-
+	void deleteByFeedLikeSeq(int feedLikeSeq);
 
 }

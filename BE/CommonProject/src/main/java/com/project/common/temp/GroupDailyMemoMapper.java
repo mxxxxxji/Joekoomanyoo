@@ -1,13 +1,11 @@
-package com.project.common.mapper.Group;
+package com.project.common.temp;
 
 import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import com.project.common.dto.Group.GroupDailyMemoDto;
 import com.project.common.dto.Group.GroupMemberDto;
-import com.project.common.entity.Group.GroupDailyMemoEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.mapper.StructMapper;
 

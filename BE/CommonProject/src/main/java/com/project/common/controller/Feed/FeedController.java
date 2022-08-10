@@ -45,31 +45,31 @@ public class FeedController {
     //피드 전체 조회
     @ApiOperation(value = "피드 전체 조회")
     @GetMapping("/list")
-    public ResponseEntity<List<FeedDto>>getFeedList() throws Exception{
+    public ResponseEntity<List<ResFeedDto>>getFeedList() throws Exception{
 	     return new ResponseEntity<>(feedService.getFeedList(),HttpStatus.OK);
+    }
+    
+    
+	//피드 전체 조회 (By 해쉬태그)
+    @ApiOperation(value = "피드 조회 by 해쉬태그")
+    @GetMapping("/list-by-hashtag/{fhTag}")
+    public ResponseEntity<List<ResFeedDto>> getFeedListByTag(@PathVariable("fhTag") String fhTag) throws Exception{
+    	return new ResponseEntity<>(feedService.getFeedListByTag(fhTag),HttpStatus.OK);
     }
     
     //내 피드 조회
     @ApiOperation(value = "내 피드 조회")
     @GetMapping("/my-feed")
-    public ResponseEntity<List<FeedDto>> getMyFeedList(HttpServletRequest request) throws Exception{
-   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-        return new ResponseEntity<>(feedService.getMyFeedList(userId),HttpStatus.OK);
+    public ResponseEntity<List<ResFeedDto>> getMyFeedList(HttpServletRequest request) throws Exception{
+    	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
+    	return new ResponseEntity<>(feedService.getMyFeedList(userId),HttpStatus.OK);
     }
-    
-	//피드 전체 조회 (By 해쉬태그)
-    @ApiOperation(value = "피드 조회 by 해쉬태그")
-    @GetMapping("/list-by-hashtag/{fhTag}")
-    public ResponseEntity<List<FeedDto>> getFeedListByTag(@PathVariable("fhTag") String fhTag) throws Exception{
-    	return new ResponseEntity<>(feedService.getFeedListByTag(fhTag),HttpStatus.OK);
-    }
-    
     
     //피드 보기
     @ApiOperation(value = "피드 보기")
     @GetMapping("/{feedSeq}/info")
-    public ResponseEntity<ResFeedDto> getFeedInfo(@PathVariable("feedSeq") int feedSeq){
-	     return new ResponseEntity<>(feedService.getFeedInfo(feedSeq),HttpStatus.OK);
+    public ResponseEntity<ResFeedDto> getFeedDetail(@PathVariable("feedSeq") int feedSeq){
+	     return new ResponseEntity<>(feedService.getFeedDetail(feedSeq),HttpStatus.OK);
     }
     
     //피드 삭제
@@ -83,15 +83,15 @@ public class FeedController {
     //피드 수정
     @ApiOperation(value = "피드 수정")
     @PutMapping("/{feedSeq}/modify")
-    public ResponseEntity<String> updateFeed(@PathVariable("feedSeq") int feedSeq,@RequestBody ReqFeedDto feedDto){
-	     return new ResponseEntity<>(feedService.updateFeed(feedSeq,feedDto),HttpStatus.OK);
+    public ResponseEntity<String> modifyFeed(@PathVariable("feedSeq") int feedSeq,@RequestBody ReqFeedDto feedDto){
+	     return new ResponseEntity<>(feedService.modifyFeed(feedSeq,feedDto),HttpStatus.OK);
     }
     
     //피드 공개/비공개
     @ApiOperation(value = "피드 활성화 여부 - Y(공개), N(비공개)")
     @PutMapping("/{feedSeq}/active/{feedOpen}")
-    public ResponseEntity<String> openFeed(@PathVariable("feedSeq") int feedSeq, @PathVariable("feedOpen") char feedOpen){
-	     return new ResponseEntity<>(feedService.openFeed(feedSeq,feedOpen),HttpStatus.OK);
+    public ResponseEntity<String> setFeedOpen(@PathVariable("feedSeq") int feedSeq, @PathVariable("feedOpen") char feedOpen){
+	     return new ResponseEntity<>(feedService.setFeedOpen(feedSeq,feedOpen),HttpStatus.OK);
     }
 
 }

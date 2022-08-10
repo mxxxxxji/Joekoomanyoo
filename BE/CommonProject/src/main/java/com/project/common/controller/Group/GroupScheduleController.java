@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
-import com.project.common.dto.Group.GroupScheduleDto;
 import com.project.common.dto.Group.Request.ReqGroupScheduleDto;
 import com.project.common.dto.Group.Response.ResGroupScheduleDto;
 import com.project.common.service.Group.GroupScheduleService;
@@ -36,36 +35,33 @@ public class GroupScheduleController {
     private final GroupScheduleService groupScheduleService;
     private final JwtTokenProvider jwtTokenProvider;
     
-    //일정 조회
     @ApiOperation(value = "모임 일정 조회")
     @GetMapping("/{groupSeq}/schedule/list")
-    public ResponseEntity<List<ResGroupScheduleDto>> getScheduleList(@PathVariable("groupSeq") int groupSeq) throws Exception{
-    	return new ResponseEntity<>(groupScheduleService.getScheduleList(groupSeq),HttpStatus.OK);
+    public ResponseEntity<List<ResGroupScheduleDto>> getGroupSchedule(@PathVariable("groupSeq") int groupSeq) throws Exception{
+    	return new ResponseEntity<>(groupScheduleService.getGroupSchedule(groupSeq),HttpStatus.OK);
     }
     
-    //내 모임 일정 조회
     @ApiOperation(value = "내 모임 일정 조회")
     @GetMapping("/my-schedule")
-    public ResponseEntity<List<ResGroupScheduleDto>> getMyScheduleList(HttpServletRequest request) throws Exception{
+    public ResponseEntity<List<ResGroupScheduleDto>> getMyGroupSchedule(HttpServletRequest request) throws Exception{
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-    	return new ResponseEntity<>(groupScheduleService.getMyScheduleList(userId),HttpStatus.OK);
+    	return new ResponseEntity<>(groupScheduleService.getMyGroupSchedule(userId),HttpStatus.OK);
     }
     
-    //일정 등록
     @ApiOperation(value = "모임 일정 생성")	
     @PostMapping("/{groupSeq}/schedule/add")
     public ResponseEntity<String> createGroupSchedule(@RequestBody ReqGroupScheduleDto gsDto, @PathVariable int groupSeq){
     	return new ResponseEntity<>(groupScheduleService.createGroupSchedule(groupSeq,gsDto),HttpStatus.CREATED);
     }
     
-    //일정 삭제
    	@ApiOperation(value = "모임 일정 삭제")
    	@DeleteMapping("/{groupSeq}/schedule/delete")
    	public ResponseEntity<String> deleteGroupSchedule(@PathVariable int groupSeq, @RequestParam("gsDateTime") Date gsDateTime){
    		return new ResponseEntity<>(groupScheduleService.deleteGroupSchedule(groupSeq,gsDateTime),HttpStatus.OK);
    	}
-    
-   	//메모 수정
+   	
+   	
+	//-------------------------------------유기된 기능----------------------------------------//
   	@ApiOperation(value = "모임 일정 수정")
   	@PutMapping("/{groupSeq}/schedule/modify")
   	public ResponseEntity<String> modifyGroupSchedule(@RequestBody ReqGroupScheduleDto gsDto, @PathVariable int groupSeq){
