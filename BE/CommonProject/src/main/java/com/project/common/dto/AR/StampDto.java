@@ -18,4 +18,5 @@ public class StampDto {
     private String heritageLocal;
     private String heritageLng;
     private String heritageLat;
+    private String stampCategory;
 }

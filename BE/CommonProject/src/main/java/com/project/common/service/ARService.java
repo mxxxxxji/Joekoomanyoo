@@ -142,6 +142,7 @@ public class ARService {
                         .heritageLocal(heritageEntity.getHeritageLocal())
                         .heritageLng(heritageEntity.getHeritageLng())
                         .heritageLat(heritageEntity.getHeritageLat())
+                        .stampCategory(heritageEntity.getHeritageCategory())
                         .build();
                 arRepository.save(StampMapper.MAPPER.toEntity(stampDto));
             }
