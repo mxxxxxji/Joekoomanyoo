@@ -28,4 +28,6 @@ public class StampEntity {
     private String heritageLocal;
     private String heritageLng;
     private String heritageLat;
+    @Column(nullable = false)
+    private String stampCategory;
 }
