@@ -43,8 +43,8 @@ class FeedViewModel : ViewModel() {
     private val _feedInfodetail = MutableLiveData<FeedListResponse>()
     val feedInfoDetailL: LiveData<FeedListResponse> get() = _feedInfodetail
 
-    private val _feedOpen = SingleLiveEvent<Char>()
-    val feedOpen: LiveData<Char> get() = _feedOpen
+    private val _feedOpen = SingleLiveEvent<String>()
+    val feedOpen: LiveData<String> get() = _feedOpen
 
     fun add(info: FeedListResponse) {
         _feedInfodetail.postValue(info)
@@ -135,7 +135,7 @@ class FeedViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.changeFeedOpen(feedSeq, feedOpen).let { response ->
                 if (response.isSuccessful) {
-                    val result = response.body() as Char
+                    val result = response.body() as String
                     Log.d(TAG, "changeFeedOpen: $result")
                     _feedOpen.postValue(result)
                 } else {

@@ -15,6 +15,7 @@ data class FeedListResponse(
     @SerializedName("feedOpen") val feedOpen: Char,                 // 공개 여부 (N,Y)
     @SerializedName("userImgUrl") val userImgUrl: String,           // 사용자 프사
     @SerializedName("userNickname") val userNickname: String,       // 사용자 닉네임
+    @SerializedName("hashtag") val hashtag: Array<String>,       // 사용자 닉네임
     @SerializedName("feedCreatedAt") val feedCreatedAt: String,     // 등록 시간
 //    @SerializedName("feedUpdatedAt") val feedUpdatedAt: String       // 수정 시간
 ) : Parcelable, Serializable {

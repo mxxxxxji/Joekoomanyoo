@@ -44,6 +44,12 @@ class FeedDetailFragment :
                 }
             }
             binding.feed = this@FeedDetailFragment.feed
+            var tagResult = ""
+
+            feed?.hashtag?.forEach { tag ->
+                tagResult = tagResult.plus("#${tag} ")
+            }
+            binding.tvFeedHashtag.text = tagResult
             Log.d(TAG, "init init: ${this@FeedDetailFragment.feed}")
         }
 
@@ -86,13 +92,25 @@ class FeedDetailFragment :
     }
 
     private fun initClickListenr() = with(binding) {
+        // 피드 삭제
         imagebtnFeedDetailDelete.setOnClickListener {
             feedViewModel.deleteFeed(feed!!.feedSeq)
             // 피드 목록 페이지로 이동하고 싶은데 홈으로 가넹,,
             findNavController().popBackStack()
         }
+        // 피드 공개/비공개
         imagebtnFeedDetailLock.setOnClickListener {
-            feedViewModel.changeFeedOpen(feed!!.feedSeq, feed!!.feedOpen)
+            if (feed?.feedOpen == 'Y') {
+                feedViewModel.changeFeedOpen(feed!!.feedSeq, 'N')
+                Log.d(TAG, "y -> n: ${feed!!.feedOpen}")
+            } else if (feed?.feedOpen == 'N') {
+                feedViewModel.changeFeedOpen(feed!!.feedSeq, 'Y')
+                Log.d(TAG, "n -> y: ${feed!!.feedOpen}")
+            }
+        }
+        // 뒤로가기
+        imagebtnFeedBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

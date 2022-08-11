@@ -23,6 +23,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn.hasPermissions
 import com.google.android.material.textfield.TextInputLayout
+import com.google.ar.core.dependencies.e
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.heritage.ApplicationClass
@@ -118,6 +119,14 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
                 tags.forEach { tag ->
                     tagResult = tagResult.plus("${tag.value}")
                 }
+
+                // 리스트 속 태그들에서 "#"을 제거
+                // 멋진 함수에요 map
+                tagResult = tagResult.map {
+                    it.replace("#", "")
+                }
+
+                Log.d(TAG, "ㅌㅐ그: $tagResult")
                 content = etFeedCreateContent.editText?.text.toString()
 
                 when {
