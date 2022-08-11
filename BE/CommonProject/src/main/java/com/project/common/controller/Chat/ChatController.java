@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class ChatController {
     private final SimpMessagingTemplate messagingTemplate;
     private final JwtTokenProvider jwtTokenProvider;
-    
     private final UserRepository userRepository;
     
     @MessageMapping(value = "/enter")
