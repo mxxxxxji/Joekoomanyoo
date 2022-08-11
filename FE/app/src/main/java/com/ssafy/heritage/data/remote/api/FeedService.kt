@@ -33,7 +33,7 @@ interface FeedService {
     suspend fun selectFeedDetail(@Path("feedSeq") feedSeq: Int): Response<FeedListResponse>
 
     // 피드 삭제
-    @DELETE("/api/feed/{feedSeq}/info")
+    @DELETE("/api/feed/{feedSeq}/delete")
     suspend fun deleteFeed(@Path("feedSeq") feedSeq: Int): Response<Boolean>
 
     // 피드 활성화 여부 (Y: 공개, N: 비공개)
