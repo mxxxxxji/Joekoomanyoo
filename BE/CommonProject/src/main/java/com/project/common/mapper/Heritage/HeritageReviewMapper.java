@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 @Mapper
 public interface HeritageReviewMapper extends StructMapper<HeritageReivewDto, HeritageReviewEntity> {
+
     HeritageReviewMapper MAPPER = Mappers.getMapper(HeritageReviewMapper.class);
 
     @Override

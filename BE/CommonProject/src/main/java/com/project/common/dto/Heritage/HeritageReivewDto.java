@@ -16,4 +16,5 @@ public class HeritageReivewDto {
     private String userNickname;
     private String heritageReviewText;
     private String heritageReviewRegistedAt;
+    private String reviewImgUrl;
 }
