@@ -1,10 +1,5 @@
 package com.project.common.config;
 
-import com.project.common.config.Jwt.JwtAuthInterceptor;
-import com.project.common.config.Jwt.JwtAuthenticationFilter;
-import com.project.common.config.Jwt.JwtTokenProvider;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,8 +10,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.project.common.config.Jwt.JwtAuthenticationFilter;
+import com.project.common.config.Jwt.JwtTokenProvider;
+
+import lombok.AllArgsConstructor;
 
 @Configuration
 // spring security 설정 클래스임을 알려준다

@@ -1,22 +1,23 @@
 package com.project.common.config.Jwt;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.RequiredArgsConstructor;
+import java.util.Base64;
+import java.util.Date;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
@@ -36,7 +37,7 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createToken(int userSeq,String userId,String userNickname, char userGender, String userBirth, String socialLoginType, String profileImgUrl, List<String> roles) {
+    public String createToken(int userSeq,String userId,String userNickname, char userGender, String userBirth, String socialLoginType, String profileImgUrl) {
         Claims claims = Jwts.claims().setSubject(String.valueOf(userSeq)); // JWT payload 에 저장되는 정보단위
         // 정보 저장  key / value 쌍으로 저장된다.
         claims.put("userSeq",userSeq);
@@ -46,7 +47,6 @@ public class JwtTokenProvider {
         claims.put("userBirth", userBirth);
         claims.put("socialLoginType", socialLoginType);
         claims.put("profileImgUrl", profileImgUrl);
-        claims.put("roles", roles);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
