@@ -53,7 +53,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            glide="@{feed.userImgUrl}"
+            glide="@{String.valueOf(feed.userImgUrl)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraint_top"
             tools:srcCompat="@tools:sample/avatars" />
@@ -128,7 +128,7 @@
                 android:layout_width="362dp"
                 android:layout_height="362dp"
                 android:scaleType="centerCrop"
-                glide="@{feed.feedImgUrl}"
+                glide="@{String.valueOf(feed.feedImgUrl)}"
                  />
         </LinearLayout>
 

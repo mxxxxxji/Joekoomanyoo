@@ -22,7 +22,7 @@
             android:id="@+id/iv_feed"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            glide="@{feedListResponse.feedImgUrl}"
+            glide="@{String.valueOf(feedListResponse.feedImgUrl)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
