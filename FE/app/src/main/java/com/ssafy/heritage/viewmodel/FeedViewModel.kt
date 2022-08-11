@@ -22,6 +22,7 @@ import okhttp3.MultipartBody
 import org.json.JSONObject
 import retrofit2.Response
 import java.io.File
+import kotlin.math.log
 
 private const val TAG = "FeedViewModel___"
 
@@ -48,6 +49,9 @@ class FeedViewModel: ViewModel() {
 
     private val _feedInfodetail = MutableLiveData<FeedListResponse>()
     val feedInfoDetailL: LiveData<FeedListResponse> get() = _feedInfodetail
+
+    private val _feedOpen = SingleLiveEvent<Char>()
+    val feedOpen: LiveData<Char> get() = _feedOpen
 
     fun add(info: FeedListResponse) {
         _feedInfodetail.postValue(info)
@@ -103,6 +107,46 @@ class FeedViewModel: ViewModel() {
                     Log.d(TAG, "insertFeed: 피드에 글 들어갔다!")
                 } else {
                     Log.d(TAG, "insertFeed: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun deleteFeed(feedSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteFeed(feedSeq).let { response ->
+                if (response.isSuccessful) {
+                    Log.d(TAG, "deleteFeed: 피드 삭제")
+                } else {
+                    Log.d(TAG, "deleteFeed: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun getFeedHashTag(fhTag: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.selectFeedHashTag(fhTag).let { response ->
+                if(response.isSuccessful) {
+                    var list = response.body() as MutableList<FeedListResponse>
+                    _feedListByHashTag.postValue(list)
+                    Log.d(TAG, "getFeedListAll: 해시태그 가져오기")
+                } else {
+                    Log.d(TAG, "getFeedListAll: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun changeFeedOpen(feedSeq: Int, feedOpen: Char) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.changeFeedOpen(feedSeq, feedOpen).let { response ->
+                if (response.isSuccessful) {
+                    val result = response.body() as Char
+                    Log.d(TAG, "changeFeedOpen: $result")
+                    _feedOpen.postValue(result)
+                } else {
+                    Log.d(TAG, "changeFeedOpen: ${response.code()}")
                 }
             }
         }

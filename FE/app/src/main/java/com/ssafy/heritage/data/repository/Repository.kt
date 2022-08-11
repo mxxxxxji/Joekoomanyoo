@@ -167,6 +167,15 @@ class Repository constructor(context: Context) {
     suspend fun selectFeedDetail(feedSeq: Int): Response<FeedListResponse> =
         feedApi.selectFeedDetail(feedSeq)
 
+    suspend fun deleteFeed(feedSeq: Int): Response<Boolean> =
+        feedApi.deleteFeed(feedSeq)
+
+    suspend fun selectFeedHashTag(fhTag: String): Response<FeedListResponse> =
+        feedApi.selectFeedHashTag(fhTag)
+
+    suspend fun changeFeedOpen(feedSeq: Int, feedOpen: Char): Response<Char> =
+        feedApi.changeFeedOpen(feedSeq, feedOpen)
+
     // file
     suspend fun sendImage(url: String, file: MultipartBody.Part): Response<String> =
         fileApi.saveImage(url, file)
