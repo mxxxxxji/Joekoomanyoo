@@ -39,6 +39,7 @@ public class FeedController {
     @PostMapping("/add")
     public ResponseEntity<FeedDto> addFeed(HttpServletRequest request, @RequestBody ReqFeedDto feedDto){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
+   	 	System.out.println(userId);
         return new ResponseEntity<>(feedService.addFeed(userId,feedDto), HttpStatus.CREATED);
     }
     

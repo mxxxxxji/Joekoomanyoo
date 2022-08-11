@@ -74,9 +74,9 @@ public class FeedEntity {
     	feedLike.setFeed(this);
     }
 
-    public void removeFeedLike(int userSeq) {
+    public void removeFeedLike(int feedLikeSeq) {
     	feedLikes.removeIf(feedLike ->
-    		feedLike.getUserSeq()==userSeq);
+    		feedLike.getFeedLikeSeq()==feedLikeSeq);
     }
     
     // Feed HashTag
@@ -90,9 +90,9 @@ public class FeedEntity {
     	feedHashtag.setFeed(this);
     }
 
-    public void removeFeedHashTag(String fhTag) {
+    public void removeFeedHashTag(int fhSeq) {
         this.hashtags.removeIf(feedHashtag ->
-        feedHashtag.getFhTag().equals(fhTag));
+        feedHashtag.getFhSeq()==fhSeq);
     }
     
     

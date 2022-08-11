@@ -18,7 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.project.common.entity.User.UserEntity;
-import com.project.common.temp.GroupDailyMemoEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -117,22 +116,7 @@ public class GroupEntity {
                 groupMember.getMemberSeq()==memberSeq);
     }
     
-    // 모임 데일리 메모 //
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    @Builder.Default
-    private List<GroupDailyMemoEntity> memos = new ArrayList<>();
-    
-    // 모임 데일리 메모 Method //
-    public void addGroupMemo(GroupDailyMemoEntity groupMemo) {
-    	this.memos.add(groupMemo);
-    	groupMemo.setGroup(this);
-    }
 
-    public void removeGroupMemo(Date gdmDate) {
-        memos.removeIf(groupMemo ->
-                groupMemo.getGdmDate()==gdmDate);
-    }
-    
     // 모임 일정 //
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @Builder.Default
