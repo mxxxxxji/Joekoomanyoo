@@ -30,7 +30,7 @@ public class ChatController {
     }
 
     @MessageMapping(value = "/chat/message")
-    public void message(HttpServletRequest request,	ChatMessageDto chatMessage) {
+    public void message(	ChatMessageDto chatMessage) {
 //   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
 //   	 	UserEntity user = userRepository.findByUserId(userId);
 //    	String nickName=user.getUserNickname();
