@@ -27,7 +27,7 @@ class GroupCalenderFragment : BaseFragment<FragmentGroupCalendarBinding>(R.layou
 
     private val groupViewModel by activityViewModels<GroupViewModel>()
     private var cardBinding: ItemMyCalendarBinding? = null
-    lateinit var callback: OnBackPressedCallback
+//    lateinit var callback: OnBackPressedCallback
 
     override fun init() {
 
@@ -154,10 +154,10 @@ class GroupCalenderFragment : BaseFragment<FragmentGroupCalendarBinding>(R.layou
 
 
 
-    override fun onDetach() {
-        super.onDetach()
-        callback.remove()
-    }
+//    override fun onDetach() {
+//        super.onDetach()
+//        callback.remove()
+//    }
 
     override fun onDayLongPressed(selectedDate: Calendar?) {
         Log.e("LONG CLICKED", EventsCalendarUtil.getDateString(selectedDate, EventsCalendarUtil.DD_MM_YYYY))

@@ -34,7 +34,7 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
 
     override fun init() {
         CoroutineScope(Dispatchers.Main).launch {
-            groupViewModel.getGroupList()
+//            groupViewModel.getGroupList()
             groupViewModel.add(args.groupInfo)
            val s= groupViewModel.selectGroupMembers(ApplicationClass.sharedPreferencesUtil.getUser(),args.groupInfo.groupSeq)
             Log.d(TAG, "init CoroutineScope: $s")
