@@ -117,7 +117,7 @@ class HeritageViewModel : ViewModel() {
 
         var response: Response<String>? = null
         job = launch(Dispatchers.Main) {
-            response = repository.sendImage("${ApplicationClass.IMG_URL}/uploadFile", img)
+            response = repository.sendImage(img)
         }
         job?.join()
 
@@ -133,6 +133,7 @@ class HeritageViewModel : ViewModel() {
                 true
             } else {
                 false
+                Log.d(TAG, "sendImage: 실패 ")
             }
         }
     }

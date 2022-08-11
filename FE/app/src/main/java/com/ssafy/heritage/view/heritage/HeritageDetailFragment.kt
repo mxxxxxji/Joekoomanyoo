@@ -36,6 +36,8 @@ import com.ssafy.heritage.data.remote.request.HeritageReviewRequest
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.databinding.FragmentHeritageDetail2Binding
 import com.ssafy.heritage.databinding.ItemReviewBinding
+import com.ssafy.heritage.util.FileUtil
+import com.ssafy.heritage.util.FormDataUtil
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.view.dialog.SharedMyGroupListDialog
 import com.ssafy.heritage.viewmodel.HeritageViewModel
@@ -351,7 +353,7 @@ class HeritageDetailFragment :
         btnCreateReview.setOnClickListener {
 
             CoroutineScope(Dispatchers.Main).launch {
-                if (!etReviewContent.text.isNullOrBlank() || img_multipart == null || img_multipart?.let {
+                if (!etReviewContent.text.isNullOrBlank() && img_multipart == null || img_multipart?.let {
                         heritageViewModel.sendImage(
                             it
                         )
@@ -361,7 +363,7 @@ class HeritageDetailFragment :
                         userSeq = userViewModel.user.value?.userSeq!!,
                         heritageSeq = heritageViewModel.heritage.value?.heritageSeq!!,
                         heritageReviewText = etReviewContent.text.toString(),
-                        reviewImgUrl = heritageViewModel.insertHeritageReview!!.value!!,
+                        reviewImgUrl = heritageViewModel.insertHeritageReview?.value!!,
                         userNickname = userViewModel.user.value?.userNickname!!
                     )
                     heritageViewModel.insertHeritageReview(heritageReview)
@@ -493,29 +495,12 @@ class HeritageDetailFragment :
     private val filterActivityLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK && it.data != null) {
-                var currentImageUri = it.data?.data
-                try {
-                    currentImageUri?.let {
-                        if (Build.VERSION.SDK_INT < 28) {
-                            val bitmap = MediaStore.Images.Media.getBitmap(
-                                requireActivity().contentResolver,
-                                currentImageUri
-                            )
-                            binding.btnImgAttach.setImageBitmap(bitmap)
-                        } else {
-                            val source = ImageDecoder.createSource(
-                                requireActivity().contentResolver,
-                                currentImageUri
-                            )
-                            val bitmap = ImageDecoder.decodeBitmap(source)
-                            binding.btnImgAttach.setImageBitmap(bitmap)
-                        }
-                    }
 
+                val imagePath = it.data!!.data
+                Log.d(TAG, "사진 골라 가져온 imagePath: $imagePath")
+                val file = FileUtil.toFile(requireContext(), imagePath!!)
+                img_multipart = FormDataUtil.getImageBody("file", file)
 
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
             } else if (it.resultCode == Activity.RESULT_CANCELED) {
                 makeToast("사진 선택 취소")
             } else {
