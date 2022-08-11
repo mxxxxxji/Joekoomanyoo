@@ -29,8 +29,6 @@ class FeedDetailFragment :
     private var feed: FeedListResponse? = null
     private val feedViewModel by activityViewModels<FeedViewModel>()
     private val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
-    private lateinit var feedInfo: FeedListResponse
-    private var userImg: String = ""
 
     private lateinit var callback: OnBackPressedCallback
 
@@ -84,12 +82,14 @@ class FeedDetailFragment :
         exitTransition = Fade()
     }
 
-
-//    private fun initObserver() {
-//        feedViewModel.feedInfoDetailL.observe(viewLifecycleOwner) {
-//            feedAdaptor.submitList(it)
-//        }
-//    }
+    private fun initClickListenr() = with(binding) {
+        imagebtnFeedDetailDelete.setOnClickListener {
+            feedViewModel.deleteFeed(feed!!.feedSeq)
+        }
+        imagebtnFeedDetailLock.setOnClickListener {
+            feedViewModel.changeFeedOpen(feed!!.feedSeq, feed!!.feedOpen)
+        }
+    }
 
     companion object {
         fun newInstance(param: FeedListResponse) = FeedDetailFragment().apply {

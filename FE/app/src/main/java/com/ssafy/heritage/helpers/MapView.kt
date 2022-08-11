@@ -16,8 +16,10 @@
 package com.ssafy.heritage.helpers
 
 
+import android.content.res.Resources
 import android.graphics.*
 import android.media.AudioRecord.MetricsConstants.SOURCE
+import android.util.Log
 import androidx.annotation.ColorInt
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -25,6 +27,7 @@ import com.bumptech.glide.load.engine.cache.DiskCache
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+import com.google.ar.core.dependencies.h
 import com.ssafy.heritage.HelloGeoActivity
 import com.ssafy.heritage.R
 
@@ -113,10 +116,7 @@ class MapView(val activity: HelloGeoActivity, val googleMap: GoogleMap) {
   }
 
   private fun createColoredMarkerBitmap(@ColorInt color: Int): Bitmap {
-    val opt = BitmapFactory.Options()
-    opt.inMutable = true
-    val navigationIcon =
-    BitmapFactory.decodeResource(activity.resources, R.drawable.ic_navigation_white_48dp, opt)
+    val navigationIcon = decodeSampledBitmapFromResource(activity.resources, R.drawable.ic_navigation_white_48dp, 20, 20)
     val p = Paint()
     p.colorFilter = LightingColorFilter(color,  /* add= */1)
     val canvas = Canvas(navigationIcon)
@@ -125,12 +125,51 @@ class MapView(val activity: HelloGeoActivity, val googleMap: GoogleMap) {
   }
 
   private fun createHeritageMarkerBitmap(): Bitmap {
-    val opt = BitmapFactory.Options()
-    opt.inMutable = true
     val navigationIcon =
-      BitmapFactory.decodeResource(activity.resources,R.drawable.monster,opt)
+      decodeSampledBitmapFromResource(activity.resources,R.drawable.monster, 20, 20)
     val canvas = Canvas(navigationIcon)
     canvas.drawBitmap(navigationIcon,  /* left= */0f,  /* top= */0f, null)
     return navigationIcon
   }
+  fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+    // Raw height and width of image
+    val (height: Int, width: Int) = options.run { outHeight to outWidth }
+    var inSampleSize = 1
+
+    if (height > reqHeight || width > reqWidth) {
+
+      val halfHeight: Int = height / 2
+      val halfWidth: Int = width / 2
+
+      // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+      // height and width larger than the requested height and width.
+      while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+        inSampleSize *= 2
+      }
+    }
+
+    return inSampleSize
+  }
+
+  fun decodeSampledBitmapFromResource(
+    res: Resources,
+    resId: Int,
+    reqWidth: Int,
+    reqHeight: Int
+  ): Bitmap {
+    // First decode with inJustDecodeBounds=true to check dimensions
+    return BitmapFactory.Options().run {
+      inJustDecodeBounds = true
+      BitmapFactory.decodeResource(res, resId, this)
+
+      // Calculate inSampleSize
+      inSampleSize = calculateInSampleSize(this, reqWidth, reqHeight)
+
+      // Decode bitmap with inSampleSize set
+      inJustDecodeBounds = false
+      inMutable = true
+      BitmapFactory.decodeResource(res, resId, this)
+    }
+  }
+
 }
