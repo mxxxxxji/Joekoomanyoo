@@ -13,11 +13,8 @@ import com.ssafy.heritage.helpers.FullScreenHelper
 import com.ssafy.heritage.helpers.GeoPermissionsHelper
 import com.ssafy.heritage.samplerender.SampleRender
 
+private const val TAG = "HelloGeoActivity"
 class HelloGeoActivity : AppCompatActivity() {
-  companion object {
-    private const val TAG = "HelloGeoActivity"
-  }
-
   lateinit var arCoreSessionHelper: ARCoreSessionLifecycleHelper
   lateinit var view: HelloGeoView
   lateinit var renderer: HelloGeoRenderer
