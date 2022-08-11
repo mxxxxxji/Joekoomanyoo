@@ -162,7 +162,7 @@ class Repository constructor(context: Context) {
     suspend fun selectFeedHashTag(fhTag: String): Response<FeedListResponse> =
         feedApi.selectFeedHashTag(fhTag)
 
-    suspend fun changeFeedOpen(feedSeq: Int, feedOpen: Char): Response<Char> =
+    suspend fun changeFeedOpen(feedSeq: Int, feedOpen: Char): Response<String> =
         feedApi.changeFeedOpen(feedSeq, feedOpen)
 
     // file

@@ -102,11 +102,15 @@ class FeedDetailFragment :
         imagebtnFeedDetailLock.setOnClickListener {
             if (feed?.feedOpen == 'Y') {
                 feedViewModel.changeFeedOpen(feed!!.feedSeq, 'N')
-                Log.d(TAG, "y -> n: $feed")
+                Log.d(TAG, "y -> n: ${feed!!.feedOpen}")
             } else if (feed?.feedOpen == 'N') {
                 feedViewModel.changeFeedOpen(feed!!.feedSeq, 'Y')
-                Log.d(TAG, "n -> y: $feed")
+                Log.d(TAG, "n -> y: ${feed!!.feedOpen}")
             }
+        }
+        // 뒤로가기
+        imagebtnFeedBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

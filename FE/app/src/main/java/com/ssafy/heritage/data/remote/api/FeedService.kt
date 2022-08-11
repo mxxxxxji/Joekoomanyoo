@@ -37,7 +37,7 @@ interface FeedService {
 
     // 피드 활성화 여부 (Y: 공개, N: 비공개)
     @PUT("/api/feed/{feedSeq}/active/{feedOpen}")
-    suspend fun changeFeedOpen(@Path("feedSeq") feedSeq: Int, @Path("feedOpen") feedOpen: Char): Response<Char>
+    suspend fun changeFeedOpen(@Path("feedSeq") feedSeq: Int, @Path("feedOpen") feedOpen: Char): Response<String>
 
     // 피드 좋아요 API
     // 피드 좋아요 등록
