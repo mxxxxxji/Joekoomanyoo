@@ -15,10 +15,10 @@ import com.project.common.entity.Feed.FeedHashtagEntity;
 import com.project.common.entity.Feed.FeedLikeEntity;
 import com.project.common.entity.User.UserEntity;
 import com.project.common.mapper.Feed.FeedMapper;
+import com.project.common.repository.Feed.FeedHashtagRepository;
 import com.project.common.repository.Feed.FeedLikeRepository;
 import com.project.common.repository.Feed.FeedRepository;
 import com.project.common.repository.User.UserRepository;
-import com.project.common.temp.FeedHashtagRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,6 +51,7 @@ public class FeedService{
 		}
 		
 		UserEntity user = userRepository.findByUserId(userId);
+		System.out.println(user.getUserSeq());
 		feedRepository.save(feed);
 		user.addFeed(feed);
 	 	userRepository.save(user);
@@ -104,20 +105,25 @@ public class FeedService{
 	
 	//피드 삭제
 	public String deleteFeed(String userId,int feedSeq){
-		FeedEntity feed =feedRepository.findByFeedSeq(feedSeq);
+		FeedEntity feed =feedRepository.findById(feedSeq).orElse(null);
 		UserEntity user = userRepository.findByUserId(userId);
 		
-		//해쉬태그 삭제
-		for(FeedHashtagEntity entity : feed.getHashtags())  
-			feedHashtagRepository.deleteByFhSeq(entity.getFhSeq());
+		if(feed==null)
+			return "Fail - no feed";
 		
-		//좋아요 삭제
-		for(FeedLikeEntity entity : feed.getFeedLikes())
-			feedLikeRepository.deleteByFeedLikeSeq(entity.getFeedLikeSeq());
-	
-		for(FeedEntity entity: user.getFeeds()) {
-			feedRepository.deleteByFeedSeq(entity.getFeedSeq());
+		//해쉬태그 삭제
+		for(int i=0;i<feed.getHashtags().size();i++) {
+			feedHashtagRepository.deleteByFhSeq(feed.getHashtags().get(i).getFhSeq());
 		}
+			
+		//좋아요 삭제
+		for(int i=0;i<feed.getFeedLikes().size();i++) {
+			feedLikeRepository.deleteByFeedLikeSeq(feed.getFeedLikes().get(i).getFeedLikeSeq());
+		}
+		
+		feedRepository.deleteByFeedSeq(feedSeq);
+		user.removeFeed(feedSeq);
+	 	userRepository.save(user);
 		
 		return "Success";
 	}

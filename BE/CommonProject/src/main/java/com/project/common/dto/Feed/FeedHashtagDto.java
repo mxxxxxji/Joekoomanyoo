@@ -1,4 +1,4 @@
-package com.project.common.temp;
+package com.project.common.dto.Feed;
 
 import java.util.Date;
 

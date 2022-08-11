@@ -1,4 +1,4 @@
-package com.project.common.temp;
+package com.project.common.repository.Feed;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +10,5 @@ public interface FeedHashtagRepository extends JpaRepository<FeedHashtagEntity, 
 
 
 	void deleteByFhSeq(int fhSeq);
-
 
 }
