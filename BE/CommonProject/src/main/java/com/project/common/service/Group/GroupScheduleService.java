@@ -63,6 +63,8 @@ public class GroupScheduleService{
 	@Transactional
 	public String createGroupSchedule(int groupSeq, ReqGroupScheduleDto gsDto) {
 		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
+		if(group==null)
+			return "Fail - No group";
 		group.addGroupSchedule(GroupScheduleEntity.builder()
 				.gsContent(gsDto.getGsContent())
 				.gsDateTime(gsDto.getGsDateTime())
@@ -105,6 +107,8 @@ public class GroupScheduleService{
 	@Transactional
 	public String deleteGroupSchedule(int groupSeq, Date gsDateTime) {
 		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
+		if(group==null)
+			return "Fail - No group";
 		for(GroupScheduleEntity entity : group.getSchedules()) {
 			if(entity.getGsDateTime()==gsDateTime) {
 				groupScheduleRepository.deleteByGsSeq(entity.getGsSeq());

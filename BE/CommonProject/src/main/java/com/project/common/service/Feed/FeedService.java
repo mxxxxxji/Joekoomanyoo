@@ -12,7 +12,6 @@ import com.project.common.dto.Feed.ReqFeedDto;
 import com.project.common.dto.Feed.ResFeedDto;
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedHashtagEntity;
-import com.project.common.entity.Feed.FeedLikeEntity;
 import com.project.common.entity.User.UserEntity;
 import com.project.common.mapper.Feed.FeedMapper;
 import com.project.common.repository.Feed.FeedHashtagRepository;
