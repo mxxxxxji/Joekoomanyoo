@@ -99,15 +99,10 @@ public class UserEntity implements UserDetails{
         this.userPassword = passwordEncoder.encode(this.userPassword);
     }
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<String> roles = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        return null;
     }
     @Override
     public String getPassword() {
@@ -139,9 +134,7 @@ public class UserEntity implements UserDetails{
         return true;
     }
     
-    
-    
-    
+
     // 모임 추가 //
     @Builder.Default @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

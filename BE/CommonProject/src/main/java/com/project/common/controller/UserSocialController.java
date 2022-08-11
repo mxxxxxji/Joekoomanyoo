@@ -98,7 +98,6 @@ public class UserSocialController {
                 .fcmToken("")
                 .profileImgUrl("")
                 .isDeleted('N')
-                .roles(Collections.singletonList("ROLE_USER"))
                 .evalUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .pushSettingStatus('Y')
                 .build());
@@ -132,7 +131,7 @@ public class UserSocialController {
 
 
         // 토큰 생성해서 리턴
-        String token = jwtTokenProvider.createToken(userEntity.getUserSeq(),userEntity.getUsername(), userEntity.getUserNickname(), userEntity.getUserGender(), userEntity.getUserBirth(), userEntity.getSocialLoginType(), userEntity.getProfileImgUrl(), userEntity.getRoles());
+        String token = jwtTokenProvider.createToken(userEntity.getUserSeq(),userEntity.getUsername(), userEntity.getUserNickname(), userEntity.getUserGender(), userEntity.getUserBirth(), userEntity.getSocialLoginType(), userEntity.getProfileImgUrl());
         if(token != null){
             return new ResponseEntity<String>(token, HttpStatus.OK);
         }else{
