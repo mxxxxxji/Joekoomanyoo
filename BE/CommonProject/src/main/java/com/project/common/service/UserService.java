@@ -64,8 +64,6 @@ public class UserService{
             userKeywordRepository.deleteAllByUserSeq(userSeq);
             // 나의 일정들 삭제
             myScheduleRepository.deleteAllByUserSeq(userSeq);
-            // 데일리 메모 삭제
-            myDailyMemoRepository.deleteAllByUserSeq(userSeq);
             return true;
         }
     }
