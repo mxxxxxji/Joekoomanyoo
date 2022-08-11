@@ -1,6 +1,7 @@
 package com.ssafy.heritage.data.remote.api
 
 import com.ssafy.heritage.data.dto.Feed
+import com.ssafy.heritage.data.dto.FeedHashTag
 import com.ssafy.heritage.data.remote.request.FeedAddRequest
 import com.ssafy.heritage.data.remote.response.FeedDetailResponse
 import com.ssafy.heritage.data.remote.response.FeedListResponse
@@ -43,5 +44,8 @@ interface FeedService {
     // 피드 해시태그 API
     // 피드 해시태그 등록
     // 피드 해시태그 목록 조회
+    @GET("/api/feed/list-by-hashtag/{fhTag}")
+    suspend fun selectFeedHashTag(@Path("fhTag") fhTag: String): Response<FeedListResponse>
+
     // 피드 해시태그 삭제
 }

@@ -108,6 +108,32 @@ class FeedViewModel: ViewModel() {
         }
     }
 
+    fun deleteFeed(feedSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteFeed(feedSeq).let { response ->
+                if (response.isSuccessful) {
+                    Log.d(TAG, "deleteFeed: 피드 삭제")
+                } else {
+                    Log.d(TAG, "deleteFeed: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun getFeedHashTag(fhTag: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.selectFeedHashTag(fhTag).let { response ->
+                if(response.isSuccessful) {
+                    var list = response.body() as MutableList<FeedListResponse>
+                    _feedListByHashTag.postValue(list)
+                    Log.d(TAG, "getFeedListAll: 해시태그 가져오기")
+                } else {
+                    Log.d(TAG, "getFeedListAll: ${response.code()}")
+                }
+            }
+        }
+    }
+
     // 사진 전송하기
     suspend fun sendImage(img: MultipartBody.Part) = withContext(Dispatchers.Main) {
 

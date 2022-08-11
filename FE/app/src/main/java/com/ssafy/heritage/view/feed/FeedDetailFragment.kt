@@ -22,18 +22,15 @@ class FeedDetailFragment :
     private var feed: FeedListResponse? = null
     private val feedViewModel by activityViewModels<FeedViewModel>()
     private val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
-    private lateinit var feedInfo: FeedListResponse
-    private var userImg: String = ""
 
     override fun init() {
         binding.feed = feed
     }
 
-
-//    private fun initObserver() {
-//        feedViewModel.feedInfoDetailL.observe(viewLifecycleOwner) {
-//            feedAdaptor.submitList(it)
-//        }
-//    }
+    private fun initClickListenr() = with(binding) {
+        imagebtnFeedDetailDelete.setOnClickListener {
+            feedViewModel.deleteFeed(feed!!.feedSeq)
+        }
+    }
 
 }

@@ -187,6 +187,7 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
 
     private fun getHashTags(text: String): Sequence<MatchResult> {
         val pattern = """#([^#\s]+)""" // 태그 추출 정규식
+
         val regex = pattern.toRegex()
         val matches = regex.findAll(text)
 
