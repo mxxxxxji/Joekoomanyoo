@@ -4,7 +4,6 @@ import com.project.common.dto.AR.MyLocationDto;
 import com.project.common.dto.Heritage.HeritageDto;
 import com.project.common.dto.Heritage.HeritageReivewDto;
 import com.project.common.dto.Heritage.HeritageScrapDto;
-import com.project.common.dto.Heritage.SortHeritageDto;
 import com.project.common.service.HeritageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -131,21 +130,21 @@ public class HeritageController {
     }
 
 
-    /**
-     * 카테고리 , 정렬별로 문화유산 리스트 가져오기
-     * @param sortHeritageDto
-     * @return List
-     */
-    @ApiOperation(value = "카테고리 , 정렬별로 문화유산 리스트 가져오기", response = List.class)
-    @PostMapping("/heritage-info/sort")
-    public ResponseEntity<?> categorySortHeritage(@RequestBody SortHeritageDto sortHeritageDto){
-        List<HeritageDto> list = heritageService.categorySortHeritage(sortHeritageDto);
-        // 번호 입력이 잘못된 경우
-        if(list == null){
-            return new ResponseEntity<String>(FAIL,HttpStatus.BAD_REQUEST);
-        }else{
-            return new ResponseEntity<List<HeritageDto>>(list,HttpStatus.OK);
-        }
-    }
+//    /**
+//     * 카테고리 , 정렬별로 문화유산 리스트 가져오기
+//     * @param sortHeritageDto
+//     * @return List
+//     */
+//    @ApiOperation(value = "카테고리 , 정렬별로 문화유산 리스트 가져오기", response = List.class)
+//    @PostMapping("/heritage-info/sort")
+//    public ResponseEntity<?> categorySortHeritage(@RequestBody SortHeritageDto sortHeritageDto){
+//        List<HeritageDto> list = heritageService.categorySortHeritage(sortHeritageDto);
+//        // 번호 입력이 잘못된 경우
+//        if(list == null){
+//            return new ResponseEntity<String>(FAIL,HttpStatus.BAD_REQUEST);
+//        }else{
+//            return new ResponseEntity<List<HeritageDto>>(list,HttpStatus.OK);
+//        }
+//    }
 
 }
