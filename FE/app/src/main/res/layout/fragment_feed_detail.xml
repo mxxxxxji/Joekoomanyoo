@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="feed"
             type="com.ssafy.heritage.data.remote.response.FeedListResponse" />
@@ -30,8 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/header_feed"
@@ -49,11 +50,11 @@
 
         <ImageView
             android:id="@+id/iv_profile"
+            glide="@{String.valueOf(feed.userImgUrl)}"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            glide="@{String.valueOf(feed.userImgUrl)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraint_top"
             tools:srcCompat="@tools:sample/avatars" />
@@ -114,10 +115,10 @@
 
         <LinearLayout
             android:id="@+id/layout_img_storke"
-            android:background="@drawable/square_background_stroke_gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:background="@drawable/square_background_stroke_gray"
             android:padding="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,11 +126,11 @@
 
             <ImageView
                 android:id="@+id/iv_feed_image"
+                glide="@{String.valueOf(feed.feedImgUrl)}"
                 android:layout_width="362dp"
                 android:layout_height="362dp"
                 android:scaleType="centerCrop"
-                glide="@{String.valueOf(feed.feedImgUrl)}"
-                 />
+                android:transitionName="feed" />
         </LinearLayout>
 
         <TextView
@@ -158,13 +159,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:textSize="11sp"
-            android:textColor="#8e8e93"
             android:textAlignment="center"
-            tools:text="1"
+            android:textColor="#8e8e93"
+            android:textSize="11sp"
             app:layout_constraintEnd_toEndOf="@+id/imagebtn_feed_detail_like"
             app:layout_constraintStart_toStartOf="@+id/imagebtn_feed_detail_like"
-            app:layout_constraintTop_toBottomOf="@+id/imagebtn_feed_detail_like" />
+            app:layout_constraintTop_toBottomOf="@+id/imagebtn_feed_detail_like"
+            tools:text="1" />
 
         <TextView
             android:id="@+id/textView2"
@@ -176,9 +177,9 @@
             android:textColor="#88bbde"
             android:textSize="14sp"
             android:textStyle="bold"
-            tools:text="#경복궁 #광화문 #겨울 #한복"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_feed_heritage_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_feed_heritage_name"
+            tools:text="#경복궁 #광화문 #겨울 #한복" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -188,9 +189,9 @@
             android:text="@{feed.feedContent}"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintWidth_max="365dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintWidth_max="365dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

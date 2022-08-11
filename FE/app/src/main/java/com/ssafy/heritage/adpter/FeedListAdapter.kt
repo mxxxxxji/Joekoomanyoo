@@ -10,26 +10,23 @@ import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.databinding.ItemFeedBinding
 import com.ssafy.heritage.listener.FeedListClickListener
 
-class FeedListAdapter(private val listener: OnItemClickListener) :
+class FeedListAdapter() :
     ListAdapter<FeedListResponse, FeedListAdapter.ViewHolder>(DiffCallback()) {
 
-    private var feedList = mutableListOf<FeedListResponse>()
     lateinit var feedListClickListener: FeedListClickListener
 
     inner class ViewHolder(private val binding: ItemFeedBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.root.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
-        }
 
         fun bind(data: FeedListResponse) = with(binding) {
             binding.apply {
                 feedListResponse = data
 
-                ViewCompat.setTransitionName(ivFeed, "album$bindingAdapterPosition")
+                ViewCompat.setTransitionName(ivFeed, "feed$bindingAdapterPosition")
 
+                binding.root.setOnClickListener {
+                    feedListClickListener.onClick(bindingAdapterPosition, data, ivFeed)
+                }
             }
         }
     }
@@ -49,11 +46,17 @@ class FeedListAdapter(private val listener: OnItemClickListener) :
     }
 
     class DiffCallback : DiffUtil.ItemCallback<FeedListResponse>() {
-        override fun areItemsTheSame(oldItem: FeedListResponse, newItem: FeedListResponse): Boolean {
+        override fun areItemsTheSame(
+            oldItem: FeedListResponse,
+            newItem: FeedListResponse
+        ): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
-        override fun areContentsTheSame(oldItem: FeedListResponse, newItem: FeedListResponse): Boolean {
+        override fun areContentsTheSame(
+            oldItem: FeedListResponse,
+            newItem: FeedListResponse
+        ): Boolean {
             return oldItem == newItem
         }
     }

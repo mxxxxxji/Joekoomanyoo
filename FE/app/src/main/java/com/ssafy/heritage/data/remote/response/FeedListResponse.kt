@@ -3,6 +3,7 @@ package com.ssafy.heritage.data.remote.response
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 @Parcelize
 data class FeedListResponse(
@@ -16,7 +17,7 @@ data class FeedListResponse(
     @SerializedName("userNickname") val userNickname: String,       // 사용자 닉네임
     @SerializedName("feedCreatedAt") val feedCreatedAt: String,     // 등록 시간
 //    @SerializedName("feedUpdatedAt") val feedUpdatedAt: String       // 수정 시간
-) : Parcelable {
+) : Parcelable, Serializable {
     // 해시코드 충돌 해결
     override fun hashCode(): Int {
         var result = feedSeq.hashCode()
