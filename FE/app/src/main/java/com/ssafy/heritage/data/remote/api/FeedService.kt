@@ -12,7 +12,7 @@ import retrofit2.http.*
 interface FeedService {
     // 피드 API
     // 내 피드 조회
-    @GET("/api/feed/{feedSeq}/active/{feedOpen}")
+    @GET("/api/feed/my-feed")
     suspend fun selectMyFeeds(): Response<List<FeedListResponse>>
 
     // 피드 조회 by 해시태그
