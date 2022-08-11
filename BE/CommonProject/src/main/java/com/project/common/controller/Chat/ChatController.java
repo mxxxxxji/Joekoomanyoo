@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,12 @@ public class ChatController {
     private final SimpMessagingTemplate messagingTemplate;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+    
+    
+    @GetMapping("/")
+    public String stompAlarm() {
+        return "/stomp";
+    }
     
     @MessageMapping(value = "/enter")
     public void enter(ChatMessageDto chatMessage) {

@@ -13,8 +13,8 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/stomp/chat")
-                .setAllowedOrigins("*")
-                .withSockJS();
+                .setAllowedOrigins("*");
+             //   .withSockJS();
     }
 
     /*어플리케이션 내부에서 사용할 path를 지정할 수 있음*/
