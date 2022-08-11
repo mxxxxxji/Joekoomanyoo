@@ -1,12 +1,11 @@
 package com.ssafy.heritage.viewmodel
 
-import android.os.Build.VERSION_CODES.M
-import android.os.Build.VERSION_CODES.S
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.heritage.data.dto.Chat
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupBasic
@@ -20,7 +19,6 @@ import com.ssafy.heritage.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 
 private const val TAG = "GroupViewModel___"
 
@@ -62,6 +60,9 @@ class GroupViewModel : ViewModel() {
 
     private val _selectGroupScheduleList = SingleLiveEvent<MutableList<GroupSchedule>>()
     val selectGroupScheduleList: LiveData<MutableList<GroupSchedule>> get() = _selectGroupScheduleList
+
+    private val _chatList = SingleLiveEvent<MutableList<Chat>>().apply { value = arrayListOf() }
+    val chatList: LiveData<MutableList<Chat>> get() = _chatList
 
     fun add(info: GroupListResponse) {
         _detailInfo.postValue(info)
@@ -217,13 +218,13 @@ class GroupViewModel : ViewModel() {
     }
 
     // 그룹 일정 등록
-    fun insertGroupSchedule(groupSeq: Int, body: GroupSchedule){
+    fun insertGroupSchedule(groupSeq: Int, body: GroupSchedule) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertGroupSchedule(groupSeq, body).let { response ->
                 if (response.isSuccessful) {
-                    if(response.body() == "Success"){
+                    if (response.body() == "Success") {
                         Log.d(TAG, "insertGroupSchedule - ${response.body()}: 일정이 등록되었습니다")
-                    }else{
+                    } else {
                         Log.d(TAG, "insertGroupSchedule - ${response.body()}: 이미 등록된 일정입니다")
                     }
                 } else {
@@ -234,13 +235,13 @@ class GroupViewModel : ViewModel() {
     }
 
     // 그룹 일정 삭제
-    fun deleteGroupSchedule(groupSeq: Int, date: String){
+    fun deleteGroupSchedule(groupSeq: Int, date: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteGroupSchedule(groupSeq, date).let { response ->
                 if (response.isSuccessful) {
-                    if(response.body() == "Success"){
+                    if (response.body() == "Success") {
                         Log.d(TAG, "deleteGroupSchedule - ${response.body()}: 일정이 삭제되었습니다")
-                    }else{
+                    } else {
                         Log.d(TAG, "deleteGroupSchedule - ${response.body()}: 이미 삭제된 일정입니다")
                     }
                 } else {
@@ -251,7 +252,7 @@ class GroupViewModel : ViewModel() {
     }
 
     // 그룹 일정 조회
-    fun selectGroupSchedule(groupSeq: Int){
+    fun selectGroupSchedule(groupSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectGroupSchedule(groupSeq).let { response ->
                 if (response.isSuccessful) {
@@ -262,5 +263,10 @@ class GroupViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    // 채팅 목록에 새로운 채팅 추가
+    fun addChat(chat: Chat) {
+        _chatList.value?.add(chat)
     }
 }
