@@ -31,6 +31,9 @@ class FeedDetailFragment :
         imagebtnFeedDetailDelete.setOnClickListener {
             feedViewModel.deleteFeed(feed!!.feedSeq)
         }
+        imagebtnFeedDetailLock.setOnClickListener {
+            feedViewModel.changeFeedOpen(feed.feedSeq, feed.feedOpen)
+        }
     }
 
 }

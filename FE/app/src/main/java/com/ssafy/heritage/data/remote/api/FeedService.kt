@@ -1,5 +1,6 @@
 package com.ssafy.heritage.data.remote.api
 
+import android.os.Build.VERSION_CODES.N
 import com.ssafy.heritage.data.dto.Feed
 import com.ssafy.heritage.data.dto.FeedHashTag
 import com.ssafy.heritage.data.remote.request.FeedAddRequest
@@ -34,7 +35,10 @@ interface FeedService {
     // 피드 삭제
     @DELETE("/api/feed/{feedSeq}/info")
     suspend fun deleteFeed(@Path("feedSeq") feedSeq: Int): Response<Boolean>
+
     // 피드 활성화 여부 (Y: 공개, N: 비공개)
+    @PUT("/api/feed/{feedSeq}/active/{feedOpen}")
+    suspend fun changeFeedOpen(@Path("feedSeq") feedSeq: Int, @Path("feedOpen") feedOpen: Char): Response<Char>
 
     // 피드 좋아요 API
     // 피드 좋아요 등록
