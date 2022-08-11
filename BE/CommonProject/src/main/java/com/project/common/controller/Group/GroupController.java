@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.Group.GroupDto;
+import com.project.common.dto.Group.GroupSettingDto;
 import com.project.common.dto.Group.Request.ReqGroupDto;
 import com.project.common.dto.Group.Response.ResMyGroupDto;
 import com.project.common.service.Group.GroupService;
@@ -84,6 +85,20 @@ public class GroupController {
     @PutMapping("/{groupSeq}/modify/image")
     public ResponseEntity<String> updateGroup(@PathVariable("groupSeq") int groupSeq,@RequestParam("groupImgUrl") String groupImgUrl){
     	return new ResponseEntity<>(groupService.updateGroupImage(groupSeq,groupImgUrl),HttpStatus.OK);
+    }
+    
+    //모임 상태 변경 (R(모집), O(진행), F(종료))
+    @ApiOperation(value = "모임 상태 변경 - R(모집), O(진행), F(종료)")
+    @PutMapping("/{groupSeq}/status")
+    public ResponseEntity<String> changeStatus(@PathVariable("groupSeq") int groupSeq, @RequestBody GroupSettingDto groupSettingDto){
+    	return new ResponseEntity<>(groupService.changeStatus(groupSeq,groupSettingDto),HttpStatus.OK);
+    }
+    
+    //모임 활성화/비활성화
+    @ApiOperation(value = "모임 활성화 여부 - Y(활성화), N(비활성화)")
+    @PutMapping("/{groupSeq}/active")
+    public ResponseEntity<String> changeActive(@PathVariable("groupSeq") int groupSeq, @RequestBody GroupSettingDto groupSettingDto){
+    	return new ResponseEntity<>(groupService.changeActive(groupSeq,groupSettingDto),HttpStatus.OK);
     }
 
 }

@@ -24,14 +24,14 @@ public class ChatController {
     
     private final UserRepository userRepository;
     
-    @MessageMapping(value = "/chat/enter")
+    @MessageMapping(value = "/enter")
     public void enter(ChatMessageDto chatMessage) {
         System.out.println("연결성공");
         chatMessage.setMessage(chatMessage.getSender() + "님이 채팅방에 참여하셨습니다.");
-        messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getRoomId(), chatMessage);
+        messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getGroupSeq(), chatMessage);
     }
 
-    @MessageMapping(value = "/chat/message")
+    @MessageMapping(value = "/message")
     public void message(HttpServletRequest request,	ChatMessageDto chatMessage) {
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
    	 	UserEntity user = userRepository.findByUserId(userId);
@@ -41,6 +41,6 @@ public class ChatController {
     	chatMessage.setImg(user.getProfileImgUrl());
     	chatMessage.setUserSeq(user.getUserSeq());
     	
-        messagingTemplate.convertAndSend("/sub/chat/room/"+chatMessage.getRoomId(),chatMessage);
+        messagingTemplate.convertAndSend("/sub/chat/room/"+chatMessage.getGroupSeq(),chatMessage);
     }
 }

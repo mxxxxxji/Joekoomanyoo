@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/api/feed")
-@Api(tags = {"피드 API"})
+@Api(tags = {"피드 관리 API"})
 public class FeedController {
     private final FeedService feedService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -93,6 +93,7 @@ public class FeedController {
     @PutMapping("/{feedSeq}/active/{feedOpen}")
     public ResponseEntity<String> setFeedOpen(@PathVariable("feedSeq") int feedSeq, @PathVariable("feedOpen") char feedOpen){
 	     return new ResponseEntity<>(feedService.setFeedOpen(feedSeq,feedOpen),HttpStatus.OK);
-    }
+    } 
+    
 
 }

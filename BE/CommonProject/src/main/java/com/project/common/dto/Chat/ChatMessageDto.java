@@ -19,8 +19,8 @@ public class ChatMessageDto{
 
     private MessageType type;
     
-    //방 번호 (그륩 번호?)
-    private String roomId;
+    //방 번호
+    private String groupSeq;
     
     //메세지 보낸 사람 (닉네임)
     private String sender;
@@ -35,10 +35,10 @@ public class ChatMessageDto{
     private long userSeq;
 
     @Builder
-	public ChatMessageDto(MessageType type, String roomId, String sender, String message, String img, long userSeq) {
+	public ChatMessageDto(MessageType type, String groupSeq, String sender, String message, String img, long userSeq) {
 		super();
 		this.type = type;
-		this.roomId = roomId;
+		this.groupSeq = groupSeq;
 		this.sender = sender;
 		this.message = message;
 		this.img = img;
