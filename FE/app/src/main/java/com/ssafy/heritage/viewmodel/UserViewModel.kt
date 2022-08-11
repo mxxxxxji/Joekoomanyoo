@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputLayout
-import com.ssafy.heritage.ApplicationClass.Companion.IMG_URL
 import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.event.Event
@@ -484,7 +483,7 @@ class UserViewModel : ViewModel() {
     }
 
     // 알림 설정 하기
-    fun setNotiSetting(flag : Char) = viewModelScope.launch {
+    fun setNotiSetting(flag: Char) = viewModelScope.launch {
         _notiSetting.value = flag
         _isNotiLoading.value = true
 
@@ -527,10 +526,10 @@ class UserViewModel : ViewModel() {
 
     // 사진 전송하기
     suspend fun sendImage(img: MultipartBody.Part) = withContext(Dispatchers.Main) {
-
+        Log.d(TAG, "sendImage: $img")
         var response: Response<String>? = null
         job = launch(Dispatchers.Main) {
-            response = repository.sendImage("${IMG_URL}/uploadFile", img)
+            response = repository.sendImage(img)
         }
         job?.join()
 

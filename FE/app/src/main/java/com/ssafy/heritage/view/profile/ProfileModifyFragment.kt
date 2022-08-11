@@ -130,6 +130,7 @@ class ProfileModifyFragment :
             if (it.resultCode == RESULT_OK && it.data != null) {
 
                 val imagePath = it.data!!.data
+                Log.d(TAG, "imagePath: $imagePath")
                 binding.ivProfile.setImageURI(imagePath)
                 val file = FileUtil.toFile(requireContext(), imagePath!!)
                 img_multipart = FormDataUtil.getImageBody("file", file)

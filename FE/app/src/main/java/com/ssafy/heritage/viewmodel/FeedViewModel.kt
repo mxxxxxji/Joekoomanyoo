@@ -5,14 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.textfield.TextInputLayout
-import com.ssafy.heritage.ApplicationClass.Companion.IMG_URL
-import com.ssafy.heritage.data.dto.Feed
 import com.ssafy.heritage.data.remote.request.FeedAddRequest
-import com.ssafy.heritage.data.remote.response.FeedDetailResponse
 import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.data.repository.Repository
-import com.ssafy.heritage.util.FormDataUtil
 import com.ssafy.heritage.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,11 +16,10 @@ import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import org.json.JSONObject
 import retrofit2.Response
-import java.io.File
 
 private const val TAG = "FeedViewModel___"
 
-class FeedViewModel: ViewModel() {
+class FeedViewModel : ViewModel() {
 
     var job: Job? = null
 
@@ -56,7 +50,7 @@ class FeedViewModel: ViewModel() {
     fun getMyFeedList() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectMyFeeds().let { response ->
-                if(response.isSuccessful) {
+                if (response.isSuccessful) {
                     var list = response.body() as MutableList<FeedListResponse>
                     _feedListAll.postValue(list)
                     Log.d(TAG, "getMyFeedList: 내 피드 목록 조회 성공")
@@ -70,7 +64,7 @@ class FeedViewModel: ViewModel() {
     fun getFeedListByHashTag(fhTag: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectFeedsByHashtag(fhTag).let { response ->
-                if(response.isSuccessful) {
+                if (response.isSuccessful) {
                     var list = response.body() as MutableList<FeedListResponse>
                     _feedListAll.postValue(list)
                 } else {
@@ -83,7 +77,7 @@ class FeedViewModel: ViewModel() {
     fun getFeedListAll() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectAllFeeds().let { response ->
-                if(response.isSuccessful) {
+                if (response.isSuccessful) {
                     var list = response.body() as MutableList<FeedListResponse>
                     _feedListAll.postValue(list)
                     Log.d(TAG, "getFeedListAll: 모든 피드 목록 조회 성공")
@@ -97,7 +91,7 @@ class FeedViewModel: ViewModel() {
     fun insertFeed(feedInfo: FeedAddRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertFeed(feedInfo).let { response ->
-                if(response.isSuccessful) {
+                if (response.isSuccessful) {
 //                    var info = response.body()
 //                    _insertFeedInfo.postValue(info)
                     Log.d(TAG, "insertFeed: 피드에 글 들어갔다!")
@@ -113,7 +107,7 @@ class FeedViewModel: ViewModel() {
 
         var response: Response<String>? = null
         job = launch(Dispatchers.Main) {
-            response = repository.sendImage("${IMG_URL}/uploadFile", img)
+            response = repository.sendImage(img)
         }
         job?.join()
 

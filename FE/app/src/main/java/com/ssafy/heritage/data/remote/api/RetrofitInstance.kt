@@ -3,7 +3,6 @@ package com.ssafy.heritage.data.remote.api
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.ssafy.heritage.ApplicationClass.Companion.BASE_URL
-import com.ssafy.heritage.ApplicationClass.Companion.IMG_URL
 import com.ssafy.heritage.util.NullOnEmptyConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,14 +10,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.HostnameVerifier
-import javax.net.ssl.HttpsURLConnection
 
 var VERIFY_DOMAIN: String = "*.lottois.info"
+
 object RetrofitInstance {
 
     private const val CONNECT_TIMEOUT_SEC = 20000L
-//    val cf: CertificateFactory = CertificateFactory.getInstance("X.509")
+
+    //    val cf: CertificateFactory = CertificateFactory.getInstance("X.509")
 //    // From https://www.washington.edu/itconnect/security/ca/load-der.crt
 //    val path = "android.resource://" + "com.ssafy.heritage" + "/raw/" + "d102.cer";
 ////    val caInput: InputStream = BufferedInputStream(FileInputStream("d102.cer"))
@@ -39,8 +38,9 @@ object RetrofitInstance {
 //
 //
 //    // 로깅인터셉터 세팅
-    val interceptor = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY}
-//    // Create a TrustManager that trusts the CAs inputStream our KeyStore
+    val interceptor = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+
+    //    // Create a TrustManager that trusts the CAs inputStream our KeyStore
 //    val tmfAlgorithm: String = TrustManagerFactory.getDefaultAlgorithm()
 //    val tmf: TrustManagerFactory = TrustManagerFactory.getInstance(tmfAlgorithm).apply {
 //        init(keyStore)
@@ -60,11 +60,11 @@ object RetrofitInstance {
     val client =
         OkHttpClient.Builder()
 //        .addInterceptor(interceptor)
-        .addInterceptor(AuthInterceptor())
-        //.sslSocketFactory( context.socketFactory, tmf?.trustManagers?.get(0) as X509TrustManager)
-        //.hostnameVerifier(hostnameVerifier)
-        .connectTimeout(CONNECT_TIMEOUT_SEC, TimeUnit.SECONDS)
-        .build()
+            .addInterceptor(AuthInterceptor())
+            //.sslSocketFactory( context.socketFactory, tmf?.trustManagers?.get(0) as X509TrustManager)
+            //.hostnameVerifier(hostnameVerifier)
+            .connectTimeout(CONNECT_TIMEOUT_SEC, TimeUnit.SECONDS)
+            .build()
 
 
     val gson: Gson = GsonBuilder()
@@ -74,16 +74,6 @@ object RetrofitInstance {
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(NullOnEmptyConverterFactory())
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-    private val retrofit2 by lazy {
-        Retrofit.Builder()
-            .baseUrl(IMG_URL)
             .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -109,15 +99,11 @@ object RetrofitInstance {
         retrofit.create(FeedService::class.java)
     }
 
-    val testApi: HeritageService by lazy{
-        retrofit2.create(HeritageService::class.java)
-    }
-
-    val fileApi: FileService by lazy{
+    val fileApi: FileService by lazy {
         retrofit.create(FileService::class.java)
     }
 
-    val ARApi: ARService by lazy{
+    val ARApi: ARService by lazy {
         retrofit.create(ARService::class.java)
     }
 

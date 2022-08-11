@@ -7,18 +7,8 @@ import com.ssafy.heritage.data.remote.api.RetrofitInstance.feedApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.fileApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
-import com.ssafy.heritage.data.remote.api.RetrofitInstance.testApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
 import com.ssafy.heritage.data.remote.request.*
-import com.ssafy.heritage.data.remote.response.FeedListResponse
-import com.ssafy.heritage.data.remote.response.GroupListResponse
-import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
-import com.ssafy.heritage.data.remote.response.MyGroupResponse
-import com.ssafy.heritage.data.remote.request.FeedAddRequest
-import com.ssafy.heritage.data.remote.request.GroupAddRequest
-import com.ssafy.heritage.data.remote.request.GroupBasic
-import com.ssafy.heritage.data.remote.request.GroupJoin
-import com.ssafy.heritage.data.remote.request.GroupSchedule
 import com.ssafy.heritage.data.remote.response.*
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -134,7 +124,6 @@ class Repository constructor(context: Context) {
         userApi.selectAllMyNoti(userSeq)
 
     suspend fun pushToken(token: FCMToken): Response<String> = userApi.pushToken(token)
-    suspend fun saveImage(img: MultipartBody.Part) = testApi.saveImage(img)
 
     // heritage
     suspend fun selectAllHeritage(): Response<List<Heritage>> = heritageApi.selectAllHeritage()
@@ -168,8 +157,8 @@ class Repository constructor(context: Context) {
         feedApi.selectFeedDetail(feedSeq)
 
     // file
-    suspend fun sendImage(url: String, file: MultipartBody.Part): Response<String> =
-        fileApi.saveImage(url, file)
+    suspend fun sendImage(file: MultipartBody.Part): Response<String> =
+        fileApi.saveImage(file)
 
     // stamp
     suspend fun selectAllStamp(): Response<List<Stamp>> = ARApi.selectAllStamp()

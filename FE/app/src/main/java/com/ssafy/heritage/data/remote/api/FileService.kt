@@ -10,6 +10,6 @@ import retrofit2.http.Url
 interface FileService {
 
     @Multipart
-    @POST
-    suspend fun saveImage(@Url url: String, @Part file: MultipartBody.Part): Response<String>
+    @POST("/image/uploadFile")
+    suspend fun saveImage(@Part file: MultipartBody.Part): Response<String>
 }
