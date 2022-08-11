@@ -29,6 +29,11 @@ class HeritageReviewAdapter(private val listener: OnItemClickListener) : ListAda
         fun bind(data: HeritageReviewListResponse) = with(binding) {
             binding.apply {
                 heritageReviewListResponse = data
+                if (binding.heritageReviewListResponse?.reviewImgUrl.toString() == "") {
+                    binding.ivHeritageReviewImg.visibility = View.GONE
+                } else {
+                    binding.ivHeritageReviewImg.visibility = View.VISIBLE
+                }
             }
         }
     }

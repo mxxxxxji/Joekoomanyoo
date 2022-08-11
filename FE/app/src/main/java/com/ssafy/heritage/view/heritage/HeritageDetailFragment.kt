@@ -15,6 +15,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -27,6 +28,7 @@ import androidx.transition.Fade
 import androidx.transition.TransitionInflater
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.HeritageReviewAdapter
+import com.ssafy.heritage.adpter.MyBindingAdapter.setImage
 import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Heritage
@@ -71,6 +73,7 @@ class HeritageDetailFragment :
     private lateinit var heritageReview: HeritageReviewRequest
     private lateinit var heritageReviewAdapter: HeritageReviewAdapter
     var img_multipart: MultipartBody.Part? = null
+    var reviewImgUrl: String? = ""
 
     private lateinit var btnPlayAudio: Button
     var mediaPlayer: MediaPlayer? = null
@@ -353,7 +356,7 @@ class HeritageDetailFragment :
         btnCreateReview.setOnClickListener {
 
             CoroutineScope(Dispatchers.Main).launch {
-                if (!etReviewContent.text.isNullOrBlank() && img_multipart == null || img_multipart?.let {
+                if (!etReviewContent.text.isNullOrBlank() && img_multipart?.let {
                         heritageViewModel.sendImage(
                             it
                         )
@@ -367,20 +370,24 @@ class HeritageDetailFragment :
                         userNickname = userViewModel.user.value?.userNickname!!
                     )
                     heritageViewModel.insertHeritageReview(heritageReview)
-                    Log.d(TAG, "initClickListener: ${heritageReview}")
-                    // 이미지 없으면 공간이 안 보이게 하고 싶다,,,,
-//                val binding: ItemReviewBinding? = null
-//                if (heritageReview.attachSeq == 0) {
-//                    binding?.ivHeritageReviewImg?.visibility = View.VISIBLE
-//                    Log.d(TAG, "bind: review img visible")
-//                } else {
-//                    binding?.ivHeritageReviewImg?.visibility = View.GONE
-//                    Log.d(TAG, "bind: review img gone")
-//                }
+                    Log.d(TAG, "첨부 했을 때: ${heritageReview}")
+                    etReviewContent.setText("")
+
+                } else if (!etReviewContent.text.isNullOrBlank() && img_multipart == null) {
+                    heritageReview = HeritageReviewRequest(
+                        userSeq = userViewModel.user.value?.userSeq!!,
+                        heritageSeq = heritageViewModel.heritage.value?.heritageSeq!!,
+                        heritageReviewText = etReviewContent.text.toString(),
+                        reviewImgUrl = "",
+                        userNickname = userViewModel.user.value?.userNickname!!
+                    )
+                    heritageViewModel.insertHeritageReview(heritageReview)
+                    Log.d(TAG, "첨부 안했을 때: ${heritageReview}")
                     etReviewContent.setText("")
                 } else {
                     makeToast("리뷰를 작성해보세요")
                 }
+                img_multipart = null
             }
         }
 

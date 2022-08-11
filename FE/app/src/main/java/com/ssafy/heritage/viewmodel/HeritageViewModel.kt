@@ -53,6 +53,9 @@ class HeritageViewModel : ViewModel() {
     val heritageScrap: MutableLiveData<HeritageScrap>
         get() = _heritageScrap
 
+    private val _emptyLayoutVisible = MutableLiveData(false)
+    val emptyLayoutVisible: LiveData<Boolean>
+        get() = _emptyLayoutVisible
 
     // 전체 문화유산 목록 가져옴
     fun getHeritageList() {

@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="heritageReviewListResponse"
             type="com.ssafy.heritage.data.remote.response.HeritageReviewListResponse" />
+        <variable
+            name="viewmodel"
+            type="com.ssafy.heritage.viewmodel.HeritageViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,6 +89,7 @@
 
         <ImageView
             android:id="@+id/iv_heritage_review_img"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
