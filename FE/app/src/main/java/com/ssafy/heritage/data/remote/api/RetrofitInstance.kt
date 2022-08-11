@@ -1,8 +1,16 @@
 package com.ssafy.heritage.data.remote.api
 
+import android.content.Context
+import android.os.Build
+import android.util.Log
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
+import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import com.ssafy.heritage.ApplicationClass.Companion.BASE_URL
+import com.ssafy.heritage.ApplicationClass.Companion.BASE_URL_HTTPS
 import com.ssafy.heritage.ApplicationClass.Companion.IMG_URL
 import com.ssafy.heritage.util.NullOnEmptyConverterFactory
 import okhttp3.OkHttpClient
@@ -66,6 +74,16 @@ object RetrofitInstance {
         .connectTimeout(CONNECT_TIMEOUT_SEC, TimeUnit.SECONDS)
         .build()
 
+    val okHttpsClient =
+        OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build() // n초동안 기다리도록 만드는 변수
+    val selfSign =
+        SelfSigningHelper(context)
+            .setSSLOkHttp(okHttpsClient.newBuilder())
+            .build() // SSL인증서를 인증하기 위한 코드, SSL 인증서가 없다면 해당 부분은 없어도된다.
 
     val gson: Gson = GsonBuilder()
         .setLenient()
@@ -88,6 +106,14 @@ object RetrofitInstance {
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    private val retrofitHttps by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL_HTTPS)
+            .client(selfSign)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -121,6 +147,9 @@ object RetrofitInstance {
         retrofit.create(ARService::class.java)
     }
 
+    val httpApi: UserService by lazy{
+        retrofitHttps.create(UserService::class.java)
+    }
 //    private fun getTrustManagerFactory(context: Context): TrustManagerFactory? {
 //        // 1. CA 로드
 //        val cf: CertificateFactory = CertificateFactory.getInstance("X.509")

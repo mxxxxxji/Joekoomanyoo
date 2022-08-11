@@ -15,14 +15,20 @@
  */
 package com.ssafy.heritage
 
+import android.opengl.GLSurfaceView
 import android.opengl.Matrix
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.maps.model.LatLng
 import com.google.ar.core.Anchor
+import com.google.ar.core.Point
 import com.google.ar.core.TrackingState
 import com.google.ar.core.exceptions.CameraNotAvailableException
+import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.HitTestResult
+import com.google.ar.sceneform.rendering.ModelRenderable
+import com.google.ar.sceneform.ux.TransformableNode
 import com.ssafy.heritage.helpers.DisplayRotationHelper
 import com.ssafy.heritage.helpers.TrackingStateHelper
 import com.ssafy.heritage.samplerender.*
@@ -30,16 +36,19 @@ import com.ssafy.heritage.samplerender.arcore.BackgroundRenderer
 import java.io.IOException
 
 
-private const val TAG = "HelloGeoRenderer__"
-class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, DefaultLifecycleObserver {
+private const val TAG = "HelloGeoRenderer___"
+class HelloGeoRenderer(val activity: HelloGeoActivity) :  SampleRender.Renderer, DefaultLifecycleObserver {
   companion object {
     private val Z_NEAR = 0.1f
     private val Z_FAR = 1000f
   }
+  var touchLat: Double = 0.0
+  var touchLong: Double = 0.0
 
   lateinit var backgroundRenderer: BackgroundRenderer
   lateinit var virtualSceneFramebuffer: Framebuffer
   var hasSetTextureNames = false
+
 
   // Virtual object (ARCore pawn)
   lateinit var virtualObjectMesh: Mesh
@@ -59,6 +68,8 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
 
   val displayRotationHelper = DisplayRotationHelper(activity)
   val trackingStateHelper = TrackingStateHelper(activity)
+
+
 
   override fun onResume(owner: LifecycleOwner) {
     displayRotationHelper.onResume()
@@ -118,7 +129,9 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
     if (!hasSetTextureNames) {
       session.setCameraTextureNames(intArrayOf(backgroundRenderer.cameraColorTexture.textureId))
       hasSetTextureNames = true
+
     }
+
 
     // -- Update per-frame state
 
@@ -186,12 +199,13 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
     earthAnchor?.let {
       render.renderCompassAtAnchor(it)
     }
-
     // Compose the virtual scene with the background.
     backgroundRenderer.drawVirtualScene(render, virtualSceneFramebuffer, Z_NEAR, Z_FAR)
   }
-
+  var anchorNode: AnchorNode? =null
   var earthAnchor: Anchor? = null
+
+
 
   fun onMapClick(latLng: LatLng) {
     val earth = session?.earth ?: return
@@ -202,27 +216,58 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
     // earthAnchor가 있으면 분리
     earthAnchor?.detach()
 
-    // (임시) 어스 앵커를 카메라와 같은 높이데 둔다
+    // (임시) 어스 앵커를 카메라와 같은 높이에 둔다
     val altitude = earth.cameraGeospatialPose.altitude - 1
     // 좌표계에서 앵커의 회전 방향
     val qx = 0f
     val qy = 0f
     val qz = 0f
     val qw = 1f
+    Log.d(TAG, "666${earthAnchor?.pose}")
+    Log.d(TAG, "777${anchorNode?.anchor?.pose}")
     earthAnchor =
       earth.createAnchor(latLng.latitude, latLng.longitude, altitude, qx, qy, qz, qw)
 
+    anchorNode = AnchorNode(earthAnchor)
+
+    anchorNode?.anchor=earth.createAnchor(latLng.latitude, latLng.longitude, altitude, qx, qy, qz, qw)
+    touchLat = latLng.latitude
+    touchLong= latLng.longitude
+
+//    if(anchorNode != null){
+//      anchorNode!!.setOnTapListener { hitTestResult, motionEvent ->
+//        Log.d(TAG, "터치")
+//        if(hitTestResult.node == null){
+//          Log.d(TAG, "NODE 어디갔냐!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+//        }else{
+//          Log.d(TAG, "NODE 여기있돠!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+//        }
+//
+//      }
+//
+//    } else{
+//      Log.d(TAG, "8888${earthAnchor?.pose}")
+//
+//      Log.d(TAG, "9999${anchorNode?.anchor?.pose}")
+//    }
+    Log.d(TAG, "8888${earthAnchor?.pose}")
+
+    Log.d(TAG, "9999${anchorNode?.anchor?.pose}")
     activity.view.mapView?.earthMarker?.apply {
       position = latLng
       isVisible = true
     }
+
   }
+
+
 
   private fun SampleRender.renderCompassAtAnchor(anchor: Anchor) {
     // Get the current pose of the Anchor in world space. The Anchor pose is updated
     // during calls to session.update() as ARCore refines its estimate of the world.
     anchor.pose.toMatrix(modelMatrix, 0)
-
+    Log.d(TAG, "renderCompassAtAnchor: ${anchor.pose}")
+    Log.d(TAG, "modelMatrix: ${modelMatrix}")
     // Calculate model/view/projection matrices
     Matrix.multiplyMM(modelViewMatrix, 0, viewMatrix, 0, modelMatrix, 0)
     Matrix.multiplyMM(modelViewProjectionMatrix, 0, projectionMatrix, 0, modelViewMatrix, 0)
@@ -230,8 +275,13 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
     // Update shader properties and draw
     virtualObjectShader.setMat4("u_ModelViewProjection", modelViewProjectionMatrix)
     draw(virtualObjectMesh, virtualObjectShader, virtualSceneFramebuffer)
+    Log.d(TAG, " modelViewProjectionMatrix: ${modelViewProjectionMatrix}")
+
   }
 
   private fun showError(errorMessage: String) =
     activity.view.snackbarHelper.showError(activity, errorMessage)
+
+
+
 }

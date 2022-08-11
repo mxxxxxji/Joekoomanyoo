@@ -7,6 +7,7 @@ import com.ssafy.heritage.data.remote.api.RetrofitInstance.feedApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.fileApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.groupApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.heritageApi
+import com.ssafy.heritage.data.remote.api.RetrofitInstance.httpApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.testApi
 import com.ssafy.heritage.data.remote.api.RetrofitInstance.userApi
 import com.ssafy.heritage.data.remote.request.*
@@ -71,6 +72,7 @@ class Repository constructor(context: Context) {
 
 
     // user
+//    suspend fun socialLoginHTTPS(@Body map: HashMap<String, String>): Response<String>
     suspend fun checkEmail(userId: String): Response<String> = userApi.checkEmail(userId)
     suspend fun checkNickname(userNickname: String): Response<String> =
         userApi.checkNickname(userNickname)

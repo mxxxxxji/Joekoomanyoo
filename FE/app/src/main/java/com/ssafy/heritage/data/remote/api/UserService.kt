@@ -1,10 +1,22 @@
 package com.ssafy.heritage.data.remote.api
 
+import android.content.Context
+import android.os.Build
+import android.provider.Telephony.Carriers.SERVER
+import android.util.Log
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import com.google.gson.JsonObject
 import com.ssafy.heritage.data.dto.*
 import retrofit2.Response
 import retrofit2.http.*
 
 interface UserService {
+
+    // https 서버 테스트
+    @RequiresApi(Build.VERSION_CODES.N)
+    @POST("/api/user/social/login")
+    suspend fun socialLoginHTTPS(@Body map: HashMap<String, String>): Response<String>
 
     // 아이디 중복검사
     @GET("/api/user/check/email/{userId}")
