@@ -12,6 +12,7 @@ import com.project.common.mapper.Heritage.HeritageScrapMapper;
 import com.project.common.repository.Heritage.*;
 import com.project.common.repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -186,7 +187,8 @@ public class HeritageService {
         // 10km, 20km, 30km ... 순으로 증가
         double distance = 0.05;
         while (listDto.size() > 0) {
-            for (int i = 0; i < 1540; i++) {
+            int size = listDto.size();
+            for (int i = 0; i < size; i++) {
                 // 문화재 위치가 위도 경도 다 범위안에 있는 경우
                 if (((lat - distance) <= Double.parseDouble(listDto.get(i).getHeritageLat())) && ((lat + distance) >= Double.parseDouble(listDto.get(i).getHeritageLat())) && ((lng - distance) <= Double.parseDouble(listDto.get(i).getHeritageLng())) && ((lng + distance) >= Double.parseDouble(listDto.get(i).getHeritageLng()))) {
                     sortList.add(listDto.get(i));
@@ -201,4 +203,78 @@ public class HeritageService {
         }
             return sortList;
         }
+
+
+    // 카테고리, 정렬 별로 문화유산 리스트 가져오기
+    public List<HeritageDto> categorySortHeritage(SortHeritageDto sortHeritageDto) {
+        double lat = Double.parseDouble(sortHeritageDto.getLat());
+        double lng = Double.parseDouble(sortHeritageDto.getLng());
+        int categorySeq = sortHeritageDto.getCategorySeq();
+        int sortSeq = sortHeritageDto.getSortSeq();
+
+        // 번호가 넘을경우 오류
+        if(categorySeq >= 11 || sortSeq>=3) return null;
+
+        // 카테고리 배열
+        String[] categoryList = {"탑", "비", "불교", "공예품", "궁궐", "기록유산", "왕릉", "건축", "종", "기타"};
+
+        String category = categoryList[categorySeq-1];
+
+        // 카테고리 별로 정렬하기
+        // 카테고리 배열 가져오기
+        List<HeritageEntity> listCategory = heritageRepository.findAllByHeritageCategory(category);
+       
+        // 정렬 별로 정렬하기
+        // 카테고리 배열에서 정렬 하기
+        // 0 : 거리순 , 1 : 스크랩순 , 2 : 리뷰순
+        List<HeritageDto> listDto = HeritageMapper.MAPPER.toDtoList(listCategory);
+        List<HeritageDto> listSort = new ArrayList<>();
+        switch (sortSeq){
+            case 0:
+                // 10km, 20km, 30km ... 순으로 증가
+                double distance = 0.05;
+                while(listDto.size()> 0){
+                    int size = listDto.size();
+                    for(int i=0; i<size; i++){
+                        // 문화재 위치가 위도 경도 다 범위안에 있는 경우
+                        if (((lat - distance) <= Double.parseDouble(listDto.get(i).getHeritageLat())) && ((lat + distance) >= Double.parseDouble(listDto.get(i).getHeritageLat())) && ((lng - distance) <= Double.parseDouble(listDto.get(i).getHeritageLng())) && ((lng + distance) >= Double.parseDouble(listDto.get(i).getHeritageLng()))) {
+                            listSort.add(listDto.get(i));
+                            listDto.remove(i);
+                            if (i == 0) i = 0;
+                            else i--;
+                        }
+                        if(listDto.size()==0)break;
+                        if(i==listDto.size()-1) break;
+                    }
+                    distance += 0.05;
+                }
+                break;
+            case 1:
+                // 스크랩 수 순으로 정렬하고
+                List<HeritageEntity> listSortScrap = heritageRepository.findAll(Sort.by(Sort.Direction.DESC,"heritageScrapCnt"));
+                // 카테고리와 같은 것만 리스트에 저장
+                List<HeritageDto> listSortScrapDto = HeritageMapper.MAPPER.toDtoList(listSortScrap);
+                for(HeritageDto heritageDto : listSortScrapDto){
+                    // 카테고리명과 같으면 추가
+                    if(heritageDto.getHeritageCategory().equals(category)){
+                        listSort.add(heritageDto);
+                    }
+                }
+                break;
+            case 2:
+                // 리뷰 수 순으로 정렬하고
+                List<HeritageEntity> listSortReview = heritageRepository.findAll(Sort.by(Sort.Direction.DESC,"heritageReviewCnt"));
+                // 카테고리와 같은 것만 리스트에 저장
+                List<HeritageDto> listSortReviewDto = HeritageMapper.MAPPER.toDtoList(listSortReview);
+                for(HeritageDto heritageDto : listSortReviewDto){
+                    // 카테고리명과 같으면 추가
+                    if(heritageDto.getHeritageCategory().equals(category)){
+                        listSort.add(heritageDto);
+                    }
+                }
+                break;
+        }
+
+        return listSort;
+    }
 }

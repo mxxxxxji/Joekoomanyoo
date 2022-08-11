@@ -9,6 +9,5 @@ import java.util.List;
 public interface HeritageRepository extends JpaRepository<HeritageEntity, Integer> {
     List<HeritageEntity> findAll();
     HeritageEntity findByHeritageSeq(int heritageSeq);
-
-
+    List<HeritageEntity> findAllByHeritageCategory(String category);
 }
