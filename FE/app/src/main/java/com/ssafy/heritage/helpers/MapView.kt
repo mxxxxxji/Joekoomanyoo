@@ -22,6 +22,9 @@ import androidx.annotation.ColorInt
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.cache.DiskCache
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.*
 import com.ssafy.heritage.HelloGeoActivity
 import com.ssafy.heritage.R
 
