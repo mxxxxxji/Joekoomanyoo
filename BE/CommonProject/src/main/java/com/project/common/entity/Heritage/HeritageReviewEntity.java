@@ -29,4 +29,5 @@ public class HeritageReviewEntity {
     @Column(nullable = false)
     private String heritageReviewRegistedAt;
     private String reviewImgUrl;
+    private String profileImgUrl;
 }
