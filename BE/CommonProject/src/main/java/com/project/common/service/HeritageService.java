@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,6 +104,9 @@ public class HeritageService {
     @Transactional
     public boolean createScrap(HeritageScrapDto heritageScrapDto){
         HeritageScrapEntity heritageScrapEntity = HeritageScrapMapper.MAPPER.toEntity(heritageScrapDto);
+
+        heritageScrapEntity.setHeritageScrapSeq(0);
+        heritageScrapEntity.setHeritageScrapRegistedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));        // 초기값 입력
 
         // 스크랩 개수 추가
         HeritageEntity heritageEntity = heritageRepository.findByHeritageSeq(heritageScrapEntity.getHeritageSeq());

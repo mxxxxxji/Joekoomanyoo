@@ -103,9 +103,7 @@ public class HeritageController {
     @ApiOperation(value = "문화 유산 스크랩 등록", response = String.class)
     @PostMapping("/scrap")
     public ResponseEntity<String> createScrap(@RequestBody HeritageScrapDto heritageScrapDto){
-        // 초기값 입력
-        heritageScrapDto.setHeritageScrapSeq(0);
-        heritageScrapDto.setHeritageScrapRegistedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
         // 성공적으로 입력 되었으면
         if(heritageService.createScrap(heritageScrapDto)){
             return new ResponseEntity<String>(SUCCESS,HttpStatus.OK);
