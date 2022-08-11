@@ -46,9 +46,11 @@ public class HeritageService {
     // 리뷰 등록
     @Transactional
     public boolean createReview(HeritageReivewDto heritageReivewDto) {
-        String nickname = userRepository.findByUserSeq(heritageReivewDto.getUserSeq()).getUserNickname();
+        UserEntity userEntity = userRepository.findByUserSeq(heritageReivewDto.getUserSeq());
+        String nickname = userEntity.getUserNickname();
         HeritageReviewEntity heritageReviewEntity = HeritageReviewMapper.MAPPER.toEntity(heritageReivewDto);
         heritageReviewEntity.setUserNickname(nickname);
+        heritageReviewEntity.setProfileImgUrl(userEntity.getProfileImgUrl());
 
         // 리뷰 개수 하나 늘리기
         int cnt = heritageReviewEntity.getHeritageReviewSeq() + 1;
