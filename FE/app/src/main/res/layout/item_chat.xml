@@ -28,6 +28,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_profile_other"
+                glide="@{chat.userImg}"
                 android:layout_width="40dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
@@ -40,6 +41,7 @@
                 android:id="@+id/tv_time_other"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{chat.createdTime}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_profile_other"
                 tools:text="시간" />
@@ -52,6 +54,7 @@
                 android:elevation="4dp"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
+                android:text="@{chat.chatContent}"
                 android:translationZ="2dp"
                 app:layout_constraintBottom_toTopOf="@id/tv_time_other"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -69,6 +72,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_profile_me"
+                glide="@{chat.userImg}"
                 android:layout_width="40dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
@@ -81,6 +85,7 @@
                 android:id="@+id/tv_time_me"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{chat.createdTime}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/iv_profile_me"
                 tools:text="시간" />
@@ -93,6 +98,7 @@
                 android:elevation="4dp"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
+                android:text="@{chat.chatContent}"
                 android:textColor="@color/white"
                 android:translationZ="2dp"
                 app:layout_constraintBottom_toTopOf="@id/tv_time_me"

@@ -1,6 +1,7 @@
 package com.ssafy.heritage.adpter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.data.dto.Chat
 import com.ssafy.heritage.databinding.ItemChatBinding
 
-class ChatListAdapter() : ListAdapter<Chat, ChatListAdapter.ViewHolder>(DiffCallback()) {
+class ChatListAdapter(val userSeq: Int) : ListAdapter<Chat, ChatListAdapter.ViewHolder>(DiffCallback()) {
 
 
     inner class ViewHolder(private val binding: ItemChatBinding) :
@@ -16,6 +17,11 @@ class ChatListAdapter() : ListAdapter<Chat, ChatListAdapter.ViewHolder>(DiffCall
         fun bind(data: Chat) = with(binding) {
             chat = data
 
+            if (userSeq == data.userSeq){
+                constraintOther.visibility = View.INVISIBLE
+            }else{
+                constraintMe.visibility = View.INVISIBLE
+            }
         }
     }
 
