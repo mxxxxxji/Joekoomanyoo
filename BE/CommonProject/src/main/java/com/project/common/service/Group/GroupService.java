@@ -68,6 +68,8 @@ public class GroupService{
 	//모임 삭제
 	public String deleteGroup(int groupSeq){
 		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
+		if(group==null)
+			return "Fail - No Group";
 		for(GroupMemberEntity entity : group.getMembers()) {
 			groupMemberRepository.deleteByMemberSeq(entity.getMemberSeq());
 		}

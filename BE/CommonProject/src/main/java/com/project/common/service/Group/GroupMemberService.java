@@ -47,7 +47,10 @@ public class GroupMemberService {
     @Transactional
     public String joinGroup(int groupSeq, ReqGroupJoinDto requestDto) {
         int masterUserSeq = 0;
-        for (GroupMemberEntity entity : groupRepository.findByGroupSeq(groupSeq).getMembers()) {
+        GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
+        if(group==null)
+        	return "Fail - No Group";
+        for (GroupMemberEntity entity : group.getMembers()) {
         	if(entity.getMemberStatus()==2) {
         		masterUserSeq=entity.getUserSeq();// 방장 userSeq 추출
         	}
@@ -57,7 +60,6 @@ public class GroupMemberService {
         }
         
         UserEntity user = userRepository.findByUserSeq(requestDto.getUserSeq());
-        GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
         
         group.addGroupMember(GroupMemberEntity.builder()
                 .memberAppeal(requestDto.getMemberAppeal())
@@ -98,6 +100,8 @@ public class GroupMemberService {
     @Transactional
     public String leaveGroup(int groupSeq, String userId) {
         GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
+        if(group==null)
+        	return "Fail- No group";
         UserEntity user = userRepository.findByUserId(userId);
         for (GroupMemberEntity entity : group.getMembers()) {
             if (entity.getUserSeq() == user.getUserSeq()) {
@@ -134,7 +138,10 @@ public class GroupMemberService {
     //모임 가입 승인
     public String approveMember(int groupSeq, String userId) {
         UserEntity user = userRepository.findByUserId(userId);
-        for (GroupMemberEntity entity : groupRepository.findByGroupSeq(groupSeq).getMembers()) {
+        GroupEntity group=groupRepository.findByGroupSeq(groupSeq);
+        if(group==null)
+        	return "Fail - No group";
+        for (GroupMemberEntity entity : group.getMembers()) {
             if (entity.getUserSeq() == user.getUserSeq()) {
                 entity.setMemberStatus(1);
                 entity.setApproveTime(new Date());

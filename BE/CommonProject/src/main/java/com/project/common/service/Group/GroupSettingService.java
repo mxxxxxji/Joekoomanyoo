@@ -35,6 +35,8 @@ public class GroupSettingService{
 	//모임 상태 변경
 	public String changeStatus(int groupSeq,GroupSettingDto groupSettingDto) {
 		GroupEntity group =groupRepository.findByGroupSeq(groupSeq);
+		if(group==null)
+			return "Fail - No group";
 		group.setGroupStatus(groupSettingDto.getGroupStatus());
 		groupRepository.save(group);
 		
@@ -91,6 +93,8 @@ public class GroupSettingService{
 	//모임 활성화 여부 변경
 	public String changeActive(int groupSeq,GroupSettingDto groupSettingDto) {
 		GroupEntity group =groupRepository.findByGroupSeq(groupSeq);
+		if(group==null)
+			return "Fail - No group";
 		group.setGroupActive(groupSettingDto.getGroupActive());
 		groupRepository.save(group);
 		return "Success";

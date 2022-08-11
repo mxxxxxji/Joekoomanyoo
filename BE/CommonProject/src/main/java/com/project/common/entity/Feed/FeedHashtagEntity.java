@@ -1,4 +1,4 @@
-package com.project.common.entity.Feed;
+	package com.project.common.entity.Feed;
 
 import java.util.Date;
 
