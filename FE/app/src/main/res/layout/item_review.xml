@@ -11,6 +11,10 @@
             name="viewmodel"
             type="com.ssafy.heritage.viewmodel.HeritageViewModel" />
         <import type="android.view.View"/>
+
+        <variable
+            name="user"
+            type="com.ssafy.heritage.data.dto.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +26,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="24dp"
+            glide="@{String.valueOf(user.profileImgUrl)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />

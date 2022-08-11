@@ -184,6 +184,9 @@ class HeritageDetailFragment :
         heritageViewModel.heritageReviewList.observe(viewLifecycleOwner) {
             heritageReviewAdapter.submitList(it)
         }
+//        userViewModel.user.observe(viewLifecycleOwner) {
+//            binding.user = it
+//        }
     }
 
     private fun initMap() = with(binding) {
