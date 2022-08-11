@@ -90,15 +90,8 @@ public class FeedService{
 	//피드 보기
 	public ResFeedDto getFeedDetail(int feedSeq) {
 		FeedEntity feedInfo=feedRepository.findByFeedSeq(feedSeq);
-		ResFeedDto feed=new ResFeedDto();
-		feed.setCreatedTime(feedInfo.getCreatedTime());
-		feed.setFeedSeq(feedSeq);
-		feed.setFeedImgUrl(feedInfo.getFeedImgUrl());
-		feed.setFeedContent(feedInfo.getFeedContent());
-		feed.setFeedTitle(feedInfo.getFeedTitle());
-		feed.setFeedOpen(feedInfo.getFeedOpen());
-		feed.setUserImgUrl(feedInfo.getUser().getProfileImgUrl());
-		feed.setUserNickname(feedInfo.getUser().getUserNickname());
+		ResFeedDto feed=new ResFeedDto(feedInfo,feedInfo.getUser());
+
 		return feed;
 	}
 	
