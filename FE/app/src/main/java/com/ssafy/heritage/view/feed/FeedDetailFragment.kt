@@ -45,6 +45,8 @@ class FeedDetailFragment :
             binding.feed = this@FeedDetailFragment.feed
             Log.d(TAG, "init init: ${this@FeedDetailFragment.feed}")
         }
+
+        initClickListenr()
     }
 
     override fun onAttach(context: Context) {

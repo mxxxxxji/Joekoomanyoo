@@ -2,6 +2,7 @@ package com.ssafy.heritage.data.remote.api
 
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.HeritageScrap
+import com.ssafy.heritage.data.remote.request.HeritageReviewRequest
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -20,7 +21,7 @@ interface HeritageService {
 
     // 리뷰를 작성한다
     @POST("/api/heritage/review")
-    suspend fun insertHeritageReview(@Body body: HeritageReviewListResponse): Response<String>
+    suspend fun insertHeritageReview(@Body body: HeritageReviewRequest): Response<HeritageReviewListResponse>
 
     // 리뷰를 삭제한다
     @DELETE("/api/heritage/review/{heritageReviewSeq}/{heritageSeq}")

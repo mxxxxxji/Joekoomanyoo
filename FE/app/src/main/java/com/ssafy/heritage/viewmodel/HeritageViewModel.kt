@@ -5,9 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.HeritageReview
 import com.ssafy.heritage.data.dto.HeritageScrap
+import com.ssafy.heritage.data.remote.request.HeritageReviewRequest
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.SingleLiveEvent
@@ -15,6 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import org.json.JSONObject
 import retrofit2.Response
 
 private const val TAG = "HeritageViewModel___"
@@ -37,8 +41,8 @@ class HeritageViewModel : ViewModel() {
     val heritageReviewList: MutableLiveData<List<HeritageReviewListResponse>>
         get() = _heritageReviewList
 
-    private val _insertHeritageReview = SingleLiveEvent<HeritageReviewListResponse>()
-    val insertHeritageReview: LiveData<HeritageReviewListResponse>
+    private val _insertHeritageReview = SingleLiveEvent<String>()
+    val insertHeritageReview: LiveData<String>
         get() = _insertHeritageReview
 
     private val _heritageReview = MutableLiveData<HeritageReview>()
@@ -93,7 +97,7 @@ class HeritageViewModel : ViewModel() {
     }
 
     // 문화유산 상세 리뷰 작성
-    fun insertHeritageReview(heritageReviewInfo: HeritageReviewListResponse) {
+    fun insertHeritageReview(heritageReviewInfo: HeritageReviewRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertHeritageReview(heritageReviewInfo).let { response ->
                 if (response.isSuccessful) {
@@ -104,6 +108,31 @@ class HeritageViewModel : ViewModel() {
                 } else {
                     Log.d(TAG, "${response.code()}")
                 }
+            }
+        }
+    }
+
+    // 사진 전송하기
+    suspend fun sendImage(img: MultipartBody.Part) = withContext(Dispatchers.Main) {
+
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.sendImage("${ApplicationClass.IMG_URL}/uploadFile", img)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "sendImage response: $it")
+            if (it.isSuccessful) {
+                val body = JSONObject(it.body())
+                val url = body.get("fileDownloadUri")
+                Log.d(TAG, "sendImage body: ${url}")
+                _insertHeritageReview.value = url as String
+                Log.d(TAG, "sendImage: ${url as String}")
+                Log.d(TAG, "sendImage: ${_insertHeritageReview.value}")
+                true
+            } else {
+                false
             }
         }
     }

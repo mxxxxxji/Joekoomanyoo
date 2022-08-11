@@ -2,27 +2,23 @@ package com.ssafy.heritage.view.heritage
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import com.google.android.gms.auth.api.signin.GoogleSignIn.hasPermissions
 import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.HeritageReviewAdapter
 import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
+import com.ssafy.heritage.data.remote.request.HeritageReviewRequest
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.databinding.FragmentHeritageReviewBinding
 import com.ssafy.heritage.viewmodel.HeritageViewModel
@@ -39,7 +35,7 @@ class HeritageReviewFragment :
 
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
     private val userViewModel by activityViewModels<UserViewModel>()
-    private lateinit var heritageReview: HeritageReviewListResponse
+    private lateinit var heritageReview: HeritageReviewRequest
     private lateinit var heritageReviewAdapter: HeritageReviewAdapter
     private var userSeq: Int = 0
     private var heritageReviewRegistedAt: String = ""
@@ -116,42 +112,40 @@ class HeritageReviewFragment :
 
 
         // 리뷰 글쓰기 버튼 클릭 시
-        btnCreateReview.setOnClickListener {
-
-            // 키보드 버튼 내리기 (둘 다 어째서인지 하이드 성공하고 앱이 꺼진다)
-            // 1안
-//            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
-            // 2안
-//            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.hideSoftInputFromWindow(requireView().windowToken, 0)
-
-            heritageReviewText = etReviewContent.text.toString()
-//            attachSeq = btnImgAttach.
-
-            when {
-                heritageReviewText == "" -> {
-                    Toast.makeText(context, "리뷰를 작성해보세요.", Toast.LENGTH_SHORT).show()
-                }
-//                storageRef?.putFile(photoUri)?.addOnSuccessListener {
-//                    Toast.makeText(this, getString(R.string.upload_success), Toast.LENGTH_SHORT).show()
+//        btnCreateReview.setOnClickListener {
+//
+//            // 키보드 버튼 내리기 (둘 다 어째서인지 하이드 성공하고 앱이 꺼진다)
+//            // 1안
+////            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+////            imm.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
+//            // 2안
+////            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+////            imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+//
+//            heritageReviewText = etReviewContent.text.toString()
+////            attachSeq = btnImgAttach.
+//
+//            when {
+//                heritageReviewText == "" -> {
+//                    Toast.makeText(context, "리뷰를 작성해보세요.", Toast.LENGTH_SHORT).show()
 //                }
-            }
-
-            if (heritageReviewText != "") {
-                heritageReview = HeritageReviewListResponse(
-                    0,
-                    userSeq = userViewModel.user.value?.userSeq!!,
-                    heritageSeq = heritageViewModel.heritage.value?.heritageSeq!!,
-                    heritageReviewText,
-                    "",
-                    0,
-                    userNickname = userViewModel.user.value?.userNickname!!
-                )
-                heritageViewModel.insertHeritageReview(heritageReview)
-                etReviewContent.setText("")
-            }
-        }
+////                storageRef?.putFile(photoUri)?.addOnSuccessListener {
+////                    Toast.makeText(this, getString(R.string.upload_success), Toast.LENGTH_SHORT).show()
+////                }
+//            }
+//
+//            if (heritageReviewText != "") {
+//                heritageReview = HeritageReviewRequest(
+//                    userSeq = userViewModel.user.value?.userSeq!!,
+//                    heritageSeq = heritageViewModel.heritage.value?.heritageSeq!!,
+//                    heritageReviewText,
+//                    heritageViewModel.insertHeritageReview.value,
+//                    userNickname = userViewModel.user.value?.userNickname!!
+//                )
+//                heritageViewModel.insertHeritageReview(heritageReview)
+//                etReviewContent.setText("")
+//            }
+//        }
 
     }
 

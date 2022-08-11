@@ -263,8 +263,8 @@
         android:name="com.ssafy.heritage.view.feed.FeedCreateFragment"
         android:label="FeedCreateFragment" >
         <action
-            android:id="@+id/action_feedCreateFragment_to_feedDetailFragment"
-            app:destination="@id/feedDetailFragment" />
+            android:id="@+id/action_feedCreateFragment_to_feedListFragment"
+            app:destination="@id/feedListFragment" />
     </fragment>
 
 </navigation>
