@@ -6,26 +6,22 @@
     <data>
 
         <variable
-            name="noti"
-            type="com.ssafy.heritage.data.dto.Noti" />
+            name="chat"
+            type="com.ssafy.heritage.data.dto.Chat" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/background_noti_list_item"
-        android:elevation="4dp"
+        android:background="@color/white"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp"
-        android:translationZ="2dp">
+        android:paddingVertical="12dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_other"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -53,8 +49,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_chat_content_other"
+                android:elevation="4dp"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
+                android:translationZ="2dp"
                 app:layout_constraintBottom_toTopOf="@id/tv_time_other"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_profile_other"
@@ -92,9 +90,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_chat_content_me"
+                android:elevation="4dp"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 android:textColor="@color/white"
+                android:translationZ="2dp"
                 app:layout_constraintBottom_toTopOf="@id/tv_time_me"
                 app:layout_constraintEnd_toStartOf="@id/iv_profile_me"
                 app:layout_constraintStart_toStartOf="parent"
