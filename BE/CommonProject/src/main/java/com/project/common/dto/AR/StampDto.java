@@ -13,7 +13,6 @@ public class StampDto {
     private int stampSeq;
     private String stampImgUrl;
     private String stampTitle;
-    private String stampText;
     private int heritageSeq;
     private String heritageLocal;
     private String heritageLng;

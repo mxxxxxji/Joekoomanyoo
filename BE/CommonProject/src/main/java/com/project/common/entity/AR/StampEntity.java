@@ -22,7 +22,6 @@ public class StampEntity {
     private String stampImgUrl;
     @Column(nullable = false)
     private String stampTitle;
-    private String stampText;
     @Column(nullable = false)
     private int heritageSeq;
     private String heritageLocal;

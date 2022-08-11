@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
 public class MyStampResponseDto {
     private String stampTitle;
     private String stampImgUrl;
-    private String stampText;
     private String stampCategory;
 }

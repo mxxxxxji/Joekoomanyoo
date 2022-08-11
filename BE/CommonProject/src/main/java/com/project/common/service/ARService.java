@@ -147,7 +147,6 @@ public class ARService {
                             .stampSeq(0)
                             .stampImgUrl("")
                             .stampTitle(heritageEntity.getHeritageName())
-                            .stampText("")
                             .heritageSeq(heritageEntity.getHeritageSeq())
                             .heritageLocal(heritageEntity.getHeritageLocal())
                             .heritageLng(heritageEntity.getHeritageLng())
@@ -330,7 +329,6 @@ public class ARService {
                         .stampTitle(stampDto.getStampTitle())
                         .stampImgUrl("")
                         .stampCategory(stampDto.getStampCategory())
-                        .stampText(stampDto.getStampText())
                         .build();
 
                 list.add(myStampResponseDto);
