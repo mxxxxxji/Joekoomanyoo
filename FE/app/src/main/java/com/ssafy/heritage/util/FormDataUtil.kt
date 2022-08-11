@@ -19,7 +19,7 @@ object FormDataUtil {
     fun getImageBody(key: String, file: File): MultipartBody.Part {
         return MultipartBody.Part.createFormData(
             name = key,
-            filename = file.name.replace("%",""),
+            filename = file.name,
             body = file.asRequestBody("image/*".toMediaTypeOrNull())
         )
     }
