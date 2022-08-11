@@ -136,7 +136,11 @@
     <fragment
         android:id="@+id/feedDetailFragment"
         android:name="com.ssafy.heritage.view.feed.FeedDetailFragment"
-        android:label="fragment_feed_detail" />
+        android:label="fragment_feed_detail">
+        <action
+            android:id="@+id/action_feedDetailFragment_to_feedListFragment"
+            app:destination="@id/feedListFragment" />
+    </fragment>
 
     <!--profile-->
     <fragment
@@ -263,8 +267,8 @@
         android:name="com.ssafy.heritage.view.feed.FeedCreateFragment"
         android:label="FeedCreateFragment" >
         <action
-            android:id="@+id/action_feedCreateFragment_to_feedDetailFragment"
-            app:destination="@id/feedDetailFragment" />
+            android:id="@+id/action_feedCreateFragment_to_feedListFragment"
+            app:destination="@id/feedListFragment" />
     </fragment>
 
 </navigation>

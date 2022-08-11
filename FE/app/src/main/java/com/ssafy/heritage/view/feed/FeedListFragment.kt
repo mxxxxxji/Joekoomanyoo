@@ -22,6 +22,7 @@ import com.ssafy.heritage.databinding.FragmentFeedListBinding
 import com.ssafy.heritage.listener.FeedListClickListener
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.FeedViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 
 private const val TAG = "FeedListFragment___"
 
@@ -30,8 +31,11 @@ class FeedListFragment :
 
     private val feedAdapter by lazy { FeedListAdapter() }
     private val feedViewModel by activityViewModels<FeedViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
     val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
     private var clickMyList: Int = 0
+    private var dataList: List<FeedListResponse> = arrayListOf()
+    private var selectedChip: Int = 0
     private var searchedList = listOf<Feed>()
 
     override fun init() {
@@ -40,6 +44,29 @@ class FeedListFragment :
         initAdapter()
         initObserver()
         initClickListener()
+        setChip()
+    }
+
+    private fun setChip() = with(binding) {
+        chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
+            when (checkedIds[0]) {
+                R.id.tv_feed_my -> {
+                    selectedChip = 1
+//                    val newList = dataList.filter { it.userSeq == userSeq }
+//                    feedAdapter.submitList(newList)
+                    feedViewModel.getMyFeedList()
+                    Log.d(TAG, "setChip: 나의 피드")
+                }
+                R.id.tv_feed_all -> {
+//                    val newList = dataList.filter { true }
+//                    feedAdapter.submitList(newList)
+                    feedViewModel.getFeedListAll()
+                    Log.d(TAG, "setChip: 모두의 피드")
+                }
+            }
+        }
+
+        chipGroup.check(R.id.chip_all)
     }
 
     override fun onCreateView(
@@ -92,15 +119,6 @@ class FeedListFragment :
             fabCreateFeed.setOnClickListener {
                 findNavController().navigate(R.id.action_feedListFragment_to_feedCreateFragment)
             }
-        }
-
-        tvFeedMy.setOnClickListener {
-            clickMyList = 1
-            feedViewModel.getMyFeedList()
-        }
-
-        tvFeedAll.setOnClickListener {
-            feedViewModel.getFeedListAll()
         }
     }
 }

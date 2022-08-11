@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.transition.Fade
 import androidx.transition.TransitionInflater
 import com.ssafy.heritage.ApplicationClass
@@ -45,6 +46,8 @@ class FeedDetailFragment :
             binding.feed = this@FeedDetailFragment.feed
             Log.d(TAG, "init init: ${this@FeedDetailFragment.feed}")
         }
+
+        initClickListenr()
     }
 
     override fun onAttach(context: Context) {
@@ -85,6 +88,8 @@ class FeedDetailFragment :
     private fun initClickListenr() = with(binding) {
         imagebtnFeedDetailDelete.setOnClickListener {
             feedViewModel.deleteFeed(feed!!.feedSeq)
+            // 피드 목록 페이지로 이동하고 싶은데 홈으로 가넹,,
+            findNavController().popBackStack()
         }
         imagebtnFeedDetailLock.setOnClickListener {
             feedViewModel.changeFeedOpen(feed!!.feedSeq, feed!!.feedOpen)

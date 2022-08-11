@@ -133,7 +133,7 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
                 if (img_multipart == null || img_multipart?.let { feedViewModel.sendImage(it) } == true) {
                     feedInfo = FeedAddRequest( userSeq, feedViewModel.insertFeedInfo.value!!, title, content, feedOpen, tagResult )
                     feedViewModel.insertFeed(feedInfo)
-                    val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedDetailFragment()
+                    val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedListFragment()
                     findNavController().navigate(action)
                     Log.d(TAG, "initClickListener: ${feedInfo}")
                     Log.d(TAG, "initClickListener: 클릭했니?")

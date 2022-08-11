@@ -15,18 +15,14 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
 import androidx.transition.TransitionInflater
 import com.ssafy.heritage.R
@@ -36,6 +32,7 @@ import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.HeritageScrap
 import com.ssafy.heritage.data.remote.api.UserService
+import com.ssafy.heritage.data.remote.request.HeritageReviewRequest
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.databinding.FragmentHeritageDetail2Binding
 import com.ssafy.heritage.databinding.ItemReviewBinding
@@ -50,6 +47,7 @@ import kotlinx.coroutines.withContext
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
+import okhttp3.MultipartBody
 
 
 private const val TAG = "HeritageDetailFragment___"
@@ -68,8 +66,9 @@ class HeritageDetailFragment :
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
     private lateinit var heritageScrap: HeritageScrap
 
-    private lateinit var heritageReview: HeritageReviewListResponse
+    private lateinit var heritageReview: HeritageReviewRequest
     private lateinit var heritageReviewAdapter: HeritageReviewAdapter
+    var img_multipart: MultipartBody.Part? = null
 
     private lateinit var btnPlayAudio: Button
     var mediaPlayer: MediaPlayer? = null
@@ -276,10 +275,12 @@ class HeritageDetailFragment :
             if (scrapCheck == true) {
                 // 포함되어 있으면 스크랩 된 것 => 스크랩 삭제할 수 있는 동작
                 userViewModel.deleteHeritageScrap(heritage?.heritageSeq!!)
+                makeToast("스크랩이 취소되었습니다")
                 scrapCheck = false
             } else {
                 // 없으면 스크랩 할 수 있는 동작
                 userViewModel.insertHeritageScrap(heritageScrap)
+                makeToast("스크랩 되었습니다")
                 scrapCheck = true
             }
         }
@@ -348,29 +349,36 @@ class HeritageDetailFragment :
 
         // 리뷰 글쓰기 버튼 클릭 시
         btnCreateReview.setOnClickListener {
-            if (!etReviewContent.text.isNullOrBlank()) {
-                heritageReview = HeritageReviewListResponse(
-                    0,
-                    userSeq = userViewModel.user.value?.userSeq!!,
-                    heritageSeq = heritageViewModel.heritage.value?.heritageSeq!!,
-                    etReviewContent.text.toString(),
-                    "",
-                    0,
-                    userNickname = userViewModel.user.value?.userNickname!!
-                )
-                heritageViewModel.insertHeritageReview(heritageReview)
-                val binding: ItemReviewBinding? = null
-                // 이미지 없으면 공간이 안 보이게 하고 싶다,,,,
-                if (heritageReview.attachSeq == 0) {
-                    binding?.ivHeritageReviewImg?.visibility = View.VISIBLE
-                    Log.d(TAG, "bind: review img visible")
+
+            CoroutineScope(Dispatchers.Main).launch {
+                if (!etReviewContent.text.isNullOrBlank() || img_multipart == null || img_multipart?.let {
+                        heritageViewModel.sendImage(
+                            it
+                        )
+                    } == true) {
+
+                    heritageReview = HeritageReviewRequest(
+                        userSeq = userViewModel.user.value?.userSeq!!,
+                        heritageSeq = heritageViewModel.heritage.value?.heritageSeq!!,
+                        heritageReviewText = etReviewContent.text.toString(),
+                        reviewImgUrl = heritageViewModel.insertHeritageReview!!.value!!,
+                        userNickname = userViewModel.user.value?.userNickname!!
+                    )
+                    heritageViewModel.insertHeritageReview(heritageReview)
+                    Log.d(TAG, "initClickListener: ${heritageReview}")
+                    // 이미지 없으면 공간이 안 보이게 하고 싶다,,,,
+//                val binding: ItemReviewBinding? = null
+//                if (heritageReview.attachSeq == 0) {
+//                    binding?.ivHeritageReviewImg?.visibility = View.VISIBLE
+//                    Log.d(TAG, "bind: review img visible")
+//                } else {
+//                    binding?.ivHeritageReviewImg?.visibility = View.GONE
+//                    Log.d(TAG, "bind: review img gone")
+//                }
+                    etReviewContent.setText("")
                 } else {
-                    binding?.ivHeritageReviewImg?.visibility = View.GONE
-                    Log.d(TAG, "bind: review img gone")
+                    makeToast("리뷰를 작성해보세요")
                 }
-                etReviewContent.setText("")
-            } else {
-                makeToast("리뷰를 작성해보세요")
             }
         }
 

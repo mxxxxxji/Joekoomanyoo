@@ -8,7 +8,7 @@ import java.io.Serializable
 @Parcelize
 data class FeedListResponse(
     @SerializedName("feedSeq") val feedSeq: Int,                    // 게시글 번호
-//    @SerializedName("userSeq") val userSeq: Int,               // 사용자 번호
+    @SerializedName("userSeq") val userSeq: Int,               // 사용자 번호
     @SerializedName("feedImgUrl") var feedImgUrl: String = "",      // 피드 첨부파일 Url
     @SerializedName("feedTitle") val feedTitle: String,             // 제목
     @SerializedName("feedContent") val feedContent: String,         // 본문
