@@ -15,7 +15,6 @@
  */
 package com.ssafy.heritage.helpers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
@@ -28,11 +27,10 @@ import android.view.WindowManager;
 
 import com.google.ar.core.Session;
 
-/**
- * Helper to track the display rotations. In particular, the 180 degree rotations are not notified
- * by the onSurfaceChanged() callback, and thus they require listening to the android display
- * events.
- */
+
+//디스플레이 회전을 추적하는 도우미입니다. 특히 180도 회전은 알림을 받지 않습니다
+// onSurfaceChanged() 콜백에 의해 처리되므로 Android 디스플레이 이벤트를 수신해야 합니다.
+
 public final class DisplayRotationHelper implements DisplayListener {
   private boolean viewportChanged;
   private int viewportWidth;
@@ -41,11 +39,7 @@ public final class DisplayRotationHelper implements DisplayListener {
   private final DisplayManager displayManager;
   private final CameraManager cameraManager;
 
-  /**
-   * Constructs the DisplayRotationHelper but does not register the listener yet.
-   *
-   * @param context the Android {@link Context}.
-   */
+
   public DisplayRotationHelper(Context context) {
     displayManager = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
     cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
@@ -53,12 +47,13 @@ public final class DisplayRotationHelper implements DisplayListener {
     display = windowManager.getDefaultDisplay();
   }
 
-  /** Registers the display listener. Should be called from {@link Activity#onResume()}. */
+
+
   public void onResume() {
     displayManager.registerDisplayListener(this, null);
   }
 
-  /** Unregisters the display listener. Should be called from {@link Activity#onPause()}. */
+
   public void onPause() {
     displayManager.unregisterDisplayListener(this);
   }
@@ -94,10 +89,9 @@ public final class DisplayRotationHelper implements DisplayListener {
     }
   }
 
-  /**
-   *  Returns the aspect ratio of the GL surface viewport while accounting for the display rotation
-   *  relative to the device camera sensor orientation.
-   */
+  // 디스플레이 회전을 고려하면서 GL 표면 뷰포트의 종횡비를 반환합니다.
+  // 장치 카메라 센서 방향을 기준으로 합니다.
+
   public float getCameraSensorRelativeViewportAspectRatio(String cameraId) {
     float aspectRatio;
     int cameraSensorToDisplayRotation = getCameraSensorToDisplayRotation(cameraId);

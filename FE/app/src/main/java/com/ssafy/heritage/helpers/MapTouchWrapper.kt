@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package com.ssafy.heritage.helpers
+
 import android.content.Context
 import android.graphics.Point
 import android.util.AttributeSet

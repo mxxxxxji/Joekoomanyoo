@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputLayout
-import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.ApplicationClass.Companion.IMG_URL
 import com.ssafy.heritage.data.dto.*
 import com.ssafy.heritage.data.repository.Repository
@@ -266,7 +265,6 @@ class UserViewModel : ViewModel() {
                 _user.value = user
                 true
             } else {
-                ApplicationClass.sharedPreferencesUtil.deleteToken()
                 false
             }
         }

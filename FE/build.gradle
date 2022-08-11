@@ -1,11 +1,14 @@
 buildscript {
-   // ext.kotlin_version = '1.4.20'
+    ext.kotlin_version = '1.4.20'
     dependencies {
         // Safe Args
+
         def nav_version = '2.3.5'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
 
         classpath 'com.google.gms:google-services:4.3.13'
+        classpath "com.android.tools.build:gradle:4.1.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // oss licenses plugin 추가
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.4'

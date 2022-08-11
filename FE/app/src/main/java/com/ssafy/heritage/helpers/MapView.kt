@@ -15,27 +15,18 @@
  */
 package com.ssafy.heritage.helpers
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.LightingColorFilter
-import android.graphics.Paint
-import android.util.Log
-import androidx.annotation.ColorInt
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 
+import android.graphics.*
+import android.media.AudioRecord.MetricsConstants.SOURCE
+import androidx.annotation.ColorInt
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.cache.DiskCache
+import com.ssafy.heritage.HelloGeoActivity
 import com.ssafy.heritage.R
 
-import com.ssafy.heritage.view.ar.ARPlayFragment
+class MapView(val activity: HelloGeoActivity, val googleMap: GoogleMap) {
 
-class MapView(val fragment: ARPlayFragment, val googleMap: GoogleMap) {
   private val CAMERA_MARKER_COLOR: Int = Color.argb(255, 0, 255, 0)
   private val EARTH_MARKER_COLOR: Int = Color.argb(255, 125, 125, 125)
 
@@ -43,7 +34,9 @@ class MapView(val fragment: ARPlayFragment, val googleMap: GoogleMap) {
   val cameraMarker = createMarker(CAMERA_MARKER_COLOR)
   var cameraIdle = true
 
-  val earthMarker = createMarker(EARTH_MARKER_COLOR)
+
+  val earthMarker = createMarker2()
+
 
   init {
     googleMap.uiSettings.apply {
@@ -63,7 +56,9 @@ class MapView(val fragment: ARPlayFragment, val googleMap: GoogleMap) {
 
   fun updateMapPosition(latitude: Double, longitude: Double, heading: Double) {
     val position = LatLng(latitude, longitude)
-    fragment.requireActivity().runOnUiThread {
+
+    activity.runOnUiThread {
+
       // If the map is already in the process of a camera update, then don't move it.
       if (!cameraIdle) {
         return@runOnUiThread
@@ -75,7 +70,9 @@ class MapView(val fragment: ARPlayFragment, val googleMap: GoogleMap) {
       val cameraPositionBuilder: CameraPosition.Builder = if (!setInitialCameraPosition) {
         // Set the camera position with an initial default zoom level.
         setInitialCameraPosition = true
-        CameraPosition.Builder().zoom(21f).target(position)
+
+        CameraPosition.Builder().zoom(30f).target(position)
+
       } else {
         // Set the camera position and keep the same zoom level.
         CameraPosition.Builder()
@@ -101,15 +98,36 @@ class MapView(val fragment: ARPlayFragment, val googleMap: GoogleMap) {
     return googleMap.addMarker(markersOptions)!!
   }
 
+  private fun createMarker2(): Marker {
+    val markersOptions = MarkerOptions()
+      .position(LatLng(0.0,0.0))
+      .draggable(false)
+      .anchor(0.5f, 0.5f)
+      .flat(true)
+      .visible(false)
+      .icon(BitmapDescriptorFactory.fromBitmap(createHeritageMarkerBitmap()))
+    return googleMap.addMarker(markersOptions)!!
+  }
+
   private fun createColoredMarkerBitmap(@ColorInt color: Int): Bitmap {
     val opt = BitmapFactory.Options()
     opt.inMutable = true
     val navigationIcon =
-      BitmapFactory.decodeResource(fragment.requireActivity().resources, R.color.gray, opt)
+    BitmapFactory.decodeResource(activity.resources, R.color.gray, opt)
     val p = Paint()
     p.colorFilter = LightingColorFilter(color,  /* add= */1)
     val canvas = Canvas(navigationIcon)
     canvas.drawBitmap(navigationIcon,  /* left= */0f,  /* top= */0f, p)
+    return navigationIcon
+  }
+
+  private fun createHeritageMarkerBitmap(): Bitmap {
+    val opt = BitmapFactory.Options()
+    opt.inMutable = true
+    val navigationIcon =
+      BitmapFactory.decodeResource(activity.resources,R.drawable.monster,opt)
+    val canvas = Canvas(navigationIcon)
+    canvas.drawBitmap(navigationIcon,  /* left= */0f,  /* top= */0f, null)
     return navigationIcon
   }
 }
