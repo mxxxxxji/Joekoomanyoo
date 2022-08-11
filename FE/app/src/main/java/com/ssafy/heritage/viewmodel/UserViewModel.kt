@@ -84,6 +84,9 @@ class UserViewModel : ViewModel() {
         job?.join()
 
         response?.let {
+            Log.d(TAG, "withdrawal response: $it")
+            Log.d(TAG, "withdrawal response body: ${it.body()}")
+            Log.d(TAG, "withdrawal response errorBody: ${it.errorBody()}")
             it.isSuccessful
         }
     }

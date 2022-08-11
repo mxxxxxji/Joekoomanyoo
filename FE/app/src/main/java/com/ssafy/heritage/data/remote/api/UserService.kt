@@ -23,7 +23,7 @@ interface UserService {
     suspend fun signup(@Body user: User): Response<String>
 
     // 회원탈퇴
-    @DELETE("/api/user/resign/{userId}")
+    @PUT("/api/user/resign/{userId}")
     suspend fun resign(@Path("userId") userId: String): Response<String>
 
     // 일반 로그인
