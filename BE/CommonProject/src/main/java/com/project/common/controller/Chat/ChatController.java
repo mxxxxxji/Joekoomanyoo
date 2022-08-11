@@ -32,13 +32,13 @@ public class ChatController {
 
     @MessageMapping(value = "/message")
     public void message(HttpServletRequest request,	ChatMessageDto chatMessage) {
-   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-   	 	UserEntity user = userRepository.findByUserId(userId);
-    	String nickName=user.getUserNickname();
-    	
-    	chatMessage.setSender(nickName);
-    	chatMessage.setImg(user.getProfileImgUrl());
-    	chatMessage.setUserSeq(user.getUserSeq());
+//   	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
+//   	 	UserEntity user = userRepository.findByUserId(userId);
+//    	String nickName=user.getUserNickname();
+//    	
+//    	chatMessage.setSender(nickName);
+//    	chatMessage.setImg(user.getProfileImgUrl());
+//    	chatMessage.setUserSeq(user.getUserSeq());
     	
         messagingTemplate.convertAndSend("/sub/chat/room/"+chatMessage.getGroupSeq(),chatMessage);
     }
