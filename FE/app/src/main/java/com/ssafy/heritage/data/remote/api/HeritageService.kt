@@ -21,7 +21,7 @@ interface HeritageService {
 
     // 리뷰를 작성한다
     @POST("/api/heritage/review")
-    suspend fun insertHeritageReview(@Body body: HeritageReviewRequest): Response<HeritageReviewListResponse>
+    suspend fun insertHeritageReview(@Body body: HeritageReviewRequest): Response<String>
 
     // 리뷰를 삭제한다
     @DELETE("/api/heritage/review/{heritageReviewSeq}/{heritageSeq}")
