@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -17,6 +18,7 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.FeedListAdapter
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Feed
+import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.databinding.FragmentFeedListBinding
 import com.ssafy.heritage.listener.FeedListClickListener
@@ -34,9 +36,8 @@ class FeedListFragment :
     private val userViewModel by activityViewModels<UserViewModel>()
     val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
     private var clickMyList: Int = 0
-    private var dataList: List<FeedListResponse> = arrayListOf()
     private var selectedChip: Int = 0
-    private var searchedList = listOf<Feed>()
+    private var dataList: List<FeedListResponse> = arrayListOf()
 
     override fun init() {
 
@@ -45,6 +46,7 @@ class FeedListFragment :
         initObserver()
         initClickListener()
         setChip()
+        setSearchView()
     }
 
     private fun setChip() = with(binding) {
@@ -120,5 +122,28 @@ class FeedListFragment :
                 findNavController().navigate(R.id.action_feedListFragment_to_feedCreateFragment)
             }
         }
+    }
+
+    private fun setSearchView() {
+
+        // 검색 했을 때
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrBlank()) {
+                    Log.d(TAG, "onQueryTextSubmit: 쿼리 $query")
+                    feedViewModel.getFeedListByHashTag(query)
+                    feedAdapter.submitList(dataList)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrBlank()) {
+//                    searchedList = arrayListOf()
+                    feedAdapter.submitList(dataList)
+                }
+                return false
+            }
+        })
     }
 }

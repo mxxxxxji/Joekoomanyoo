@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.transition.Fade
@@ -34,7 +35,6 @@ class FeedDetailFragment :
     private val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
 
     private lateinit var callback: OnBackPressedCallback
-    var checkLike = false
 
     override fun init() {
 
@@ -52,8 +52,20 @@ class FeedDetailFragment :
             feed?.hashtag?.forEach { tag ->
                 tagResult = tagResult.plus("#${tag} ")
             }
+
             binding.tvFeedHashtag.text = tagResult
             Log.d(TAG, "init init: ${this@FeedDetailFragment.feed}")
+
+            feedViewModel.countFeedLike(feed!!.feedSeq)
+            binding.tvFeedCount.setText(feedViewModel.feedCount.toString())
+            Log.d(TAG, "init: 좋아요 수 ${feedViewModel.feedCount}")
+
+//            if (feed!!.feedOpen == 'Y') {
+//                binding.switchFeedDetailLock.isChecked = true
+//            } else {
+//                binding.switchFeedDetailLock.isChecked = false
+//            }
+//            Log.d(TAG, "init: 공개비공개 ${feed!!.feedOpen}")
         }
 
         initClickListenr()
@@ -98,35 +110,39 @@ class FeedDetailFragment :
         // 피드 삭제
         imagebtnFeedDetailDelete.setOnClickListener {
 
-            feedViewModel.deleteFeed(feed!!.feedSeq)
+            feedViewModel?.deleteFeed(feed!!.feedSeq)
             // 피드 목록 페이지로 이동하고 싶은데 홈으로 가넹,,
             findNavController().popBackStack()
         }
-        // 피드 공개/비공개
-        imagebtnFeedDetailLock.setOnClickListener {
-            if (feed?.feedOpen == 'Y') {
-                feedViewModel.changeFeedOpen(feed!!.feedSeq, 'Y')
-                Log.d(TAG, "y -> n: ${feed!!.feedOpen}")
-            } else if (feed?.feedOpen == 'N') {
-                feedViewModel.changeFeedOpen(feed!!.feedSeq, 'N')
-                Log.d(TAG, "n -> y: ${feed!!.feedOpen}")
-            }
-        }
+//        // 피드 공개/비공개
+//        switchFeedDetailLock.setOnCheckedChangeListener { _, isChecked ->
+//            if (feed?.feedOpen == 'Y' && isChecked) {
+//                feedViewModel?.changeFeedOpen(feed!!.feedSeq, 'N')
+//                binding.switchFeedDetailLock.isChecked = false
+//                Log.d(TAG, "y -> n: ${feed!!.feedOpen}")
+//            } else if (feed?.feedOpen == 'N' && !isChecked) {
+//                feedViewModel?.changeFeedOpen(feed!!.feedSeq, 'Y')
+//                binding.switchFeedDetailLock.isChecked = true
+//                Log.d(TAG, "n -> y: ${feed!!.feedOpen}")
+//            }
+//        }
 
         // 좋아요
         imagebtnFeedDetailLike.setOnClickListener {
             if (feed?.userLike == 'N') {
-                feedViewModel.insertFeedLike(feed!!.feedSeq)
+                feedViewModel?.insertFeedLike(feed!!.feedSeq)
                 feed?.userLike = 'Y'
                 imagebtnFeedDetailLike.isSelected = true
                 Log.d(TAG, "initClickListenr: 좋아요")
             } else if (feed?.userLike == 'Y') {
-                feedViewModel.deleteFeedLike(feed!!.feedSeq)
+                feedViewModel?.deleteFeedLike(feed!!.feedSeq)
                 feed?.userLike = 'N'
                 imagebtnFeedDetailLike.isSelected = false
                 Log.d(TAG, "initClickListenr: 좋아요 취소")
             }
-            tvFeedCount.setText(feedViewModel.countFeedLike(feed!!.feedSeq).toString())
+            feedViewModel?.countFeedLike(feed!!.feedSeq)
+            tvFeedCount.setText(feedViewModel?.feedCount.toString())
+            Log.d(TAG, "initClickListenr: ${feedViewModel?.feedCount.toString()}")
         }
 
         // 뒤로가기
