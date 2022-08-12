@@ -29,16 +29,16 @@ public class GroupChatService{
     	groupChatRepository.save(entity);
     }
     
-    // 저장 메시지 보내기
-    public List<GroupChatDto> getMessages(int groupSeq) {
-        List<GroupChatDto> messages =new ArrayList<>();
-        for(GroupChatEntity entity: groupChatRepository.findAll()) {
-        	UserEntity user = userRepository.findByUserSeq(entity.getUserSeq());
-        	if(entity.getGroupSeq()==groupSeq)
-        		messages.add(new GroupChatDto(entity,user));
-        }
-        return messages;
-    }
-    
+//    // 저장 메시지 보내기
+//    public List<GroupChatDto> getMessages(int groupSeq) {
+//        List<GroupChatDto> messages =new ArrayList<>();
+//        for(GroupChatEntity entity: groupChatRepository.findAll()) {
+//        	UserEntity user = userRepository.findByUserSeq(entity.getUserSeq());
+//        	if(entity.getGroupSeq()==groupSeq)
+//        		messages.add(new GroupChatDto(entity,user));
+//        }
+//        return messages;
+//    }
+//    
 
 }
