@@ -46,16 +46,18 @@ public class FeedController {
     //피드 전체 조회
     @ApiOperation(value = "피드 전체 조회")
     @GetMapping("/list")
-    public ResponseEntity<List<ResFeedDto>>getFeedList() throws Exception{
-	     return new ResponseEntity<>(feedService.getFeedList(),HttpStatus.OK);
+    public ResponseEntity<List<ResFeedDto>>getFeedList(HttpServletRequest request) throws Exception{
+    	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
+    	return new ResponseEntity<>(feedService.getFeedList(userId),HttpStatus.OK);
     }
     
     
 	//피드 전체 조회 (By 해쉬태그)
     @ApiOperation(value = "피드 조회 by 해쉬태그")
     @GetMapping("/list-by-hashtag/{fhTag}")
-    public ResponseEntity<List<ResFeedDto>> getFeedListByTag(@PathVariable("fhTag") String fhTag) throws Exception{
-    	return new ResponseEntity<>(feedService.getFeedListByTag(fhTag),HttpStatus.OK);
+    public ResponseEntity<List<ResFeedDto>> getFeedListByTag(HttpServletRequest request,@PathVariable("fhTag") String fhTag) throws Exception{
+     	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
+    	return new ResponseEntity<>(feedService.getFeedListByTag(fhTag,userId),HttpStatus.OK);
     }
     
     //내 피드 조회
@@ -69,8 +71,9 @@ public class FeedController {
     //피드 보기
     @ApiOperation(value = "피드 보기")
     @GetMapping("/{feedSeq}/info")
-    public ResponseEntity<ResFeedDto> getFeedDetail(@PathVariable("feedSeq") int feedSeq){
-	     return new ResponseEntity<>(feedService.getFeedDetail(feedSeq),HttpStatus.OK);
+    public ResponseEntity<ResFeedDto> getFeedDetail(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq){
+     	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN")); 
+    	return new ResponseEntity<>(feedService.getFeedDetail(feedSeq,userId),HttpStatus.OK);
     }
     
     //피드 삭제

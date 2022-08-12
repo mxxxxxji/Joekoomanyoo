@@ -28,7 +28,6 @@ public class FeedDto {
 
    
    	// 모임 설정 정보 //
-
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Date createdTime;
 

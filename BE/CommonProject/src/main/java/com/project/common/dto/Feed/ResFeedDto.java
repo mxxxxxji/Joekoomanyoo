@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Feed.FeedHashtagEntity;
+import com.project.common.entity.Feed.FeedLikeEntity;
 import com.project.common.entity.User.UserEntity;
 
 import lombok.Builder;
@@ -33,13 +34,15 @@ public class ResFeedDto {
    	private String userNickname;
    
    	private List<String> hashtag;
+   	
+   	private String userLike;
    	// 모임 설정 정보 //
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Date createdTime;
 
 	@Builder
-	public ResFeedDto(FeedEntity feed,UserEntity user) {
+	public ResFeedDto(FeedEntity feed,UserEntity user,UserEntity user2) {
 		this.feedSeq = feed.getFeedSeq();
 		this.feedImgUrl=feed.getFeedImgUrl();
 		this.feedTitle=feed.getFeedTitle();
@@ -48,15 +51,20 @@ public class ResFeedDto {
 		this.userImgUrl=user.getProfileImgUrl();
 		this.userNickname=user.getUserNickname();
 		this.createdTime=feed.getCreatedTime();
-		System.out.println(this.createdTime);
 		this.hashtag=new ArrayList<>();
+	
 		for(FeedHashtagEntity entity :feed.getHashtags()) {
 			this.hashtag.add(entity.getFhTag());
 		}
+
+		this.userLike="N";
+		for(FeedLikeEntity entity:feed.getFeedLikes()) {
+			if(entity.getUserSeq()==user2.getUserSeq()) {
+				this.userLike="Y";
+				break;
+			}else
+				this.userLike="N";
+		}
 	}
-	
     
-
-
-
 }

@@ -51,16 +51,18 @@ public class FeedLikeService {
 	// 피드 좋아요 해제
 	@Transactional
 	public String deleteFeedLike(String userId,int feedSeq) {
-
 		FeedEntity feed = feedService.findFeed(feedSeq);
 		UserEntity user = userRepository.findByUserId(userId);
-
-		for (FeedLikeEntity entity : feed.getFeedLikes()) {
-			if (entity.getUserSeq() == user.getUserSeq()) {
-				feedLikeRepository.deleteByFeedLikeSeq(entity.getFeedLikeSeq());
-				feed.removeFeedLike(entity.getFeedLikeSeq());
+		int cnt =0;
+		for (int i=0;i<feed.getFeedLikes().size();i++) {
+			if (feed.getFeedLikes().get(i).getUserSeq() == user.getUserSeq()) {
+				feedLikeRepository.deleteByFeedLikeSeq(feed.getFeedLikes().get(i).getFeedLikeSeq());
+				feed.removeFeedLike(feed.getFeedLikes().get(i).getFeedLikeSeq());
+				cnt++;
 			}
 		}
+		if(cnt==0) 
+			return "Fail";
 		return "Success";
 	}
 
