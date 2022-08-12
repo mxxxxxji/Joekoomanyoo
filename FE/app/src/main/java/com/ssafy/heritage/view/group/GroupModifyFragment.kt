@@ -1,5 +1,6 @@
 package com.ssafy.heritage.view.group
 
+import android.app.DatePickerDialog
 import android.os.Build
 import android.text.format.DateFormat
 import android.util.Log
@@ -64,6 +65,27 @@ class GroupModifyFragment :
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initClickListener() = with(binding) {
+
+        val cal = Calendar.getInstance()
+        val year = cal.get(Calendar.YEAR)
+        val month = cal.get(Calendar.MONTH)
+        val day = cal.get(Calendar.DAY_OF_MONTH)
+
+        // 시작일
+        etGroupStartDate.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener { view, myear, mmonth, mdayOfMonth ->
+                etGroupStartDate.setText(""+  myear+"-"+ mmonth+1 +"-"+mdayOfMonth )
+            }, year, month, day)
+            datePickerDialog.show()
+        }
+
+        // 종료일
+        etGroupEndDate.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener { view, myear, mmonth, mdayOfMonth ->
+                etGroupEndDate.setText(""+  myear+"-"+ mmonth+1 +"-"+mdayOfMonth )
+            }, year, month, day)
+            datePickerDialog.show()
+        }
 
         // 아이 동반 여부
         cbKids.setOnCheckedChangeListener { buttonView, isChecked ->

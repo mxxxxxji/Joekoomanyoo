@@ -6,8 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.group.GroupModifyFragment"
-        android:background="@drawable/background_group_list">
+        tools:context=".view.group.GroupModifyFragment">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -17,13 +16,15 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white_50">
+                android:background="@color/main_color"
+                android:elevation="10dp">
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/btn_back"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+                    android:backgroundTint="@color/white"
+                    android:background="@drawable/ic_baseline_arrow_back_24"/>
 
                 <TextView
                     android:id="@+id/header_create_group"
@@ -31,8 +32,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="30dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_b"
                     android:text="모임 만들기"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -74,6 +76,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:text="모임 이름"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
@@ -83,13 +86,15 @@
                             <EditText
                                 android:id="@+id/et_group_name"
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/background_search_view"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
+                                android:textSize="12sp"
                                 android:elevation="10dp"
                                 android:hint="모임 이름"
                                 android:paddingStart="20dp"
-                                android:textColorHint="@color/main_color"
+                                android:textColorHint="@color/gray"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/header_group_name" />
@@ -99,6 +104,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:text="스터디 설명"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
@@ -109,13 +115,15 @@
                             <EditText
                                 android:id="@+id/et_group_content"
                                 android:layout_width="match_parent"
-                                android:layout_height="100dp"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/background_search_view"
                                 android:elevation="10dp"
                                 android:hint="스터디 설명"
                                 android:paddingStart="20dp"
-                                android:textColorHint="@color/main_color"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
+                                android:textColorHint="@color/gray"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/header_group_content" />
@@ -125,6 +133,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:text="모임 기간"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
@@ -135,22 +144,25 @@
                             <EditText
                                 android:id="@+id/et_group_start_date"
                                 android:layout_width="150dp"
-                                android:layout_height="50dp"
-                                android:layout_marginTop="10dp"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="8dp"
+                                android:inputType="date"
+                                android:focusable="false"
                                 android:background="@drawable/background_search_view"
-                                android:elevation="10dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 android:hint="시작일"
                                 android:paddingStart="20dp"
                                 android:textColorHint="@color/gray"
-                                app:layout_constraintEnd_toStartOf="@id/header_from"
+                                android:textSize="12sp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/header_group_term" />
 
                             <TextView
                                 android:id="@+id/header_from"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="10dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:text="-"
                                 android:textColor="@color/black"
                                 android:textSize="32sp"
@@ -161,13 +173,17 @@
                             <EditText
                                 android:id="@+id/et_group_end_date"
                                 android:layout_width="150dp"
-                                android:layout_height="50dp"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/background_search_view"
                                 android:elevation="10dp"
+                                android:inputType="date"
+                                android:focusable="false"
                                 android:hint="종료일"
                                 android:paddingStart="20dp"
+                                android:textSize="12sp"
                                 android:textColorHint="@color/gray"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/header_from"
                                 app:layout_constraintTop_toBottomOf="@id/header_group_term" />
@@ -180,6 +196,7 @@
                                 android:text="최대 인원"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 app:layout_constraintEnd_toStartOf="@id/header_age"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/et_group_start_date" />
@@ -187,7 +204,7 @@
                             <com.skydoves.powerspinner.PowerSpinnerView
                                 android:id="@+id/spinner_maximum"
                                 android:layout_width="150dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="12dp"
                                 android:background="@drawable/button_vertify"
                                 android:foreground="?attr/selectableItemBackground"
@@ -196,7 +213,8 @@
                                 android:padding="10dp"
                                 android:textColor="@color/bombay"
                                 android:textColorHint="@color/bombay"
-                                android:textSize="14.5sp"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 app:layout_constraintStart_toStartOf="@id/header_maximum"
                                 app:layout_constraintTop_toBottomOf="@id/header_maximum"
                                 app:spinner_arrow_gravity="end"
@@ -218,6 +236,7 @@
                                 android:layout_marginStart="130dp"
                                 android:layout_marginTop="30dp"
                                 android:text="나이대"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
                                 app:layout_constraintStart_toEndOf="@id/header_maximum"
@@ -226,7 +245,7 @@
                             <com.skydoves.powerspinner.PowerSpinnerView
                                 android:id="@+id/spinner_age"
                                 android:layout_width="150dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="12dp"
                                 android:background="@drawable/button_vertify"
                                 android:foreground="?attr/selectableItemBackground"
@@ -235,7 +254,8 @@
                                 android:padding="10dp"
                                 android:textColor="@color/bombay"
                                 android:textColorHint="@color/bombay"
-                                android:textSize="14.5sp"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 app:layout_constraintStart_toStartOf="@id/header_age"
                                 app:layout_constraintTop_toBottomOf="@id/header_age"
                                 app:spinner_arrow_gravity="end"
@@ -258,13 +278,14 @@
                                 android:text="지역"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/spinner_age" />
 
                             <com.skydoves.powerspinner.PowerSpinnerView
                                 android:id="@+id/spinner_region"
                                 android:layout_width="150dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="12dp"
                                 android:background="@drawable/button_vertify"
                                 android:foreground="?attr/selectableItemBackground"
@@ -273,7 +294,8 @@
                                 android:padding="10dp"
                                 android:textColor="@color/bombay"
                                 android:textColorHint="@color/bombay"
-                                android:textSize="14.5sp"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 app:layout_constraintStart_toStartOf="@id/header_region"
                                 app:layout_constraintTop_toBottomOf="@id/header_region"
                                 app:spinner_arrow_gravity="end"
@@ -299,19 +321,22 @@
                                 android:text="비밀번호"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 app:layout_constraintStart_toEndOf="@id/header_region"
                                 app:layout_constraintTop_toBottomOf="@id/spinner_age" />
 
                             <EditText
                                 android:id="@+id/et_group_password"
                                 android:layout_width="150dp"
-                                android:layout_height="50dp"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/background_search_view"
                                 android:elevation="10dp"
                                 android:hint="비밀번호"
                                 android:paddingStart="20dp"
                                 android:textColorHint="@color/gray"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/spinner_region"
                                 app:layout_constraintTop_toBottomOf="@id/header_password" />
@@ -334,6 +359,7 @@
                                 android:layout_marginTop="20dp"
                                 android:buttonTint="#000000"
                                 android:text="글로벌 여부"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/cb_kids" />
@@ -349,7 +375,6 @@
                         android:layout_marginHorizontal="80dp"
                         android:layout_weight="1"
                         android:background="@drawable/button_login"
-                        android:backgroundTint="@color/main_color"
                         android:text="모임 만들기"
                         android:textColor="@color/white"
                         android:textSize="14sp"
@@ -364,10 +389,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

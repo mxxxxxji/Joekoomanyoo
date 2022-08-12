@@ -24,7 +24,7 @@
 
     <!--main color-->
     <color name="main_color">#356393</color>
-
+    <color name="main_color_dark">#28496C</color>
     <!--로그인 배경-->
     <color name="malibu">#FF8E9EFF</color>
     <!--로그인 버튼-->
