@@ -61,7 +61,7 @@ class GroupViewModel : ViewModel() {
     private val _selectGroupScheduleList = SingleLiveEvent<MutableList<GroupSchedule>>()
     val selectGroupScheduleList: LiveData<MutableList<GroupSchedule>> get() = _selectGroupScheduleList
 
-    private val _chatList = SingleLiveEvent<MutableList<Chat>>().apply { value = arrayListOf() }
+    private val _chatList = MutableLiveData<MutableList<Chat>>().apply { value = arrayListOf() }
     val chatList: LiveData<MutableList<Chat>> get() = _chatList
 
     fun add(info: GroupListResponse) {

@@ -46,7 +46,7 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
 
         initAdapter()
 
-        initObserer()
+//        initObserer()
 
         initClickListener()
 
@@ -65,6 +65,7 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
 
     private fun initObserer() {
         groupViewModel.chatList.observe(viewLifecycleOwner) {
+            Log.d(TAG, "initObserer chatList: $it")
             chatListAdapter.submitList(it)
         }
     }
@@ -76,10 +77,6 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
         val url = "wss://i7d102.p.ssafy.io/stomp/chat"
         val intervalMillis = 1000L
         val client = OkHttpClient()
-        val request = Request.Builder()
-            .addHeader("X-AUTH-TOKEN", ApplicationClass.sharedPreferencesUtil.getToken()!!)
-            .url(url)
-            .build()
         stomp = StompClient(client, intervalMillis)
         stomp.url = url
 
@@ -110,6 +107,7 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
                     Log.d(TAG, "initStomp 받은 메시지: $message")
                     val chat = Json.decodeFromString<Chat>(message)
                     groupViewModel.addChat(chat)
+                    chatListAdapter.submitList(groupViewModel.chatList.value)
                 }
             }
     }
@@ -124,18 +122,21 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
 
     private fun setTextChangedListener() = with(binding) {
 
-        // id 이메일 입력창 에러 비활성화
+        // 입력창 에러 비활성화
         tilChat.editText?.addTextChangedListener {
             tilChat.isErrorEnabled = false
+
             if (it?.length ?: 0 < 1) {
                 tilChat.endIconMode = END_ICON_NONE
-            } else {
+            }
+
+            else {
                 tilChat.endIconMode = END_ICON_CUSTOM
                 tilChat.setEndIconOnClickListener {
 
                     val groupSeq = groupViewModel.detailInfo.value?.groupSeq!!
                     val chatContent = tilChat.editText!!.text.toString()
-                    val chatImgUrl = ""
+                    val chatImgUrl = "0"
                     val userSeq = userViewModel.user.value?.userSeq!!
 
                     val chat = Chat(
@@ -143,7 +144,6 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
                         userSeq = userSeq,
                         chatContent = chatContent,
                         chatImgUrl = chatImgUrl
-
                     )
 
                     val serializer = serializer(Chat::class.java)
