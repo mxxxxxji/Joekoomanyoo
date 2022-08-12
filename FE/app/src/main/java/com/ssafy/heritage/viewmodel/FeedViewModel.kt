@@ -46,7 +46,8 @@ class FeedViewModel : ViewModel() {
     private val _feedOpen = SingleLiveEvent<String>()
     val feedOpen: LiveData<String> get() = _feedOpen
 
-    var feedCount: Int = 0
+    private val _feedCount = SingleLiveEvent<Int>()
+    val feedCount: LiveData<Int> get() = _feedCount
 
     fun add(info: FeedListResponse) {
         _feedInfodetail.postValue(info)
@@ -204,7 +205,8 @@ class FeedViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.countFeedLike(feedSeq).let { response ->
                 if (response.isSuccessful) {
-                    feedCount = response.body() as Int
+                    var temp = response.body() as Int
+                    _feedCount.postValue(temp)
                     Log.d(TAG, "countFeedLike: ${response.body()}")
                 } else {
                     Log.d(TAG, "countFeedLike: ${response.errorBody()}")

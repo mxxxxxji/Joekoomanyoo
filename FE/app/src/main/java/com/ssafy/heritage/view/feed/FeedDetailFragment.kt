@@ -56,9 +56,6 @@ class FeedDetailFragment :
             binding.tvFeedHashtag.text = tagResult
             Log.d(TAG, "init init: ${this@FeedDetailFragment.feed}")
 
-            feedViewModel.countFeedLike(feed!!.feedSeq)
-            binding.tvFeedCount.setText(feedViewModel.feedCount.toString())
-            Log.d(TAG, "init: 좋아요 수 ${feedViewModel.feedCount}")
 
 //            if (feed!!.feedOpen == 'Y') {
 //                binding.switchFeedDetailLock.isChecked = true
@@ -68,7 +65,23 @@ class FeedDetailFragment :
 //            Log.d(TAG, "init: 공개비공개 ${feed!!.feedOpen}")
         }
 
+//        initObserver()
         initClickListenr()
+    }
+
+    private fun initObserver() = with(binding) {
+        feedViewModel.feedCount.observe(viewLifecycleOwner) {
+            if (feed?.userLike == 'N') {
+                binding.imagebtnFeedDetailLike.isSelected = false
+                Log.d(TAG, "initClickListenr: 좋아요")
+            } else if (feed?.userLike == 'Y') {
+                binding.imagebtnFeedDetailLike.isSelected = true
+                Log.d(TAG, "initClickListenr: 좋아요 취소")
+            }
+            feedViewModel.countFeedLike(feed!!.feedSeq)
+            binding.tvFeedCount.setText(it)
+            Log.d(TAG, "init: 좋아요 수 $it")
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -127,23 +140,7 @@ class FeedDetailFragment :
 //            }
 //        }
 
-        // 좋아요
-        imagebtnFeedDetailLike.setOnClickListener {
-            if (feed?.userLike == 'N') {
-                feedViewModel?.insertFeedLike(feed!!.feedSeq)
-                feed?.userLike = 'Y'
-                imagebtnFeedDetailLike.isSelected = true
-                Log.d(TAG, "initClickListenr: 좋아요")
-            } else if (feed?.userLike == 'Y') {
-                feedViewModel?.deleteFeedLike(feed!!.feedSeq)
-                feed?.userLike = 'N'
-                imagebtnFeedDetailLike.isSelected = false
-                Log.d(TAG, "initClickListenr: 좋아요 취소")
-            }
-            feedViewModel?.countFeedLike(feed!!.feedSeq)
-            tvFeedCount.setText(feedViewModel?.feedCount.toString())
-            Log.d(TAG, "initClickListenr: ${feedViewModel?.feedCount.toString()}")
-        }
+
 
         // 뒤로가기
         imagebtnFeedBack.setOnClickListener {
