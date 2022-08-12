@@ -32,6 +32,9 @@ public class GroupChatEntity{
     @Column(name = "chat_seq")
 	private int chatSeq;
 	    
+	@Column(name="group_seq")
+	private int groupSeq;
+
 	//유저 아이디
 	@Column(name = "user_seq")
 	private int userSeq;
@@ -49,8 +52,5 @@ public class GroupChatEntity{
 	@Column(name="chat_created_at")
     private Date createdTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="group_seq")
-	private GroupEntity group;
    
 }

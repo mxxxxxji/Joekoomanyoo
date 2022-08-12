@@ -3,6 +3,8 @@ package com.project.common.dto.Chat;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.common.entity.Feed.FeedHashtagEntity;
+import com.project.common.entity.Group.GroupChatEntity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -26,17 +28,17 @@ public class GroupChatDto{
 	    
 	//메시지 이미지
 	private String chatImgUrl;
-
-	//메세지 보낸 사람 (닉네임)
-	private String sender;
-
-	//유저 이미지
-	private String userImg;
     
     //메세지 전송시간
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Date createdTime;
 
+    
+	//메세지 보낸 사람 (닉네임)
+	private String sender;
+	
+	//유저 이미지
+	private String userImg;
     
     @Builder
 	public GroupChatDto(int chatSeq, int groupSeq, int userSeq, String chatContent, String chatImgUrl, String sender,
@@ -51,7 +53,16 @@ public class GroupChatDto{
 		this.userImg = userImg;
 	}
 
-
+    public GroupChatEntity toEntity(){
+        return GroupChatEntity.builder()
+                .chatSeq(chatSeq)
+                .groupSeq(groupSeq)
+                .userSeq(userSeq)
+                .chatContent(chatContent)
+                .chatImgUrl(chatImgUrl)
+                .createdTime(createdTime)
+                .build();
+    }
 
     
    

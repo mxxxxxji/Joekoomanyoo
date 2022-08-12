@@ -32,6 +32,7 @@ public class GroupMemberDto {
     private Date updatedTime;
 	
 	private GroupEntity group;
+	
     private int userSeq;
     
 	@Builder

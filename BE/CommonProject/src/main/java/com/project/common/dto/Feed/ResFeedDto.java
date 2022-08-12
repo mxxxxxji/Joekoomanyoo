@@ -60,8 +60,7 @@ public class ResFeedDto {
 		this.userLike="N";
 		for(FeedLikeEntity entity:feed.getFeedLikes()) {
 			if(entity.getUserSeq()==user2.getUserSeq()) {
-				this.userLike="Y";
-				break;
+				this.userLike="Y";break;
 			}else
 				this.userLike="N";
 		}

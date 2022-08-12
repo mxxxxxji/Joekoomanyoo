@@ -18,6 +18,7 @@ public class ResGroupMemberDto {
 	private char memberIsEvaluated;
 	private String memberNickname;
 	
+	private int userSeq;
 	private String userId;
 	private char memberGender;
 	private int eval1;
@@ -29,6 +30,7 @@ public class ResGroupMemberDto {
 	
 	@Builder
 	public ResGroupMemberDto(GroupMemberEntity member,UserEntity user) {
+		this.userSeq=user.getUserSeq();
 		this.memberSeq = member.getMemberSeq();
 		this.groupSeq = member.getGroup().getGroupSeq();
 		this.memberStatus = member.getMemberStatus();
