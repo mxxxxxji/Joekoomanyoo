@@ -38,11 +38,11 @@ public class GroupChatRoomController {
     	return new ResponseEntity<>(groupChatRoomService.getChatRoomByGroupSeq(groupSeq), HttpStatus.OK);
     }
     
-    // 해당 채팅방에 저장된 최신 메시지 받기
-    @ApiOperation(value = "채팅 메세지 목록 받기")
-    @GetMapping("/message/{groupSeq}")
-    public ResponseEntity <List<GroupChatDto>> getMessages(@PathVariable int groupSeq){
-    	return new ResponseEntity<>(groupChatRoomService.getMessages(groupSeq), HttpStatus.OK);
-    }
+//    // 해당 채팅방에 저장된 최신 메시지 받기
+//    @ApiOperation(value = "채팅 메세지 목록 받기")
+//    @GetMapping("/message/{groupSeq}")
+//    public ResponseEntity <List<GroupChatDto>> getMessages(@PathVariable int groupSeq){
+//    	return new ResponseEntity<>(groupChatRoomService.getMessages(groupSeq), HttpStatus.OK);
+//    }
 
 }
