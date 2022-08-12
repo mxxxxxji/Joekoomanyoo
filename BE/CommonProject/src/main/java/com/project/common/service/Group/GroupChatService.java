@@ -16,14 +16,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GroupChatService{
 
-    private GroupChatRepository groupChatRepository;
+    private final GroupChatRepository groupChatRepository;
     
-    public String saveMessage(GroupChatDto chat){
+    public void saveMessage(GroupChatDto chat){
     	GroupChatEntity entity = chat.toEntity();
     	entity.setCreatedTime(new Date());
     	groupChatRepository.save(entity);
-
-    	return "Success";
     }
     
     
