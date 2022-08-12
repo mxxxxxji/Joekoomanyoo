@@ -30,7 +30,7 @@
                 android:id="@+id/til_chat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/athens_gray"
                 android:textColorHint="@color/bombay"
                 android:theme="@style/TextInputLayoutStyle"
                 app:boxBackgroundColor="@color/white"

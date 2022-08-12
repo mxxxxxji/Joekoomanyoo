@@ -257,7 +257,8 @@ class GroupViewModel : ViewModel() {
     }
 
     // 채팅 목록에 새로운 채팅 추가
-    fun addChat(chat: Chat) {
+    suspend fun addChat(chat: Chat) = withContext(Dispatchers.Main) {
         _chatList.value?.add(chat)
+        true
     }
 }
