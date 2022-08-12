@@ -6,7 +6,7 @@
     <data>
         <variable
             name="member"
-            type="com.ssafy.heritage.data.dto.Member" />
+            type="com.ssafy.heritage.data.dto.Member"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +18,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/monster"
+            android:textColor="@color/black"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tv_members_nickname"
@@ -28,12 +29,14 @@
             android:id="@+id/tv_members_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             tools:text = "김싸피"
-            android:text="@{String.valueOf(member.memberSeq)}"
+            android:text="@{member.memberNickname}"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_member_img"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

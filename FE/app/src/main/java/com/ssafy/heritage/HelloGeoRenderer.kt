@@ -187,6 +187,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
       render.renderCompassAtAnchor(it)
     }
 
+
     // Compose the virtual scene with the background.
     backgroundRenderer.drawVirtualScene(render, virtualSceneFramebuffer, Z_NEAR, Z_FAR)
   }

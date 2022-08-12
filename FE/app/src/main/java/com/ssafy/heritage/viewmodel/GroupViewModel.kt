@@ -97,20 +97,7 @@ class GroupViewModel : ViewModel() {
                 Log.d(TAG, "현재 유저 :${userSeq}")
 
                 _groupPermission.value = list.find { it.userSeq == userSeq }?.memberStatus ?: 3
-
-//                    for(i in list){
-//                        if(i.userSeq == userSeq){
-//                            Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION: ${i.memberStatus} ")
-//                            _groupPermission.postValue(i.memberStatus)
-//                        }else{ // 그 외의 경우
-//                            Log.d(TAG,"현재 유저 :${userSeq}")
-//                            _groupPermission.postValue(3)
-//                        }
-//                    }
-
-//                    Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION_groupPermission: ${_groupPermission.value}")
-//                    Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION groupPermission: ${groupPermission.value}")
-//                    _groupMemberList.postValue(list)
+                _groupMemberList.postValue(list)
                 true
             } else {
                 Log.d(TAG, "selectGroupMembers : ${response.code()}")

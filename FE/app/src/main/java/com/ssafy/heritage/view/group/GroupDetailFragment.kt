@@ -5,10 +5,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.MemberAdapter
-import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.remote.request.GroupBasic
@@ -21,7 +21,6 @@ import com.ssafy.heritage.view.dialog.ApplyGroupJoinDialogInterface
 import com.ssafy.heritage.view.dialog.OtherProfileDialog
 import com.ssafy.heritage.view.dialog.OtherProfileDialogInterface
 import com.ssafy.heritage.viewmodel.GroupViewModel
-import com.ssafy.heritage.viewmodel.UserViewModel
 
 private const val TAG = " GroupDetailFragment___"
 
@@ -38,6 +37,7 @@ class GroupDetailFragment :
     override fun init() {
         binding.groupVM = groupViewModel
         Log.d(TAG, "init: ${groupViewModel.groupPermission.value}")
+       // groupViewModel.selectGroupMembers(userSeq)
         initAdapter()
         initObserver()
         initClickListener()
@@ -93,26 +93,14 @@ class GroupDetailFragment :
         groupViewModel.detailInfo.observe(viewLifecycleOwner) {
             groupDetailInfo = it
             groupInfo = it
-
-//            when(it.status){
-//                'R' -> {
-//                    Log.d(TAG, "GROUP IS RECRUITING")
-//                    constraintBtn.visibility = View.VISIBLE
-//                }
-//                'O' -> {
-//                    Log.d(TAG, "GROUP IS OPENING")
-//                    constraintBtn.visibility = View.GONE
-//                }
-//                'F' -> {
-//                    Log.d(TAG, "GROUP IS FINISHED")
-//                   constraintBtn.visibility = View.GONE
-//                }
-//            }
-
         }
     }
 
     private fun initClickListener() {
+
+        binding.btnChangeImage.setOnClickListener {
+
+        }
 
         // 가입 요청
         binding.btnSubscription.setOnClickListener {
@@ -123,19 +111,50 @@ class GroupDetailFragment :
         // 가입취소
         binding.btnCancellation.setOnClickListener {
             // 모임을 떠나시겠습니까? 다이얼로그
+            val dialog = SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("정말 떠나실 건가요?")
+                .setContentText("모임을 정말 떠나실건가요?")
+                .setContentText("네, 탈퇴하겠습니다")
+                .setCancelText("아니요, 안할래요!")
+                .showCancelButton(true)
+                .setCancelClickListener {
+                    it.cancel()
+                }
+                .setConfirmClickListener {
+                    groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
+                    Toast.makeText(requireActivity(), "모임을 탈퇴했습니다.", Toast.LENGTH_SHORT).show()
+                    groupViewModel.setGroupPermission(3)
+                    it.dismissWithAnimation()
+                }
+                .show()
+            // 가입을 취소하시겠습니까? 다이얼로그
             groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
             Toast.makeText(requireActivity(), "가입이 취소되었습니다.", Toast.LENGTH_SHORT).show()
             groupViewModel.setGroupPermission(3)
             parentFragment?.findNavController()?.popBackStack()
-
         }
 
         // 탈퇴하기
         binding.btnDrop.setOnClickListener {
+
             // 모임을 떠나시겠습니까? 다이얼로그
-            groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
-            Toast.makeText(requireActivity(), "모임을 탈퇴했습니다.", Toast.LENGTH_SHORT).show()
-            groupViewModel.setGroupPermission(3)
+            SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("정말 떠나실 건가요?")
+                .setContentText("모임을 정말 떠나실건가요?")
+                .setContentText("네, 탈퇴하겠습니다")
+                .setCancelText("아니요, 안할래요!")
+                .showCancelButton(true)
+                .setCancelClickListener {
+                    it.cancel()
+                }
+                .setConfirmClickListener {
+                    groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
+                    Toast.makeText(requireActivity(), "모임을 탈퇴했습니다.", Toast.LENGTH_SHORT).show()
+                    groupViewModel.setGroupPermission(3)
+                    it.dismissWithAnimation()
+                }
+                .show()
+
             val action =
                 GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupListFragment()
             findNavController().navigate(action)
