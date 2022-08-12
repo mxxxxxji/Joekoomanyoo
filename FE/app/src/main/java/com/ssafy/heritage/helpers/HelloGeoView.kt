@@ -27,12 +27,15 @@ class HelloGeoView(val activity: HelloGeoActivity) : DefaultLifecycleObserver{
 
     val root = View.inflate(activity, R.layout.activity_hello_geo, null)
 
-  val surfaceView = root.findViewById<GLSurfaceView>(R.id.surfaceview).apply {
-      this.setOnTouchListener { view, motionEvent ->
-          Log.d(TAG, "${motionEvent.action}:${ motionEvent.x}, ${ motionEvent.y} ")
-          true
-      }
-  }
+  val surfaceView = root.findViewById<GLSurfaceView>(R.id.surfaceview)
+//      .apply {
+//      this.setOnTouchListener { view, motionEvent ->
+//          Log.d(TAG, "${motionEvent.action}:${ motionEvent.x}, ${ motionEvent.y} ")
+//          view.onTouchEvent(motionEvent)
+//         // if(activity.renderer.earthAnchor?.pose. == motionEvent.x && )
+//          true
+//      }
+//  }
 
   val session
     get() = activity.arCoreSessionHelper.session
@@ -52,15 +55,7 @@ class HelloGeoView(val activity: HelloGeoActivity) : DefaultLifecycleObserver{
     (activity.supportFragmentManager.findFragmentById(R.id.map)!! as SupportMapFragment).also {
       it.getMapAsync { googleMap -> mapView = MapView(activity, googleMap) }
     }
-    val fragmentWrapper = root.findViewById<MapTouchWrapper>(R.id.fragment_wrapper).apply {
-        setup { screenLocation->
-            Log.d(TAG, screenLocation.toString())
-            if(activity.renderer.earthAnchor?.pose == screenLocation) {
-                Log.d(TAG, activity.renderer.earthAnchor?.pose.toString())
-            }
-            Log.d(TAG, "dddddd${activity.renderer.earthAnchor?.pose.toString()}")
-        }
-    }
+
   val statusText = root.findViewById<TextView>(R.id.statusText)
   fun updateStatusText(earth: Earth, cameraGeospatialPose: GeospatialPose?) {
     activity.runOnUiThread {

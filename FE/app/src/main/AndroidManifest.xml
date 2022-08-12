@@ -8,9 +8,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera.ar" android:required="true"/>
-    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera.ar"
+        android:required="true" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <application
         android:name=".ApplicationClass"
@@ -22,6 +27,9 @@
         android:theme="@style/Theme.Heritage"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".ARActivity"
+            android:exported="false" />
         <activity
             android:name=".TestActivity"
             android:exported="true"
@@ -53,8 +61,8 @@
             android:name=".HelloGeoActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:screenOrientation="locked"/>
+            android:screenOrientation="locked"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".view.LanguageActivity"
             android:exported="false" />
@@ -65,16 +73,15 @@
             android:name=".view.HomeActivity"
             android:exported="true" />
 
-        <meta-data android:name="com.google.ar.core" android:value="required" />
-
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
         <meta-data
             android:name="com.google.android.ar.API_KEY"
-            android:value="AIzaSyAZjHxA12NifiqpPjb2nTw6uESg6auxv5w"/>
-
+            android:value="AIzaSyAZjHxA12NifiqpPjb2nTw6uESg6auxv5w" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAZjHxA12NifiqpPjb2nTw6uESg6auxv5w" />
-
     </application>
 
 </manifest>

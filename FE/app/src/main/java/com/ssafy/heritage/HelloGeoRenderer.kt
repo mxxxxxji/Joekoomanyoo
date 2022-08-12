@@ -49,6 +49,9 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) :  SampleRender.Renderer,
   lateinit var virtualSceneFramebuffer: Framebuffer
   var hasSetTextureNames = false
 
+  var anchorNode: AnchorNode? =null
+  var earthAnchor: Anchor? = null
+
 
   // Virtual object (ARCore pawn)
   lateinit var virtualObjectMesh: Mesh
@@ -201,10 +204,38 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) :  SampleRender.Renderer,
     }
     // Compose the virtual scene with the background.
     backgroundRenderer.drawVirtualScene(render, virtualSceneFramebuffer, Z_NEAR, Z_FAR)
-  }
-  var anchorNode: AnchorNode? =null
-  var earthAnchor: Anchor? = null
+    activity.view.surfaceView.setOnTouchListener { view, motionEvent ->
+      if(earthAnchor == null){
+        Log.d(TAG, "&&NODE 어디갔냐!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+      } else{
+        Log.d(TAG, "&&NODE 여깃냐!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        Log.d(TAG, "&&earthAnchor_x: ${earthAnchor?.pose?.xAxis?.get(0)}")
+        Log.d(TAG, "&&earthAnchor_x_1: ${earthAnchor?.pose?.xAxis?.get(1)}")
+        Log.d(TAG, "&&earthAnchor_x_q: ${earthAnchor?.pose?.qx()}")
+        Log.d(TAG, "&&motionEvent_xPrecision: ${motionEvent}")
+        Log.d(TAG, "&&motionEvent_xPrecision: ${motionEvent.xPrecision}")
+        Log.d(TAG, "&&getAxisValue_x: ${motionEvent.getAxisValue(0)}")
+        Log.d(TAG, "&&getAxisValue_rawX: ${motionEvent.rawX}")
+        Log.d(TAG, "&&getAxisValue_getX0: ${motionEvent.getX(0)}")
+        Log.d(TAG, "&&getAxisValue_getX: ${motionEvent.x}")
 
+        Log.d(TAG, "&&NODE YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
+
+        Log.d(TAG, "&&earthAnchor_y: ${earthAnchor?.pose?.yAxis?.get(0)}")
+        Log.d(TAG, "&&earthAnchor_y_1: ${earthAnchor?.pose?.yAxis?.get(1)}")
+        Log.d(TAG, "&&motionEvent_yPrecision: ${motionEvent.yPrecision}")
+        Log.d(TAG, "&&getAxisValue_y: ${motionEvent.getAxisValue(1)}")
+        Log.d(TAG, "&&getAxisValue_rawY: ${motionEvent.rawY}")
+        Log.d(TAG, "&&getAxisValue_getY0: ${motionEvent.getY(0)}")
+        Log.d(TAG, "&&getAxisValue_getY: ${motionEvent.y}")
+
+
+        session.earth?.anchors?.remove(earthAnchor)
+      }
+      true
+    }
+
+  }
 
 
   fun onMapClick(latLng: LatLng) {
@@ -234,22 +265,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) :  SampleRender.Renderer,
     touchLat = latLng.latitude
     touchLong= latLng.longitude
 
-//    if(anchorNode != null){
-//      anchorNode!!.setOnTapListener { hitTestResult, motionEvent ->
-//        Log.d(TAG, "터치")
-//        if(hitTestResult.node == null){
-//          Log.d(TAG, "NODE 어디갔냐!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-//        }else{
-//          Log.d(TAG, "NODE 여기있돠!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-//        }
-//
-//      }
-//
-//    } else{
-//      Log.d(TAG, "8888${earthAnchor?.pose}")
-//
-//      Log.d(TAG, "9999${anchorNode?.anchor?.pose}")
-//    }
+
     Log.d(TAG, "8888${earthAnchor?.pose}")
 
     Log.d(TAG, "9999${anchorNode?.anchor?.pose}")
@@ -257,6 +273,16 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) :  SampleRender.Renderer,
       position = latLng
       isVisible = true
     }
+//    activity.view.surfaceView.setOnTouchListener { view, motionEvent ->
+//      val x = earthAnchor?.pose?.xAxis?.get(0)?.toInt()
+//      Log.d(TAG, "&&onMapClick_x: ${earthAnchor?.pose?.xAxis?.get(0)}")
+//      Log.d(TAG, "&&motionEvent_xPrecision: ${motionEvent.xPrecision}")
+//
+//      Log.d(TAG, "&&onMapClick_y: ${earthAnchor?.pose?.yAxis?.get(1)}")
+//      Log.d(TAG, "&&motionEvent_yPrecision: ${motionEvent.yPrecision}")
+//      earthAnchor?.detach()
+//      true
+//    }
 
   }
 
@@ -266,8 +292,8 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) :  SampleRender.Renderer,
     // Get the current pose of the Anchor in world space. The Anchor pose is updated
     // during calls to session.update() as ARCore refines its estimate of the world.
     anchor.pose.toMatrix(modelMatrix, 0)
-    Log.d(TAG, "renderCompassAtAnchor: ${anchor.pose}")
-    Log.d(TAG, "modelMatrix: ${modelMatrix}")
+   // Log.d(TAG, "renderCompassAtAnchor: ${anchor.pose}")
+   // Log.d(TAG, "modelMatrix: ${modelMatrix}")
     // Calculate model/view/projection matrices
     Matrix.multiplyMM(modelViewMatrix, 0, viewMatrix, 0, modelMatrix, 0)
     Matrix.multiplyMM(modelViewProjectionMatrix, 0, projectionMatrix, 0, modelViewMatrix, 0)
@@ -275,7 +301,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) :  SampleRender.Renderer,
     // Update shader properties and draw
     virtualObjectShader.setMat4("u_ModelViewProjection", modelViewProjectionMatrix)
     draw(virtualObjectMesh, virtualObjectShader, virtualSceneFramebuffer)
-    Log.d(TAG, " modelViewProjectionMatrix: ${modelViewProjectionMatrix}")
+    //Log.d(TAG, " modelViewProjectionMatrix: ${modelViewProjectionMatrix}")
 
   }
 

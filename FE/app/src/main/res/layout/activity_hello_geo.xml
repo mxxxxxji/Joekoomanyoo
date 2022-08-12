@@ -5,23 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    <android.opengl.GLSurfaceView-->
-<!--        android:id="@+id/surfaceview"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="fill_parent"-->
-<!--        android:layout_gravity="top" />-->
-    <com.ssafy.heritage.helpers.MapTouchWrapper
-        android:id="@+id/fragment_wrapper"
+    <android.opengl.GLSurfaceView
+        android:id="@+id/surfaceview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="top">
+        android:layout_gravity="top" />
+<!--    <com.ssafy.heritage.helpers.MapTouchWrapper-->
+<!--        android:id="@+id/fragment_wrapper"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="fill_parent"-->
+<!--        android:layout_gravity="top">-->
 
-            <android.opengl.GLSurfaceView
-                android:id="@+id/surfaceview"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="top" />
-    </com.ssafy.heritage.helpers.MapTouchWrapper>
+<!--            <android.opengl.GLSurfaceView-->
+<!--                android:id="@+id/surfaceview"-->
+<!--                android:layout_width="fill_parent"-->
+<!--                android:layout_height="fill_parent"-->
+<!--                android:layout_gravity="top" />-->
+<!--    </com.ssafy.heritage.helpers.MapTouchWrapper>-->
 
     <com.ssafy.heritage.helpers.MapTouchWrapper
 

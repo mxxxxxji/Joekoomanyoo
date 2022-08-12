@@ -164,5 +164,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20+'
     implementation 'com.google.android.gms:play-services-location:19+'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
-
+    implementation 'com.google.maps.android:maps-utils-ktx:0.2'
 }
