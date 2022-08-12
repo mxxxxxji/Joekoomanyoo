@@ -58,20 +58,23 @@ public class FeedService{
 	}
 	
 	//피드 전체 조회
-	public List<ResFeedDto> getFeedList(){
+	public List<ResFeedDto> getFeedList(String userId){
 		List<ResFeedDto> feedList =new ArrayList<>();
+		UserEntity user = userRepository.findByUserId(userId);
 		for(FeedEntity entity : feedRepository.findAll()) {
-			feedList.add(new ResFeedDto(entity,entity.getUser()));
+			feedList.add(new ResFeedDto(entity,entity.getUser(),user));
 		}
 		return feedList;
 	}
 	
 	//피드 전체 조회 (By 해쉬태그)
-	public List<ResFeedDto> getFeedListByTag(String fhTag){
+	public List<ResFeedDto> getFeedListByTag(String fhTag,String userId){
 		List<ResFeedDto> feedList=new ArrayList<>();
+		UserEntity user = userRepository.findByUserId(userId);
+		
 		for(FeedHashtagEntity entity : feedHashtagRepository.findAll()) {
 			if(entity.getFhTag().equals(fhTag)) {
-				feedList.add(new ResFeedDto(entity.getFeed(),entity.getFeed().getUser()));
+				feedList.add(new ResFeedDto(entity.getFeed(),entity.getFeed().getUser(),user));
 			}
 		}
 		return feedList;
@@ -82,15 +85,17 @@ public class FeedService{
 		List<ResFeedDto> feedList=new ArrayList<>();
 		UserEntity user = userRepository.findByUserId(userId);
 		for(FeedEntity entity : user.getFeeds()) {
-			feedList.add(new ResFeedDto(entity,user));
+			feedList.add(new ResFeedDto(entity,user,user));
 		}
 		return feedList;
 	}
 	
 	//피드 보기
-	public ResFeedDto getFeedDetail(int feedSeq) {
+	public ResFeedDto getFeedDetail(int feedSeq,String userId) {
+
+		UserEntity user = userRepository.findByUserId(userId);
 		FeedEntity feedInfo=feedRepository.findByFeedSeq(feedSeq);
-		ResFeedDto feed=new ResFeedDto(feedInfo,feedInfo.getUser());
+		ResFeedDto feed=new ResFeedDto(feedInfo,feedInfo.getUser(),user);
 
 		return feed;
 	}
