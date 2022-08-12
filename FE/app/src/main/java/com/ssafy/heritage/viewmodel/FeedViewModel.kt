@@ -46,6 +46,9 @@ class FeedViewModel : ViewModel() {
     private val _feedOpen = SingleLiveEvent<String>()
     val feedOpen: LiveData<String> get() = _feedOpen
 
+//    private val _feedCount = MutableLiveData<Int>()
+//    val feedCount: MutableLiveData<Int> get() = _feedCount
+
     fun add(info: FeedListResponse) {
         _feedInfodetail.postValue(info)
     }
@@ -166,6 +169,46 @@ class FeedViewModel : ViewModel() {
                 true
             } else {
                 false
+            }
+        }
+    }
+
+    fun insertFeedLike(feedSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) { 
+            repository.insertFeedLike(feedSeq).let { response ->
+                Log.d(TAG, "insertFeedLike: ${response}")
+                if (response.isSuccessful) {
+                    Log.d(TAG, "insertFeedLike: 좋아요 성공")
+                    Log.d(TAG, "insertFeedLike: ${response.body()}")
+                } else {
+                    Log.d(TAG, "insertFeedLike: ${response.errorBody()}")
+                }
+            }
+        }
+    }
+
+    fun deleteFeedLike(feedSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteFeedLike(feedSeq).let { response ->
+                Log.d(TAG, "deleteFeedLike: $response")
+                if (response.isSuccessful) {
+                    Log.d(TAG, "insertFeedLike: 좋아요 취소 성공")
+                    Log.d(TAG, "deleteFeedLike: ${response.body()}")
+                } else {
+                    Log.d(TAG, "insertFeedLike: ${response.errorBody()}")
+                }
+            }
+        }
+    }
+
+    fun countFeedLike(feedSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.countFeedLike(feedSeq).let { response ->
+                if (response.isSuccessful) {
+                    Log.d(TAG, "countFeedLike: ${response.body()}")
+                } else {
+                    Log.d(TAG, "countFeedLike: ${response.errorBody()}")
+                }
             }
         }
     }

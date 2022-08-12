@@ -165,6 +165,15 @@ class Repository constructor(context: Context) {
     suspend fun changeFeedOpen(feedSeq: Int, feedOpen: Char): Response<String> =
         feedApi.changeFeedOpen(feedSeq, feedOpen)
 
+    suspend fun insertFeedLike(feedSeq: Int): Response<String> =
+        feedApi.insertFeedLike(feedSeq)
+
+    suspend fun countFeedLike(feedSeq: Int): Response<Int> =
+        feedApi.countFeedLike(feedSeq)
+
+    suspend fun deleteFeedLike(feedSeq: Int): Response<String> =
+        feedApi.deleteFeedLike(feedSeq)
+
     // file
     suspend fun sendImage(file: MultipartBody.Part): Response<String> =
         fileApi.saveImage(file)

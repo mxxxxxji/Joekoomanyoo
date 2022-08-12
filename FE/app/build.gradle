@@ -171,4 +171,7 @@ dependencies {
 
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2'
+
+    // recyclerview selection
+    implementation 'androidx.recyclerview:recyclerview-selection:1.1.0-beta01'
 }

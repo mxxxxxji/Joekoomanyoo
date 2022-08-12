@@ -72,8 +72,8 @@ class HeritageDetailFragment :
 
     private lateinit var heritageReview: HeritageReviewRequest
     private lateinit var heritageReviewAdapter: HeritageReviewAdapter
+    private lateinit var heritageReviewListResponse: HeritageReviewListResponse
     var img_multipart: MultipartBody.Part? = null
-    var reviewImgUrl: String? = ""
 
     private lateinit var btnPlayAudio: Button
     var mediaPlayer: MediaPlayer? = null
@@ -127,6 +127,9 @@ class HeritageDetailFragment :
             binding.heritage = this@HeritageDetailFragment.heritage
             Log.d(TAG, "init init: ${this@HeritageDetailFragment.heritage}")
         }
+//        if (userViewModel.user.value?.profileImgUrl != heritageReviewListResponse.profileImgUrl) {
+//            heritageReviewListResponse.reviewImgUrl = userViewModel.user.value?.profileImgUrl.toString()
+//        }
 
         initMap()
 

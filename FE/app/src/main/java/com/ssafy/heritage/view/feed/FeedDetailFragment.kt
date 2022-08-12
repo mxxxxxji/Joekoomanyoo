@@ -15,6 +15,7 @@ import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.databinding.FragmentFeedDetailBinding
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.FeedViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,9 +30,11 @@ class FeedDetailFragment :
     //    private var feed: Feed? = null
     private var feed: FeedListResponse? = null
     private val feedViewModel by activityViewModels<FeedViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
     private val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
 
     private lateinit var callback: OnBackPressedCallback
+    var checkLike = false
 
     override fun init() {
 
@@ -94,6 +97,7 @@ class FeedDetailFragment :
     private fun initClickListenr() = with(binding) {
         // 피드 삭제
         imagebtnFeedDetailDelete.setOnClickListener {
+
             feedViewModel.deleteFeed(feed!!.feedSeq)
             // 피드 목록 페이지로 이동하고 싶은데 홈으로 가넹,,
             findNavController().popBackStack()
@@ -101,13 +105,30 @@ class FeedDetailFragment :
         // 피드 공개/비공개
         imagebtnFeedDetailLock.setOnClickListener {
             if (feed?.feedOpen == 'Y') {
-                feedViewModel.changeFeedOpen(feed!!.feedSeq, 'N')
+                feedViewModel.changeFeedOpen(feed!!.feedSeq, 'Y')
                 Log.d(TAG, "y -> n: ${feed!!.feedOpen}")
             } else if (feed?.feedOpen == 'N') {
-                feedViewModel.changeFeedOpen(feed!!.feedSeq, 'Y')
+                feedViewModel.changeFeedOpen(feed!!.feedSeq, 'N')
                 Log.d(TAG, "n -> y: ${feed!!.feedOpen}")
             }
         }
+
+        // 좋아요
+        imagebtnFeedDetailLike.setOnClickListener {
+            if (feed?.userLike == 'N') {
+                feedViewModel.insertFeedLike(feed!!.feedSeq)
+                feed?.userLike = 'Y'
+                imagebtnFeedDetailLike.isSelected = true
+                Log.d(TAG, "initClickListenr: 좋아요")
+            } else if (feed?.userLike == 'Y') {
+                feedViewModel.deleteFeedLike(feed!!.feedSeq)
+                feed?.userLike = 'N'
+                imagebtnFeedDetailLike.isSelected = false
+                Log.d(TAG, "initClickListenr: 좋아요 취소")
+            }
+            tvFeedCount.setText(feedViewModel.countFeedLike(feed!!.feedSeq).toString())
+        }
+
         // 뒤로가기
         imagebtnFeedBack.setOnClickListener {
             findNavController().popBackStack()
