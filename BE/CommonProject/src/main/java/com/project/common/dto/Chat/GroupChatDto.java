@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.common.entity.Group.GroupChatEntity;
-import com.project.common.entity.User.UserEntity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -53,18 +52,6 @@ public class GroupChatDto{
 		this.userImg = userImg;
 	}
     
-//    public GroupChatDto(GroupChatEntity entity, UserEntity user) {
-//		this.chatSeq = entity.getChatSeq();
-//		this.groupSeq = entity.getGroupSeq();
-//		this.userSeq = entity.getUserSeq();
-//		this.chatContent = entity.getChatContent();
-//		this.chatImgUrl = entity.getChatImgUrl();
-//		this.sender = user.getUserNickname();
-//		this.userImg = user.getProfileImgUrl();
-//		this.createdTime=entity.getCreatedTime();
-//	}
-    
-
     public GroupChatEntity toEntity(){
         return GroupChatEntity.builder()
                 .chatSeq(chatSeq)
