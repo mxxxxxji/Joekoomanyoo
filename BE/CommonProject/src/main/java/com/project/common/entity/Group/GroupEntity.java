@@ -152,15 +152,5 @@ public class GroupEntity {
         groupDestination.getGdSeq()==gdSeq);
     }
     
-    // 모임 채팅
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    @Builder.Default
-    private List<GroupChatEntity> messages = new ArrayList<>();
-    
-    // 모임 채팅  Method
-    public void addGroupChat(GroupChatEntity groupChat) {
-    	this.messages.add(groupChat);
-    	groupChat.setGroup(this);
-    }
-
+ 
 }

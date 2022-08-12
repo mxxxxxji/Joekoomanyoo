@@ -23,8 +23,7 @@ public class GroupChatController {
     
     @MessageMapping(value = "/chat/message")
     public void message(GroupChatDto chat) {
-    	int userSeq=chat.getUserSeq();
-    	UserEntity user = userRepository.findByUserSeq(userSeq);
+    	UserEntity user = userRepository.findByUserSeq(chat.getUserSeq());
     	chat.setSender(user.getUserNickname());
     	chat.setUserImg(user.getProfileImgUrl());    	
 		chat.setCreatedTime(new Date());
