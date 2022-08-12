@@ -64,6 +64,8 @@ class GroupViewModel : ViewModel() {
     private val _chatList = MutableLiveData<MutableList<Chat>>().apply { value = arrayListOf() }
     val chatList: LiveData<MutableList<Chat>> get() = _chatList
 
+    var sharedcheck = false
+
     fun add(info: GroupListResponse) {
         _detailInfo.postValue(info)
     }
@@ -190,8 +192,10 @@ class GroupViewModel : ViewModel() {
                     Log.d(TAG, "insertGroupDestination isSuccessful: ${response.body()}")
                     if (response.body() == "Success") {
                         makeToast("${groupName}에 ${heritageName}이(가) 추가되었습니다.")
+                        sharedcheck = true
                     } else {
                         makeToast("이미 추가된 모임입니다.")
+                        sharedcheck = false
                     }
                 } else {
                     Log.d(TAG, "insertGroupDestination: ${response.code()}")

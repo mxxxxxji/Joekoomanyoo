@@ -174,4 +174,7 @@ dependencies {
 
     // Dialog
     implementation 'com.github.f0ris.sweetalert:library:1.5.1'
+
+    // recyclerview selection
+    implementation 'androidx.recyclerview:recyclerview-selection:1.1.0-beta01'
 }

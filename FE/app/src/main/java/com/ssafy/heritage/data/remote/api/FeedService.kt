@@ -43,8 +43,14 @@ interface FeedService {
     // 피드 좋아요 등록
     @POST("/api/feed/{feedSeq}/like/add")
     suspend fun insertFeedLike(@Path("feedSeq") feedSeq: Int): Response<String>
+
     // 피드 좋아요 개수 조회
+    @GET("/api/feed/{feedSeq}/like/count")
+    suspend fun countFeedLike(@Path("feedSeq") feedSeq: Int): Response<Int>
+
     // 피드 좋아요 해제
+    @DELETE("/api/feed/{feedSeq}/like/delete")
+    suspend fun deleteFeedLike(@Path("feedSeq") feedSeq: Int): Response<String>
 
     // 피드 해시태그 API
     // 피드 해시태그 목록 조회

@@ -31,6 +31,7 @@ class SharedMyGroupListDialog(heritageSeq: Int) : DialogFragment() {
     private var groupSeq = 0
     private var groupName = ""
     private val heritageSeq: Int = heritageSeq
+    var selectPos = -1
 
 
     // 아이템 뿌려주는 거는 리뷰 리스트 참고하셈
@@ -93,8 +94,10 @@ class SharedMyGroupListDialog(heritageSeq: Int) : DialogFragment() {
             // 선택한 모임이 있다면
             if (groupSeq != 0) {
                 groupViewModel.insertGroupDestination(groupSeq, heritageSeq, groupName, heritageViewModel.heritage.value?.heritageName!!)
-
-
+                if (!groupViewModel.sharedcheck) {
+                } else {
+                    dismiss()
+                }
             } else {
                 makeToast("모임을 선택해주세요!")
             }
