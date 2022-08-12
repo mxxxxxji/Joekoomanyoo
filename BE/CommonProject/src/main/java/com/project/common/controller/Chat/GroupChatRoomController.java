@@ -39,7 +39,8 @@ public class GroupChatRoomController {
     }
     
     // 해당 채팅방에 저장된 최신 메시지 받기
-    @GetMapping("/room/message/{groupSeq}")
+    @ApiOperation(value = "채팅 메세지 목록 받기")
+    @GetMapping("/message/{groupSeq}")
     public ResponseEntity <List<GroupChatDto>> getMessages(@PathVariable int groupSeq){
     	return new ResponseEntity<>(groupChatRoomService.getMessages(groupSeq), HttpStatus.OK);
     }

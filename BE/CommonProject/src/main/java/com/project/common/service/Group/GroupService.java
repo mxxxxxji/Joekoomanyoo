@@ -78,8 +78,8 @@ public class GroupService{
 		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
 		if(group==null)
 			return "Fail - No Group";
-		for(GroupMemberEntity entity : group.getMembers()) {
-			groupMemberRepository.deleteByMemberSeq(entity.getMemberSeq());
+		for(int i=0;i<group.getMembers().size();i++) {
+			groupMemberRepository.deleteByMemberSeq(group.getMembers().get(i).getMemberSeq());
 		}
 		groupRepository.deleteById(groupSeq);
 		return "Success";
