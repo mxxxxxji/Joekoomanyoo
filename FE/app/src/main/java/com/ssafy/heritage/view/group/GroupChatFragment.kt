@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gmail.bishoybasily.stomp.lib.Event
 import com.gmail.bishoybasily.stomp.lib.StompClient
@@ -36,15 +35,12 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
     private val chatListAdapter: ChatListAdapter by lazy { ChatListAdapter(userViewModel.user.value?.userSeq!!) }
 
     private val groupViewModel by activityViewModels<GroupViewModel>()
-    private val groupViewModelFrag by viewModels<GroupViewModel>()
     private val userViewModel by activityViewModels<UserViewModel>()
 
     lateinit var stomp: StompClient
     lateinit var stompConnection: Disposable
 
     override fun init() {
-        groupViewModelFrag.add(groupViewModel.detailInfo.value!!)
-        groupViewModelFrag.getChatList(groupViewModel.detailInfo.value?.groupSeq!!)
 
         initView()
 
@@ -74,7 +70,7 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
     }
 
     private fun initObserer() {
-        groupViewModelFrag.chatList.observe(viewLifecycleOwner) {
+        groupViewModel.chatList.observe(viewLifecycleOwner) {
             Log.d(TAG, "initObserer chatList: $it")
             chatListAdapter.submitList(it)
             binding.recyclerView.scrollToPosition(it.size - 1)
@@ -117,10 +113,10 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
                 CoroutineScope(Dispatchers.Main).launch {
                     Log.d(TAG, "initStomp 받은 메시지: $message")
                     val chat = Json.decodeFromString<Chat>(message)
-                    groupViewModelFrag.addChat(chat)
-                    chatListAdapter.submitList(groupViewModelFrag.chatList.value)
+                    groupViewModel.addChat(chat)
+                    chatListAdapter.submitList(groupViewModel.chatList.value)
                     chatListAdapter.notifyDataSetChanged()
-                    binding.recyclerView.scrollToPosition(groupViewModelFrag.chatList.value!!.size - 1)
+                    binding.recyclerView.scrollToPosition(groupViewModel.chatList.value!!.size - 1)
                 }
             }
     }

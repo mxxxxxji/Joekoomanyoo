@@ -37,6 +37,7 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
 //            groupViewModel.getGroupList()
             groupViewModel.add(args.groupInfo)
            val s= groupViewModel.selectGroupMembers(ApplicationClass.sharedPreferencesUtil.getUser(),args.groupInfo.groupSeq)
+            groupViewModel.getChatList(args.groupInfo.groupSeq)
             Log.d(TAG, "init CoroutineScope: $s")
             initAdapter()
             initClickListener()
