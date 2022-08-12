@@ -3,13 +3,18 @@ package com.project.common.dto.Chat;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.common.entity.Group.GroupChatEntity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
 public class GroupChatDto{
 
 	//메시지 번호
@@ -50,6 +55,18 @@ public class GroupChatDto{
 		this.sender = sender;
 		this.userImg = userImg;
 	}
+
+
+    
+    public GroupChatEntity toEntity(){
+        return GroupChatEntity.builder()
+                .chatSeq(chatSeq)
+                .userSeq(userSeq)
+                .chatContent(chatContent)
+                .chatImgUrl(chatImgUrl)
+                .createdTime(createdTime)
+                .build();
+    }
 
 
 

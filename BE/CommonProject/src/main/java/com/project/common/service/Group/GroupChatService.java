@@ -29,7 +29,7 @@ public class GroupChatService{
 				.createdTime(new Date())
 				.userSeq(chat.getUserSeq())
 				.build());
-		groupRepository.save(group);
+	//	groupRepository.save(group);
 
     	return "Success";
     }
