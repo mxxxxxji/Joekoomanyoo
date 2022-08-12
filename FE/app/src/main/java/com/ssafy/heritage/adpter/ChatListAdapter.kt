@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.data.dto.Chat
 import com.ssafy.heritage.databinding.ItemChatBinding
 
-class ChatListAdapter(val userSeq: Int) : ListAdapter<Chat, ChatListAdapter.ViewHolder>(DiffCallback()) {
+class ChatListAdapter(val userSeq: Int) :
+    ListAdapter<Chat, ChatListAdapter.ViewHolder>(DiffCallback()) {
 
 
     inner class ViewHolder(private val binding: ItemChatBinding) :
@@ -17,9 +18,11 @@ class ChatListAdapter(val userSeq: Int) : ListAdapter<Chat, ChatListAdapter.View
         fun bind(data: Chat) = with(binding) {
             chat = data
 
-            if (userSeq == data.userSeq){
+            if (userSeq == data.userSeq) {
                 constraintOther.visibility = View.INVISIBLE
-            }else{
+                constraintMe.visibility = View.VISIBLE
+            } else {
+                constraintOther.visibility = View.VISIBLE
                 constraintMe.visibility = View.INVISIBLE
             }
         }
