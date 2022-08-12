@@ -53,16 +53,16 @@ public class GroupChatDto{
 		this.userImg = userImg;
 	}
     
-    public GroupChatDto(GroupChatEntity entity, UserEntity user) {
-		this.chatSeq = entity.getChatSeq();
-		this.groupSeq = entity.getGroupSeq();
-		this.userSeq = entity.getUserSeq();
-		this.chatContent = entity.getChatContent();
-		this.chatImgUrl = entity.getChatImgUrl();
-		this.sender = user.getUserNickname();
-		this.userImg = user.getProfileImgUrl();
-		this.createdTime=entity.getCreatedTime();
-	}
+//    public GroupChatDto(GroupChatEntity entity, UserEntity user) {
+//		this.chatSeq = entity.getChatSeq();
+//		this.groupSeq = entity.getGroupSeq();
+//		this.userSeq = entity.getUserSeq();
+//		this.chatContent = entity.getChatContent();
+//		this.chatImgUrl = entity.getChatImgUrl();
+//		this.sender = user.getUserNickname();
+//		this.userImg = user.getProfileImgUrl();
+//		this.createdTime=entity.getCreatedTime();
+//	}
     
 
     public GroupChatEntity toEntity(){
