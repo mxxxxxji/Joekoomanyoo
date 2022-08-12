@@ -25,8 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class GroupChatRoomService{
 
     private Map<Integer, GroupChatRoomDto> chatRoomDTOMap;
-    private final GroupChatRepository groupChatRepository;
-    private final UserRepository userRepository;
     
     
     @PostConstruct
@@ -45,16 +43,6 @@ public class GroupChatRoomService{
         chatRoomDTOMap.put(room.getGroupSeq(), room);
 
         return room;
-    }
-    // 저장 메시지 보내기
-    public List<GroupChatDto> getMessages(int groupSeq) {
-        List<GroupChatDto> messages =new ArrayList<>();
-        for(GroupChatEntity entity: groupChatRepository.findAll()) {
-        	UserEntity user = userRepository.findByUserSeq(entity.getUserSeq());
-        	if(entity.getGroupSeq()==groupSeq)
-        		messages.add(new GroupChatDto(entity,user));
-        }
-        return messages;
     }
 
 }
