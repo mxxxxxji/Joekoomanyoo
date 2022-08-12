@@ -100,12 +100,12 @@ public class GroupEntity {
 	private UserEntity user;
     
 
-    // 모임 멤버 //
+    // 모임 멤버
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @Builder.Default
     private List<GroupMemberEntity> members = new ArrayList<>();
     
-    // 모임 멤버 Method //
+    // 모임 멤버 Method
     public void addGroupMember(GroupMemberEntity groupMember) {
     	this.members.add(groupMember);
     	groupMember.setGroup(this);
@@ -116,13 +116,14 @@ public class GroupEntity {
                 groupMember.getMemberSeq()==memberSeq);
     }
     
-
-    // 모임 일정 //
+    
+    
+    // 모임 일정
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @Builder.Default
     private List<GroupScheduleEntity> schedules = new ArrayList<>();
     
-    // 모임 일정 Method //
+    // 모임 일정 Method
     public void addGroupSchedule(GroupScheduleEntity groupSchedule) {
     	this.schedules.add(groupSchedule);
     	groupSchedule.setGroup(this);
@@ -133,12 +134,14 @@ public class GroupEntity {
         groupSchedule.getGsSeq()==gsSeq);
     }
     
-    // 모임 목적지 //
+    
+    
+    // 모임 목적지
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @Builder.Default
     private List<GroupDestinationEntity> destinations = new ArrayList<>();
     
-    // 모임 목적지  Method //
+    // 모임 목적지  Method
     public void addGroupDestination(GroupDestinationEntity groupDestination) {
     	this.destinations.add(groupDestination);
     	groupDestination.setGroup(this);
@@ -149,5 +152,15 @@ public class GroupEntity {
         groupDestination.getGdSeq()==gdSeq);
     }
     
+    // 모임 채팅
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<GroupChatEntity> messages = new ArrayList<>();
     
+    // 모임 채팅  Method
+    public void addGroupChat(GroupChatEntity groupChat) {
+    	this.messages.add(groupChat);
+    	groupChat.setGroup(this);
+    }
+
 }

@@ -10,13 +10,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ChatRoomDto {
+public class GroupChatRoomDto {
 
     private int groupSeq;
     private Set<WebSocketSession> sessions = new HashSet<>();
 
-    public static ChatRoomDto create(int groupSeq){
-        ChatRoomDto chatRoom = new ChatRoomDto();
+    public static GroupChatRoomDto create(int groupSeq){
+        GroupChatRoomDto chatRoom = new GroupChatRoomDto();
         chatRoom.groupSeq = groupSeq;
         return chatRoom;
     }

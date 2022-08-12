@@ -1,7 +1,5 @@
 package com.project.common.entity.Group;
 
-
-
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -22,42 +20,37 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
 @Getter @Setter 
 @Builder @AllArgsConstructor @NoArgsConstructor
-@Table(name="tb_group_member")
-public class GroupMessageEntity {
+@Table(name="tb_group_chat")
+public class GroupChatEntity{
 
+	//메시지 번호
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_seq")
-	private int memberSeq;
-	
-	@Column(name = "member_status")
-	private int memberStatus;
-	
-	@Column(name = "member_appeal")
-	private String memberAppeal;
-	
-	@Column(name = "member_is_evaluated")
-	private char memberIsEvaluated;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "member_approve_at")
-	private Date approveTime;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="member_created_at")
-	private Date createdTime;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "member_updated_at")
-    private Date updatedTime;
-	
-    @Column(name = "user_seq")
-    private int userSeq;
+    @Column(name = "chat_seq")
+	private int chatSeq;
+	    
+	//유저 아이디
+	@Column(name = "user_seq")
+	private int userSeq;
+
+	//메시지 내용
+	@Column(name = "chat_content")	
+	private String chatContent;
+	    
+	//메시지 이미지
+	@Column(name = "chat_img_url")
+	private String chatImgUrl;
     
+    //메세지 전송시간
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="chat_created_at")
+    private Date createdTime;
+
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="group_seq")
 	private GroupEntity group;
-
+   
 }

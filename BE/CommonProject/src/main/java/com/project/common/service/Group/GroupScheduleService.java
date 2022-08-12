@@ -109,10 +109,10 @@ public class GroupScheduleService{
 		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
 		if(group==null)
 			return "Fail - No group";
-		for(GroupScheduleEntity entity : group.getSchedules()) {
-			if(entity.getGsDateTime()==gsDateTime) {
-				groupScheduleRepository.deleteByGsSeq(entity.getGsSeq());
-				group.removeGroupSchedule(entity.getGsSeq());
+		for(int i=0;i<group.getSchedules().size();i++) {
+			if(group.getSchedules().get(i).getGsDateTime().equals(gsDateTime)) {
+				groupScheduleRepository.deleteByGsSeq(group.getSchedules().get(i).getGsSeq());
+				group.removeGroupSchedule(group.getSchedules().get(i).getGsSeq());
 			}
 		}
 		return "Success";

@@ -110,10 +110,12 @@ public class GroupDestinationService{
 	@Transactional
 	public String deleteGroupDestination(int groupSeq, int heritageSeq) {
 		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
-		for(GroupDestinationEntity entity : group.getDestinations()) {
-			if(entity.getHeritageSeq()==heritageSeq) {
-				groupDestinationRepository.deleteByGdSeq(entity.getGdSeq());
-				group.removeGroupDestination(entity.getGdSeq());
+		if(group==null)
+			return "fail";
+		for(int i=0;i<group.getDestinations().size();i++) {
+			if(group.getDestinations().get(i).getHeritageSeq()==heritageSeq) {
+				groupDestinationRepository.deleteByGdSeq(group.getDestinations().get(i).getGdSeq());
+				group.removeGroupDestination(group.getDestinations().get(i).getGdSeq());
 			}
 		}
 		return "Success";
