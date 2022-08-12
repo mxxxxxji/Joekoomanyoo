@@ -38,6 +38,7 @@ class GroupDetailFragment :
     override fun init() {
         binding.groupVM = groupViewModel
         Log.d(TAG, "init: ${groupViewModel.groupPermission.value}")
+       // groupViewModel.selectGroupMembers(userSeq)
         initAdapter()
         initObserver()
         initClickListener()
@@ -93,22 +94,6 @@ class GroupDetailFragment :
         groupViewModel.detailInfo.observe(viewLifecycleOwner) {
             groupDetailInfo = it
             groupInfo = it
-
-//            when(it.status){
-//                'R' -> {
-//                    Log.d(TAG, "GROUP IS RECRUITING")
-//                    constraintBtn.visibility = View.VISIBLE
-//                }
-//                'O' -> {
-//                    Log.d(TAG, "GROUP IS OPENING")
-//                    constraintBtn.visibility = View.GONE
-//                }
-//                'F' -> {
-//                    Log.d(TAG, "GROUP IS FINISHED")
-//                   constraintBtn.visibility = View.GONE
-//                }
-//            }
-
         }
     }
 

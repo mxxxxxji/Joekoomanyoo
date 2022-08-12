@@ -19,7 +19,6 @@ class Repository constructor(context: Context) {
     // group
     suspend fun insertGroup(body: GroupAddRequest): Response<GroupListResponse> =
         groupApi.insertGroup(body)
-
     suspend fun selectAllGroups(): Response<List<GroupListResponse>> = groupApi.selectAllGroups()
     suspend fun deleteGroup(groupSeq: Int): Response<Boolean> = groupApi.deleteGroup(groupSeq)
     suspend fun changeGroupActiveState(body: Int): Response<Boolean> =

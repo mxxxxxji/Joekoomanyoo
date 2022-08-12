@@ -110,7 +110,7 @@ class GroupViewModel : ViewModel() {
 
 //                    Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION_groupPermission: ${_groupPermission.value}")
 //                    Log.d(TAG,"현재 유저 :${userSeq}, PERMISSION groupPermission: ${groupPermission.value}")
-//                    _groupMemberList.postValue(list)
+                    _groupMemberList.postValue(list)
                 true
             } else {
                 Log.d(TAG, "selectGroupMembers : ${response.code()}")

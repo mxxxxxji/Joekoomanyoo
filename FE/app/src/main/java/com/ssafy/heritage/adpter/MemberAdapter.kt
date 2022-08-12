@@ -12,7 +12,6 @@ import com.ssafy.heritage.listener.MemberClickListener
 
 class MemberAdapter:ListAdapter<Member, MemberAdapter.ViewHolder>(DiffCallback()){
 
-
     lateinit var memberClickListener: MemberClickListener
     inner class ViewHolder(private val binding: ItemMemberBinding) :
         RecyclerView.ViewHolder(binding.root) {
