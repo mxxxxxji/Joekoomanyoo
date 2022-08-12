@@ -29,8 +29,9 @@ public class GroupChatController {
     	chat.setUserImg(user.getProfileImgUrl());    	
 		chat.setCreatedTime(new Date());
 		
+		String content = groupChatService.saveMessage(chat);
+		chat.setChatContent(content);
 		messagingTemplate.convertAndSend("/sub/chat/room/"+chat.getGroupSeq(),chat);
-        groupChatService.saveMessage(chat);
         
     }
 }
