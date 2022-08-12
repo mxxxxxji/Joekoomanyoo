@@ -24,9 +24,10 @@ public class GroupChatController {
     	int userSeq=chat.getUserSeq();
     	UserEntity user = userRepository.findByUserSeq(userSeq);
     	chat.setSender(user.getUserNickname());
-    	chat.setChatImgUrl(user.getProfileImgUrl());    	
+    	chat.setUserImg(user.getProfileImgUrl());    	
+
+    	groupChatService.saveMessage(chat);
         messagingTemplate.convertAndSend("/sub/chat/room/"+chat.getGroupSeq(),chat);
         
-        groupChatService.saveMessage(chat);
     }
 }
