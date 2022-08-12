@@ -99,6 +99,10 @@ class GroupDetailFragment :
 
     private fun initClickListener() {
 
+        binding.btnChangeImage.setOnClickListener {
+
+        }
+
         // 가입 요청
         binding.btnSubscription.setOnClickListener {
             val dialog = ApplyGroupJoinDialog(requireContext(), this)
@@ -112,7 +116,6 @@ class GroupDetailFragment :
             Toast.makeText(requireActivity(), "가입이 취소되었습니다.", Toast.LENGTH_SHORT).show()
             groupViewModel.setGroupPermission(3)
             parentFragment?.findNavController()?.popBackStack()
-
         }
 
         // 탈퇴하기
