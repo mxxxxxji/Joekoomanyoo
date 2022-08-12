@@ -12,7 +12,7 @@ object MyBindingAdapter {
     @BindingAdapter("image")
     @JvmStatic
     fun ImageView.setImage (imageUrl: String?){
-        //.load("${ApplicationClass.IMG_URL}${imageUrl}")
+        .load("${ApplicationClass.IMG_URL}${imageUrl}")
         Glide.with(this.context)
             .load(R.drawable.monster)
             .circleCrop()
