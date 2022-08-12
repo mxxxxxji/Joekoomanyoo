@@ -20,15 +20,16 @@ public class GroupChatService{
     private GroupRepository groupRepository;
    
     public String saveMessage(GroupChatDto chat){
-//    	GroupEntity group = groupRepository.findByGroupSeq(chat.getGroupSeq());
-//    	
-//		group.addGroupChat(GroupChatEntity.builder()
-//				.chatContent(chat.getChatContent())
-//				.chatImgUrl(chat.getChatImgUrl())
-//				.createdTime(new Date())
-//				.userSeq(chat.getUserSeq())
-//				.build());
-//		groupRepository.save(group);
+    	GroupEntity group = groupRepository.findByGroupSeq(chat.getGroupSeq());
+    	if(group==null)
+    		return "Fail";
+		group.addGroupChat(GroupChatEntity.builder()
+				.chatContent(chat.getChatContent())
+				.chatImgUrl(chat.getChatImgUrl())
+				.createdTime(new Date())
+				.userSeq(chat.getUserSeq())
+				.build());
+		groupRepository.save(group);
 
     	return "Success";
     }
