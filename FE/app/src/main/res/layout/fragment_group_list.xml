@@ -9,17 +9,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_group_list"
         tools:context=".view.group.GroupListFragment">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white_50"
+            android:background="@color/main_color"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -30,6 +30,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/ic_baseline_arrow_back_24"
+                    android:backgroundTint="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
@@ -39,8 +40,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/apple_sd_gothic_neo_b"
                     android:text="모임 둘러보기"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +53,6 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginHorizontal="16dp"
-                    android:backgroundTint="@color/gray"
                     android:background="@drawable/ic_mypage"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btn_sort"
@@ -60,7 +61,7 @@
                     android:id="@+id/btn_sort"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                   android:layout_marginStart="16dp"
+                    android:layout_marginStart="16dp"
                     android:background="@drawable/ic_sort"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -83,17 +84,21 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_create_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="54dp"
+            android:layout_height="57dp"
             android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:padding="10dp"
+            android:layout_margin="18dp"
             android:clickable="true"
+            android:outlineAmbientShadowColor="@color/main_color"
+            android:outlineSpotShadowColor="@color/main_color"
+            android:padding="10dp"
+            android:shadowColor="@color/main_color"
             android:tintMode="@color/white"
-            android:backgroundTint="@color/main_color"
+            app:backgroundTint="@color/main_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add"/>
+            app:rippleColor="@color/main_color"
+            app:srcCompat="@drawable/ic_add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

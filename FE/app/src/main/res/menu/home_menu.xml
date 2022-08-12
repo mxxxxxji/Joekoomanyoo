@@ -5,12 +5,14 @@
         android:id="@+id/profile"
         android:enabled="true"
         android:icon="@drawable/ic_profile"
+        android:iconTint="@color/white"
         android:title="프로필"
         app:showAsAction="always" />
     <item
         android:id="@+id/notification"
         android:enabled="true"
         android:icon="@drawable/ic_notification"
+        android:iconTint="@color/white"
         android:title="알림"
         app:showAsAction="always" />
 </menu>

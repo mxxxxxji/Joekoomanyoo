@@ -12,62 +12,56 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="10dp"
-        app:cardBackgroundColor="@color/white_50"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp">
+        app:cardCornerRadius="7dp"
+        app:cardElevation="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="20dp">
+
             <ImageView
                 android:id="@+id/iv_member_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/monster"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <TextView
-                android:id="@+id/tv_leader_nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginVertical="5dp"
-                tools:text="방장 닉네임"
-                android:text="@{groupListResponse.groupMaster}"
-                app:layout_constraintStart_toEndOf="@id/iv_member_img"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:background="@mipmap/ic_launcher"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_group_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
                 tools:text="설명"
                 android:text="@{groupListResponse.groupName}"
-                android:textStyle="bold"
+                android:fontFamily="@font/apple_sd_gothic_neo_b"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
-                app:layout_constraintTop_toBottomOf="@id/tv_leader_nickname"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toEndOf="@id/iv_member_img"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/apple_sd_gothic_neo_m"
                 android:text="@{String.valueOf(groupListResponse.groupStartDate)}"
                 tools:text="0000.00.00"
-                app:layout_constraintTop_toBottomOf="@id/tv_group_name"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_group_name"/>
             <TextView
                 android:id="@+id/header_from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:fontFamily="@font/apple_sd_gothic_neo_m"
                 android:text=" ~ "
                 tools:text=" ~ "
                 app:layout_constraintTop_toTopOf="@id/tv_start_date"
@@ -78,47 +72,47 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:fontFamily="@font/apple_sd_gothic_neo_m"
                 android:text="@{String.valueOf(groupListResponse.groupEndDate)}"
                 tools:text="0000.00.00"
                 app:layout_constraintStart_toEndOf="@id/header_from"
                 app:layout_constraintTop_toTopOf="@id/tv_start_date"
                 app:layout_constraintBottom_toBottomOf="@id/tv_start_date"/>
 
-            <TextView
-                android:id="@+id/tv_kids_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:layout_marginHorizontal="10dp"
-                android:text="아이"
-                tools:text="아이동반"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/tv_start_date"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <TextView
-                android:id="@+id/tv_global_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:layout_marginHorizontal="10dp"
-                android:text="글로벌"
-                tools:text="외국인여부"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@id/tv_kids_check"
-                app:layout_constraintBottom_toBottomOf="@id/tv_kids_check"
-                app:layout_constraintStart_toEndOf="@id/tv_kids_check"/>
-            <TextView
-                android:id="@+id/tv_age_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:layout_marginHorizontal="10dp"
-                android:text="@{String.valueOf(groupListResponse.groupAgeRange)}"
-                tools:text="나이대"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@id/tv_global_check"
-                app:layout_constraintBottom_toBottomOf="@id/tv_global_check"
-                app:layout_constraintStart_toEndOf="@id/tv_global_check"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tv_kids_check"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginVertical="5dp"-->
+<!--                android:text="아이"-->
+<!--                tools:text="아이동반"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/tv_start_date"-->
+<!--                app:layout_constraintStart_toStartOf="@id/tv_start_date"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/tv_global_check"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginVertical="5dp"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:text="글로벌"-->
+<!--                tools:text="외국인여부"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintTop_toTopOf="@id/tv_kids_check"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/tv_kids_check"-->
+<!--                app:layout_constraintStart_toEndOf="@id/tv_kids_check"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/tv_age_check"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginVertical="5dp"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:text="@{String.valueOf(groupListResponse.groupAgeRange)}"-->
+<!--                tools:text="나이대"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintTop_toTopOf="@id/tv_global_check"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/tv_global_check"-->
+<!--                app:layout_constraintStart_toEndOf="@id/tv_global_check"/>-->
             <ImageView
                 android:id="@+id/iv_lock_on"
                 android:layout_width="wrap_content"

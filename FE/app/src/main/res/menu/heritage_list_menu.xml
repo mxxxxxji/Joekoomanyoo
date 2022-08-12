@@ -6,5 +6,6 @@
         android:enabled="true"
         android:icon="@drawable/ic_sort"
         android:title="정렬"
+        android:iconTint="@color/white"
         app:showAsAction="always" />
 </menu>
