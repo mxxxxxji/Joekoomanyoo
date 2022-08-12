@@ -180,6 +180,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
         longitude = cameraGeospatialPose.longitude,
         heading = cameraGeospatialPose.heading
       )
+      activity.view.updateStatusText(earth, cameraGeospatialPose)
     }
 
     // Draw the placed anchor, if it exists.

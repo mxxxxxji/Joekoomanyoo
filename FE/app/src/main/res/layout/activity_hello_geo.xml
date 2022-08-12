@@ -7,16 +7,23 @@
 
     <android.opengl.GLSurfaceView
         android:id="@+id/surfaceview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/sceneform_fragment"
         android:layout_gravity="top" />
 
+<!--    <fragment-->
+<!--        android:id="@+id/sceneform_fragment"-->
+<!--        android:name="com.google.ar.sceneform.ux.ArFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_above="@+id/map_wrapper"/>-->
 
     <com.ssafy.heritage.helpers.MapTouchWrapper
 
         android:id="@+id/map_wrapper"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_alignParentBottom="true">
 
         <fragment
@@ -25,13 +32,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".HelloGeoActivity" />
+
         <TextView
             android:id="@+id/statusText"
             android:padding="8dp"
             android:textColor="@android:color/black"
             android:background="#AAFFFFFF"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:fontFamily="monospace"
+            android:textSize="16dp"
             android:layout_height="wrap_content" />
     </com.ssafy.heritage.helpers.MapTouchWrapper>
 

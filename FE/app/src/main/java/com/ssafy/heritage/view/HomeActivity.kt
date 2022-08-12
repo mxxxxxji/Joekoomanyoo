@@ -178,7 +178,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             Log.d(TAG, "FCMToken: ${token ?: "task.result is null"}")
 
             // 서버로 토큰 전송
-            userViewModel.pushToken(userViewModel.user.value?.userSeq!!, token)
+//            userViewModel.pushToken(userViewModel.user.value?.userSeq!!, token)
         })
     }
 
