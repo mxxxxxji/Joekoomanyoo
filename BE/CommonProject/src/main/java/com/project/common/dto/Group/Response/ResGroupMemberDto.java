@@ -36,7 +36,7 @@ public class ResGroupMemberDto {
 		this.memberStatus = member.getMemberStatus();
 		this.memberAppeal = member.getMemberAppeal();
 		this.memberIsEvaluated = member.getMemberIsEvaluated();
-		this.memberNickname=member.getGroup().getUser().getUserNickname();
+		this.memberNickname=user.getUserNickname();
 		this.userId=user.getUserId();
 		this.memberGender=user.getUserGender();
 		this.eval1=user.getEvalList1();
