@@ -213,17 +213,14 @@ public class ARService {
             double stampLat = Double.parseDouble(stampEntity.getHeritageLat());
             double stampLng = Double.parseDouble(stampEntity.getHeritageLng());
             double dis = distance(lat,lng,stampLat,stampLng, "meter");
-            System.out.println(stampEntity.getStampTitle() +" 와의 거리는 " + (int)dis + "m입니다.");
 
             // 100m 안에 있으면 알림 울리기
             if(dis<=100){
                 // 만약 이미 잡은 거면 통과
                 if(arRepositoryCustom.findByUserSeqAndStampSeq(userSeq, stampEntity.getStampSeq()) != null){
-                    System.out.println("이미 잡았습니다.");
                     continue;
                 }
 
-                System.out.println("100m안에 있는 문화재 : " + stampEntity.getStampTitle());
                 UserEntity userEntity = userRepository.findByUserSeq(userSeq);
                 
                 String fcmToken = userEntity.getFcmToken();

@@ -1,8 +1,8 @@
 package com.project.common.service;
 
-import com.project.common.controller.Feed.FeedController;
-import com.project.common.controller.HeritageController;
+import com.project.common.controller.FcmTokenController;
 import com.project.common.dto.Admin.AdminReportDto;
+import com.project.common.dto.Push.FcmHistoryDto;
 import com.project.common.entity.Admin.AdminReportEntity;
 import com.project.common.entity.Feed.FeedEntity;
 import com.project.common.entity.Heritage.HeritageReviewEntity;
@@ -10,12 +10,17 @@ import com.project.common.entity.User.UserEntity;
 import com.project.common.mapper.Admin.AdminReportMapper;
 import com.project.common.repository.Admin.AdminRepository;
 import com.project.common.repository.Feed.FeedRepository;
+import com.project.common.repository.Heritage.HeritageRepository;
 import com.project.common.repository.Heritage.HeritageReviewRepository;
 import com.project.common.repository.User.UserRepository;
 import com.project.common.service.Feed.FeedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -29,9 +34,9 @@ public class AdminService {
     private final HeritageService heritageService;
     private final FeedService feedService;
     private final UserService userService;
-
-    
-
+    private final HeritageRepository heritageRepository;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
+    private final FcmTokenController fcmTokenController;
 
     // 신고 접수 받기
     public boolean reportCreate(AdminReportDto adminReportDto) {
@@ -40,26 +45,26 @@ public class AdminService {
         int reportTypeSeq = adminReportDto.getReportTypeSeq();
 
         // 타입을 이상하게 가져올 경우
-        if(type > 2) return false;
+        if (type > 2) return false;
 
         AdminReportEntity adminReportEntity = AdminReportMapper.MAPPER.toEntity(adminReportDto);
         adminReportEntity.setIsSolved('N');
 
-        switch (type){
+        switch (type) {
             // 리뷰 신고
             case 0:
                 // 리뷰 정보 가져오기
                 HeritageReviewEntity heritageReviewEntity = heritageReviewRepository.findByHeritageReviewSeq(reportTypeSeq);
 
                 // 리뷰 있는지 체크
-                if(heritageReviewEntity == null){
+                if (heritageReviewEntity == null) {
                     return false;
                 }
                 // 리뷰 작성자 아이디
                 String reviewUserId = userRepository.findByUserSeq(heritageReviewEntity.getUserSeq()).getUserId();
 
                 // 사용자 있는지 체크
-                if(userRepository.findByUserId(reviewUserId).getIsDeleted() == 'Y'){
+                if (userRepository.findByUserId(reviewUserId).getIsDeleted() == 'Y') {
                     return false;
                 }
 
@@ -72,14 +77,14 @@ public class AdminService {
                 FeedEntity feedEntity = feedRepository.findByFeedSeq(reportTypeSeq);
 
                 // 피드 있는지 체크
-                if(feedEntity == null){
+                if (feedEntity == null) {
                     return false;
                 }
                 // 피드 작성자 아이디
                 String feedUserId = feedEntity.getUser().getUserId();
 
                 // 사용자 있는지 체크
-                if(feedEntity.getUser().getIsDeleted() == 'Y'){
+                if (feedEntity.getUser().getIsDeleted() == 'Y') {
                     return false;
                 }
 
@@ -90,9 +95,9 @@ public class AdminService {
             case 2:
                 // 사용자 정보 가져오기
                 UserEntity userEntity = userRepository.findByUserSeq(reportTypeSeq);
-                
+
                 // 사용자 있는지 체크
-                if(userEntity == null || userEntity.getIsDeleted() == 'Y'){
+                if (userEntity == null || userEntity.getIsDeleted() == 'Y') {
                     return false;
                 }
                 // 사용자 아이디
@@ -112,14 +117,14 @@ public class AdminService {
         return listDto;
     }
 
-    
+
     // 신고에 따라 리뷰, 피드, 사용자 탈퇴시키기
-    public String deleteReport(int reportSeq) {
+    public boolean deleteReport(int reportSeq) {
         AdminReportEntity adminReportEntity = adminRepository.findByReportSeq(reportSeq);
 
         // 이미 신고가 처리 된 경우 false
-        if(adminReportEntity.getIsSolved() == 'Y'){
-            return "Fail - Solved";
+        if (adminReportEntity.getIsSolved() == 'Y') {
+            return false;
         }
 
 
@@ -130,11 +135,11 @@ public class AdminService {
         int reportTypeSeq = adminReportEntity.getReportTypeSeq();
 
         // 올바르지 않은 경우 false
-        if(adminReportEntity == null){
-            return "Fail - no data";
+        if (adminReportEntity == null) {
+            return false;
         }
 
-        switch (type){
+        switch (type) {
             // 리뷰 삭제
             case 0:
 
@@ -142,8 +147,8 @@ public class AdminService {
                 HeritageReviewEntity heritageReviewEntity = heritageReviewRepository.findByHeritageReviewSeq(reportTypeSeq);
 
                 // 만약 리뷰가 없다면 false
-                if(heritageReviewEntity == null){
-                    return "Fail - no Review Data";
+                if (heritageReviewEntity == null) {
+                    return false;
                 }
 
                 // 리뷰 번호, 문화유산 번호
@@ -151,7 +156,7 @@ public class AdminService {
                 int heritageSeq = heritageReviewEntity.getHeritageSeq();
 
                 // 리뷰 삭제
-                heritageService.deleteReview(heritageReviewSeq,heritageSeq);
+                heritageService.deleteReview(heritageReviewSeq, heritageSeq);
                 break;
             // 피드 삭제    
             case 1:
@@ -160,8 +165,8 @@ public class AdminService {
                 FeedEntity feedEntity = feedRepository.findByFeedSeq(reportTypeSeq);
 
                 // 만약 피드가 없다면 false
-                if(feedEntity == null){
-                    return "Fail - no Feed Data";
+                if (feedEntity == null) {
+                    return false;
                 }
 
                 // 피드 삭제
@@ -174,8 +179,8 @@ public class AdminService {
                 UserEntity userEntity = userRepository.findByUserSeq(reportTypeSeq);
 
                 // 만약 사용자가 없다면 false
-                if(userEntity == null){
-                    return "Fail - no User Data";
+                if (userEntity == null) {
+                    return false;
                 }
 
                 // 사용자 탈퇴 처리
@@ -187,6 +192,97 @@ public class AdminService {
         adminReportEntity.setIsSolved('Y');
         adminRepository.save(adminReportEntity);
 
-        return "Success";
+        return true;
+    }
+
+    public boolean warningAlarm(int reportSeq) {
+        AdminReportEntity adminReportEntity = adminRepository.findByReportSeq(reportSeq);
+
+        // 이미 신고가 처리 된 경우 false
+        if (adminReportEntity.getIsSolved() == 'Y') {
+            return false;
+        }
+
+        // 신고 종류
+        int type = adminReportEntity.getReportType();
+
+        // 신고 번호
+        int reportTypeSeq = adminReportEntity.getReportTypeSeq();
+
+        // 올바르지 않은 경우 false
+        if (adminReportEntity == null) {
+            return false;
+        }
+
+        // 알림 받을 사용자
+        UserEntity userEntity = userRepository.findByUserId(adminReportEntity.getUserId());
+        String userNickname = userEntity.getUserNickname();
+
+        // 알림에 필요한 정보
+        String fcmToken = userEntity.getFcmToken();
+        String title = "신고로 인한 경고 알림";
+        String body = userNickname + " 님의 ";
+
+        switch (type) {
+            // 리뷰
+            case 0:
+                // 리뷰 찾기
+                HeritageReviewEntity heritageReviewEntity = heritageReviewRepository.findByHeritageReviewSeq(reportTypeSeq);
+                // 문화재 이름
+                String heritageName = heritageRepository.findByHeritageSeq(heritageReviewEntity.getHeritageSeq()).getHeritageName();
+                body += "' " + heritageName + " ' 에 작성한 리뷰가 신고처리가 되어 삭제되었습니다.";
+                try {
+                    firebaseCloudMessageService.sendMessageTo(fcmToken, title, body);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            // 피드    
+            case 1:
+                // 피드 찾기
+                FeedEntity feedEntity = feedRepository.findByFeedSeq(reportTypeSeq);
+
+                // 피드 제목
+                String feedTitle = feedEntity.getFeedTitle();
+                body += "' " + feedTitle + " ' 피드가 신고처리가 되어 삭제되었습니다.";
+                try {
+                    firebaseCloudMessageService.sendMessageTo(fcmToken, title, body);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            // 사용자
+            case 2:
+                body += "아이디가 탈퇴처리 되었습니다.";
+                try {
+                    firebaseCloudMessageService.sendMessageTo(fcmToken, title, body);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+        }
+        // 알림 기록하기
+        FcmHistoryDto fcmHistoryDto = FcmHistoryDto.builder()
+                .pushSeq(0)
+                .userSeq(userEntity.getUserSeq())
+                .pushTitle(title)
+                .pushContent(body)
+                .pushCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .build();
+        fcmTokenController.createHistory(fcmHistoryDto);
+
+        return true;
+    }
+
+    public boolean passReport(int reportSeq) {
+        AdminReportEntity adminReportEntity = adminRepository.findByReportSeq(reportSeq);
+        // 이미 처리된 신고이면 false
+        if(adminReportEntity.getIsSolved() == 'Y') return false;
+
+        // 취소 처리 -> 완료 처리하기
+        adminReportEntity.setIsSolved('Y');
+
+        adminRepository.save(adminReportEntity);
+        return true;
     }
 }

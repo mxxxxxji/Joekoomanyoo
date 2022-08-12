@@ -64,7 +64,44 @@ public class AdminController {
     @ApiOperation(value = "신고에 따라 게시글 삭제하기", response = String.class)
     @PostMapping("/report/{reportSeq}")
     public ResponseEntity<String> deleteReport(@PathVariable("reportSeq") int reportSeq) {
-            return new ResponseEntity<String>(adminService.deleteReport(reportSeq), HttpStatus.OK);
+        if(adminService.deleteReport(reportSeq)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * 삭제 알림 보내기
+     *
+     * @param reportSeq
+     * @return String
+     */
+
+    @ApiOperation(value = "삭제 알림 보내기", response = String.class)
+    @PostMapping("/report/warn/{reportSeq}")
+    public ResponseEntity<String> warningAlarm(@PathVariable("reportSeq") int reportSeq) {
+        if(adminService.warningAlarm(reportSeq)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+        }
+    }
+
+    /**
+     * 신고 내용 취소 처리
+     *
+     * @param reportSeq
+     * @return String
+     */
+
+    @ApiOperation(value = "신고 내용 취소 처리", response = String.class)
+    @PutMapping("/report/pass/{reportSeq}")
+    public ResponseEntity<String> passReport(@PathVariable("reportSeq") int reportSeq) {
+        if(adminService.passReport(reportSeq)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+        }
     }
 
 }
