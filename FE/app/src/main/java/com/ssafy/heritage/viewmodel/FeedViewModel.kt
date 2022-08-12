@@ -178,6 +178,7 @@ class FeedViewModel : ViewModel() {
             repository.insertFeedLike(feedSeq).let { response ->
                 Log.d(TAG, "insertFeedLike: ${response}")
                 if (response.isSuccessful) {
+                    countFeedLike(feedSeq)
                     Log.d(TAG, "insertFeedLike: 좋아요 성공")
                     Log.d(TAG, "insertFeedLike: ${response.body()}")
                 } else {
@@ -192,6 +193,7 @@ class FeedViewModel : ViewModel() {
             repository.deleteFeedLike(feedSeq).let { response ->
                 Log.d(TAG, "deleteFeedLike: $response")
                 if (response.isSuccessful) {
+                    countFeedLike(feedSeq)
                     Log.d(TAG, "insertFeedLike: 좋아요 취소 성공")
                     Log.d(TAG, "deleteFeedLike: ${response.body()}")
                 } else {

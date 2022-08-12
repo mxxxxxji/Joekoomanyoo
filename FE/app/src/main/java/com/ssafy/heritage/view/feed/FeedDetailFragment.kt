@@ -44,8 +44,10 @@ class FeedDetailFragment :
                 arguments?.let {
                     feed = it.getSerializable(ARG_FEED) as FeedListResponse
                     Log.d(TAG, "init onCreate: $feed")
+
                 }
             }
+
             binding.feed = this@FeedDetailFragment.feed
             var tagResult = ""
 
@@ -56,8 +58,17 @@ class FeedDetailFragment :
             binding.tvFeedHashtag.text = tagResult
             Log.d(TAG, "init init: ${this@FeedDetailFragment.feed}")
 
+            feedViewModel.countFeedLike(feed!!.feedSeq)
 
-//            if (feed!!.feedOpen == 'Y') {
+            // 불러온 목록에서 내가 좋아요한 게시물인지 확인
+            if (feed?.userLike == 'N') { // 내가 좋아요 누르지 않은 게시물일 경우
+                Log.d(TAG, "init: 현재 좋아요 안되어있음")
+                binding.imagebtnFeedDetailLike.isSelected = false
+            } else if (feed?.userLike == 'Y') { // 내가 좋아요한 게시물일 경우
+                Log.d(TAG, "init:현재 좋아요 되어있음")
+                binding.imagebtnFeedDetailLike.isSelected = true
+            }
+        //            if (feed!!.feedOpen == 'Y') {
 //                binding.switchFeedDetailLock.isChecked = true
 //            } else {
 //                binding.switchFeedDetailLock.isChecked = false
@@ -65,21 +76,15 @@ class FeedDetailFragment :
 //            Log.d(TAG, "init: 공개비공개 ${feed!!.feedOpen}")
         }
 
-//        initObserver()
+        initObserver()
         initClickListenr()
+
     }
 
-    private fun initObserver() = with(binding) {
+    private fun initObserver(){
         feedViewModel.feedCount.observe(viewLifecycleOwner) {
-            if (feed?.userLike == 'N') {
-                binding.imagebtnFeedDetailLike.isSelected = false
-                Log.d(TAG, "initClickListenr: 좋아요")
-            } else if (feed?.userLike == 'Y') {
-                binding.imagebtnFeedDetailLike.isSelected = true
-                Log.d(TAG, "initClickListenr: 좋아요 취소")
-            }
-            feedViewModel.countFeedLike(feed!!.feedSeq)
-            binding.tvFeedCount.setText(it)
+            Log.d(TAG, "feedViewModel.countFeedLike: $it")
+            binding.tvFeedCount.text = it.toString()
             Log.d(TAG, "init: 좋아요 수 $it")
         }
     }
@@ -122,7 +127,6 @@ class FeedDetailFragment :
     private fun initClickListenr() = with(binding) {
         // 피드 삭제
         imagebtnFeedDetailDelete.setOnClickListener {
-
             feedViewModel?.deleteFeed(feed!!.feedSeq)
             // 피드 목록 페이지로 이동하고 싶은데 홈으로 가넹,,
             findNavController().popBackStack()
@@ -139,7 +143,19 @@ class FeedDetailFragment :
 //                Log.d(TAG, "n -> y: ${feed!!.feedOpen}")
 //            }
 //        }
+        imagebtnFeedDetailLike.setOnClickListener {
+            // 현재 좋아요 상태일 경우
+            if(it.isSelected){
+                it.isSelected = false
+                Log.d(TAG, "initClickListenr: 좋아요 취소")
+                feedViewModel.deleteFeedLike(feed!!.feedSeq)
 
+            }else{
+                it.isSelected = true
+                Log.d(TAG, "initClickListenr: 좋아요")
+                feedViewModel.insertFeedLike(feed!!.feedSeq)
+            }
+        }
 
 
         // 뒤로가기
