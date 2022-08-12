@@ -110,6 +110,23 @@ class GroupDetailFragment :
 
         // 가입취소
         binding.btnCancellation.setOnClickListener {
+            // 모임을 떠나시겠습니까? 다이얼로그
+            val dialog = SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("정말 떠나실 건가요?")
+                .setContentText("모임을 정말 떠나실건가요?")
+                .setContentText("네, 탈퇴하겠습니다")
+                .setCancelText("아니요, 안할래요!")
+                .showCancelButton(true)
+                .setCancelClickListener {
+                    it.cancel()
+                }
+                .setConfirmClickListener {
+                    groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
+                    Toast.makeText(requireActivity(), "모임을 탈퇴했습니다.", Toast.LENGTH_SHORT).show()
+                    groupViewModel.setGroupPermission(3)
+                    it.dismissWithAnimation()
+                }
+                .show()
             // 가입을 취소하시겠습니까? 다이얼로그
             groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
             Toast.makeText(requireActivity(), "가입이 취소되었습니다.", Toast.LENGTH_SHORT).show()
