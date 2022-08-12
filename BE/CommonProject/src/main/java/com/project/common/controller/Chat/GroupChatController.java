@@ -1,5 +1,7 @@
 package com.project.common.controller.Chat;
 
+import java.util.Date;
+
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +27,10 @@ public class GroupChatController {
     	UserEntity user = userRepository.findByUserSeq(userSeq);
     	chat.setSender(user.getUserNickname());
     	chat.setUserImg(user.getProfileImgUrl());    	
-
-    	groupChatService.saveMessage(chat);
-        messagingTemplate.convertAndSend("/sub/chat/room/"+chat.getGroupSeq(),chat);
+		chat.setCreatedTime(new Date());
+		
+		messagingTemplate.convertAndSend("/sub/chat/room/"+chat.getGroupSeq(),chat);
+        groupChatService.saveMessage(chat);
         
     }
 }
