@@ -1,4 +1,4 @@
-package com.project.common.controller;
+package com.project.common.controller.User;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;

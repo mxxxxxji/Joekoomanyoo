@@ -1,4 +1,4 @@
-package com.project.common.controller;
+package com.project.common.controller.User;
 
 import com.project.common.config.Jwt.JwtTokenProvider;
 import com.project.common.dto.User.UserDto;

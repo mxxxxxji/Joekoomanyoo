@@ -1,4 +1,4 @@
-package com.project.common.controller;
+package com.project.common.controller.User;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
