@@ -1,6 +1,5 @@
 package com.project.common.controller.Group;
 
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,6 @@ public class GroupController {
     private final GroupService groupService;
     private final JwtTokenProvider jwtTokenProvider;
     
-    //모임 개설
     @ApiOperation(value = "모임 개설")
     @PostMapping("/add")
     public ResponseEntity<GroupDto> addGroup(HttpServletRequest request, @RequestBody ReqGroupDto groupDto){
@@ -44,35 +42,30 @@ public class GroupController {
     	return new ResponseEntity<>(groupService.addGroup(userId,groupDto), HttpStatus.CREATED);
     }
     
-    //모임 목록 조회
-    @ApiOperation(value = "모임 목록 조회")
+    @ApiOperation(value = "모임 리스트 조회")
     @GetMapping("/list")
     public ResponseEntity<List<GroupDto>> getGroupList() throws Exception{
     	return new ResponseEntity<>(groupService.getGroupList(),HttpStatus.OK);
     }
     
-    //모임 정보 보기
-    @ApiOperation(value = "모임 정보 조회")
+    @ApiOperation(value = "모임 상세 조회")
     @GetMapping("/{groupSeq}/info")
     public ResponseEntity<GroupDto> getGroupInfo(@PathVariable("groupSeq") int groupSeq){
     	return new ResponseEntity<>(groupService.getGroupInfo(groupSeq),HttpStatus.OK);
     }
     
-    //모임 삭제
     @ApiOperation(value = "모임 삭제")
     @DeleteMapping("/{groupSeq}/delete")
     public ResponseEntity<String> deleteGroup(@PathVariable("groupSeq") int groupSeq){  
    	 	return new ResponseEntity<>(groupService.deleteGroup(groupSeq),HttpStatus.OK);
     }
     
-    //모임 정보 수정
     @ApiOperation(value = "모임 정보 수정")
     @PutMapping("/{groupSeq}/modify")
     public ResponseEntity<GroupDto> updateGroup(@PathVariable("groupSeq") int groupSeq, @RequestBody ReqGroupDto groupDto){
     	return new ResponseEntity<>(groupService.updateGroup(groupSeq,groupDto),HttpStatus.OK);
     }
     
-    //내 모임 목록 조회
     @ApiOperation(value = "내 모임 목록 조회")
     @GetMapping("/my-group")
     public ResponseEntity<List<ResMyGroupDto>> getMyGroupList(HttpServletRequest request) throws Exception{
@@ -80,21 +73,18 @@ public class GroupController {
    	 	return new ResponseEntity<>(groupService.getMyGroupList(userId),HttpStatus.OK);
     }
     
-    //모임 테마 변경
-    @ApiOperation(value = "모임 테마 변경")
+    @ApiOperation(value = "모임 테마 이미지 변경")
     @PutMapping("/{groupSeq}/modify/image")
     public ResponseEntity<String> updateGroup(@PathVariable("groupSeq") int groupSeq,@RequestParam("groupImgUrl") String groupImgUrl){
     	return new ResponseEntity<>(groupService.updateGroupImage(groupSeq,groupImgUrl),HttpStatus.OK);
     }
     
-    //모임 상태 변경 (R(모집), O(진행), F(종료))
     @ApiOperation(value = "모임 상태 변경 - R(모집), O(진행), F(종료)")
     @PutMapping("/{groupSeq}/status")
     public ResponseEntity<String> changeStatus(@PathVariable("groupSeq") int groupSeq, @RequestBody GroupSettingDto groupSettingDto){
     	return new ResponseEntity<>(groupService.changeStatus(groupSeq,groupSettingDto),HttpStatus.OK);
     }
     
-    //모임 활성화/비활성화
     @ApiOperation(value = "모임 활성화 여부 - Y(활성화), N(비활성화)")
     @PutMapping("/{groupSeq}/active")
     public ResponseEntity<String> changeActive(@PathVariable("groupSeq") int groupSeq, @RequestBody GroupSettingDto groupSettingDto){

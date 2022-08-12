@@ -32,7 +32,6 @@ public class GroupDestinationController {
     private final GroupDestinationService groupDestinationService;
     private final JwtTokenProvider jwtTokenProvider;
     
-    //내 모임 목적지 조회
     @ApiOperation(value = "내 모임 목적지 조회")
     @GetMapping("/my-destination")
     public ResponseEntity<List<ResGroupDestinationDto>> getMyDestination(HttpServletRequest request) throws Exception{

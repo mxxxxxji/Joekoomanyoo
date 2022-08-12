@@ -41,7 +41,7 @@ public class FeedLikeService {
 		UserEntity user = userRepository.findByUserId(userId);
 		FeedEntity feed = feedService.findFeed(feedSeq);
 		for (FeedLikeEntity entity : feed.getFeedLikes()) {
-			if (entity.getUserSeq() == user.getUserSeq()) return "Fail";
+			if (entity.getUserSeq() == user.getUserSeq()) return "Fail - Already add";
 		}
 		feed.addFeedLike(FeedLikeEntity.builder().userSeq(user.getUserSeq()).build());
 		feedRepository.save(feed);
@@ -62,7 +62,7 @@ public class FeedLikeService {
 			}
 		}
 		if(cnt==0) 
-			return "Fail";
+			return "Fail - No like";
 		return "Success";
 	}
 

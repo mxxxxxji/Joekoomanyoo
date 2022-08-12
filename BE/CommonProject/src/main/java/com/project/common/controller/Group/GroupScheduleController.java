@@ -60,7 +60,6 @@ public class GroupScheduleController {
    		return new ResponseEntity<>(groupScheduleService.deleteGroupSchedule(groupSeq,gsDateTime),HttpStatus.OK);
    	}
    	
-   	
 	//-------------------------------------유기된 기능----------------------------------------//
   	@ApiOperation(value = "모임 일정 수정")
   	@PutMapping("/{groupSeq}/schedule/modify")

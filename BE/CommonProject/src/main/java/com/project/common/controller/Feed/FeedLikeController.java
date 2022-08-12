@@ -27,14 +27,12 @@ public class FeedLikeController {
     private final FeedLikeService feedLikeService;
     private final JwtTokenProvider jwtTokenProvider;
     
-    //좋아요 갯수 조회
     @ApiOperation(value = "좋아요 갯수 조회")
     @GetMapping("/count")
     public ResponseEntity<Integer> getFeedLikeCount(@PathVariable("feedSeq") int feedSeq) throws Exception{
         return new ResponseEntity<>(feedLikeService.getFeedLikeCount(feedSeq),HttpStatus.OK);
     }
     
-    //피드 좋아요 등록
     @ApiOperation(value = "피드 좋아요 등록")
     @PostMapping("/add")
     public ResponseEntity<String> addFeedLike(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq){
@@ -42,7 +40,6 @@ public class FeedLikeController {
          return new ResponseEntity<>(feedLikeService.addFeedLike(userId,feedSeq),HttpStatus.CREATED);
     }
     
-    //피드 좋아요 해제
    	@ApiOperation(value = "피드 좋아요 해제")
    	@DeleteMapping("/delete")
    	public ResponseEntity<String> deleteFeedLike(HttpServletRequest request,@PathVariable("feedSeq") int feedSeq){

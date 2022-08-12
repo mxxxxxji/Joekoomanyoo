@@ -1,4 +1,4 @@
-package com.project.common.controller.Chat;
+package com.project.common.controller.Group;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -22,25 +22,24 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor   
 @RequestMapping("/chat")
-@Api(tags = {"채팅 방 API"})
+@Api(tags = {"채팅 채널 API"})
 public class GroupChatRoomController {
 
     private final GroupChatRoomService groupChatRoomService;
     private final GroupChatService groupChatService;
     
-    @ApiOperation(value = "채팅방 개설")
+    @ApiOperation(value = "채팅 채널 개설")
     @PostMapping("/room")
     public ResponseEntity<GroupChatRoomDto> createChatRoom(@RequestParam int groupSeq){
     	return new ResponseEntity<>(groupChatRoomService.createChatRoom(groupSeq), HttpStatus.CREATED);
     }
    
-    @ApiOperation(value = "채팅방 조회")
+    @ApiOperation(value = "채팅 채널 조회")
     @GetMapping("/room")
     public ResponseEntity<GroupChatRoomDto> ChatRoomInfo(@RequestParam int groupSeq){
     	return new ResponseEntity<>(groupChatRoomService.getChatRoomByGroupSeq(groupSeq), HttpStatus.OK);
     }
     
-    // 해당 채팅방에 저장된 최신 메시지 받기
     @ApiOperation(value = "채팅 메세지 목록 받기")
     @GetMapping("/message/{groupSeq}")
     public ResponseEntity <List<ResGroupChatDto>> getMessages(@PathVariable int groupSeq){

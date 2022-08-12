@@ -24,13 +24,14 @@ public class GroupChatService{
     private final GroupChatRepository groupChatRepository;
     private final UserRepository userRepository;
     
+    // 채팅 메시지 저장하기
     public void saveMessage(GroupChatDto chat){
     	GroupChatEntity entity = chat.toEntity();
     	entity.setCreatedTime(new Date());
     	groupChatRepository.save(entity);
     }
     
-    // 저장 메시지 보내기
+    // 저장된 메시지 보내기
     public List<ResGroupChatDto> getMessages(int groupSeq) {
         List<ResGroupChatDto> messages =new ArrayList<>();
         for(GroupChatEntity entity: groupChatRepository.findAll()) {

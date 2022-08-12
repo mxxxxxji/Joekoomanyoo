@@ -1,4 +1,4 @@
-package com.project.common.controller.Chat;
+package com.project.common.controller.Group;
 
 import java.util.Date;
 
@@ -23,13 +23,15 @@ public class GroupChatController {
     
     @MessageMapping(value = "/chat/message")
     public void message(GroupChatDto chat) {
+    	//멤버 채팅 프로필 설정
     	UserEntity user = userRepository.findByUserSeq(chat.getUserSeq());
     	chat.setSender(user.getUserNickname());
     	chat.setUserImg(user.getProfileImgUrl());    	
 		chat.setCreatedTime(new Date());
 		
 		messagingTemplate.convertAndSend("/sub/chat/room/"+chat.getGroupSeq(),chat);
+		
+		//메시지 DB 저장
 		groupChatService.saveMessage(chat);
-        
     }
 }

@@ -32,21 +32,18 @@ public class GroupMemberController {
     private final GroupMemberService groupMemberService;
     private final JwtTokenProvider jwtTokenProvider;
     
-    //모임 멤버 목록 조회
     @ApiOperation(value = "모임 멤버 목록 조회")
     @GetMapping("/member/list")
     public ResponseEntity<List<ResGroupMemberDto>> getMemberList(@PathVariable("groupSeq") int groupSeq) throws Exception{
     	return new ResponseEntity<>(groupMemberService.getMemberList(groupSeq),HttpStatus.OK);
     }
     
-	//참가 신청
     @ApiOperation(value = "모임 참가 신청")
 	@PostMapping("/member/join")
 	public ResponseEntity<String> joinGroup(@RequestBody ReqGroupJoinDto groupJoinRequestDto, @PathVariable int groupSeq){
     	return new ResponseEntity<>(groupMemberService.joinGroup(groupSeq,groupJoinRequestDto),HttpStatus.CREATED);
 	}
 		
-	 //탈퇴
 	@ApiOperation(value = "모임 탈퇴 / 가입 거절 / 가입 취소 / 강제 퇴장 ")
 	@DeleteMapping("/member/leave")
 	public ResponseEntity<String> leaveGroup(HttpServletRequest request,@PathVariable("groupSeq") int groupSeq){
@@ -54,8 +51,6 @@ public class GroupMemberController {
 		return new ResponseEntity<>(groupMemberService.leaveGroup(groupSeq,userId),HttpStatus.OK);
 	}
 	
-	//모임 가입 승인
-
 	@ApiOperation(value = "모임 가입 승인 - memberStatus 0(가입대기)->1(일반회원)")
 	@PutMapping("/member/approve")
 	public ResponseEntity<String> approveMember(HttpServletRequest request,@PathVariable("groupSeq") int groupSeq){	

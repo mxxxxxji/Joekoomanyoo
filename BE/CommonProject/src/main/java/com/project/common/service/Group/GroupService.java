@@ -130,7 +130,7 @@ public class GroupService{
 	public String changeStatus(int groupSeq,GroupSettingDto groupSettingDto) {
 		GroupEntity group =groupRepository.findByGroupSeq(groupSeq);
 		if(group==null)
-			return "Fail - No group";
+			return "Fail - Group Not Exist";
 		group.setGroupStatus(groupSettingDto.getGroupStatus());
 		groupRepository.save(group);
 		
@@ -188,7 +188,7 @@ public class GroupService{
 	public String changeActive(int groupSeq,GroupSettingDto groupSettingDto) {
 		GroupEntity group =groupRepository.findByGroupSeq(groupSeq);
 		if(group==null)
-			return "Fail - No group";
+			return "Fail - Group Not Exist";
 		group.setGroupActive(groupSettingDto.getGroupActive());
 		groupRepository.save(group);
 		return "Success";

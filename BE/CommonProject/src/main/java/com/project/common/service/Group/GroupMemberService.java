@@ -49,7 +49,7 @@ public class GroupMemberService {
         int masterUserSeq = 0;
         GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
         if(group==null)
-        	return "Fail - No Group";
+        	return "Fail - Group Not Exist";
         for (GroupMemberEntity entity : group.getMembers()) {
         	if(entity.getMemberStatus()==2) {
         		masterUserSeq=entity.getUserSeq();// 방장 userSeq 추출
@@ -101,7 +101,7 @@ public class GroupMemberService {
     public String leaveGroup(int groupSeq, String userId) {
         GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
         if(group==null)
-        	return "Fail- No group";
+        	return "Fail - Group Not Exist";
         UserEntity user = userRepository.findByUserId(userId);
         for (GroupMemberEntity entity : group.getMembers()) {
             if (entity.getUserSeq() == user.getUserSeq()) {
@@ -140,7 +140,7 @@ public class GroupMemberService {
         UserEntity user = userRepository.findByUserId(userId);
         GroupEntity group=groupRepository.findByGroupSeq(groupSeq);
         if(group==null)
-        	return "Fail - No group";
+        	return "Fail - Group Not Exist";
         for (GroupMemberEntity entity : group.getMembers()) {
             if (entity.getUserSeq() == user.getUserSeq()) {
                 entity.setMemberStatus(1);

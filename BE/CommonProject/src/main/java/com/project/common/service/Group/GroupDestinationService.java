@@ -51,7 +51,7 @@ public class GroupDestinationService{
 					destinationList.add(new ResGroupDestinationDto(entity.getDestinations().get(i),heritage));
 			}
 		}
-			return destinationList;
+		return destinationList;
 	}
 	
 	//모임 목적지 조회
@@ -111,7 +111,7 @@ public class GroupDestinationService{
 	public String deleteGroupDestination(int groupSeq, int heritageSeq) {
 		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
 		if(group==null)
-			return "fail";
+			return "Fail - group not exist";
 		for(int i=0;i<group.getDestinations().size();i++) {
 			if(group.getDestinations().get(i).getHeritageSeq()==heritageSeq) {
 				groupDestinationRepository.deleteByGdSeq(group.getDestinations().get(i).getGdSeq());

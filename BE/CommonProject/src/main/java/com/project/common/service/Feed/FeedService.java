@@ -50,7 +50,6 @@ public class FeedService{
 		}
 		
 		UserEntity user = userRepository.findByUserId(userId);
-		System.out.println(user.getUserSeq());
 		feedRepository.save(feed);
 		user.addFeed(feed);
 	 	userRepository.save(user);
@@ -111,8 +110,8 @@ public class FeedService{
 		//해쉬태그 삭제
 		for(int i=0;i<feed.getHashtags().size();i++) {
 			feedHashtagRepository.deleteByFhSeq(feed.getHashtags().get(i).getFhSeq());
-		}
-			
+		}	
+		
 		//좋아요 삭제
 		for(int i=0;i<feed.getFeedLikes().size();i++) {
 			feedLikeRepository.deleteByFeedLikeSeq(feed.getFeedLikes().get(i).getFeedLikeSeq());
