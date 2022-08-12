@@ -3,7 +3,6 @@ package com.project.common.dto.Chat;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.project.common.entity.Feed.FeedHashtagEntity;
 import com.project.common.entity.Group.GroupChatEntity;
 
 import lombok.Builder;
