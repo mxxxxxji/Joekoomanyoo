@@ -17,12 +17,16 @@ import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.event.Event
 import com.ssafy.heritage.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 private const val TAG = "GroupViewModel___"
 
 class GroupViewModel : ViewModel() {
+
+    var job: Job? = null
 
     private val repository = Repository.get()
 
@@ -257,7 +261,28 @@ class GroupViewModel : ViewModel() {
     }
 
     // 채팅 목록에 새로운 채팅 추가
-    fun addChat(chat: Chat) {
+    suspend fun addChat(chat: Chat) = withContext(Dispatchers.Main) {
         _chatList.value?.add(chat)
+        true
+    }
+
+    // 채팅 전체 목록 불러오기
+    fun getChatList(groupSeq: Int) = viewModelScope.launch {
+        var response: Response<List<Chat>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.selectAllChat(_detailInfo.value?.groupSeq!!)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "getChatList response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "getChatList response: ${it.body()}")
+                _chatList.postValue(it.body() as MutableList<Chat>?)
+            } else {
+                Log.d(TAG, "getChatList response: ${it.errorBody()}")
+
+            }
+        }
     }
 }

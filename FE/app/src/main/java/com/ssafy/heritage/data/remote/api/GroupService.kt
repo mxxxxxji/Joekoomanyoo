@@ -1,5 +1,6 @@
 package com.ssafy.heritage.data.remote.api
 
+import com.ssafy.heritage.data.dto.Chat
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupBasic
@@ -96,10 +97,7 @@ interface GroupService {
 
 
 
-    // 채팅을 불러온다
-
-    // 채팅을 입력한다
-
-    // 채팅을 삭제한다
-
+    // 전체 채팅을 불러온다
+    @GET("/chat/message/{groupSeq}")
+    suspend fun selectAllChat(@Path("groupSeq") groupSeq: Int) : Response<List<Chat>>
 }
