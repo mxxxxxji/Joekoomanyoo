@@ -1,8 +1,11 @@
 package com.ssafy.heritage.view.feed
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
@@ -143,7 +146,11 @@ class FeedDetailFragment :
 //                Log.d(TAG, "n -> y: ${feed!!.feedOpen}")
 //            }
 //        }
-        imagebtnFeedDetailLike.setOnClickListener {
+
+        // 좋아요
+        binding.imagebtnFeedDetailLike.setOnClickListener {
+            var bounceAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.bounce_anim)
+            binding.imagebtnFeedDetailLike.startAnimation(bounceAnimation)
             // 현재 좋아요 상태일 경우
             if(it.isSelected){
                 it.isSelected = false
@@ -156,7 +163,6 @@ class FeedDetailFragment :
                 feedViewModel.insertFeedLike(feed!!.feedSeq)
             }
         }
-
 
         // 뒤로가기
         btnBack.setOnClickListener {

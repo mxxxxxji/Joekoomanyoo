@@ -57,7 +57,7 @@ class SharedMyGroupListAdapter() :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(position: Int) = with(binding) {
                 val item = myGroupList[position]
-//                ivGroupImg.text = item.attachSeq
+//                ivGroupImg.text = item.groupImgUrl
                 tvGroupStartDate.text = item.groupStartDate.toString()
                 tvGroupEndDate.text = item.groupEndDate.toString()
                 tvGroupName.text = item.groupName

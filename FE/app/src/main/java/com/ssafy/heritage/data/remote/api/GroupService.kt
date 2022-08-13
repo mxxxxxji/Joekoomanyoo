@@ -92,6 +92,8 @@ interface GroupService {
     suspend fun insertGroupDestination(@Path("groupSeq") groupSeq: Int, @Query("heritageSeq") heritageSeq: Int): Response<String>
 
     // 모임 목적지를 삭제한다
+    @DELETE("/api/group/{groupSeq}/destination/delete")
+    suspend fun deleteGroupDestination(@Path("groupSeq") groupSeq: Int, @Query("heritageSeq") heritageSeq: Int): Response<String>
 
     // 모임 목적지 방문 여부를 등록한다
 

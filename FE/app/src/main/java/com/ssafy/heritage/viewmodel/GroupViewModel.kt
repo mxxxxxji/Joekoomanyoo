@@ -62,6 +62,9 @@ class GroupViewModel : ViewModel() {
     private val _insertGroupDestination = SingleLiveEvent<String>()
     val insertGroupDestination: LiveData<String> get() = _insertGroupDestination
 
+    private val _deleteGroupDestination = SingleLiveEvent<String>()
+    val deleteGroupDestination: LiveData<String> get() = _deleteGroupDestination
+
     private val _selectGroupScheduleList = SingleLiveEvent<MutableList<GroupSchedule>>()
     val selectGroupScheduleList: LiveData<MutableList<GroupSchedule>> get() = _selectGroupScheduleList
 
@@ -211,6 +214,7 @@ class GroupViewModel : ViewModel() {
         }
     }
 
+    // 모임 목적지 추가
     fun insertGroupDestination(
         groupSeq: Int,
         heritageSeq: Int,
@@ -223,14 +227,36 @@ class GroupViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     Log.d(TAG, "insertGroupDestination isSuccessful: ${response.body()}")
                     if (response.body() == "Success") {
-                        makeToast("${groupName}에 ${heritageName}이(가) 추가되었습니다.")
                         sharedcheck = true
+                        makeToast("${groupName}에 ${heritageName}이(가) 추가되었습니다.")
                     } else {
-                        makeToast("이미 추가된 모임입니다.")
                         sharedcheck = false
+                        makeToast("이미 추가된 모임입니다")
                     }
                 } else {
                     Log.d(TAG, "insertGroupDestination: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    // 모임 목적지 삭제
+    fun deleteGroupDestination(
+        groupSeq: Int,
+        heritageSeq: Int,
+        groupName: String,
+        heritageName: String
+    ) {
+        viewModelScope.launch(Dispatchers.Main) {
+            repository.deleteGroupDestination(groupSeq, heritageSeq).let { response ->
+                Log.d(TAG, "deleteGroupDestination response: $response")
+                if (response.isSuccessful) {
+                    Log.d(TAG, "deleteGroupDestination isSuccessful: ${response.body()}")
+                    if (response.body() == "Success") {
+                        makeToast("${groupName}에서 ${heritageName}이(가) 제거되었습니다.")
+                    }
+                } else {
+                    Log.d(TAG, "deleteGroupDestination: ${response.code()}")
                 }
             }
         }

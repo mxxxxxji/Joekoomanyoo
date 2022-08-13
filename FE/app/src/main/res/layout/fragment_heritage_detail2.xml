@@ -327,24 +327,24 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/imagebtn_heritage_detail_voice_pause"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="24dp"
-                        android:src="@drawable/ic_pause"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_heritage_description_title"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_heritage_description_title" />
+<!--                    <androidx.appcompat.widget.AppCompatImageView-->
+<!--                        android:id="@+id/imagebtn_heritage_detail_voice_pause"-->
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_marginEnd="24dp"-->
+<!--                        android:src="@drawable/ic_pause"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@+id/tv_heritage_description_title"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/tv_heritage_description_title" />-->
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imagebtn_heritage_detail_voice_play"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="26dp"
                         android:src="@drawable/ic_audio"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_heritage_description_title"
-                        app:layout_constraintEnd_toStartOf="@+id/imagebtn_heritage_detail_voice_pause"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/tv_heritage_description_title" />
 
                     <TextView

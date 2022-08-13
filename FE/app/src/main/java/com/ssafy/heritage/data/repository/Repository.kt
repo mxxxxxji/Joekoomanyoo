@@ -54,6 +54,9 @@ class Repository constructor(context: Context) {
     suspend fun insertGroupDestination(groupSeq: Int, heritageSeq: Int): Response<String> =
         groupApi.insertGroupDestination(groupSeq, heritageSeq)
 
+    suspend fun deleteGroupDestination(groupSeq: Int, heritageSeq: Int): Response<String> =
+        groupApi.deleteGroupDestination(groupSeq, heritageSeq)
+
     // group - 일정
     suspend fun insertGroupSchedule(groupSeq: Int, body: GroupSchedule): Response<String> =
         groupApi.insertGroupSchedule(groupSeq, body)

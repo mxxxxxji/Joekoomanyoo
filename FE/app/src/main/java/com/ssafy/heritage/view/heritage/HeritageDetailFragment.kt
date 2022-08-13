@@ -41,6 +41,7 @@ import com.ssafy.heritage.util.FileUtil
 import com.ssafy.heritage.util.FormDataUtil
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.view.dialog.SharedMyGroupListDialog
+import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -67,6 +68,7 @@ class HeritageDetailFragment :
     private lateinit var userService: UserService
     private val userViewModel by activityViewModels<UserViewModel>()
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
+    private val groupViewModel by activityViewModels<GroupViewModel>()
     private lateinit var heritageScrap: HeritageScrap
 
     private lateinit var heritageReview: HeritageReviewRequest
@@ -185,6 +187,13 @@ class HeritageDetailFragment :
     private fun initObserver() {
         heritageViewModel.heritageReviewList.observe(viewLifecycleOwner) {
             heritageReviewAdapter.submitList(it)
+        }
+
+        groupViewModel.message.observe(viewLifecycleOwner){
+            // viewModel에서 Toast메시지 Event 발생시
+            it.getContentIfNotHandled()?.let {
+                makeToast(it)
+            }
         }
 //        userViewModel.user.observe(viewLifecycleOwner) {
 //            binding.user = it
@@ -342,13 +351,13 @@ class HeritageDetailFragment :
             }
         }
 
-        imagebtnHeritageDetailVoicePause.setOnClickListener {
-            if (mediaPlayer!!.isPlaying) {
-                mediaPlayer!!.pause()
-                audioCheck = true
-                Log.d(TAG, "Audio pause")
-            }
-        }
+//        imagebtnHeritageDetailVoicePause.setOnClickListener {
+//            if (mediaPlayer!!.isPlaying) {
+//                mediaPlayer!!.pause()
+//                audioCheck = true
+//                Log.d(TAG, "Audio pause")
+//            }
+//        }
 
         // 스터디로 공유하기
         btnLink.setOnClickListener {
