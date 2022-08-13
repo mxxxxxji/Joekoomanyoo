@@ -1,6 +1,7 @@
 package com.ssafy.heritage.view.heritage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.HeritageListAdapter
 import com.ssafy.heritage.base.BaseFragment
@@ -38,6 +40,7 @@ class HeritageListFragment :
             setFirstOnly(false)
         }
     }
+    private var page = 0
 
     private lateinit var popupWindow: PopupWindow
 
@@ -113,13 +116,39 @@ class HeritageListFragment :
                         .commit()
                 }
             }
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val lastVisibleItemPosition =
+                        (recyclerView.layoutManager as LinearLayoutManager)
+                            .findLastCompletelyVisibleItemPosition()
+                    val totalCount = recyclerView.adapter!!.itemCount - 1
+                    Log.d(TAG, "onScrolled1: ${recyclerView.canScrollVertically(1)}")
+                    Log.d(TAG, "onScrolled2: ${lastVisibleItemPosition == totalCount - 1}")
+                    if (recyclerView.canScrollVertically(1) && lastVisibleItemPosition == totalCount - 1) {
+                        //스크롤이 끝에 도달할 경우[canScrollVertically(최하단:1 or 최상단:-1)]
+                        //&& 마지막 아이템일 경우(lastVisibleItemPosition==totalCount-)
+                        Log.d(TAG, "onScrolled: $page")
+                        val addList =
+                            heritageViewModel.heritageList.value!!.subList(0, (page + 1) * 20)
+                        page++
+                        heritageAdapter.submitList(addList)
+                    }
+                }
+            })
         }
     }
 
     private fun initObserver() {
         heritageViewModel.heritageList.observe(viewLifecycleOwner) {
 
-            heritageAdapter.submitList(it)
+            page = 0
+            val list = it.subList(page * 20, (page + 1) * 20)
+            page++
+            heritageAdapter.submitList(list)
+            binding.recyclerview.smoothScrollToPosition(0)
 
             // 뷰 다 불러오고나서 transition 효과 시작
             (view?.parent as ViewGroup)?.doOnPreDraw {
