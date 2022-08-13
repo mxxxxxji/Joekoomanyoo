@@ -44,11 +44,17 @@ public class GroupMemberController {
     	return new ResponseEntity<>(groupMemberService.joinGroup(groupSeq,groupJoinRequestDto),HttpStatus.CREATED);
 	}
 		
-	@ApiOperation(value = "모임 탈퇴 / 가입 거절 / 가입 취소 / 강제 퇴장 ")
-	@DeleteMapping("/member/leave/{userSeq}")
-	public ResponseEntity<String> leaveGroup(HttpServletRequest request,@PathVariable("userSeq") int userSeq,@PathVariable("groupSeq") int groupSeq){
+	@ApiOperation(value = "모임 탈퇴 / 가입 취소 ")
+	@DeleteMapping("/member/leave")
+	public ResponseEntity<String> leaveGroup(HttpServletRequest request,@PathVariable("groupSeq") int groupSeq){
    	 	String userId = jwtTokenProvider.getUserId(request.getHeader("X-AUTH-TOKEN"));
-		return new ResponseEntity<>(groupMemberService.leaveGroup(groupSeq,userSeq),HttpStatus.OK);
+		return new ResponseEntity<>(groupMemberService.leaveGroup(groupSeq,userId),HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "가입 거절 /강제 퇴장 ")
+	@DeleteMapping("/member/out/{userSeq}")
+	public ResponseEntity<String> outGroup(@PathVariable("userSeq") int userSeq,@PathVariable("groupSeq") int groupSeq){
+   	 	return new ResponseEntity<>(groupMemberService.outGroup(groupSeq,userSeq),HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "모임 가입 승인 - memberStatus 0(가입대기)->1(일반회원)")
