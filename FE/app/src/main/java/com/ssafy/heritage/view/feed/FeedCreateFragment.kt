@@ -94,17 +94,17 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
             }
         }
 
-        // 공개/비공개 여부
-        switchFeedCreateLock.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                // 기본값이 공개
-                makeToast("공개")
-            } else {
-                // 비공개
-                feedOpen = 'N'
-                makeToast("비공개")
-            }
-        }
+//        // 공개/비공개 여부
+//        switchFeedCreateLock.setOnCheckedChangeListener { _, isChecked ->
+//            if (isChecked) {
+//                // 기본값이 공개
+//                makeToast("공개")
+//            } else {
+//                // 비공개
+//                feedOpen = 'N'
+//                makeToast("비공개")
+//            }
+//        }
 
         // 해시태그랑 같이 post할 수 있게 바뀌어야 함
         // 피드 등록하기 클릭 시
@@ -153,7 +153,7 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
                 }
             }
         }
-        imagebtnFeedBack.setOnClickListener {
+        btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
     }

@@ -13,52 +13,110 @@
             android:layout_height="wrap_content"
             tools:context=".view.feed.FeedCreateFragment">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraint_top"
-                android:layout_width="0dp"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_feed_top"
-                android:paddingVertical="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@color/main_color"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                android:elevation="10dp">
 
-                <ImageButton
-                    android:id="@+id/imagebtn_feed_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="20dp">
 
-                <TextView
-                    android:id="@+id/header_feed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4sp"
-                    android:text="사진 피드"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/imagebtn_feed_back"
-                    app:layout_constraintStart_toEndOf="@+id/imagebtn_feed_back"
-                    app:layout_constraintTop_toTopOf="@+id/imagebtn_feed_back" />
+                    <ImageButton
+                        android:id="@+id/btn_back"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/ic_baseline_arrow_back_24"
+                        android:backgroundTint="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
-                <TextView
-                    android:id="@+id/tv_group_insert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="24dp"
-                    android:text="등록하기"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:textColor="#88bbde"
-                    app:layout_constraintBottom_toBottomOf="@+id/imagebtn_feed_back"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imagebtn_feed_back" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/header_feed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center"
+                        android:text="사진 피드"
+                        android:fontFamily="@font/apple_sd_gothic_neo_b"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@id/btn_back"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_group_insert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="312dp"
+                        android:text="등록하기"
+                        android:fontFamily="@font/apple_sd_gothic_neo_m"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/btn_back"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/btn_back" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:id="@+id/constraint_top"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/background_feed_top"-->
+<!--                android:paddingVertical="8dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/imagebtn_feed_back"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="24dp"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/header_feed"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="4sp"-->
+<!--                    android:text="사진 피드"-->
+<!--                    android:textSize="17sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/imagebtn_feed_back"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/imagebtn_feed_back"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/imagebtn_feed_back" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_group_insert"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginRight="24dp"-->
+<!--                    android:text="등록하기"-->
+<!--                    android:textSize="17sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textColor="#88bbde"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/imagebtn_feed_back"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/imagebtn_feed_back" />-->
+
+
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
             <LinearLayout
                 android:id="@+id/layout_img_storke"
@@ -71,7 +129,7 @@
                 android:padding="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraint_top">
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
                 <ImageView
                     android:id="@+id/iv_feed_image"
@@ -195,35 +253,35 @@
                     android:hint="내용을 입력하세요" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/tv_feed_create_lock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="70dp"
-                android:text="공개 / 비공개"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_feed_create_content" />
+<!--            <TextView-->
+<!--                android:id="@+id/tv_feed_create_lock"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="24dp"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:layout_marginBottom="70dp"-->
+<!--                android:text="공개 / 비공개"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/et_feed_create_content" />-->
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switch_feed_create_lock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="24dp"
-                android:thumbTint="@color/white"
-                android:thumb="@drawable/switch_custom_selector"
-                app:track="@drawable/switch_custom_track"
-                android:checked="true"
-                android:textOff="공개"
-                android:textOn="비공개"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_feed_create_lock"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_feed_create_lock" />
+<!--            <androidx.appcompat.widget.SwitchCompat-->
+<!--                android:id="@+id/switch_feed_create_lock"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginRight="24dp"-->
+<!--                android:thumbTint="@color/white"-->
+<!--                android:thumb="@drawable/switch_custom_selector"-->
+<!--                app:track="@drawable/switch_custom_track"-->
+<!--                android:checked="true"-->
+<!--                android:textOff="공개"-->
+<!--                android:textOn="비공개"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/tv_feed_create_lock"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/tv_feed_create_lock" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -159,7 +159,7 @@ class FeedDetailFragment :
 
 
         // 뒤로가기
-        imagebtnFeedBack.setOnClickListener {
+        btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
     }

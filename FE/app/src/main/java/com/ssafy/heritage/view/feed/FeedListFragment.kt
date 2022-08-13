@@ -59,7 +59,7 @@ class FeedListFragment :
                     feedViewModel.getMyFeedList()
                     Log.d(TAG, "setChip: 나의 피드")
                 }
-                R.id.tv_feed_all -> {
+                else -> {
 //                    val newList = dataList.filter { true }
 //                    feedAdapter.submitList(newList)
                     feedViewModel.getFeedListAll()
@@ -120,6 +120,10 @@ class FeedListFragment :
         binding.apply {
             fabCreateFeed.setOnClickListener {
                 findNavController().navigate(R.id.action_feedListFragment_to_feedCreateFragment)
+            }
+            // 뒤로가기
+            btnBack.setOnClickListener {
+                findNavController().popBackStack()
             }
         }
     }
