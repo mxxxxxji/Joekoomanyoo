@@ -105,7 +105,6 @@ class GroupCreateFragment :
 
         // 모임 만들기 버튼 클릭 시
         btnCreateGroup.setOnClickListener {
-            //groupInfo = GroupListResponse(0,0,"",0,"",'N',"",'Y', 'R',2, groupAttribute = )
             name = etGroupName.text.toString()
             content = etGroupContent.text.toString()
             startDate = etGroupStartDate.text.toString()

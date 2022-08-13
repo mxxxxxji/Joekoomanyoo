@@ -3,6 +3,7 @@ package com.ssafy.heritage.view.group
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
 import com.ogaclejapan.smarttablayout.SmartTabLayout
@@ -36,6 +37,7 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(com.ssafy.herit
             groupViewModel.add(args.groupInfo)
            val s= groupViewModel.selectGroupMembers(ApplicationClass.sharedPreferencesUtil.getUser(),args.groupInfo.groupSeq)
             groupViewModel.getChatList(args.groupInfo.groupSeq)
+            groupViewModel.selectGroupDetail(args.groupInfo.groupSeq)
             Log.d(TAG, "init CoroutineScope: $s")
             initAdapter()
             initClickListener()
@@ -43,9 +45,9 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(com.ssafy.herit
     }
 
     private fun initClickListener() = with(binding) {
-//        btnBack.setOnClickListener{
-//            findNavController().popBackStack()
-//        }
+        btnBack.setOnClickListener{
+            findNavController().popBackStack()
+        }
     }
     private fun initAdapter() {
         binding.apply {
@@ -77,7 +79,6 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(com.ssafy.herit
                     .create())
             viewpager.adapter = adapter
             viewpagertab.setViewPager(viewpager)
-
         }
     }
 

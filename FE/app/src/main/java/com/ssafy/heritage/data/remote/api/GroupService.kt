@@ -27,7 +27,7 @@ interface GroupService {
     suspend fun deleteGroup(@Path("groupSeq") groupSeq: Int): Response<Boolean>
 
     // 모임 정보를 수정한다
-    @PUT("/api/group/{groupSeq}/update")
+    @PUT("/api/group/{groupSeq}/modify")
     suspend fun modifyGroup(@Path("groupSeq") groupSeq: Int, @Body body: GroupListResponse): Response<GroupListResponse>
 
     // 모임 정보 상세 조회한다

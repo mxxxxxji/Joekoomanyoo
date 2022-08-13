@@ -11,7 +11,6 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.MemberAdapter
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Member
-import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupDetailBinding
@@ -104,7 +103,7 @@ class GroupDetailFragment :
 
         // 설정
         binding.btnSetting.setOnClickListener{
-            val action = GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupModifyFragment(groupInfo)
+            val action = GroupInfoFragmentDirections.actionGroupInfoFragmentToGroupModifyFragment(groupInfo)
             findNavController().navigate(action)
         }
 

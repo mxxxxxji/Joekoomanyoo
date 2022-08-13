@@ -59,7 +59,7 @@ object RetrofitInstance {
     // OKHttpClient에 로깅인터셉터 등록
     val client =
         OkHttpClient.Builder()
-//        .addInterceptor(interceptor)
+        .addInterceptor(interceptor)
             .addInterceptor(AuthInterceptor())
             //.sslSocketFactory( context.socketFactory, tmf?.trustManagers?.get(0) as X509TrustManager)
             //.hostnameVerifier(hostnameVerifier)

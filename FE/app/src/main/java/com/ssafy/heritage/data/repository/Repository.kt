@@ -32,6 +32,8 @@ class Repository constructor(context: Context) {
     suspend fun selectGroupDetail(groupSeq: Int): Response<GroupListResponse> =
         groupApi.selectGroupDetail(groupSeq)
 
+    suspend fun modifyGroup(groupSeq: Int, body: GroupListResponse): Response<GroupListResponse> =
+        groupApi.modifyGroup(groupSeq, body)
 
     // group - 가입/신청/승인/취소/탈퇴
     suspend fun approveGroupJoin(groupSeq: Int, userSeq: Int): Response<Boolean> =
