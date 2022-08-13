@@ -13,30 +13,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_member_img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:foregroundGravity="center"
             android:src="@drawable/monster"
             android:textColor="@color/black"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tv_members_nickname"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:civ_border_color="@color/gray"
+            app:civ_border_width="1dp"
+            app:civ_border_overlay="true" />
 
         <TextView
             android:id="@+id/tv_members_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             tools:text = "김싸피"
             android:text="@{member.memberNickname}"
             android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/apple_sd_gothic_neo_l"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_member_img"/>
+            app:layout_constraintTop_toBottomOf="@id/iv_member_img"
+            android:gravity="center"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

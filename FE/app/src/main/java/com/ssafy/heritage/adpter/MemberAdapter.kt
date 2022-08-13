@@ -1,5 +1,6 @@
 package com.ssafy.heritage.adpter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -18,7 +19,7 @@ class MemberAdapter:ListAdapter<Member, MemberAdapter.ViewHolder>(DiffCallback()
 
         fun bind(data: Member)= with(binding){
             member = data
-
+            Log.d("___MemberAdapter", data.toString())
             itemView.setOnClickListener {
                 memberClickListener.onClick(bindingAdapterPosition, data, ivMemberImg)
             }

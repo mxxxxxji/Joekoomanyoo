@@ -13,48 +13,43 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.databinding.DialogOtherProfileBinding
 
+
 private const val TAG = "OtherProfileDialog___"
 
-class OtherProfileDialog(
-    context: Context,
-    member: Member,
-    userPermission: Int,
-    otherProfileDialogInterface: OtherProfileDialogInterface
-) : Dialog(context) {
+class OtherProfileDialog(context: Context, member: Member, userPermission: Int, otherProfileDialogInterface: OtherProfileDialogInterface) : Dialog(context) {
 
     private lateinit var binding: DialogOtherProfileBinding
     private val otherProfileDialogInterface: OtherProfileDialogInterface =
         otherProfileDialogInterface
+
     private val member: Member = member
     private val userPermission: Int = userPermission
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
-            R.layout.dialog_other_profile,
-            null,
-            false
-        )
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_other_profile, null, false)
         setContentView(binding.root)
 
+        binding.member= member
         // 배경 투명하게 바꿔줌
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         Log.d(TAG, "PERMISSION: $userPermission")
-
+        Log.d(TAG, "NAME: ${member.memberNickname}")
         // 현재 유저가 방장일 때
         if (userPermission == 2) {
+            if (member.memberStatus == 0) {
+                binding.btnDrop.visibility = View.GONE
+                binding.btnRefuse.visibility = View.VISIBLE
+                binding.btnApprove.visibility = View.VISIBLE
+            }
             if (member.memberStatus == 1) {
                 binding.btnDrop.visibility = View.VISIBLE // 강제퇴장
                 binding.btnRefuse.visibility = View.GONE
                 binding.btnApprove.visibility = View.GONE
             }
-            if (member.memberStatus == 2) {
-                binding.btnDrop.visibility = View.GONE
-                binding.btnRefuse.visibility = View.GONE
-                binding.btnApprove.visibility = View.GONE
-            }
         } else {
+            binding.btnDrop.visibility = View.GONE
             binding.btnRefuse.visibility = View.GONE
             binding.btnApprove.visibility = View.GONE
         }
@@ -65,15 +60,15 @@ class OtherProfileDialog(
 
     private fun initClickListener() = with(binding) {
         btnApprove.setOnClickListener {
-            otherProfileDialogInterface.onApproveBtnClicked(member.userSeq)
+            otherProfileDialogInterface.onApproveBtnClicked(member!!.userSeq)
             dismiss()
         }
         btnRefuse.setOnClickListener {
-            otherProfileDialogInterface.onRefuseBtnClicked(member.userSeq)
+            otherProfileDialogInterface.onRefuseBtnClicked(member!!.userSeq)
             dismiss()
         }
         btnDrop.setOnClickListener {
-            otherProfileDialogInterface.onDropBtnClicked(member.userSeq)
+            otherProfileDialogInterface.onDropBtnClicked(member!!.userSeq)
             dismiss()
         }
         btnCancel.setOnClickListener {
