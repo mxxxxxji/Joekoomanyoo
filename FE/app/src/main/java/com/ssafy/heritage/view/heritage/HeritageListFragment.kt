@@ -1,9 +1,5 @@
 package com.ssafy.heritage.view.heritage
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +7,8 @@ import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.PopupWindow
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.app.ActivityCompat
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -26,19 +20,10 @@ import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.databinding.FragmentHeritageListBinding
 import com.ssafy.heritage.databinding.PopupHeritageSortBinding
 import com.ssafy.heritage.listener.HeritageListClickListener
-import com.ssafy.heritage.util.SORT.ASCENDING_DIST
-import com.ssafy.heritage.util.SORT.ASCENDING_REVIEW
-import com.ssafy.heritage.util.SORT.ASCENDING_SCRAP
 import com.ssafy.heritage.viewmodel.HeritageViewModel
-import com.ssafy.heritage.viewmodel.UserViewModel
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
 
 private const val TAG = "HeritageListFragment___"
-private val PERMISSIONS_REQUIRED = Manifest.permission.ACCESS_FINE_LOCATION
 
 
 class HeritageListFragment :
@@ -46,11 +31,6 @@ class HeritageListFragment :
 
     private val heritageAdapter: HeritageListAdapter by lazy { HeritageListAdapter() }
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
-    private val userViewModel by activityViewModels<UserViewModel>()
-    private var dataList: List<Heritage> = arrayListOf()
-    private var selectedSort: String = ""
-    private var selectedChip: Int = 0
-    private var searchedList = listOf<Heritage>()
     private val alphaInAnimationAdapter: ScaleInAnimationAdapter by lazy {
         ScaleInAnimationAdapter(heritageAdapter).apply {
             setDuration(300)
@@ -58,13 +38,6 @@ class HeritageListFragment :
             setFirstOnly(false)
         }
     }
-
-    private var lat = 0.0    // 위도
-    private var lng = 0.0    // 경도
-    private val locationManager by lazy {
-        requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    }
-
 
     private lateinit var popupWindow: PopupWindow
 
@@ -83,52 +56,10 @@ class HeritageListFragment :
 
     private fun setChip() = with(binding) {
         chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
-            when (checkedIds[0]) {
-                1 -> {
-                    selectedChip = 1
-                    val newList = dataList.filter { it.heritageCategory == "탑" }
-                    heritageAdapter.submitList(newList)
-                }
-                2 -> {
-                    val newList = dataList.filter { it.heritageCategory == "비" }
-                    heritageAdapter.submitList(newList)
-                }
-                3 -> {
-                    val newList = dataList.filter { it.heritageCategory == "불교" }
-                    heritageAdapter.submitList(newList)
-                }
-                4 -> {
-                    val newList = dataList.filter { it.heritageCategory == "공예품" }
-                    heritageAdapter.submitList(newList)
-                }
-                5 -> {
-                    val newList = dataList.filter { it.heritageCategory == "궁궐" }
-                    heritageAdapter.submitList(newList)
-                }
-                6 -> {
-                    val newList = dataList.filter { it.heritageCategory == "기록유산" }
-                    heritageAdapter.submitList(newList)
-                }
-                7 -> {
-                    val newList = dataList.filter { it.heritageCategory == "왕릉" }
-                    heritageAdapter.submitList(newList)
-                }
-                8 -> {
-                    val newList = dataList.filter { it.heritageCategory == "건축" }
-                    heritageAdapter.submitList(newList)
-                }
-                9 -> {
-                    val newList = dataList.filter { it.heritageCategory == "종" }
-                    heritageAdapter.submitList(newList)
-                }
-                10 -> {
-                    val newList = dataList.filter { it.heritageCategory == "기타" }
-                    heritageAdapter.submitList(newList)
-                }
-                else -> {
-                    val newList = dataList.filter { true }
-                    heritageAdapter.submitList(newList)
-                }
+            if (checkedIds[0] in 1..10) {
+                heritageViewModel.setCategory(checkedIds[0])
+            } else {
+                heritageViewModel.setCategory(0)
             }
         }
 
@@ -188,20 +119,7 @@ class HeritageListFragment :
     private fun initObserver() {
         heritageViewModel.heritageList.observe(viewLifecycleOwner) {
 
-            // Fragment에 처음 진입하는 경우
-            if (searchedList.isNotEmpty()) {
-                heritageAdapter.submitList(searchedList)
-            } else {
-                if (selectedSort == "") {
-                    dataList = it
-                    selectedSort = ASCENDING_DIST
-                    filterList(ASCENDING_DIST)
-                }
-                // DetailFragment에서 온 경우
-                else {
-                    filterList(selectedSort)
-                }
-            }
+            heritageAdapter.submitList(it)
 
             // 뷰 다 불러오고나서 transition 효과 시작
             (view?.parent as ViewGroup)?.doOnPreDraw {
@@ -215,22 +133,19 @@ class HeritageListFragment :
 
         // 리뷰순 정렬 클릭시
         popBinding.btnSortReview.setOnClickListener {
-            selectedSort = ASCENDING_REVIEW
-            filterList(selectedSort)
+            heritageViewModel.setSort(2)
             popupWindow.dismiss()
         }
 
         // 스크랩순 정렬 클릭시
         popBinding.btnSortScrap.setOnClickListener {
-            selectedSort = ASCENDING_SCRAP
-            filterList(selectedSort)
+            heritageViewModel.setSort(1)
             popupWindow.dismiss()
         }
 
         // 거리순 정렬 클릭시
         popBinding.btnSortDist.setOnClickListener {
-            selectedSort = ASCENDING_DIST
-            filterList(selectedSort)
+            heritageViewModel.setSort(0)
             popupWindow.dismiss()
         }
 
@@ -247,7 +162,7 @@ class HeritageListFragment :
             when (it.itemId) {
                 R.id.menu_sort -> {
                     val view = requireActivity().findViewById<View>(R.id.menu_sort)
-                    popupWindow.showAsDropDown(view)
+                    popupWindow.showAsDropDown(view, -200, 0)
                     true
                 }
                 else -> {
@@ -263,115 +178,21 @@ class HeritageListFragment :
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrBlank()) {
-                    searchedList = dataList.filter {
+                    val list = heritageViewModel.heritageList.value!!.filter {
                         it.heritageName.contains(query)
                     }
-                    heritageAdapter.submitList(searchedList)
+                    heritageAdapter.submitList(list)
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrBlank()) {
-                    searchedList = arrayListOf()
-                    heritageAdapter.submitList(dataList)
+                    heritageAdapter.submitList(heritageViewModel.heritageList.value!!)
                 }
                 return false
             }
         })
-    }
-
-    private fun filterList(sortType: String) {
-        heritageAdapter.submitList(arrayListOf<Heritage>())
-        when (sortType) {
-            ASCENDING_REVIEW -> {
-                // 우선 리뷰 내림차순, 그 다음 seq 오름차순
-                dataList = dataList.sortedWith(
-                    compareBy({ -it.heritageReviewCnt },
-                        { it.heritageSeq })
-                )
-                heritageAdapter.submitList(
-                    dataList
-                )
-            }
-            ASCENDING_SCRAP -> {
-                // 우선 스크랩 내림차순, 그 다음 seq 오름차순
-                dataList = dataList.sortedWith(
-                    compareBy({ -it.heritageScrapCnt },
-                        { it.heritageSeq })
-                )
-                heritageAdapter.submitList(
-                    dataList
-                )
-            }
-            ASCENDING_DIST -> {
-                requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
-            }
-        }
-    }
-
-    // 위치 권한 체크 해주고 이후 동작 설정
-    private val requestPermissionLancher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                // PERMISSION GRANTED
-                getLastLocation()
-
-                CoroutineScope(Dispatchers.Main).launch {
-                    val map = HashMap<String, String>()
-                    map.put("userSeq", userViewModel.user.value?.userSeq!!.toString())
-                    map.put("lat", lat.toString())
-                    map.put("lng", lng.toString())
-                    val dataList = heritageViewModel.orderByLocation(map)
-                    heritageAdapter.submitList(
-                        dataList
-                    )
-                }
-            } else {
-                // PERMISSION NOT GRANTED
-                makeToast("위치 권한이 필요합니다")
-            }
-        }
-
-    private fun getLastLocation() {
-
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
-            return
-        }
-        locationManager
-            .getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            .apply {
-                if (this != null) {
-                    lat = latitude
-                    lng = longitude
-                }
-            }
-
-        locationManager
-            .getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-            .apply {
-                if (this != null) {
-                    lat = latitude
-                    lng = longitude
-                }
-            }
-
-        locationManager
-            .getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
-            .apply {
-                if (this != null) {
-                    lat = latitude
-                    lng = longitude
-                }
-            }
     }
 
     private fun makeToast(msg: String) {
