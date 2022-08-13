@@ -13,6 +13,7 @@ import com.ssafy.heritage.data.remote.response.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Path
 
 class Repository constructor(context: Context) {
 
@@ -57,6 +58,8 @@ class Repository constructor(context: Context) {
 
     suspend fun selectGroupSchedule(groupSeq: Int): Response<List<GroupSchedule>> =
         groupApi.selectGroupSchedule(groupSeq)
+
+    suspend fun selectAllChat(groupSeq: Int) : Response<List<Chat>> = groupApi.selectAllChat(groupSeq)
 
 
     // user
@@ -151,7 +154,7 @@ class Repository constructor(context: Context) {
 
     suspend fun insertFeed(body: FeedAddRequest): Response<FeedListResponse> =
         feedApi.insertFeed(body)
-        
+
     suspend fun selectFeedDetail(feedSeq: Int): Response<FeedListResponse> =
         feedApi.selectFeedDetail(feedSeq)
 

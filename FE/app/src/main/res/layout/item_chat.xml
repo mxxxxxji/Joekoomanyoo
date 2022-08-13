@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.ssafy.heritage.util.DateFormatter" />
+
         <variable
             name="chat"
             type="com.ssafy.heritage.data.dto.Chat" />
@@ -31,24 +33,35 @@
                 android:layout_width="40dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_nickname_other"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:src="@drawable/ic_launcher_foreground" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_nickname_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{chat.sender}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="닉네임" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_time_other"
+                setTime="@{chat.createdTime}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{chat.createdTime}"
+                android:layout_marginEnd="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_profile_other"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:text="시간" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_content_other"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:background="@drawable/background_chat_content_other"
                 android:elevation="4dp"
                 android:paddingHorizontal="16dp"
@@ -65,6 +78,7 @@
             android:id="@+id/constraint_me"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -75,24 +89,35 @@
                 android:layout_width="40dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_nickname_me"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:src="@drawable/ic_launcher_foreground" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_nickname_me"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{chat.sender}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="닉네임" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_time_me"
+                setTime="@{chat.createdTime}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{chat.createdTime}"
+                android:layout_marginStart="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/iv_profile_me"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:text="시간" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_content_me"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:background="@drawable/background_chat_content_me"
                 android:elevation="4dp"
                 android:paddingHorizontal="16dp"

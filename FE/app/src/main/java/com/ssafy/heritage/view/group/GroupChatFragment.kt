@@ -11,7 +11,6 @@ import com.gmail.bishoybasily.stomp.lib.StompClient
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM
 import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
-import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.ChatListAdapter
 import com.ssafy.heritage.base.BaseFragment
@@ -19,6 +18,7 @@ import com.ssafy.heritage.data.dto.Chat
 import com.ssafy.heritage.databinding.FragmentGroupChatBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
+import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +26,6 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import okhttp3.OkHttpClient
-import okhttp3.Request
 
 
 private const val TAG = "GroupChatFragment___"
@@ -39,6 +38,7 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
     private val userViewModel by activityViewModels<UserViewModel>()
 
     lateinit var stomp: StompClient
+    lateinit var stompConnection: Disposable
 
     override fun init() {
 
@@ -46,7 +46,7 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
 
         initAdapter()
 
-//        initObserer()
+        initObserer()
 
         initClickListener()
 
@@ -60,6 +60,12 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
             adapter = chatListAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+                // 키보드가 올라와 높이가 변함
+                if (bottom < oldBottom) {
+                    this.scrollBy(0, oldBottom - bottom) // 스크롤 유지를 위해 추가
+                }
+            }
         }
     }
 
@@ -67,6 +73,7 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
         groupViewModel.chatList.observe(viewLifecycleOwner) {
             Log.d(TAG, "initObserer chatList: $it")
             chatListAdapter.submitList(it)
+            binding.recyclerView.scrollToPosition(it.size - 1)
         }
     }
 
@@ -81,7 +88,7 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
         stomp.url = url
 
         // 2. CONNECT
-        val stompConnection = stomp.connect().subscribe {
+        stompConnection = stomp.connect().subscribe {
             when (it.type) {
                 Event.Type.OPENED -> {
                     Log.d(TAG, "initStomp: OPENED")
@@ -108,6 +115,8 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
                     val chat = Json.decodeFromString<Chat>(message)
                     groupViewModel.addChat(chat)
                     chatListAdapter.submitList(groupViewModel.chatList.value)
+                    chatListAdapter.notifyDataSetChanged()
+                    binding.recyclerView.scrollToPosition(groupViewModel.chatList.value!!.size - 1)
                 }
             }
     }
@@ -128,9 +137,7 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
 
             if (it?.length ?: 0 < 1) {
                 tilChat.endIconMode = END_ICON_NONE
-            }
-
-            else {
+            } else {
                 tilChat.endIconMode = END_ICON_CUSTOM
                 tilChat.setEndIconOnClickListener {
 
@@ -158,9 +165,15 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
                     }
 
                     tilChat.editText?.text?.clear()
+                    tilChat.requestFocus()
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stompConnection.dispose()
     }
 
     private fun makeToast(msg: String) {
