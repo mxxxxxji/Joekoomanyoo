@@ -102,6 +102,11 @@ class GroupDetailFragment :
 
     private fun initClickListener() {
 
+        // 설정
+        binding.btnSetting.setOnClickListener{
+
+        }
+
         binding.btnChangeImage.setOnClickListener {
 
         }
