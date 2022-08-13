@@ -177,7 +177,7 @@ class GroupDetailFragment :
     }
 
     override fun onApproveBtnClicked(userSeq: Int) {
-        groupViewModel.approveGroupJoin(groupInfo.groupSeq, GroupBasic(userSeq,groupInfo.groupSeq))
+        groupViewModel.approveGroupJoin(groupInfo.groupSeq, userSeq)
         Log.d(TAG, "가입을 승인했습니다")
         Toast.makeText(requireActivity(), "가입을 승인했습니다", Toast.LENGTH_SHORT).show()
         // 그 회원에게 알림 전송

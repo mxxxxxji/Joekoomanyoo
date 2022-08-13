@@ -42,9 +42,12 @@ class OtherProfileDialog(context: Context, member: Member, userPermission: Int, 
                 binding.btnDrop.visibility = View.GONE
                 binding.btnRefuse.visibility = View.VISIBLE
                 binding.btnApprove.visibility = View.VISIBLE
-            }
-            if (member.memberStatus == 1) {
+            }else if (member.memberStatus == 1) {
                 binding.btnDrop.visibility = View.VISIBLE // 강제퇴장
+                binding.btnRefuse.visibility = View.GONE
+                binding.btnApprove.visibility = View.GONE
+            }else{
+                binding.btnDrop.visibility = View.GONE
                 binding.btnRefuse.visibility = View.GONE
                 binding.btnApprove.visibility = View.GONE
             }
