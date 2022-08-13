@@ -98,15 +98,19 @@ public class GroupMemberService {
 
     //모임 탈퇴
     @Transactional
-    public String leaveGroup(int groupSeq, String userId) {
+    public String leaveGroup(int groupSeq, int userSeq) {        
         GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
         if(group==null)
         	return "Fail - Group Not Exist";
-        UserEntity user = userRepository.findByUserId(userId);
+        
+        UserEntity user = userRepository.findByUserSeq(userSeq);
+        GroupMemberEntity leaveMember=null;
+        
         for (int i=0;i<group.getMembers().size();i++) {
-            if (group.getMembers().get(i).getUserSeq() == user.getUserSeq()) {
+            if (group.getMembers().get(i).getUserSeq() == userSeq) {
             	if(group.getMembers().get(i).getMemberStatus()==2)
             		return "Fail - Group Master";
+            	leaveMember = group.getMembers().get(i);
                 groupMemberRepository.deleteByMemberSeq(group.getMembers().get(i).getMemberSeq());
                 group.removeGroupMember(group.getMembers().get(i).getMemberSeq());
                 user.removeGroup(groupSeq);
@@ -115,11 +119,16 @@ public class GroupMemberService {
         groupRepository.save(group);
         userRepository.save(user);
         
-        //FCM 알림
-        UserEntity leave = userRepository.findByUserId(userId);
+        //방장
+        int masterSeq = group.getUser().getUserSeq();
+        //FCM 알림 (탈퇴된 인원)
+        if(leaveMember.getMemberStatus()!=1)
+        	return "Success";
+        
+        UserEntity leave = userRepository.findByUserSeq(userSeq);
         String fcmToken = leave.getFcmToken();
-        String title = "모임 제외 알림";
-        String body = "죄송합니다. " + leave.getUserNickname() + "님은 모임에서 제외되셨습니다.";
+        String title = "모임 탈퇴 알림";
+        String body =  leave.getUserNickname() + "님은 모임에서 탈퇴되었습니다";
         try {
             firebaseCloudMessageService.sendMessageTo(fcmToken, title, body);
         } catch (IOException e) {
