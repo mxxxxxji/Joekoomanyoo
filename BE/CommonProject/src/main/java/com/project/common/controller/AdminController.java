@@ -1,6 +1,5 @@
 package com.project.common.controller;
 
-import com.project.common.dto.AR.StampDto;
 import com.project.common.dto.Admin.AdminReportDto;
 import com.project.common.service.AdminService;
 import io.swagger.annotations.Api;

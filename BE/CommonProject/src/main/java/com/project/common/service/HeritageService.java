@@ -218,14 +218,20 @@ public class HeritageService {
         if(categorySeq >= 11 || sortSeq>=3) return null;
 
         // 카테고리 배열
-        String[] categoryList = {"탑", "비", "불교", "공예품", "궁궐", "기록유산", "왕릉", "건축", "종", "기타"};
+        String[] categoryList = {"전체", "탑", "비", "불교", "공예품", "궁궐", "기록유산", "왕릉", "건축", "종", "기타"};
 
-        String category = categoryList[categorySeq-1];
+        String category = categoryList[categorySeq];
 
-        // 카테고리 별로 정렬하기
-        // 카테고리 배열 가져오기
-        List<HeritageEntity> listCategory = heritageRepository.findAllByHeritageCategory(category);
-
+        List<HeritageEntity> listCategory;
+        // 전체리스트 가져오는 경우
+        if(categorySeq == 0){
+            listCategory= heritageRepository.findAll();
+        }else {
+            // 나머지
+            // 카테고리 별로 정렬하기
+            // 카테고리 배열 가져오기
+            listCategory = heritageRepository.findAllByHeritageCategory(category);
+        }
         // 정렬 별로 정렬하기
         // 카테고리 배열에서 정렬 하기
         // 0 : 거리순 , 1 : 스크랩순 , 2 : 리뷰순
@@ -253,7 +259,16 @@ public class HeritageService {
                 break;
             case 1:
                 // 스크랩 수 순으로 정렬하고
-                List<HeritageEntity> listSortScrap = heritageRepository.findAll(Sort.by(Sort.Direction.DESC,"heritageScrapCnt"));
+                Sort sortScrap = Sort.by(
+                        Sort.Order.desc("heritageScrapCnt"),
+                        Sort.Order.asc("heritageSeq")
+                );
+                List<HeritageEntity> listSortScrap = heritageRepository.findAll(sortScrap);
+                // 만약 전체일 경우
+                if(categorySeq == 0){
+                    listSort = HeritageMapper.MAPPER.toDtoList(listSortScrap);
+                }
+
                 // 카테고리와 같은 것만 리스트에 저장
                 List<HeritageDto> listSortScrapDto = HeritageMapper.MAPPER.toDtoList(listSortScrap);
                 for(HeritageDto heritageDto : listSortScrapDto){
@@ -265,7 +280,15 @@ public class HeritageService {
                 break;
             case 2:
                 // 리뷰 수 순으로 정렬하고
-                List<HeritageEntity> listSortReview = heritageRepository.findAll(Sort.by(Sort.Direction.DESC,"heritageReviewCnt"));
+                Sort sortReview = Sort.by(
+                        Sort.Order.desc("heritageReviewCnt"),
+                        Sort.Order.asc("heritageSeq")
+                );
+                List<HeritageEntity> listSortReview = heritageRepository.findAll(sortReview);
+                // 만약 전체일 경우
+                if(categorySeq == 0){
+                    listSort = HeritageMapper.MAPPER.toDtoList(listSortReview);
+                }
                 // 카테고리와 같은 것만 리스트에 저장
                 List<HeritageDto> listSortReviewDto = HeritageMapper.MAPPER.toDtoList(listSortReview);
                 for(HeritageDto heritageDto : listSortReviewDto){
