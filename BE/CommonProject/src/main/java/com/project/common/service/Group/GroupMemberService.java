@@ -105,6 +105,8 @@ public class GroupMemberService {
         UserEntity user = userRepository.findByUserId(userId);
         for (int i=0;i<group.getMembers().size();i++) {
             if (group.getMembers().get(i).getUserSeq() == user.getUserSeq()) {
+            	if(group.getMembers().get(i).getMemberStatus()==2)
+            		return "Fail - Group Master";
                 groupMemberRepository.deleteByMemberSeq(group.getMembers().get(i).getMemberSeq());
                 group.removeGroupMember(group.getMembers().get(i).getMemberSeq());
                 user.removeGroup(groupSeq);
