@@ -106,8 +106,8 @@ class Repository constructor(context: Context) {
     suspend fun deleteMyKeyword(myKeywordSeq: Int): Response<String> =
         userApi.deleteMyKeyword(myKeywordSeq)
 
-    suspend fun selectAllMyDestination(userSeq: Int): Response<List<GroupDestinationMap>> =
-        userApi.selectAllMyDestination(userSeq)
+    suspend fun selectAllMyDestination(): Response<List<GroupDestinationMap>> =
+        userApi.selectAllMyDestination()
 
     suspend fun selectAllMySchedule(userSeq: Int): Response<List<Schedule>> =
         userApi.selectAllMySchedule(userSeq)
