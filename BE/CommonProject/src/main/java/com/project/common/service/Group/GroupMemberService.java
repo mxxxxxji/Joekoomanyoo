@@ -59,7 +59,7 @@ public class GroupMemberService {
         	}
         }
         
-        UserEntity user = userRepository.findByUserSeq(requestDto.getUserSeq());
+     //   UserEntity user = userRepository.findByUserSeq(requestDto.getUserSeq());
         
         group.addGroupMember(GroupMemberEntity.builder()
                 .memberAppeal(requestDto.getMemberAppeal())
@@ -68,9 +68,9 @@ public class GroupMemberService {
                 .memberIsEvaluated('N')
                 .createdTime(new Date())
                 .updatedTime(new Date()).build());
-        user.addGroup(group);
+       // user.addGroup(group);
         groupRepository.save(group);
-        userRepository.save(user);
+      //  userRepository.save(user);
 
         //FCM 알림
         UserEntity master = userRepository.findByUserSeq(masterUserSeq);
@@ -110,6 +110,8 @@ public class GroupMemberService {
                 user.removeGroup(groupSeq);
             }
         }
+        groupRepository.save(group);
+        userRepository.save(user);
         
         //FCM 알림
         UserEntity leave = userRepository.findByUserId(userId);
@@ -136,8 +138,8 @@ public class GroupMemberService {
     }
 
     //모임 가입 승인
-    public String approveMember(int groupSeq, String userId) {
-        UserEntity user = userRepository.findByUserId(userId);
+    public String approveMember(int groupSeq, int userSeq) {
+        UserEntity user = userRepository.findByUserSeq(userSeq);
         GroupEntity group=groupRepository.findByGroupSeq(groupSeq);
         if(group==null)
         	return "Fail - Group Not Exist";
@@ -152,7 +154,7 @@ public class GroupMemberService {
         }
         
         //FCM 알림
-        UserEntity approve = userRepository.findByUserId(userId);
+        UserEntity approve = userRepository.findByUserSeq(userSeq);
         String fcmToken = approve.getFcmToken();
         String title = "모임 가입 알림";
         String body = "축하드립니다! " + approve.getUserNickname() + "님은 모임에 가입되셨습니다.";
