@@ -140,6 +140,7 @@ class Repository constructor(context: Context) {
 
     suspend fun orderByLocation(map: HashMap<String, String>): Response<List<Heritage>> =
         heritageApi.orderByLocation(map)
+    suspend fun getOrderHeritage(@Body map: HashMap<String, Any>): Response<List<Heritage>> = heritageApi.getOrderHeritage(map)
 
 
     // feed

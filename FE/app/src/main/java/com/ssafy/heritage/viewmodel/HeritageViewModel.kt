@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.dto.HeritageReview
 import com.ssafy.heritage.data.dto.HeritageScrap
@@ -32,6 +31,22 @@ class HeritageViewModel : ViewModel() {
     private val _heritageList = MutableLiveData<List<Heritage>>()
     val heritageList: LiveData<List<Heritage>>
         get() = _heritageList
+
+    private val _heritageCategory = MutableLiveData<Int>().apply { value = 0 }
+    val heritageCategory: LiveData<Int>
+        get() = _heritageCategory
+
+    private val _heritageSort = MutableLiveData<Int>().apply { value = 0 }
+    val heritageSort: LiveData<Int>
+        get() = _heritageSort
+
+    private val _lat = MutableLiveData<String>().apply { value = "0" }
+    val lat: LiveData<String>
+        get() = _lat
+
+    private val _lng = MutableLiveData<String>().apply { value = "0" }
+    val lng: LiveData<String>
+        get() = _lng
 
     private val _heritage = MutableLiveData<Heritage>()
     val heritage: LiveData<Heritage>
@@ -175,4 +190,55 @@ class HeritageViewModel : ViewModel() {
         }
     }
 
+    // 카테고리, 정렬한 문화유산 리스트 받기
+    suspend fun getOrderHeritage() = withContext(Dispatchers.Main) {
+
+        val map = HashMap<String, Any>()
+        map.put("categorySeq", _heritageCategory.value!!)
+        map.put("sortSeq", _heritageSort.value!!)
+        map.put("lat", _lat.value!!)
+        map.put("lng", _lng.value!!)
+
+        Log.d(TAG, "getOrderHeritage: ${map.keys}")
+        Log.d(TAG, "getOrderHeritage: ${map.values}")
+
+        var response: Response<List<Heritage>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.getOrderHeritage(map)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "getOrderHeritage response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "getOrderHeritage body: ${it.body()}")
+                _heritageList.postValue(it.body())
+            } else {
+                Log.d(TAG, "getOrderHeritage error: ${it.errorBody()}")
+                null
+            }
+        }
+    }
+
+    // 카테고리 설정
+    fun setCategory(num: Int) = viewModelScope.launch {
+        Log.d(TAG, "setCategory: $num")
+        withContext(this.coroutineContext) { _heritageCategory.value = num }
+        getOrderHeritage()
+    }
+
+    // 정렬 설정
+    fun setSort(num: Int) = viewModelScope.launch {
+        Log.d(TAG, "setSort: $num")
+        withContext(this.coroutineContext) { _heritageSort.value = num }
+        getOrderHeritage()
+    }
+
+    // 위치 설정
+    fun setLocation(lat: String, lng: String) = viewModelScope.launch {
+        Log.d(TAG, "setLocation: $lat $lng")
+        _lat.value = lat
+        _lng.value = lng
+        getOrderHeritage()
+    }
 }

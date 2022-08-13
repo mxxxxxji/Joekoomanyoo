@@ -1,10 +1,12 @@
 package com.ssafy.heritage.view
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Build
 import android.util.Base64
 import android.util.Log
@@ -12,8 +14,10 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -39,6 +43,8 @@ import java.security.NoSuchAlgorithmException
 
 
 private const val TAG = "HomeActivity___"
+private val PERMISSIONS_REQUIRED = Manifest.permission.ACCESS_FINE_LOCATION
+
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
@@ -49,9 +55,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     lateinit var backPressedListener: BackPressedListener
     var fromHeritageDetailFragment = false
 
+    private var lat = 0.0    // 위도
+    private var lng = 0.0    // 경도
+    private val locationManager by lazy {
+        getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    }
+
     override fun init() {
-        CoroutineScope(Dispatchers.Main).launch{
+        CoroutineScope(Dispatchers.Main).launch {
             intent?.getParcelableExtra<User>("user")?.let { userViewModel.setUser(it) }
+
+            requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
 
             initNavigation()
 
@@ -65,11 +79,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 createNotificationChannel(CHANNEL_ID, CHANNEL_NAME)
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        heritageViewModel.getHeritageList()
     }
 
     private fun initObserver() {
@@ -205,5 +214,69 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
 
         return super.dispatchTouchEvent(ev)
+    }
+
+    // 위치 권한 체크 해주고 이후 동작 설정
+    private val requestPermissionLancher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                // PERMISSION GRANTED
+                getLastLocation()
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    heritageViewModel.getOrderHeritage()
+                }
+
+            } else {
+                // PERMISSION NOT GRANTED
+                makeToast("위치 권한이 필요합니다")
+            }
+        }
+
+    private fun getLastLocation() {
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
+            return
+        }
+        locationManager
+            .getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            .apply {
+                if (this != null) {
+                    lat = latitude
+                    lng = longitude
+                }
+            }
+
+        locationManager
+            .getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            .apply {
+                if (this != null) {
+                    lat = latitude
+                    lng = longitude
+                }
+            }
+
+        locationManager
+            .getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
+            .apply {
+                if (this != null) {
+                    lat = latitude
+                    lng = longitude
+                }
+            }
+
+        heritageViewModel.setLocation(lat.toString(), lng.toString())
+    }
+
+    private fun makeToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }
