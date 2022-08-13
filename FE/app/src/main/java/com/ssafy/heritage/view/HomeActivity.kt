@@ -18,6 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -33,6 +35,9 @@ import com.ssafy.heritage.databinding.ActivityHomeBinding
 import com.ssafy.heritage.listener.BackPressedListener
 import com.ssafy.heritage.util.Channel.CHANNEL_ID
 import com.ssafy.heritage.util.Channel.CHANNEL_NAME
+import com.ssafy.heritage.view.ar.ARFragment
+import com.ssafy.heritage.viewmodel.FeedViewModel
+import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -50,6 +55,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private val heritageViewModel by viewModels<HeritageViewModel>()
     private val userViewModel by viewModels<UserViewModel>()
+    private val groupViewModel by viewModels<GroupViewModel>()
+    private val feedViewModel by viewModels<FeedViewModel>()
+
     private lateinit var navController: NavController
     private var backButtonTime = 0L
     lateinit var backPressedListener: BackPressedListener
@@ -71,6 +79,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
             initObserver()
 
+            initClickListener()
+
             getHashKey()
 
             getFCMToken()
@@ -81,6 +91,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
     }
 
+
     private fun initObserver() {
         userViewModel.user.observe(this) {
             Log.d(TAG, "initObserver: $it")
@@ -88,8 +99,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             // userViewModel에 있는 user에 데이터가 들어오면 블라블라
             userViewModel.getScrapLIst()
 
+            groupViewModel.selectMyGroups()
+
+            feedViewModel.getFeedListAll()
+
             ApplicationClass.sharedPreferencesUtil.saveUser(it)
 
+        }
+    }
+
+    private fun initClickListener() = with(binding) {
+        fab.setOnClickListener {
+            bottomNavigation.selectedItemId = R.id.ARFragment
         }
     }
 

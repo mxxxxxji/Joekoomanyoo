@@ -56,7 +56,7 @@ class GroupViewModel : ViewModel() {
     private val _applyState = SingleLiveEvent<Boolean>()
     val applyState: LiveData<Boolean> get() = _applyState
 
-    private val _myGroupList = SingleLiveEvent<MutableList<MyGroupResponse>>()
+    private val _myGroupList = MutableLiveData<MutableList<MyGroupResponse>>()
     val myGroupList: LiveData<MutableList<MyGroupResponse>> get() = _myGroupList
 
     private val _insertGroupDestination = SingleLiveEvent<String>()
