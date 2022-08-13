@@ -23,7 +23,7 @@ import lombok.ToString;
 public class ResFeedDto {
 
 	private int feedSeq;  
-	
+	private int userSeq;
 	// 모임 기본 정보 //
     private String feedImgUrl;
    	private String feedTitle;
@@ -35,6 +35,7 @@ public class ResFeedDto {
    
    	private List<String> hashtag;
    	
+   	private String deleteButton;
    	private String userLike;
    	// 모임 설정 정보 //
 
@@ -42,24 +43,28 @@ public class ResFeedDto {
     private Date createdTime;
 
 	@Builder
-	public ResFeedDto(FeedEntity feed,UserEntity user,UserEntity user2) {
+	public ResFeedDto(FeedEntity feed,UserEntity user) {
 		this.feedSeq = feed.getFeedSeq();
+		this.userSeq=feed.getUser().getUserSeq();
 		this.feedImgUrl=feed.getFeedImgUrl();
 		this.feedTitle=feed.getFeedTitle();
 		this.feedContent=feed.getFeedContent();
 		this.feedOpen=feed.getFeedOpen();
-		this.userImgUrl=user.getProfileImgUrl();
-		this.userNickname=user.getUserNickname();
+		this.userImgUrl=feed.getUser().getProfileImgUrl();
+		this.userNickname=feed.getUser().getUserNickname();
 		this.createdTime=feed.getCreatedTime();
 		this.hashtag=new ArrayList<>();
 	
 		for(FeedHashtagEntity entity :feed.getHashtags()) {
 			this.hashtag.add(entity.getFhTag());
 		}
+		this.deleteButton="N";
+		if(feed.getUser().getUserSeq()==user.getUserSeq())
+			this.deleteButton="Y";
 
 		this.userLike="N";
 		for(FeedLikeEntity entity:feed.getFeedLikes()) {
-			if(entity.getUserSeq()==user2.getUserSeq()) {
+			if(entity.getUserSeq()==user.getUserSeq()) {
 				this.userLike="Y";break;
 			}else
 				this.userLike="N";
