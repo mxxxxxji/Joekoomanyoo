@@ -40,9 +40,11 @@ class Repository constructor(context: Context) {
     suspend fun applyGroupJoin(groupSeq: Int, body: GroupJoin): Response<Boolean> =
         groupApi.applyGroupJoin(groupSeq, body)
 
-    suspend fun leaveGroupJoin(groupSeq: Int, userSeq: Int): Response<Boolean> =
-        groupApi.leaveGroupJoin(groupSeq, userSeq)
+    suspend fun leaveGroupJoin(groupSeq: Int): Response<Boolean> =
+        groupApi.leaveGroupJoin(groupSeq)
 
+    suspend fun outGroupJoin(groupSeq:Int, userSeq: Int): Response<Boolean> =
+        groupApi.outGroupJoin(groupSeq, userSeq)
 
     // group - 내 그룹 조회
     suspend fun selectMyGroups(): Response<List<MyGroupResponse>> =

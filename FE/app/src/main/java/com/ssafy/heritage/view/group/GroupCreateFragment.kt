@@ -16,7 +16,7 @@ import com.ssafy.heritage.viewmodel.GroupViewModel
 import java.util.*
 
 
-private const val TAG = "GroupModifyFragment___"
+private const val TAG = "GroupCreateFragment___"
 
 class GroupCreateFragment :
     BaseFragment<FragmentGroupCreateBinding>(R.layout.fragment_group_create) {
@@ -51,7 +51,7 @@ class GroupCreateFragment :
             if (it != null) {
                 Toast.makeText(context, "모임이 등록되었습니다.", Toast.LENGTH_SHORT)
                     .show() // 추후에 모임세부화면으로 이동하겠냐는 다이얼로그 추가
-                val action = GroupModifyFragmentDirections.actionGroupModifyFragmentToGroupInfoFragment(it)
+                val action = GroupCreateFragmentDirections.actionGroupCreateFragmentToGroupInfoFragment(it)
                 findNavController().navigate(action)
             } else {
                 Toast.makeText(context, "모임이 등록되지 않았습니다. 서버오류", Toast.LENGTH_SHORT).show()

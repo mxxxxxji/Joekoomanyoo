@@ -43,11 +43,14 @@
             android:id="@+id/action_groupListFragment_to_groupInfoFragment"
             app:destination="@id/groupInfoFragment" />
         <action
-            android:id="@+id/action_groupListFragment_to_groupModifyFragment"
-            app:destination="@id/groupModifyFragment" />
+            android:id="@+id/action_groupListFragment_to_groupCreateFragment"
+            app:destination="@id/groupCreateFragment" />
         <action
             android:id="@+id/action_groupListFragment_to_myGroupListFragment"
             app:destination="@id/myGroupListFragment" />
+        <action
+            android:id="@+id/action_groupListFragment_to_groupDetailFragment"
+            app:destination="@id/groupDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupMapFragment"
@@ -61,6 +64,9 @@
         android:id="@+id/groupDetailFragment"
         android:name="com.ssafy.heritage.view.group.GroupDetailFragment"
         android:label="GroupDetailFragment">
+        <action
+            android:id="@+id/action_groupDetailFragment_to_groupModifyFragment"
+            app:destination="@id/groupModifyFragment" />
         <action
             android:id="@+id/action_groupDetailFragment_to_groupListFragment"
             app:destination="@id/groupListFragment" />
@@ -80,9 +86,12 @@
         android:id="@+id/groupModifyFragment"
         android:name="com.ssafy.heritage.view.group.GroupModifyFragment"
         android:label="GroupModifyFragment">
+        <argument
+            android:name="groupInfo"
+            app:argType="com.ssafy.heritage.data.remote.response.GroupListResponse" />
         <action
-            android:id="@+id/action_groupModifyFragment_to_groupInfoFragment"
-            app:destination="@id/groupInfoFragment" />
+            android:id="@+id/action_groupModifyFragment_to_groupDetailFragment"
+            app:destination="@id/groupDetailFragment" />
     </fragment>
     <!--heritage-->
     <fragment
@@ -269,6 +278,14 @@
         <action
             android:id="@+id/action_feedCreateFragment_to_feedListFragment"
             app:destination="@id/feedListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupCreateFragment"
+        android:name="com.ssafy.heritage.view.group.GroupCreateFragment"
+        android:label="GroupCreateFragment" >
+        <action
+            android:id="@+id/action_groupCreateFragment_to_groupInfoFragment"
+            app:destination="@id/groupInfoFragment" />
     </fragment>
 
 </navigation>

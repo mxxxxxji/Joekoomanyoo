@@ -104,7 +104,8 @@ class GroupDetailFragment :
 
         // 설정
         binding.btnSetting.setOnClickListener{
-
+            val action = GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupModifyFragment(groupInfo)
+            findNavController().navigate(action)
         }
 
         binding.btnChangeImage.setOnClickListener {
@@ -131,7 +132,7 @@ class GroupDetailFragment :
                     it.cancel()
                 }
                 .setConfirmClickListener {
-                    groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
+                    groupViewModel.leaveGroupJoin(groupInfo.groupSeq)
                     Toast.makeText(requireContext(), "가입을 취소했습니다.", Toast.LENGTH_SHORT).show()
                     groupViewModel.setGroupPermission(3)
                     it.dismissWithAnimation()
@@ -154,16 +155,15 @@ class GroupDetailFragment :
                     it.cancel()
                 }
                 .setConfirmClickListener {
-                    groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
+                    groupViewModel.leaveGroupJoin(groupInfo.groupSeq)
                     Toast.makeText(requireActivity(), "모임을 탈퇴했습니다.", Toast.LENGTH_SHORT).show()
                     groupViewModel.setGroupPermission(3)
                     it.dismissWithAnimation()
                 }
                 .show()
 
-            val action =
-                GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupListFragment()
-//            findNavController().navigate(action)
+            val action = GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupListFragment()
+            findNavController().navigate(action)
         }
 
         // 모임시작
@@ -189,15 +189,15 @@ class GroupDetailFragment :
     }
 
     override fun onRefuseBtnClicked(userSeq: Int) {
-        groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
+        groupViewModel.leaveGroupJoin(groupInfo.groupSeq)
         Log.d(TAG, "가입을 요청을 거절했습니다.")
         Toast.makeText(requireActivity(), "가입을 요청을 거절했습니다.", Toast.LENGTH_SHORT).show()
         // 그 회원에게 알림 전송
     }
 
     override fun onDropBtnClicked(userSeq: Int) {
-        groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
-        Toast.makeText(requireActivity(), "${groupInfo.groupName}님이 퇴장되었습니다", Toast.LENGTH_SHORT).show()
+        groupViewModel.outGroupJoin(groupInfo.groupSeq, userSeq)
+        Toast.makeText(requireActivity(), "${userSeq}를 강제 퇴장시켰습니다", Toast.LENGTH_SHORT).show()
         // 그 회원에게 알림 전송
     }
 }

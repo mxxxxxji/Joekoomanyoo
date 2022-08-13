@@ -57,7 +57,7 @@ class GroupListFragment :
     private fun initClickListener() {
         binding.apply {
             fabCreateGroup.setOnClickListener {
-                findNavController().navigate(R.id.action_groupListFragment_to_groupModifyFragment)
+                findNavController().navigate(R.id.action_groupListFragment_to_groupCreateFragment)
             }
             btnMyGroup.setOnClickListener {
                 findNavController().navigate(R.id.action_groupListFragment_to_myGroupListFragment)

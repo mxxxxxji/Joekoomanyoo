@@ -30,7 +30,7 @@ interface GroupService {
     @PUT("/api/group/{groupSeq}/update")
     suspend fun modifyGroup(@Path("groupSeq") groupSeq: Int, @Body body: GroupListResponse): Response<GroupListResponse>
 
-    // 모임 정보를 조회한다
+    // 모임 정보 상세 조회한다
     @GET("/api/group/{groupSeq}/info")
     suspend fun selectGroupDetail(@Path("groupSeq") groupSeq: Int): Response<GroupListResponse>
 
@@ -53,12 +53,13 @@ interface GroupService {
     @POST("/api/group/{groupSeq}/member/join")
     suspend fun applyGroupJoin(@Path("groupSeq") groupSeq: Int, @Body body: GroupJoin): Response<Boolean>
 
-    // 가입을 탈퇴/취소/거절(방장)/취소한다
+    // 가입을 탈퇴/취소
     @DELETE("/api/group/{groupSeq}/member/leave")
-    suspend fun leaveGroupJoin(@Path("groupSeq") groupSeq: Int, @Query("userSeq") userSeq: Int): Response<Boolean>
+    suspend fun leaveGroupJoin(@Path("groupSeq") groupSeq: Int): Response<Boolean>
 
-
-
+    // 가입 거절/퇴장
+    @DELETE("/api/group/{groupSeq}/member/out/{userSeq}")
+    suspend fun outGroupJoin(@Path("groupSeq") groupSeq: Int, @Path("userSeq") userSeq: Int): Response<Boolean>
 
     // 회원 목록을 조회한다
     @GET("/api/group/{groupSeq}/member/list")

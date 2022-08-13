@@ -112,6 +112,21 @@ class GroupViewModel : ViewModel() {
         }
     }
 
+    suspend fun selectGroupDetail(groupSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.selectGroupDetail(groupSeq).let { response ->
+                if (response.isSuccessful) {
+                    Log.d(TAG, "selectGroupDetail : ${response.code()} ${response.body()}")
+                    var info = response.body()!! as GroupListResponse
+                    _detailInfo.postValue(info)
+                }else{
+                    Log.d(TAG, "selectGroupDetail : ${response.code()}")
+                }
+            }
+
+        }
+    }
+
     fun insertGroup(groupInfo: GroupAddRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertGroup(groupInfo).let { response ->
@@ -146,7 +161,7 @@ class GroupViewModel : ViewModel() {
             repository.applyGroupJoin(groupSeq, groupJoin).let { response ->
                 if (response.isSuccessful) {
                     //val result = response.body()!! as Boolean
-                    Log.d(TAG, "applyGroupJoin: ${response.code()}")
+                    Log.d(TAG, "applyGroupJoin: ${response.code()} ${response.body()}")
                     _applyState.postValue(true)
                     _groupPermission.postValue(0)
                 } else {
@@ -156,10 +171,10 @@ class GroupViewModel : ViewModel() {
         }
     }
 
-    // 가입 취소, 거절, 탈퇴
-    fun leaveGroupJoin(groupSeq: Int, userSeq: Int) {
+    // 가입 취소, 탈퇴
+    fun leaveGroupJoin(groupSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.leaveGroupJoin(groupSeq, userSeq).let { response ->
+            repository.leaveGroupJoin(groupSeq).let { response ->
                 if (response.isSuccessful) {
                     Log.d(TAG, "leaveGroupJoin: ${response.code()},  ${response.body()}")
                     _groupPermission.postValue(3)
@@ -169,7 +184,19 @@ class GroupViewModel : ViewModel() {
             }
         }
     }
-
+    // 가입 거절, 강제 퇴장
+    fun outGroupJoin(groupSeq: Int, userSeq: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.outGroupJoin(groupSeq, userSeq).let { response ->
+                if (response.isSuccessful) {
+                    Log.d(TAG, "outGroupJoin: ${response.code()},  ${response.body()}")
+                    _groupPermission.postValue(3)
+                } else {
+                    Log.d(TAG, "outGroupJoin: ${response.code()}")
+                }
+            }
+        }
+    }
     fun selectMyGroups() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectMyGroups().let { response ->
