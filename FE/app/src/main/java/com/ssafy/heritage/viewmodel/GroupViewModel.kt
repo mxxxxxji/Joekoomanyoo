@@ -146,7 +146,7 @@ class GroupViewModel : ViewModel() {
             repository.applyGroupJoin(groupSeq, groupJoin).let { response ->
                 if (response.isSuccessful) {
                     //val result = response.body()!! as Boolean
-                    //Log.d(TAG, "applyGroupJoin: $result")
+                    Log.d(TAG, "applyGroupJoin: ${response.code()}")
                     _applyState.postValue(true)
                     _groupPermission.postValue(0)
                 } else {
@@ -161,6 +161,7 @@ class GroupViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.leaveGroupJoin(groupSeq, userSeq).let { response ->
                 if (response.isSuccessful) {
+                    Log.d(TAG, "leaveGroupJoin: ${response.code()},  ${response.body()}")
                     _groupPermission.postValue(3)
                 } else {
                     Log.d(TAG, "leaveGroupJoin: ${response.code()}")

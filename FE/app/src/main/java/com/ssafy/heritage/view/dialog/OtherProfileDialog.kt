@@ -31,11 +31,13 @@ class OtherProfileDialog(context: Context, member: Member, userPermission: Int, 
         setContentView(binding.root)
 
         binding.member= member
+
         // 배경 투명하게 바꿔줌
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         Log.d(TAG, "PERMISSION: $userPermission")
         Log.d(TAG, "NAME: ${member.memberNickname}")
+
         // 현재 유저가 방장일 때
         if (userPermission == 2) {
             if (member.memberStatus == 0) {
@@ -63,14 +65,17 @@ class OtherProfileDialog(context: Context, member: Member, userPermission: Int, 
 
     private fun initClickListener() = with(binding) {
         btnApprove.setOnClickListener {
+            Log.d(TAG, member!!.userSeq.toString())
             otherProfileDialogInterface.onApproveBtnClicked(member!!.userSeq)
             dismiss()
         }
         btnRefuse.setOnClickListener {
+            Log.d(TAG, "가입 거절 : ${member!!.userSeq}, ${member!!.memberNickname}")
             otherProfileDialogInterface.onRefuseBtnClicked(member!!.userSeq)
             dismiss()
         }
         btnDrop.setOnClickListener {
+            Log.d(TAG, "강제 퇴장 : ${member!!.userSeq}, ${member!!.memberNickname}")
             otherProfileDialogInterface.onDropBtnClicked(member!!.userSeq)
             dismiss()
         }
