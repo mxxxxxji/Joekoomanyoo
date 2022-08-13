@@ -44,11 +44,14 @@ public class GroupDestinationService{
 	public List<ResGroupDestinationDto> getMyDestination(String userId){
 		UserEntity user = userRepository.findByUserId(userId);	
 		List<ResGroupDestinationDto> destinationList= new ArrayList<>();
-		for(GroupEntity entity : user.getGroups()) {
-			for(int i=0; i<entity.getDestinations().size();i++) {
-				HeritageEntity heritage = heritageRepository.findByHeritageSeq(entity.getDestinations().get(i).getHeritageSeq());
-				if(heritage!=null)
-					destinationList.add(new ResGroupDestinationDto(entity.getDestinations().get(i),heritage));
+		
+		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
+			if(entity.getUserSeq()==user.getUserSeq()) {
+				for(int i=0; i<entity.getGroup().getDestinations().size();i++) {
+					HeritageEntity heritage = heritageRepository.findByHeritageSeq(entity.getGroup().getDestinations().get(i).getHeritageSeq());
+					if(heritage!=null)
+						destinationList.add(new ResGroupDestinationDto(entity.getGroup().getDestinations().get(i),heritage));
+				}
 			}
 		}
 		return destinationList;

@@ -52,13 +52,16 @@ public class GroupScheduleService{
 	public List<ResGroupScheduleDto> getMyGroupSchedule (String userId){
 		List<ResGroupScheduleDto> mySchedule= new ArrayList<>();
 		UserEntity user = userRepository.findByUserId(userId);
-		for(GroupEntity entity :user.getGroups()) {
-			for(int i=0; i<entity.getSchedules().size();i++)
-				mySchedule.add(new ResGroupScheduleDto(entity.getSchedules().get(i)));		
+		
+		for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
+			if(entity.getUserSeq()==user.getUserSeq()) {
+				for(int i=0; i<entity.getGroup().getSchedules().size();i++) {
+					mySchedule.add(new ResGroupScheduleDto(entity.getGroup().getSchedules().get(i)));	
+				}
+			}
 		}
 		return mySchedule;
 	}
-	
 	//일정 등록
 	@Transactional
 	public String createGroupSchedule(int groupSeq, ReqGroupScheduleDto gsDto) {
