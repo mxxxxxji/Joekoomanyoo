@@ -21,6 +21,9 @@ import com.ssafy.heritage.view.dialog.ApplyGroupJoinDialogInterface
 import com.ssafy.heritage.view.dialog.OtherProfileDialog
 import com.ssafy.heritage.view.dialog.OtherProfileDialogInterface
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val TAG = " GroupDetailFragment___"
 
@@ -35,12 +38,13 @@ class GroupDetailFragment :
     private lateinit var groupInfo: GroupListResponse
 
     override fun init() {
-        binding.groupVM = groupViewModel
-        Log.d(TAG, "init: ${groupViewModel.groupPermission.value}")
-       // groupViewModel.selectGroupMembers(userSeq)
-        initAdapter()
-        initObserver()
-        initClickListener()
+        CoroutineScope(Dispatchers.Main).launch {
+            binding.groupVM = groupViewModel
+            Log.d(TAG, "init: ${groupViewModel.groupPermission.value}")
+            initAdapter()
+            initObserver()
+            initClickListener()
+        }
     }
 
     private fun initAdapter(){
@@ -49,6 +53,7 @@ class GroupDetailFragment :
             memberAdapter.memberClickListener = object : MemberClickListener {
                 override fun onClick(position: Int, member: Member, view: View) {
                     Log.d(TAG, "initAdapter : ${groupViewModel.groupPermission.value!!}")
+                    Log.d(TAG, "initAdapter : ${member.toString()}")
                     val dialog = OtherProfileDialog(requireContext(), member, userPermission= groupViewModel.groupPermission.value!!,this@GroupDetailFragment)
                     dialog.show()
                 }
@@ -88,7 +93,6 @@ class GroupDetailFragment :
             }
             applicantAdapter.submitList(applicantList)
             memberAdapter.submitList(memberList)
-
         }
         groupViewModel.detailInfo.observe(viewLifecycleOwner) {
             groupDetailInfo = it
@@ -106,15 +110,16 @@ class GroupDetailFragment :
         binding.btnSubscription.setOnClickListener {
             val dialog = ApplyGroupJoinDialog(requireContext(), this)
             dialog.show()
+            it.visibility = View.GONE
+            binding.btnCancellation.visibility = View.VISIBLE
         }
 
         // 가입취소
         binding.btnCancellation.setOnClickListener {
             // 모임을 떠나시겠습니까? 다이얼로그
             val dialog = SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("정말 떠나실 건가요?")
-                .setContentText("모임을 정말 떠나실건가요?")
-                .setContentText("네, 탈퇴하겠습니다")
+                .setTitleText("가입을 취소하실건가요?")
+                .setConfirmText("네, 취소하겠습니다")
                 .setCancelText("아니요, 안할래요!")
                 .showCancelButton(true)
                 .setCancelClickListener {
@@ -122,26 +127,22 @@ class GroupDetailFragment :
                 }
                 .setConfirmClickListener {
                     groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
-                    Toast.makeText(requireActivity(), "모임을 탈퇴했습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "가입을 취소했습니다.", Toast.LENGTH_SHORT).show()
                     groupViewModel.setGroupPermission(3)
                     it.dismissWithAnimation()
+                    binding.btnCancellation.visibility = View.GONE
+                    binding.btnSubscription.visibility = View.VISIBLE
                 }
                 .show()
-            // 가입을 취소하시겠습니까? 다이얼로그
-            groupViewModel.leaveGroupJoin(groupInfo.groupSeq, userSeq)
-            Toast.makeText(requireActivity(), "가입이 취소되었습니다.", Toast.LENGTH_SHORT).show()
-            groupViewModel.setGroupPermission(3)
-            parentFragment?.findNavController()?.popBackStack()
         }
 
         // 탈퇴하기
         binding.btnDrop.setOnClickListener {
-
             // 모임을 떠나시겠습니까? 다이얼로그
             SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("정말 떠나실 건가요?")
-                .setContentText("모임을 정말 떠나실건가요?")
-                .setContentText("네, 탈퇴하겠습니다")
+                .setTitleText("정말 떠나실건가요?")
+                .setContentText("모임의 정보는 저장되지 않습니다. 그래도 탈퇴 하시겠습니까?")
+                .setConfirmText("네, 탈퇴하겠습니다")
                 .setCancelText("아니요, 안할래요!")
                 .showCancelButton(true)
                 .setCancelClickListener {
