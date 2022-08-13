@@ -103,10 +103,10 @@ public class GroupMemberService {
         if(group==null)
         	return "Fail - Group Not Exist";
         UserEntity user = userRepository.findByUserId(userId);
-        for (GroupMemberEntity entity : group.getMembers()) {
-            if (entity.getUserSeq() == user.getUserSeq()) {
-                groupMemberRepository.deleteByMemberSeq(entity.getMemberSeq());
-                group.removeGroupMember(entity.getMemberSeq());
+        for (int i=0;i<group.getMembers().size();i++) {
+            if (group.getMembers().get(i).getUserSeq() == user.getUserSeq()) {
+                groupMemberRepository.deleteByMemberSeq(group.getMembers().get(i).getMemberSeq());
+                group.removeGroupMember(group.getMembers().get(i).getMemberSeq());
                 user.removeGroup(groupSeq);
             }
         }
