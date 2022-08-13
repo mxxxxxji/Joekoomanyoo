@@ -61,7 +61,7 @@ public class FeedService{
 		List<ResFeedDto> feedList =new ArrayList<>();
 		UserEntity user = userRepository.findByUserId(userId);
 		for(FeedEntity entity : feedRepository.findAll()) {
-			feedList.add(new ResFeedDto(entity,entity.getUser(),user));
+			feedList.add(new ResFeedDto(entity,user));
 		}
 		return feedList;
 	}
@@ -73,7 +73,7 @@ public class FeedService{
 		
 		for(FeedHashtagEntity entity : feedHashtagRepository.findAll()) {
 			if(entity.getFhTag().equals(fhTag)) {
-				feedList.add(new ResFeedDto(entity.getFeed(),entity.getFeed().getUser(),user));
+				feedList.add(new ResFeedDto(entity.getFeed(),user));
 			}
 		}
 		return feedList;
@@ -84,7 +84,7 @@ public class FeedService{
 		List<ResFeedDto> feedList=new ArrayList<>();
 		UserEntity user = userRepository.findByUserId(userId);
 		for(FeedEntity entity : user.getFeeds()) {
-			feedList.add(new ResFeedDto(entity,user,user));
+			feedList.add(new ResFeedDto(entity,user));
 		}
 		return feedList;
 	}
@@ -94,7 +94,7 @@ public class FeedService{
 
 		UserEntity user = userRepository.findByUserId(userId);
 		FeedEntity feedInfo=feedRepository.findByFeedSeq(feedSeq);
-		ResFeedDto feed=new ResFeedDto(feedInfo,feedInfo.getUser(),user);
+		ResFeedDto feed=new ResFeedDto(feedInfo,user);
 
 		return feed;
 	}
@@ -106,6 +106,9 @@ public class FeedService{
 		
 		if(feed==null)
 			return "Fail - no feed";
+		
+		if(feed.getUser().getUserSeq()!= user.getUserSeq())
+			return "Fail - not my feed";
 		
 		//해쉬태그 삭제
 		for(int i=0;i<feed.getHashtags().size();i++) {
