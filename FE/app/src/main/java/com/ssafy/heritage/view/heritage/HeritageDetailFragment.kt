@@ -13,6 +13,8 @@ import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.provider.MediaStore
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
@@ -313,6 +315,7 @@ class HeritageDetailFragment :
         mediaPlayer = MediaPlayer()
         mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
 
+        var mediaPosition = mediaPlayer!!.getCurrentPosition()
 
         imagebtnHeritageDetailVoicePlay.setOnClickListener {
             if (mediaPlayer!!.isPlaying) {
@@ -324,8 +327,12 @@ class HeritageDetailFragment :
                 }
             } else {
                 try {
+                    // 여기서 MediaPlayer를 다시 선언해주면 된다. 근데 일시정지가 아님,,,,다시 시작 됨 당연함 다시 선언했으니까
+                    mediaPlayer = MediaPlayer()
                     mediaPlayer!!.setDataSource(audioURL)
                     mediaPlayer!!.prepare()
+//                    mediaPlayer!!.start()
+                    mediaPlayer!!.seekTo(mediaPosition)
                     mediaPlayer!!.setOnPreparedListener {
                         mediaPlayer!!.start()
                     }
@@ -370,7 +377,8 @@ class HeritageDetailFragment :
                         heritageSeq = heritageViewModel.heritage.value?.heritageSeq!!,
                         heritageReviewText = etReviewContent.text.toString(),
                         reviewImgUrl = heritageViewModel.insertHeritageReview?.value!!,
-                        userNickname = userViewModel.user.value?.userNickname!!
+                        userNickname = userViewModel.user.value?.userNickname!!,
+                        profileImgUrl = userViewModel.user.value?.profileImgUrl!!
                     )
                     heritageViewModel.insertHeritageReview(heritageReview)
                     Log.d(TAG, "첨부 했을 때: ${heritageReview}")
@@ -382,7 +390,8 @@ class HeritageDetailFragment :
                         heritageSeq = heritageViewModel.heritage.value?.heritageSeq!!,
                         heritageReviewText = etReviewContent.text.toString(),
                         reviewImgUrl = "",
-                        userNickname = userViewModel.user.value?.userNickname!!
+                        userNickname = userViewModel.user.value?.userNickname!!,
+                        profileImgUrl = userViewModel.user.value?.profileImgUrl!!
                     )
                     heritageViewModel.insertHeritageReview(heritageReview)
                     Log.d(TAG, "첨부 안했을 때: ${heritageReview}")

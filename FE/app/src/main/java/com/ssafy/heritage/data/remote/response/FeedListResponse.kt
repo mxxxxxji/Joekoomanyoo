@@ -16,7 +16,7 @@ data class FeedListResponse(
     @SerializedName("userImgUrl") val userImgUrl: String,           // 사용자 프사
     @SerializedName("userNickname") val userNickname: String,       // 사용자 닉네임
     @SerializedName("hashtag") val hashtag: Array<String>,       // 사용자 닉네임
-    @SerializedName("feedCreatedAt") val feedCreatedAt: String,     // 등록 시간
+    @SerializedName("createdTime") val createdTime: String,     // 등록 시간
     @SerializedName("userLike") var userLike: Char,                 // 해당 사용자가 좋아요를 눌렀는가?? (N,Y)
 //    @SerializedName("feedUpdatedAt") val feedUpdatedAt: String       // 수정 시간
 ) : Parcelable, Serializable {
