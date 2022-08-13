@@ -46,8 +46,8 @@ interface GroupService {
     suspend fun changeGroupActiveState(@Body body: Int): Response<Boolean>
 
     // 가입을 승인한다
-    @PUT("/api/group/{groupSeq}/member/approve")
-    suspend fun approveGroupJoin(@Path("groupSeq") groupSeq: Int,@Body body: GroupBasic): Response<Boolean>
+    @PUT("/api/group/{groupSeq}/member/approve/{userSeq}")
+    suspend fun approveGroupJoin(@Path("groupSeq") groupSeq: Int, @Path("userSeq") userSeq: Int): Response<Boolean>
 
     // 가입을 신청한다
     @POST("/api/group/{groupSeq}/member/join")

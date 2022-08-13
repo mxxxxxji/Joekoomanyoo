@@ -126,9 +126,9 @@ class GroupViewModel : ViewModel() {
     }
 
     // 가입승인
-    fun approveGroupJoin(groupSeq: Int, groupBasic: GroupBasic) {
+    fun approveGroupJoin(groupSeq: Int, userSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.approveGroupJoin(groupSeq, groupBasic).let { response ->
+            repository.approveGroupJoin(groupSeq, userSeq).let { response ->
                 if (response.isSuccessful) {
                     val result = response.body()!! as Boolean
                     Log.d(TAG, "approveGroupJoin: $result")

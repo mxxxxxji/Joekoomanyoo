@@ -20,6 +20,7 @@ class Repository constructor(context: Context) {
     // group
     suspend fun insertGroup(body: GroupAddRequest): Response<GroupListResponse> =
         groupApi.insertGroup(body)
+
     suspend fun selectAllGroups(): Response<List<GroupListResponse>> = groupApi.selectAllGroups()
     suspend fun deleteGroup(groupSeq: Int): Response<Boolean> = groupApi.deleteGroup(groupSeq)
     suspend fun changeGroupActiveState(body: Int): Response<Boolean> =
@@ -31,15 +32,17 @@ class Repository constructor(context: Context) {
     suspend fun selectGroupDetail(groupSeq: Int): Response<GroupListResponse> =
         groupApi.selectGroupDetail(groupSeq)
 
+
     // group - 가입/신청/승인/취소/탈퇴
-    suspend fun approveGroupJoin(groupSeq: Int, body: GroupBasic): Response<Boolean> =
-        groupApi.approveGroupJoin(groupSeq, body)
+    suspend fun approveGroupJoin(groupSeq: Int, userSeq: Int): Response<Boolean> =
+        groupApi.approveGroupJoin(groupSeq, userSeq)
 
     suspend fun applyGroupJoin(groupSeq: Int, body: GroupJoin): Response<Boolean> =
         groupApi.applyGroupJoin(groupSeq, body)
 
     suspend fun leaveGroupJoin(groupSeq: Int, userSeq: Int): Response<Boolean> =
         groupApi.leaveGroupJoin(groupSeq, userSeq)
+
 
     // group - 내 그룹 조회
     suspend fun selectMyGroups(): Response<List<MyGroupResponse>> =
@@ -59,7 +62,8 @@ class Repository constructor(context: Context) {
     suspend fun selectGroupSchedule(groupSeq: Int): Response<List<GroupSchedule>> =
         groupApi.selectGroupSchedule(groupSeq)
 
-    suspend fun selectAllChat(groupSeq: Int) : Response<List<Chat>> = groupApi.selectAllChat(groupSeq)
+    suspend fun selectAllChat(groupSeq: Int): Response<List<Chat>> =
+        groupApi.selectAllChat(groupSeq)
 
 
     // user
@@ -140,7 +144,9 @@ class Repository constructor(context: Context) {
 
     suspend fun orderByLocation(map: HashMap<String, String>): Response<List<Heritage>> =
         heritageApi.orderByLocation(map)
-    suspend fun getOrderHeritage(@Body map: HashMap<String, Any>): Response<List<Heritage>> = heritageApi.getOrderHeritage(map)
+
+    suspend fun getOrderHeritage(@Body map: HashMap<String, Any>): Response<List<Heritage>> =
+        heritageApi.getOrderHeritage(map)
 
 
     // feed
@@ -186,8 +192,8 @@ class Repository constructor(context: Context) {
     suspend fun getMyStamp(userSeq: Int): Response<List<Stamp>> = ARApi.getMyStamp(userSeq)
     suspend fun addStamp(userSeq: Int, stampSeq: Int): Response<String> =
         ARApi.addStamp(userSeq, stampSeq)
-    suspend fun selectStampCategory(): Response<List<StampCategory>> = ARApi.selectStampCategory()
 
+    suspend fun selectStampCategory(): Response<List<StampCategory>> = ARApi.selectStampCategory()
 
 
     companion object {
