@@ -83,10 +83,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="@{feed.userNickname}"
+                android:fontFamily="@font/apple_sd_gothic_neo_b"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="바닐라라떼"/>
 
             <TextView
                 android:id="@+id/tv_feed_user_tale"
@@ -94,8 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
                 android:text="님"
+                android:fontFamily="@font/apple_sd_gothic_neo_b"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/tv_feed_user_id"
                 app:layout_constraintTop_toTopOf="@+id/tv_feed_user_id" />
 
@@ -104,10 +105,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{feed.createdTime}"
+                android:fontFamily="@font/apple_sd_gothic_neo_m"
                 android:textColor="#aeaeb2"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_feed_user_id"
-                app:layout_constraintTop_toBottomOf="@+id/tv_feed_user_id" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_feed_user_id"
+                tools:text="2022-08-15" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -164,21 +167,22 @@
             android:layout_marginLeft="24dp"
             android:layout_marginTop="24dp"
             android:text="@{feed.feedTitle}"
+            android:fontFamily="@font/apple_sd_gothic_neo_b"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_img_storke" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_img_storke"
+            tools:text="바닐라라떼"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/imagebtn_feed_detail_like"
             android:layout_width="26dp"
             android:layout_height="25dp"
+            android:layout_marginTop="17dp"
             android:layout_marginRight="28dp"
             android:background="@drawable/like_change"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_feed_heritage_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_feed_heritage_name" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_img_storke" />
 
         <TextView
             android:id="@+id/tv_feed_count"
@@ -186,6 +190,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text=""
+            android:fontFamily="@font/apple_sd_gothic_neo_l"
             android:textAlignment="center"
             android:textColor="#8e8e93"
             android:textSize="11sp"
@@ -199,11 +204,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="15dp"
             android:text=""
+            android:fontFamily="@font/apple_sd_gothic_neo_m"
             android:textColor="#88bbde"
             android:textSize="14sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_feed_heritage_name"
             tools:text="#경복궁 #광화문 #겨울 #한복" />
@@ -212,13 +217,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:text="@{feed.feedContent}"
+            android:fontFamily="@font/apple_sd_gothic_neo_m"
             android:textSize="14sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_feed_hashtag"
-            app:layout_constraintWidth_max="365dp" />
+            app:layout_constraintWidth_max="365dp"
+            tools:text="숨참고 러브다이브 우우우우 라라라라라라라 우우우우 어서와서 러브다이브 우우우우 오펄펙트세크리파이스 예에 숨참고 러브다이브"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

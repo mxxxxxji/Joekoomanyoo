@@ -158,9 +158,9 @@
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="20dp"
                             android:text="@{heritage.heritageName}"
+                            android:fontFamily="@font/apple_sd_gothic_neo_b"
                             android:textColor="#CC000000"
                             android:textSize="24sp"
-                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintWidth_max="365dp"
@@ -173,6 +173,7 @@
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="4dp"
                             android:text="@{heritage.heritageClass}"
+                            android:fontFamily="@font/apple_sd_gothic_neo_m"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_heritage_name_scroll"
                             tools:text="국보" />
@@ -216,7 +217,7 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="20dp"
                         android:text="분류"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/apple_sd_gothic_neo_b"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/constraint_content2" />
 
@@ -225,6 +226,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@{heritage.heritageCategory}"
+                        android:fontFamily="@font/apple_sd_gothic_neo_m"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@id/gl_verti_20"
                         app:layout_constraintTop_toTopOf="@id/tv_heritage_categorization_title"
@@ -248,7 +250,7 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="8dp"
                         android:text="소재지"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/apple_sd_gothic_neo_b"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/divider1" />
 
@@ -258,6 +260,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@{heritage.heritageAddress}"
+                        android:fontFamily="@font/apple_sd_gothic_neo_m"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@id/gl_verti_20"
                         app:layout_constraintTop_toTopOf="@id/tv_heritage_address_title"
@@ -281,7 +284,7 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="8dp"
                         android:text="시대"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/apple_sd_gothic_neo_b"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
@@ -290,6 +293,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{heritage.heritageEra}"
+                        android:fontFamily="@font/apple_sd_gothic_neo_m"
                         app:layout_constraintStart_toStartOf="@id/gl_verti_20"
                         app:layout_constraintTop_toTopOf="@+id/tv_heritage_age_title"
                         tools:text="TextView" />
@@ -322,8 +326,8 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="20dp"
                         android:text="설명"
+                        android:fontFamily="@font/apple_sd_gothic_neo_b"
                         android:textSize="24sp"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
@@ -354,6 +358,7 @@
                         android:layout_marginHorizontal="24dp"
                         android:layout_marginTop="8dp"
                         android:text="@{heritage.heritageMemo}"
+                        android:fontFamily="@font/apple_sd_gothic_neo_m"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_heritage_description_title"
@@ -376,8 +381,8 @@
                         android:layout_marginHorizontal="24dp"
                         android:layout_marginTop="20dp"
                         android:text="리뷰"
+                        android:fontFamily="@font/apple_sd_gothic_neo_b"
                         android:textSize="24sp"
-                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/divider6" />
@@ -413,6 +418,7 @@
                             android:layout_marginStart="24dp"
                             android:background="@drawable/background_search_view_white"
                             android:hint="리뷰를 작성해보세요"
+                            android:fontFamily="@font/apple_sd_gothic_neo_m"
                             android:paddingStart="10dp"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -438,9 +444,9 @@
                             android:background="@drawable/button_review"
                             android:backgroundTint="@color/white"
                             android:text="글쓰기"
+                            android:fontFamily="@font/apple_sd_gothic_neo_b"
                             android:textColor="#b797e2"
                             android:textSize="13sp"
-                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/et_review_content"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/et_review_content" />
