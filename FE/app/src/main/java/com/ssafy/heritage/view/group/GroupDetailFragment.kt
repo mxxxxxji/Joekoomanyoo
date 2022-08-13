@@ -158,7 +158,7 @@ class GroupDetailFragment :
 
             val action =
                 GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupListFragment()
-            findNavController().navigate(action)
+//            findNavController().navigate(action)
         }
 
         // 모임시작

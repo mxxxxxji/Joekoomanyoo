@@ -1,8 +1,13 @@
 package com.ssafy.heritage.view.profile
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
+import com.ssafy.heritage.data.dto.GroupDestinationMap
+import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.databinding.FragmentMyDataBinding
 import com.ssafy.heritage.viewmodel.UserViewModel
 import net.daum.mf.map.api.MapPOIItem
@@ -45,23 +50,38 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
 
     private fun initObserver() {
         userViewModel.myDestinationList.observe(viewLifecycleOwner) {
-            makeMarker()
+            makeGroupMarker(it)
+        }
+        userViewModel.myStampList.observe(viewLifecycleOwner) {
+            makeStampMarker(it)
         }
     }
 
-    private fun makeMarker() {
+    // 모임에서 설정한 마커
+    private fun makeGroupMarker(list: MutableList<GroupDestinationMap>) {
 
-        userViewModel.myDestinationList.value?.forEachIndexed { index, destination ->
+        list.forEachIndexed { index, destination ->
             MapPOIItem().apply {
-                itemName = ""
+                itemName = destination.heritage.heritageName
                 mapPoint =
                     MapPoint.mapPointWithGeoCoord(
-                        destination.heritageLat.toDouble(),
-                        destination.heritageLng.toDouble()
+                        destination.heritage.heritageLat.toDouble(),
+                        destination.heritage.heritageLng.toDouble()
                     )
-                markerType = MapPOIItem.MarkerType.BluePin // 기본으로 제공하는 BluePin 마커 모양.
-                selectedMarkerType =
-                    MapPOIItem.MarkerType.RedPin // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+                val bitmapdraw: BitmapDrawable = ResourcesCompat.getDrawable(
+                    resources,
+                    R.drawable.ic_gorup_location,
+                    null
+                ) as BitmapDrawable
+                val b: Bitmap = bitmapdraw.bitmap
+                val marker: Bitmap = Bitmap.createScaledBitmap(b, 50, 50, false)
+
+                markerType = MapPOIItem.MarkerType.CustomImage          // 마커 모양 (커스텀)
+                selectedMarkerType = MapPOIItem.MarkerType.CustomImage  // 클릭 시 마커 모양 (커스텀)
+                customImageBitmap = marker
+                customSelectedImageBitmap = marker
+
                 showAnimationType = MapPOIItem.ShowAnimationType.SpringFromGround
                 tag = index
 
@@ -70,7 +90,46 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
         }
     }
 
-    override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
+    // 스탬프 획득한 곳 마커
+    private fun makeStampMarker(list: MutableList<Stamp>) {
+        list.forEachIndexed { index, destination ->
+            MapPOIItem().apply {
+                itemName = destination.stampTitle
+                mapPoint =
+                    MapPoint.mapPointWithGeoCoord(
+                        destination.heritageLat.toDouble(),
+                        destination.heritageLng.toDouble()
+                    )
+
+                val bitmapdraw: BitmapDrawable = ResourcesCompat.getDrawable(
+                    resources,
+                    R.drawable.ic_stamp_location,
+                    null
+                ) as BitmapDrawable
+                val b: Bitmap = bitmapdraw.bitmap
+                val marker: Bitmap = Bitmap.createScaledBitmap(b, 50, 50, false)
+
+                markerType = MapPOIItem.MarkerType.CustomImage          // 마커 모양 (커스텀)
+                selectedMarkerType = MapPOIItem.MarkerType.CustomImage  // 클릭 시 마커 모양 (커스텀)
+                customImageBitmap = marker
+                customSelectedImageBitmap = marker
+
+                showAnimationType = MapPOIItem.ShowAnimationType.DropFromHeaven
+                tag = index
+
+                mapView.addPOIItem(this)
+            }
+        }
+    }
+
+    override fun onPOIItemSelected(p0: MapView?, poiItem: MapPOIItem?) {
+
+        mapView.setMapCenterPointAndZoomLevel(
+            MapPoint.mapPointWithGeoCoord(
+                poiItem?.mapPoint?.mapPointGeoCoord?.latitude!!,
+                poiItem?.mapPoint?.mapPointGeoCoord?.longitude!!
+            ), 1, true
+        )
     }
 
     override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {

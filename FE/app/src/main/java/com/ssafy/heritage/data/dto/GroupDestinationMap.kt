@@ -1,8 +1,9 @@
 package com.ssafy.heritage.data.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class GroupDestinationMap(
-    val heritageSeq: Int,
-    val gdCompleted: Char,
-    val heritageLng: String,
-    val heritageLat: String
+    @SerializedName("heritageSeq") val heritageSeq: Int,
+    @SerializedName("gdCompleted") val gdCompleted: Char,
+    @SerializedName("heritage") val heritage: Heritage
 )

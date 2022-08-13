@@ -6,16 +6,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.ImageDecoder
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.location.LocationManager
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -23,12 +21,12 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.transition.Fade
 import androidx.transition.TransitionInflater
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.HeritageReviewAdapter
-import com.ssafy.heritage.adpter.MyBindingAdapter.setImage
 import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Heritage
@@ -37,7 +35,6 @@ import com.ssafy.heritage.data.remote.api.UserService
 import com.ssafy.heritage.data.remote.request.HeritageReviewRequest
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
 import com.ssafy.heritage.databinding.FragmentHeritageDetail2Binding
-import com.ssafy.heritage.databinding.ItemReviewBinding
 import com.ssafy.heritage.util.FileUtil
 import com.ssafy.heritage.util.FormDataUtil
 import com.ssafy.heritage.view.HomeActivity
@@ -413,6 +410,37 @@ class HeritageDetailFragment :
                     lat, lng
                 ), true
             )
+
+            val item = mapView.poiItems.find { it.tag == -1 }
+            item?.let { mapView.removePOIItem(item) }
+
+            MapPOIItem().apply {
+                itemName = "현재 위치"
+                mapPoint =
+                    MapPoint.mapPointWithGeoCoord(
+                        lat,
+                        lng
+                    )
+
+                val bitmapdraw: BitmapDrawable = ResourcesCompat.getDrawable(
+                    resources,
+                    R.drawable.ic_current_location,
+                    null
+                ) as BitmapDrawable
+                val b: Bitmap = bitmapdraw.bitmap
+                val marker: Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false)
+
+                markerType = MapPOIItem.MarkerType.CustomImage          // 마커 모양 (커스텀)
+                selectedMarkerType = MapPOIItem.MarkerType.CustomImage  // 클릭 시 마커 모양 (커스텀)
+                customImageBitmap = marker
+                customSelectedImageBitmap = marker
+
+                showAnimationType = MapPOIItem.ShowAnimationType.DropFromHeaven
+
+                tag = -1
+
+                mapView.addPOIItem(this)
+            }
         }
     }
 
@@ -531,15 +559,17 @@ class HeritageDetailFragment :
 
     override fun onPOIItemSelected(p0: MapView?, poiItem: MapPOIItem?) {
 
-        val data = poiItem?.tag?.let { heritageViewModel.heritageList.value?.get(it) }
+        if (poiItem?.tag ?: -1 >= 0) {
+            val data = poiItem?.tag?.let { heritageViewModel.heritageList.value?.get(it) }
 
-        mapView.setMapCenterPoint(
-            MapPoint.mapPointWithGeoCoord(
-                data?.heritageLat!!.toDouble(), data?.heritageLng!!.toDouble()
-            ), true
-        )
-        heritage = data
-        binding.heritage = data
+            mapView.setMapCenterPoint(
+                MapPoint.mapPointWithGeoCoord(
+                    data?.heritageLat!!.toDouble(), data?.heritageLng!!.toDouble()
+                ), true
+            )
+            heritage = data
+            binding.heritage = data
+        }
     }
 
     override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {

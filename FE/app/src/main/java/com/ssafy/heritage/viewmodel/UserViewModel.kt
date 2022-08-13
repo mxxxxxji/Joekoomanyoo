@@ -381,16 +381,15 @@ class UserViewModel : ViewModel() {
     fun getMydestination() = viewModelScope.launch {
         var response: Response<List<GroupDestinationMap>>? = null
         job = launch(Dispatchers.Main) {
-            response = repository.selectAllMyDestination(_user.value?.userSeq!!)
+            response = repository.selectAllMyDestination()
         }
         job?.join()
 
         response?.let {
             Log.d(TAG, "getMydestination response: $it")
             if (it.isSuccessful) {
-                val list = it.body() as MutableList<GroupDestinationMap>
-                Log.d(TAG, "getMydestination list: $list")
-                _myDestinationList.postValue(list)
+                Log.d(TAG, "getMydestination list: ${it.body()}")
+                _myDestinationList.postValue(it.body() as MutableList<GroupDestinationMap>)
             } else {
 
             }
