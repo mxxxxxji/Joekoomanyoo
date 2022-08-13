@@ -74,7 +74,8 @@ class GroupModifyFragment :
         // 시작일
         etGroupStartDate.setOnClickListener {
             val datePickerDialog = DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener { view, myear, mmonth, mdayOfMonth ->
-                etGroupStartDate.setText(""+  myear+"-"+ mmonth+1 +"-"+mdayOfMonth )
+                val m = mmonth +1
+                etGroupStartDate.setText(""+  myear+"-"+ m +"-"+mdayOfMonth )
             }, year, month, day)
             datePickerDialog.show()
         }
@@ -82,7 +83,8 @@ class GroupModifyFragment :
         // 종료일
         etGroupEndDate.setOnClickListener {
             val datePickerDialog = DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener { view, myear, mmonth, mdayOfMonth ->
-                etGroupEndDate.setText(""+  myear+"-"+ mmonth+1 +"-"+mdayOfMonth )
+                val m = mmonth +1
+                etGroupEndDate.setText(""+  myear+"-"+ m +"-"+mdayOfMonth )
             }, year, month, day)
             datePickerDialog.show()
         }
