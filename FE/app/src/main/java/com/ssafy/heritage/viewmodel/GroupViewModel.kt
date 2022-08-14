@@ -115,7 +115,7 @@ class GroupViewModel : ViewModel() {
         }
     }
 
-    suspend fun selectGroupDetail(groupSeq: Int) {
+    fun selectGroupDetail(groupSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectGroupDetail(groupSeq).let { response ->
                 if (response.isSuccessful) {
@@ -138,6 +138,20 @@ class GroupViewModel : ViewModel() {
                     _insertGroupInfo.postValue(info)
                 } else {
                     Log.d(TAG, "insertGroup: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    fun modifyGroup(groupSeq: Int, groupInfo: GroupListResponse) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.modifyGroup(groupSeq, groupInfo).let { response ->
+                if (response.isSuccessful) {
+                    Log.d(TAG, "modifyGroup: ${response.code()} ${response.body()}")
+                    var info = response.body()!! as GroupListResponse
+                    _detailInfo.postValue(info)
+                } else {
+                    Log.d(TAG, "modifyGroup: ${response.code()}")
                 }
             }
         }

@@ -11,10 +11,10 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.MemberAdapter
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Member
-import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupDetailBinding
+
 import com.ssafy.heritage.listener.MemberClickListener
 import com.ssafy.heritage.view.dialog.ApplyGroupJoinDialog
 import com.ssafy.heritage.view.dialog.ApplyGroupJoinDialogInterface
@@ -101,16 +101,6 @@ class GroupDetailFragment :
     }
 
     private fun initClickListener() {
-
-        // 설정
-        binding.btnSetting.setOnClickListener{
-            val action = GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupModifyFragment(groupInfo)
-            findNavController().navigate(action)
-        }
-
-        binding.btnChangeImage.setOnClickListener {
-
-        }
 
         // 가입 요청
         binding.btnSubscription.setOnClickListener {

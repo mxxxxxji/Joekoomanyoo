@@ -3,14 +3,15 @@ package com.ssafy.heritage.view.group
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
-import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
+import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupInfoBinding
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "GroupInfoFragment___"
 
-class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(com.ssafy.heritage.R.layout.fragment_group_info), TabLayout.OnTabSelectedListener{
+class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragment_group_info), TabLayout.OnTabSelectedListener{
 
     private val args by navArgs<GroupInfoFragmentArgs>()
     private val groupViewModel by activityViewModels<GroupViewModel>()
@@ -29,23 +30,39 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(com.ssafy.herit
     private lateinit var chatFragment: GroupChatFragment
     private lateinit var calenderFragment: GroupCalenderFragment
     private lateinit var mapFragment: GroupMapFragment
-
+    private lateinit var groupInfo: GroupListResponse
     override fun init() {
         CoroutineScope(Dispatchers.Main).launch {
 //            groupViewModel.getGroupList()
             groupViewModel.add(args.groupInfo)
            val s= groupViewModel.selectGroupMembers(ApplicationClass.sharedPreferencesUtil.getUser(),args.groupInfo.groupSeq)
             groupViewModel.getChatList(args.groupInfo.groupSeq)
+            groupViewModel.selectGroupDetail(args.groupInfo.groupSeq)
             Log.d(TAG, "init CoroutineScope: $s")
             initAdapter()
             initClickListener()
         }
+        initObserver()
     }
-
+    private fun initObserver() = with(binding) {
+        groupViewModel.detailInfo.observe(viewLifecycleOwner) {
+            groupDetailInfo = it
+            groupInfo = it
+        }
+    }
     private fun initClickListener() = with(binding) {
-//        btnBack.setOnClickListener{
-//            findNavController().popBackStack()
-//        }
+        btnBack.setOnClickListener{
+            findNavController().popBackStack()
+        }
+        // 설정
+        binding.btnSetting.setOnClickListener{
+            val action = GroupInfoFragmentDirections.actionGroupInfoFragmentToGroupModifyFragment(groupInfo)
+            findNavController().navigate(action)
+        }
+
+        binding.btnChangeImage.setOnClickListener {
+
+        }
     }
     private fun initAdapter() {
         binding.apply {
@@ -55,18 +72,7 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(com.ssafy.herit
             chatFragment = GroupChatFragment()
             calenderFragment = GroupCalenderFragment()
             mapFragment = GroupMapFragment()
-//
-//
-//            childFragmentManager.beginTransaction()
-////                .replace(R.id.vewtab, detailFragment).commit()
-//
-//          //  viewpagerTab.addView(LayoutInflater.from(requireContext()).inflate(R.layout.fragment_group_detail,viewpagerTab,false))
-//
-//            val pages = FragmentPagerItems(requireContext())
-//            pages.add(FragmentPagerItem.of("정보", GroupDetailFragment::class.java))
-//            pages.add(FragmentPagerItem.of("채팅", GroupChatFragment()::class.java))
-//            pages.add(FragmentPagerItem.of("일정", GroupCalenderFragment()::class.java))
-//            pages.add(FragmentPagerItem.of("지도", GroupMapFragment()::class.java))
+
 
             val adapter = FragmentPagerItemAdapter(
                 childFragmentManager, FragmentPagerItems.with(requireContext())
@@ -77,7 +83,6 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(com.ssafy.herit
                     .create())
             viewpager.adapter = adapter
             viewpagertab.setViewPager(viewpager)
-
         }
     }
 
