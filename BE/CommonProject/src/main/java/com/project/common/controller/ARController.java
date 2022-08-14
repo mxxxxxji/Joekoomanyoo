@@ -47,10 +47,10 @@ public class ARController {
 
     @ApiOperation(value = "스탬프 전체 리스트 불러오기", response = List.class)
     @GetMapping("/stamp/list")
-    public ResponseEntity<?> listStamp() {
+    public ResponseEntity<List<StampDto>> listStamp() {
         List<StampDto> list = arService.listStamp();
-        if (list == null) {
-            return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+        if (list.size() == 0) {
+            return new ResponseEntity<List<StampDto>>(list, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<List<StampDto>>(list, HttpStatus.OK);
         }
@@ -65,7 +65,7 @@ public class ARController {
 
     @ApiOperation(value = "내 스탬프 전체 리스트 불러오기", response = List.class)
     @GetMapping("/stamp/list/{userSeq}")
-    public ResponseEntity<?> listMyStamp(@PathVariable("userSeq") int userSeq) {
+    public ResponseEntity<List<StampDto>> listMyStamp(@PathVariable("userSeq") int userSeq) {
         List<StampDto> list = arService.listMyStamp(userSeq);
         return new ResponseEntity<List<StampDto>>(list, HttpStatus.OK);
     }
@@ -145,10 +145,10 @@ public class ARController {
 
     @ApiOperation(value = "카테고리 별 내 스탬프 정보 전달", response = List.class)
     @GetMapping("/stamp/category/{userSeq}/{categorySeq}")
-    public ResponseEntity<?> listCategoryMyStamp(@PathVariable("userSeq") int userSeq, @PathVariable("categorySeq") int categorySeq) {
+    public ResponseEntity<List<MyStampResponseDto>> listCategoryMyStamp(@PathVariable("userSeq") int userSeq, @PathVariable("categorySeq") int categorySeq) {
         List<MyStampResponseDto> list = arService.listCategoryMyStamp(userSeq, categorySeq);
         if(list.size()==0){
-            return new ResponseEntity<String>("no list", HttpStatus.OK);
+            return new ResponseEntity<List<MyStampResponseDto>>(list, HttpStatus.BAD_REQUEST);
         }else {
             return new ResponseEntity<List<MyStampResponseDto>>(list, HttpStatus.OK);
         }
