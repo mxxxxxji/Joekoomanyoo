@@ -9,70 +9,187 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
 
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <FrameLayout
+            android:id="@+id/frame_layout_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/main_color"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@android:color/transparent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="20dp">
-
-                <ImageButton
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent">
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btn_back"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="8.8dp"
+                    android:layout_height="17.7dp"
+                    android:layout_marginTop="40.6dp"
+                    android:layout_marginStart="15.5dp"
                     android:background="@drawable/ic_baseline_arrow_back_24"
                     android:backgroundTint="@color/white"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"/>
 
+                <ImageView
+                    android:id="@+id/iv_group_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
+                    android:background="@drawable/feed_img_1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btn_setting"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="15.3dp"
+                    android:backgroundTint="@color/white"
+                    android:background="@drawable/ic_baseline_settings_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btn_change_image"
+                    android:layout_width="22.5dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="11.9dp"
+                    android:text="사진변경"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/white"
+                    android:background="@drawable/ic_nav_feed"
+                    app:layout_constraintEnd_toStartOf="@id/btn_setting"
+                    app:layout_constraintTop_toTopOf="parent" />
                 <TextView
-                    android:id="@+id/header_create_group"
+                    android:id="@+id/tv_start_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/apple_sd_gothic_neo_b"
-                    android:text="모임 상세화면"
-                    android:textColor="@color/white"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="129dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_l"
+                    android:text="@{String.valueOf(groupDetailInfo.groupStartDate)}"
                     android:textSize="16sp"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="0000.00.00" />
+
+                <TextView
+                    android:id="@+id/header_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/apple_sd_gothic_neo_l"
+                    android:layout_marginTop="129dp"
+                    android:text=" - "
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@id/tv_start_date"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_end_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="129dp"
+                    android:text="@{String.valueOf(groupDetailInfo.groupEndDate)}"
+                    android:fontFamily="@font/apple_sd_gothic_neo_l"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@id/header_from"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="0000.00.00" />
+                <TextView
+                    android:id="@+id/tv_group_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="148dp"
+                    android:layout_marginStart="15dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/apple_sd_gothic_neo_b"
+                    android:text="@{groupDetailInfo.groupName}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="베낭메고 떠나는 경주여행" />
+
+                <ImageView
+                    android:id="@+id/iv_lock"
+                    android:layout_width="15dp"
+                    android:layout_height="19dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="146dp"
+                    android:background="@drawable/ic_lock_on"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintStart_toEndOf="@id/tv_group_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_kids"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="110dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="3dp"
+                    android:text="@{String.valueOf(groupDetailInfo.groupWithChild)}"
+                    android:fontFamily="@font/apple_sd_gothic_neo_l"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-<!--                <ImageButton-->
-<!--                    android:id="@+id/btn_sort"-->
-<!--                    android:layout_width="25dp"-->
-<!--                    android:layout_height="25dp"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:background="@drawable/ic_baseline_settings_24"-->
-<!--                    android:backgroundTintMode="@color/white"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+                    tools:text="아이 동반"/>
+
+                <TextView
+                    android:id="@+id/tv_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="130dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="3dp"
+                    android:text="@{String.valueOf(groupDetailInfo.groupAgeRange)+`대`}"
+                    android:fontFamily="@font/apple_sd_gothic_neo_l"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="연령" />
+
+                <TextView
+                    android:id="@+id/tv_region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="150dp"
+                    android:layout_marginEnd="15dp"
+                    android:text="@{groupDetailInfo.groupRegion}"
+                    android:fontFamily="@font/apple_sd_gothic_neo_l"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="지역" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.appbar.MaterialToolbar>
+        </FrameLayout>
 
 
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/viewpagertab"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="45dp"
             android:fontFamily="@font/apple_sd_gothic_neo_l"
             android:clipToPadding="false"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             app:stl_defaultTabTextColor="@color/main_color"
-            app:stl_defaultTabTextHorizontalPadding="18dp"
+            app:stl_defaultTabTextHorizontalPadding="20dp"
             app:stl_dividerColor="@color/float_transparent"
             app:stl_dividerThickness="0dp"
             app:stl_indicatorColor="@color/black_10"
@@ -81,24 +198,22 @@
             app:stl_indicatorInterpolation="smart"
             app:stl_indicatorThickness="36dp"
             app:stl_underlineColor="@color/float_transparent"
-            android:background="@color/white"
             app:stl_underlineThickness="0dp"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/frame_layout_top"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:elevation="5dp"
-            />
+            android:elevation="10dp"/>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/float_transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/viewpagertab"
-            app:layout_constraintVertical_bias="0.355" />
+            app:layout_constraintTop_toBottomOf="@id/viewpagertab" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
