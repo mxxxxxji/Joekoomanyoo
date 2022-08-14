@@ -200,4 +200,7 @@ dependencies {
 
     // Auto Image Slider
     implementation 'com.github.Fuadafdhal:Auto-Image-Slider:1.0'
+
+    // lottie
+    implementation 'com.airbnb.android:lottie:3.0.7'
 }
