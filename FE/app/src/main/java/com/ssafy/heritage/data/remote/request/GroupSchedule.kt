@@ -1,6 +1,9 @@
 package com.ssafy.heritage.data.remote.request
 
 data class GroupSchedule(
-    val date : String,           // 날짜
-    val content : String         // 내용
+    val gsSeq: Int = 0,
+    val gsDateTime: String,           // 날짜
+    val gsContent: String,         // 내용
+    val gsRegisteredAt: String = "",
+    val gsUpdatedAt: String = ""
 )

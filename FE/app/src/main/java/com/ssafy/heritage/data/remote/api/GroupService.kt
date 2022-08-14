@@ -82,7 +82,7 @@ interface GroupService {
     suspend fun deleteGroupSchedule(@Path("groupSeq") groupSeq: Int, @Query("gsDateTime") gsDateTime: String): Response<String>
 
     // 모임 일정을 조회한다
-    @GET("/api/group/{group}/schedule/list")
+    @GET("/api/group/{groupSeq}/schedule/list")
     suspend fun selectGroupSchedule(@Path("groupSeq") groupSeq: Int) : Response<List<GroupSchedule>>
 
 

@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.heritage.data.dto.Chat
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.remote.request.GroupAddRequest
-import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.request.GroupSchedule
 import com.ssafy.heritage.data.remote.response.GroupListResponse
@@ -65,7 +64,7 @@ class GroupViewModel : ViewModel() {
     private val _deleteGroupDestination = SingleLiveEvent<String>()
     val deleteGroupDestination: LiveData<String> get() = _deleteGroupDestination
 
-    private val _selectGroupScheduleList = SingleLiveEvent<MutableList<GroupSchedule>>()
+    private val _selectGroupScheduleList = MutableLiveData<MutableList<GroupSchedule>>()
     val selectGroupScheduleList: LiveData<MutableList<GroupSchedule>> get() = _selectGroupScheduleList
 
     private val _chatList = MutableLiveData<MutableList<Chat>>().apply { value = arrayListOf() }
@@ -122,7 +121,7 @@ class GroupViewModel : ViewModel() {
                     Log.d(TAG, "selectGroupDetail : ${response.code()} ${response.body()}")
                     var info = response.body()!! as GroupListResponse
                     _detailInfo.postValue(info)
-                }else{
+                } else {
                     Log.d(TAG, "selectGroupDetail : ${response.code()}")
                 }
             }
@@ -187,8 +186,9 @@ class GroupViewModel : ViewModel() {
             }
         }
     }
+
     // 가입 거절, 강제 퇴장
-    fun outGroupJoin(groupSeq: Int, userSeq: Int){
+    fun outGroupJoin(groupSeq: Int, userSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.outGroupJoin(groupSeq, userSeq).let { response ->
                 if (response.isSuccessful) {
@@ -200,6 +200,7 @@ class GroupViewModel : ViewModel() {
             }
         }
     }
+
     fun selectMyGroups() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectMyGroups().let { response ->
@@ -270,14 +271,12 @@ class GroupViewModel : ViewModel() {
     fun insertGroupSchedule(groupSeq: Int, body: GroupSchedule) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertGroupSchedule(groupSeq, body).let { response ->
+                Log.d(TAG, "insertGroupSchedule response: $response")
                 if (response.isSuccessful) {
-                    if (response.body() == "Success") {
-                        Log.d(TAG, "insertGroupSchedule - ${response.body()}: 일정이 등록되었습니다")
-                    } else {
-                        Log.d(TAG, "insertGroupSchedule - ${response.body()}: 이미 등록된 일정입니다")
-                    }
+                    Log.d(TAG, "insertGroupSchedule body: ${response.body()}")
+                    selectGroupSchedule(detailInfo.value?.groupSeq!!)
                 } else {
-                    Log.d(TAG, "insertGroupSchedule: ${response.code()}")
+                    Log.d(TAG, "insertGroupSchedule: ${response.errorBody()}")
                 }
             }
         }
@@ -287,14 +286,12 @@ class GroupViewModel : ViewModel() {
     fun deleteGroupSchedule(groupSeq: Int, date: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteGroupSchedule(groupSeq, date).let { response ->
+                Log.d(TAG, "deleteGroupSchedule response: $response")
                 if (response.isSuccessful) {
-                    if (response.body() == "Success") {
-                        Log.d(TAG, "deleteGroupSchedule - ${response.body()}: 일정이 삭제되었습니다")
-                    } else {
-                        Log.d(TAG, "deleteGroupSchedule - ${response.body()}: 이미 삭제된 일정입니다")
-                    }
+                    Log.d(TAG, "deleteGroupSchedule body: ${response.body()}")
+                    selectGroupSchedule(detailInfo.value?.groupSeq!!)
                 } else {
-                    Log.d(TAG, "deleteGroupSchedule: ${response.code()}")
+                    Log.d(TAG, "deleteGroupSchedule: ${response.errorBody()}")
                 }
             }
         }
@@ -304,11 +301,13 @@ class GroupViewModel : ViewModel() {
     fun selectGroupSchedule(groupSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.selectGroupSchedule(groupSeq).let { response ->
+                Log.d(TAG, "selectGroupSchedule response: $response")
                 if (response.isSuccessful) {
+                    Log.d(TAG, "selectGroupSchedule response: ${response.body()}")
                     var list = response.body()!! as MutableList<GroupSchedule>
                     _selectGroupScheduleList.postValue(list)
                 } else {
-                    Log.d(TAG, "selectGroupSchedule: ${response.code()}")
+                    Log.d(TAG, "selectGroupSchedule: ${response.errorBody()}")
                 }
             }
         }
