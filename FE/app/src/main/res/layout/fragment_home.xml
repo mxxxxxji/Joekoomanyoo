@@ -33,25 +33,26 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_header"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:scaleType="fitStart"
             android:src="@drawable/home_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:elevation="4dp"
+            android:elevation="40dp"
             android:minHeight="?attr/actionBarSize"
             android:outlineProvider="none"
-            android:paddingTop="50dp"
             android:theme="?attr/actionBarTheme"
+            android:translationZ="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_header"
             app:menu="@menu/home_menu">
 
             <androidx.constraintlayout.widget.ConstraintLayout
