@@ -7,9 +7,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afdhal_fa.imageslider.model.SlideUIModel
 import com.ssafy.heritage.R
+import com.ssafy.heritage.adpter.GroupMyListAdapter
 import com.ssafy.heritage.adpter.HomeFeedAdapter
 import com.ssafy.heritage.adpter.HomeHeritageAdapter
-import com.ssafy.heritage.adpter.MyGroupListAdapter
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.remote.response.FeedListResponse
@@ -28,7 +28,7 @@ private const val TAG = "HomeFragment__"
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
-    private val myGroupListAdapter: MyGroupListAdapter by lazy { MyGroupListAdapter() }
+    private val myGroupListAdapter: GroupMyListAdapter by lazy { GroupMyListAdapter() }
     private val homeHeritageAdapter: HomeHeritageAdapter by lazy { HomeHeritageAdapter() }
     private val homeFeedAdapter: HomeFeedAdapter by lazy { HomeFeedAdapter() }
 
@@ -87,7 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
 
         groupViewModel.myGroupList.observe(viewLifecycleOwner) {
-            myGroupListAdapter.submitList(it)
+            myGroupListAdapter.submitList(it.filter { it.groupStatus != 'F' && it.memberStatus != 0 })
         }
 
         feedViewModel.feedListAll.observe(viewLifecycleOwner) {

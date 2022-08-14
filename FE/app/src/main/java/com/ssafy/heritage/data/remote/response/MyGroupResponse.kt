@@ -10,7 +10,8 @@ data class MyGroupResponse(
     @SerializedName("groupName") var groupName: String,
     @SerializedName("groupMaster") var groupMaster: String,
     @SerializedName("groupDescription") var groupDescription: String,
-    @SerializedName("groupAccessType") var groupAccessType: String,
+    @SerializedName("groupImgUrl") var groupImgUrl: String = "",
+    @SerializedName("groupAccessType") var groupAccessType: Char,
     @SerializedName("groupPassword") var groupPassword: String,
     @SerializedName("groupMaxCount") var groupMaxCount: Int,
     @SerializedName("groupRegion") var groupRegion: String,
@@ -23,4 +24,4 @@ data class MyGroupResponse(
     @SerializedName("groupStatus") var groupStatus: Char,
     @SerializedName("memberStatus") var memberStatus: Int,
     @SerializedName("memberIsEvaluated") var memberIsEvaluated: Char
-): Parcelable
+) : Parcelable

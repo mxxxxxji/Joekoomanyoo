@@ -32,6 +32,13 @@
             motion:layout_constraintEnd_toEndOf="@id/gl_verti_90"
             motion:layout_constraintStart_toStartOf="@id/gl_verti_10"
             motion:layout_goneMarginStart="16dp" />
+
+        <Constraint
+            android:id="@+id/header"
+            android:alpha="0"
+            motion:layout_constraintBottom_toTopOf="@id/constraint_et"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 
     <Transition
