@@ -17,6 +17,7 @@ package com.ssafy.heritage
 
 import android.opengl.Matrix
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.maps.model.LatLng
@@ -27,6 +28,7 @@ import com.ssafy.heritage.helpers.DisplayRotationHelper
 import com.ssafy.heritage.helpers.TrackingStateHelper
 import com.ssafy.heritage.samplerender.*
 import com.ssafy.heritage.samplerender.arcore.BackgroundRenderer
+import com.ssafy.heritage.view.dialog.ARCheckDialog
 import java.io.IOException
 
 
@@ -180,6 +182,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
         longitude = cameraGeospatialPose.longitude,
         heading = cameraGeospatialPose.heading
       )
+      activity.view.updateStatusText(earth, cameraGeospatialPose)
     }
 
     // Draw the placed anchor, if it exists.

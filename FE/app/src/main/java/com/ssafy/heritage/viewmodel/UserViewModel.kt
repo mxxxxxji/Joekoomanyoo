@@ -568,24 +568,5 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    // 획득한 스탬프 등록
-    fun addStamp(stampSeq: Int) = viewModelScope.launch {
-        var response: Response<String>? = null
-        job = launch(Dispatchers.Main) {
-            response = repository.addStamp(_user.value?.userSeq!!, stampSeq)
-        }
-        job?.join()
 
-        response?.let {
-            Log.d(TAG, "addStamp response: $it")
-            if (it.isSuccessful) {
-                Log.d(TAG, "addStamp body: ${it.body()}")
-
-                // 새로 등록하고 다시 내 스탬프 목록 갱신
-                getMyStamp()
-            } else {
-                Log.d(TAG, "addStamp: ${it.errorBody()}")
-            }
-        }
-    }
 }

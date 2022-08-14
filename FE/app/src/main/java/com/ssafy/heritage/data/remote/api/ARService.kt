@@ -3,6 +3,7 @@ package com.ssafy.heritage.data.remote.api
 import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.data.dto.StampCategory
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -24,4 +25,8 @@ interface ARService {
     // 스탬프 카테고리별 개수 조회
     @GET("/api/ar/stamp/category")
     suspend fun selectStampCategory(): Response<List<StampCategory>>
+
+    // 내 위치 전송하여 나와 가까운 스탬프 정보 조회
+    //@POST("api/ar/location")
+    //suspend fun selectNearStamp(@Body map: HashMap<String, String>): Response<>
 }
