@@ -102,6 +102,16 @@ class GroupDetailFragment :
 
     private fun initClickListener() {
 
+        // 설정
+//        binding.btnSetting.setOnClickListener{
+//            val action = GroupDetailFragmentDirections.actionGroupDetailFragmentToGroupModifyFragment(groupInfo)
+//            findNavController().navigate(action)
+//        }
+//
+//        binding.btnChangeImage.setOnClickListener {
+//
+//        }
+
         // 가입 요청
         binding.btnSubscription.setOnClickListener {
             val dialog = ApplyGroupJoinDialog(requireContext(), this)

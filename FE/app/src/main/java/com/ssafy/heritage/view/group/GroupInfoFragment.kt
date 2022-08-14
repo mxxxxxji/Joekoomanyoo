@@ -21,25 +21,45 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "GroupInfoFragment___"
 
-class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragment_group_info), TabLayout.OnTabSelectedListener{
+class GroupInfoFragment :
+    BaseFragment<FragmentGroupInfoBinding>(com.ssafy.heritage.R.layout.fragment_group_info),
+    TabLayout.OnTabSelectedListener {
 
     private val args by navArgs<GroupInfoFragmentArgs>()
     private val groupViewModel by activityViewModels<GroupViewModel>()
 
-    private lateinit var detailFragment : GroupDetailFragment
+    private lateinit var detailFragment: GroupDetailFragment
     private lateinit var chatFragment: GroupChatFragment
     private lateinit var calenderFragment: GroupCalenderFragment
     private lateinit var mapFragment: GroupMapFragment
     private lateinit var groupInfo: GroupListResponse
     override fun init() {
+
+        getGroupData()
+
+    }
+
+    private fun getGroupData() {
         CoroutineScope(Dispatchers.Main).launch {
-//            groupViewModel.getGroupList()
+
             groupViewModel.add(args.groupInfo)
-           val s= groupViewModel.selectGroupMembers(ApplicationClass.sharedPreferencesUtil.getUser(),args.groupInfo.groupSeq)
+            val s = groupViewModel.selectGroupMembers(
+                ApplicationClass.sharedPreferencesUtil.getUser(),
+                args.groupInfo.groupSeq
+            )
+
+            binding.groupVM = groupViewModel
+
             groupViewModel.getChatList(args.groupInfo.groupSeq)
             groupViewModel.selectGroupDetail(args.groupInfo.groupSeq)
+            groupViewModel.selectGroupSchedule(args.groupInfo.groupSeq)
+
             Log.d(TAG, "init CoroutineScope: $s")
+
+            binding.groupDetailInfo = groupViewModel.detailInfo?.value!!
+
             initAdapter()
+
             initClickListener()
         }
         initObserver()
@@ -63,7 +83,11 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
         binding.btnChangeImage.setOnClickListener {
 
         }
+        btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
+
     private fun initAdapter() {
         binding.apply {
 //
@@ -80,17 +104,32 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
                     .add("채팅", GroupChatFragment()::class.java)
                     .add("일정", GroupCalenderFragment()::class.java)
                     .add("지도", GroupMapFragment()::class.java)
-                    .create())
+                    .create()
+            )
             viewpager.adapter = adapter
             viewpagertab.setViewPager(viewpager)
+
+            val permission = groupViewModel.groupPermission?.value!!
+            if (permission == 3 || permission == 0) {
+                viewpager.setOnTouchListener { view, motionEvent ->
+                    true
+                }
+            }
+
+            viewpagertab.setOnTabClickListener {
+                if (it > 0) {
+                    binding.motionlayout.transitionToEnd()
+                } else {
+                    binding.motionlayout.transitionToStart()
+                }
+            }
         }
     }
 
 
-
     private fun replaceView(tab: Fragment) {
         // 탭한 화면 변경
-        var selectedFragment: Fragment?=null
+        var selectedFragment: Fragment? = null
         selectedFragment = tab
         selectedFragment?.let {
             childFragmentManager?.beginTransaction()?.replace(R.id.viewpager, it)?.commit()
@@ -98,7 +137,7 @@ class GroupInfoFragment : BaseFragment<FragmentGroupInfoBinding>(R.layout.fragme
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
-        when(tab!!.position) {
+        when (tab!!.position) {
             0 -> replaceView(detailFragment)
             1 -> replaceView(chatFragment)
             2 -> replaceView(calenderFragment)

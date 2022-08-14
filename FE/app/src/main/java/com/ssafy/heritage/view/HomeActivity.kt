@@ -25,6 +25,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.heritage.ApplicationClass
@@ -68,6 +69,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private val locationManager by lazy {
         getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
+
+    lateinit var fab: FloatingActionButton
 
     override fun init() {
         CoroutineScope(Dispatchers.Main).launch {
@@ -143,7 +146,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             // 바텀 네비게이션이 표시되는 Fragment
             //if(destination.id == R.id.homeFragment)
             // 바텀 네비게이션이 표시되지 않는 Fragment
-
         }
 
 //        // 바텀네비 중복클릭 방지
@@ -159,6 +161,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 fromHeritageDetailFragment = false
             }
         }
+
+        this@HomeActivity.fab = binding.fab
     }
 
     override fun onBackPressed() {

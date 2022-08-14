@@ -1,6 +1,7 @@
 package com.ssafy.heritage.data.remote.api
 
 import com.ssafy.heritage.data.dto.Chat
+import com.ssafy.heritage.data.dto.GroupDestinationMap
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupBasic
@@ -82,10 +83,13 @@ interface GroupService {
     suspend fun deleteGroupSchedule(@Path("groupSeq") groupSeq: Int, @Query("gsDateTime") gsDateTime: String): Response<String>
 
     // 모임 일정을 조회한다
-    @GET("/api/group/{group}/schedule/list")
+    @GET("/api/group/{groupSeq}/schedule/list")
     suspend fun selectGroupSchedule(@Path("groupSeq") groupSeq: Int) : Response<List<GroupSchedule>>
 
 
+    // 모임 목적지 조회
+    @GET("/api/group/{groupSeq}/destination/list")
+    suspend fun getGroupDestination(@Path("groupSeq") groupSeq: Int): Response<List<GroupDestinationMap>>
 
     // 모임 목적지를 등록한다
     @POST("/api/group/{groupSeq}/destination/add")

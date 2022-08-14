@@ -14,7 +14,7 @@ object DateFormatter {
         val dt = SimpleDateFormat("yyyyy-mm-dd hh:mm:ss")
         val date = dt.parse(s)
 
-        val format = SimpleDateFormat("yyyy-MM-dd (E)\nk시 m분", Locale.KOREAN)
+        val format = SimpleDateFormat("M월-d일(E) aa h시 m분", Locale.KOREAN)
         format.timeZone = TimeZone.getTimeZone("Asia/Seoul")
 
         return format.format(date.time)
