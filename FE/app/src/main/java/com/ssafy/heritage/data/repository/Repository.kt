@@ -51,6 +51,8 @@ class Repository constructor(context: Context) {
         groupApi.selectMyGroups()
 
     // group -  목적지
+    suspend fun getGroupDestination(groupSeq: Int): Response<List<GroupDestinationMap>> = groupApi.getGroupDestination(groupSeq)
+
     suspend fun insertGroupDestination(groupSeq: Int, heritageSeq: Int): Response<String> =
         groupApi.insertGroupDestination(groupSeq, heritageSeq)
 

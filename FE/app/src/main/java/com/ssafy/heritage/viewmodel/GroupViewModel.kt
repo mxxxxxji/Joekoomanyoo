@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.heritage.data.dto.Chat
+import com.ssafy.heritage.data.dto.GroupDestinationMap
 import com.ssafy.heritage.data.dto.Member
 import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupJoin
@@ -57,6 +58,9 @@ class GroupViewModel : ViewModel() {
 
     private val _myGroupList = MutableLiveData<MutableList<MyGroupResponse>>()
     val myGroupList: LiveData<MutableList<MyGroupResponse>> get() = _myGroupList
+
+    private val _groupDestination = MutableLiveData<List<GroupDestinationMap>>()
+    val groupDestination: LiveData<List<GroupDestinationMap>> get() = _groupDestination
 
     private val _insertGroupDestination = SingleLiveEvent<String>()
     val insertGroupDestination: LiveData<String> get() = _insertGroupDestination
@@ -210,6 +214,23 @@ class GroupViewModel : ViewModel() {
                     _myGroupList.postValue(info)
                 } else {
                     Log.d(TAG, "selectMyGroups: ${response.code()}")
+                }
+            }
+        }
+    }
+
+    // 모임 목적지 조회
+    fun getGroupDestination(){
+        viewModelScope.launch(Dispatchers.Main) {
+            Log.d(TAG, "getGroupDestination: ${_detailInfo.value?.groupSeq!!}")
+            repository.getGroupDestination(_detailInfo.value?.groupSeq!!).let { response ->
+                Log.d(TAG, "getGroupDestination response: $response")
+                if (response.isSuccessful) {
+                    Log.d(TAG, "getGroupDestination response: ${response.body()}")
+                    var list = response.body()!! as MutableList<GroupDestinationMap>
+                    _groupDestination.postValue(list)
+                } else {
+                    Log.d(TAG, "insertGroupDestination: ${response.errorBody()}")
                 }
             }
         }
