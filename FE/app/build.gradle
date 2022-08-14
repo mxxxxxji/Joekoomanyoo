@@ -200,4 +200,8 @@ dependencies {
 
     // Auto Image Slider
     implementation 'com.github.Fuadafdhal:Auto-Image-Slider:1.0'
+
+    // gif 재생
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
 }

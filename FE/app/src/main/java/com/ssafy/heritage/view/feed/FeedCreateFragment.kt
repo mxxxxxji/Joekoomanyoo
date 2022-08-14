@@ -60,6 +60,7 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
     private var feedOpen: Char = 'Y'
 
     override fun init() {
+        binding.layoutImgStorke.isSelected = true
         initObserver()
         initClickListener()
     }
@@ -129,26 +130,31 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
                 Log.d(TAG, "ㅌㅐ그: $tagResult")
                 content = etFeedCreateContent.editText?.text.toString()
 
-                when {
-                    title == "" -> {
-                        makeToast("제목을 입력해주세요")
-                    }
-    //                hashTag == "" -> {
-    //                    makeToast("해시태그를 입력해주세요")
-    //                }
-                }
+//                when {
+//                    title == "" -> {
+//                        makeToast("제목을 입력해주세요")
+//                    }
+//                    tagResult == [] -> {
+//                        makeToast("해시태그를 입력해주세요")
+//                    }
+//                }
 
                 // imageUrl을 필수값으로 하자..사진 피드니까!!
                 if (img_multipart == null || img_multipart?.let { feedViewModel.sendImage(it) } == true) {
-                    feedInfo = FeedAddRequest( userSeq, feedViewModel.insertFeedInfo.value!!, title, content, feedOpen, tagResult )
-                    feedViewModel.insertFeed(feedInfo)
-                    val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedListFragment()
-                    findNavController().navigate(action)
-                    Log.d(TAG, "initClickListener: ${feedInfo}")
-                    Log.d(TAG, "initClickListener: 클릭했니?")
-
+                    if (feedViewModel.insertFeedInfo.value == null) {
+                        makeToast("안쪽 if문: 사진을 첨부해주세요")
+                        binding.layoutImgStorke.isSelected = false
+                    } else {
+                        binding.layoutImgStorke.isSelected = true
+                        feedInfo = FeedAddRequest( userSeq, feedViewModel.insertFeedInfo.value!!, title, content, feedOpen, tagResult )
+                        feedViewModel.insertFeed(feedInfo)
+                        val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedListFragment()
+                        findNavController().navigate(action)
+                        Log.d(TAG, "initClickListener: ${feedInfo}")
+                        makeToast("피드가 등록되었습니다")
+                    }
                 } else {
-                    makeToast("제목을 입력해주세요.")
+                    // 여기는 뭐지? 이미지 눌렀는데 사진 첨부가 안된 곳인가?
                     return@launch
                 }
             }

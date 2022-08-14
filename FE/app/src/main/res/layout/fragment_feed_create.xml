@@ -125,7 +125,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:background="@drawable/square_background_stroke_gray"
+                android:background="@drawable/stroke_change"
                 android:padding="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -252,6 +252,14 @@
                     android:layout_height="match_parent"
                     android:hint="내용을 입력하세요" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_feed_create_content"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
 <!--            <TextView-->
 <!--                android:id="@+id/tv_feed_create_lock"-->
