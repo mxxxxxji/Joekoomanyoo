@@ -92,10 +92,10 @@ public class ARController {
      * 내 위치 받아와서 나와 가까운 스탬프 목록 반환하기
      *
      * @param myLocationDto
-     * @return String
+     * @return List
      */
 
-    @ApiOperation(value = "내 위치 받아와서 나와 가까운 스탬프 목록 반환하기", response = String.class)
+    @ApiOperation(value = "내 위치 받아와서 나와 가까운 스탬프 목록 반환하기", response = List.class)
     @PostMapping("/location")
     public ResponseEntity<?> myLocationStampList(@RequestBody MyLocationDto myLocationDto) {
         if(myLocationDto == null){
