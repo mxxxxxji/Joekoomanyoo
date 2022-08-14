@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
@@ -61,6 +63,14 @@ class FeedDetailFragment :
             binding.tvFeedHashtag.text = tagResult
             Log.d(TAG, "init init: ${this@FeedDetailFragment.feed}")
 
+            // 본인이 작성한 게시물에서만 삭제 버튼 보이기
+            if (userSeq == feed!!.userSeq) {
+                binding.imagebtnFeedDetailDelete.visibility = View.VISIBLE
+            } else {
+                binding.imagebtnFeedDetailDelete.visibility = View.GONE
+            }
+
+            // 게시물의 현재 좋아요 수 가져오기
             feedViewModel.countFeedLike(feed!!.feedSeq)
 
             // 불러온 목록에서 내가 좋아요한 게시물인지 확인
@@ -131,7 +141,8 @@ class FeedDetailFragment :
         // 피드 삭제
         imagebtnFeedDetailDelete.setOnClickListener {
             feedViewModel?.deleteFeed(feed!!.feedSeq)
-            // 피드 목록 페이지로 이동하고 싶은데 홈으로 가넹,,
+            makeToast("피드가 삭제되었습니다.")
+            // 피드 목록 페이지로 이동하고 싶은데 홈으로 가넹,, => 지금은 create로 가넹,,,,
             findNavController().popBackStack()
         }
 //        // 피드 공개/비공개
@@ -176,6 +187,10 @@ class FeedDetailFragment :
                 putSerializable(ARG_FEED, param)
             }
         }
+    }
+
+    private fun makeToast(msg: String) {
+        Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
     }
 
 }

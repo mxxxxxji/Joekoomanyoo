@@ -203,4 +203,8 @@ dependencies {
 
     // lottie
     implementation 'com.airbnb.android:lottie:3.0.7'
+
+    // gif 재생
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
 }
