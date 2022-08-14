@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.data.dto.StampCategory
 import com.ssafy.heritage.data.dto.User
+import com.ssafy.heritage.data.remote.request.NearStampRequest
 import com.ssafy.heritage.data.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -35,6 +36,13 @@ class ARViewModel : ViewModel() {
     val myStampList: LiveData<MutableList<Stamp>>
         get() = _myStampList
 
+    private val _nearMyStampList = MutableLiveData<MutableList<Stamp>>()
+    val nearMyStampList: LiveData<MutableList<Stamp>>
+        get() = _nearMyStampList
+
+    private val _myCategoryList = MutableLiveData<List<StampCategory>>()
+    val myCategoryList: LiveData<List<StampCategory>>
+        get() = _myCategoryList
 
     // 전체 스탬프 목록 불러오기
     fun getAllStamp() = viewModelScope.launch {
@@ -96,7 +104,7 @@ class ARViewModel : ViewModel() {
     }
     
     // 획득한 스탬프 등록
-    fun addStamp(stampSeq: Int, userSeq: Int) = viewModelScope.launch {
+    fun addStamp(userSeq: Int, stampSeq: Int ) = viewModelScope.launch {
         var response: Response<String>? = null
         job = launch(Dispatchers.Main) {
             response = repository.addStamp(userSeq, stampSeq)
@@ -112,6 +120,42 @@ class ARViewModel : ViewModel() {
                 getMyStamp(userSeq)
             } else {
                 Log.d(TAG, "addStamp: ${it.errorBody()}")
+            }
+        }
+    }
+
+    // 실시간 내 위치 전송(내 위치를 전송하여 나와 가까운 스탬프 정보 조회)
+    fun selectNearStamp(location: NearStampRequest){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.selectNearStamp(location).let { response ->
+                if (response.isSuccessful) {
+                    val list = response.body() as MutableList<Stamp>
+                    _nearMyStampList.postValue(list)
+                    Log.d(TAG, "selectNearStamp: ${response.code()}")
+                }else{
+                    Log.d(TAG, "selectNearStamp: ${response.code()}")
+                }
+            }
+        }
+    }
+    // 나의 스탬프 카테고리별 개수 불러오기
+    fun selectMyStampCategory(userSeq: Int, categorySeq: Int)= viewModelScope.launch {
+        var response: Response<List<StampCategory>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.selectMyStampCategory(userSeq, categorySeq)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "getMyStampCategory response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "getMyStampCategory Success: ${it.body()}")
+                val list = it.body()
+                val newList = list?.filter { it.categoryCnt > 0 }
+                _myCategoryList.postValue(newList!!)
+            } else {
+                Log.d(TAG, "getMyStampCategory error: ${it.errorBody()}")
+
             }
         }
     }

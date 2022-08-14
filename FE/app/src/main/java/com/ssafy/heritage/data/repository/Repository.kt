@@ -201,8 +201,8 @@ class Repository constructor(context: Context) {
         ARApi.addStamp(userSeq, stampSeq)
 
     suspend fun selectStampCategory(): Response<List<StampCategory>> = ARApi.selectStampCategory()
-
-
+    suspend fun selectNearStamp(location: NearStampRequest): Response<List<Stamp>> = ARApi.selectNearStamp(location)
+    suspend fun selectMyStampCategory(userSeq: Int, categorySeq: Int): Response<List<StampCategory>> = ARApi.selectMyStampCategory(userSeq, categorySeq)
     companion object {
         private var INSTANCE: Repository? = null
 

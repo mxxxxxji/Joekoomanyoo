@@ -4,25 +4,23 @@ package com.ssafy.heritage
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.google.ar.core.Config
 import com.google.ar.core.Session
 import com.google.ar.core.exceptions.*
-import com.gun0912.tedpermission.provider.TedPermissionProvider.context
+import com.ssafy.heritage.data.dto.Stamp
+import com.ssafy.heritage.data.remote.request.NearStampRequest
 import com.ssafy.heritage.helpers.ARCoreSessionLifecycleHelper
 import com.ssafy.heritage.helpers.FullScreenHelper
 import com.ssafy.heritage.helpers.GeoPermissionsHelper
 import com.ssafy.heritage.samplerender.SampleRender
 import com.ssafy.heritage.view.HomeActivity
-import com.ssafy.heritage.view.ar.ARListFragment
 import com.ssafy.heritage.view.dialog.ARCheckDialog
 import com.ssafy.heritage.view.dialog.ARCheckDialogInterface
 import com.ssafy.heritage.viewmodel.ARViewModel
-import com.ssafy.heritage.viewmodel.UserViewModel
+import com.ssafy.heritage.viewmodel.FeedViewModel
 
 private const val TAG = "HelloGeoActivity"
 class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
@@ -32,7 +30,7 @@ class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
   lateinit var renderer: HelloGeoRenderer
   private val arViewModel by viewModels<ARViewModel>()
   val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
-
+  val stampInfo: Stamp = ApplicationClass.sharedPreferencesUtil.getStamp()  // 주변 스탬프 정보 받아오기
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
@@ -54,10 +52,6 @@ class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
           }
         Log.e(TAG, "ARCore threw an exception", exception)
         view.snackbarHelper.showError(this, message)
-//        view.btnCheck.setOnClickListener{
-//          val dialog = ARCheckDialog(this, this)
-//          dialog.show()
-//        }
       }
 
     // Configure session features.
@@ -67,6 +61,8 @@ class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
     // Set up the Hello AR renderer.
     renderer = HelloGeoRenderer(this)
     lifecycle.addObserver(renderer)
+    // 지도에 유물 위치 표시
+
 
     // Set up Hello AR UI.
     view = HelloGeoView(this)
@@ -75,8 +71,10 @@ class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
 
     // Sets up an example renderer using our HelloGeoRenderer.
     SampleRender(view.surfaceView, renderer, assets)
+    renderer.onMapInit()
     view.btnCheck.setOnClickListener{
-      //arViewModel.addStamp(userSeq)
+      // 획득한 스탬프 전송
+      arViewModel.addStamp(userSeq, stampInfo.stampSeq)
       val dialog = ARCheckDialog(it.context, this)
       dialog.show()
     }
@@ -116,8 +114,7 @@ class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
   }
 
   override fun onHomeBtnClicked() {
-    val intent = Intent(this, HomeActivity::class.java)
-    startActivity(intent)
+    finish()
   }
 
   override fun onARListBtnClicked() {
