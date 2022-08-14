@@ -1,13 +1,18 @@
 package com.ssafy.heritage.view.group
 
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.GroupMyListAdapter
 import com.ssafy.heritage.base.BaseFragment
+import com.ssafy.heritage.data.remote.response.GroupListResponse
+import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import com.ssafy.heritage.databinding.FragmentMyGroupListBinding
+import com.ssafy.heritage.listener.GroupMyListClickListener
 import com.ssafy.heritage.viewmodel.GroupViewModel
 
 private const val TAG = "MyGroupListFragment___"
@@ -34,25 +39,110 @@ class MyGroupListFragment :
             adapter = lastGroupListAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+            lastGroupListAdapter.groupMyListClickListener = object : GroupMyListClickListener {
+                override fun onClick(position: Int, group: MyGroupResponse) {
+                    val data = GroupListResponse(
+                        group.groupSeq,
+                        group.groupName,
+                        group.groupImgUrl,
+                        group.groupMaster,
+                        group.groupDescription,
+                        group.groupAccessType,
+                        group.groupPassword,
+                        group.groupMaxCount,
+                        group.groupRegion,
+                        group.groupStartDate,
+                        group.groupEndDate,
+                        group.groupAgeRange,
+                        group.groupWithChild,
+                        group.groupWithGlobal,
+                        group.groupActive,
+                        group.groupStatus
+                    )
+                    val action =
+                        MyGroupListFragmentDirections.actionMyGroupListFragmentToGroupInfoFragment(
+                            data
+                        )
+                    findNavController().navigate(action)
+                }
+            }
         }
         recyclerviewApplyGroup.apply {
             adapter = applyGroupListAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+            applyGroupListAdapter.groupMyListClickListener = object : GroupMyListClickListener {
+                override fun onClick(position: Int, group: MyGroupResponse) {
+                    val data = GroupListResponse(
+                        group.groupSeq,
+                        group.groupName,
+                        group.groupImgUrl,
+                        group.groupMaster,
+                        group.groupDescription,
+                        group.groupAccessType,
+                        group.groupPassword,
+                        group.groupMaxCount,
+                        group.groupRegion,
+                        group.groupStartDate,
+                        group.groupEndDate,
+                        group.groupAgeRange,
+                        group.groupWithChild,
+                        group.groupWithGlobal,
+                        group.groupActive,
+                        group.groupStatus
+                    )
+                    val action =
+                        MyGroupListFragmentDirections.actionMyGroupListFragmentToGroupInfoFragment(
+                            data
+                        )
+                    findNavController().navigate(action)
+                }
+            }
         }
         recyclerviewJoinGroup.apply {
             adapter = joinGroupListAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+            joinGroupListAdapter.groupMyListClickListener = object : GroupMyListClickListener {
+                override fun onClick(position: Int, group: MyGroupResponse) {
+                    val data = GroupListResponse(
+                        group.groupSeq,
+                        group.groupName,
+                        group.groupImgUrl,
+                        group.groupMaster,
+                        group.groupDescription,
+                        group.groupAccessType,
+                        group.groupPassword,
+                        group.groupMaxCount,
+                        group.groupRegion,
+                        group.groupStartDate,
+                        group.groupEndDate,
+                        group.groupAgeRange,
+                        group.groupWithChild,
+                        group.groupWithGlobal,
+                        group.groupActive,
+                        group.groupStatus
+                    )
+                    val action =
+                        MyGroupListFragmentDirections.actionMyGroupListFragmentToGroupInfoFragment(
+                            data
+                        )
+                    findNavController().navigate(action)
+                }
+            }
         }
     }
 
     private fun initObserver() {
         groupViewModel.myGroupList.observe(viewLifecycleOwner) {
-            val lastGroupList = it.filter { it.groupStatus == 'F' }
-            val applyGroupList = it.filter { it.groupStatus != 'F' && it.memberStatus == 0 }
-            val joinGroupList = it.filter { it.groupStatus != 'F' && it.memberStatus != 0 }
+            val lastGroupList = it.filter { it.groupActive == 'Y' && it.groupStatus == 'F' }
+            val applyGroupList =
+                it.filter { it.groupActive == 'Y' && it.groupStatus != 'F' && it.memberStatus == 0 }
+            val joinGroupList =
+                it.filter { it.groupActive == 'Y' && it.groupStatus != 'F' && it.memberStatus != 0 }
 
             Log.d(TAG, lastGroupList.size.toString())
             Log.d(TAG, applyGroupList.size.toString())
@@ -62,5 +152,9 @@ class MyGroupListFragment :
             applyGroupListAdapter.submitList(applyGroupList)
             joinGroupListAdapter.submitList(joinGroupList)
         }
+    }
+
+    private fun makeToast(msg: String) {
+        Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
     }
 }

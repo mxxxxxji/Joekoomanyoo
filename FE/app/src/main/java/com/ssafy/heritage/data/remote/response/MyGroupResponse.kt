@@ -22,6 +22,6 @@ data class MyGroupResponse(
     @SerializedName("groupWithGlobal") var groupWithGlobal: Char,
     @SerializedName("groupActive") var groupActive: Char,
     @SerializedName("groupStatus") var groupStatus: Char,
-    @SerializedName("memberStatus") var memberStatus: Int,
-    @SerializedName("memberIsEvaluated") var memberIsEvaluated: Char
+    @SerializedName("memberStatus") var memberStatus: Int = 0,
+    @SerializedName("memberIsEvaluated") var memberIsEvaluated: Char = 'N'
 ) : Parcelable

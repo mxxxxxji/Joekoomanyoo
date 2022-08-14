@@ -7,14 +7,25 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import com.ssafy.heritage.databinding.ItemGroupMyBinding
+import com.ssafy.heritage.listener.GroupMyListClickListener
 
 class GroupMyListAdapter :
     ListAdapter<MyGroupResponse, GroupMyListAdapter.ViewHolder>(DiffCallback()) {
+
+    lateinit var groupMyListClickListener: GroupMyListClickListener
 
     inner class ViewHolder(private val binding: ItemGroupMyBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: MyGroupResponse) = with(binding) {
             myGroupResponse = data
+
+            btnEvaluate.setOnClickListener {
+                // 상호평가 ㄱㄱ
+            }
+
+            itemView.setOnClickListener {
+                groupMyListClickListener.onClick(bindingAdapterPosition, data)
+            }
         }
     }
 

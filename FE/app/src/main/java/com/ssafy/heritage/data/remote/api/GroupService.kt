@@ -40,7 +40,9 @@ interface GroupService {
     suspend fun selectMyGroups(): Response<List<MyGroupResponse>>
 
 
-
+    // 모임 상태 변경 - R(모집), O(진행), F(종료)
+    @PUT("/api/group/{groupSeq}/status")
+    suspend fun modifyStatus(@Path("groupSeq") groupSeq: Int, @Body body: HashMap<String, String>): Response<String>
 
     // 모임 활성화 여부를 등록한다
     @PUT("/api/group/{groupSeq}/active")

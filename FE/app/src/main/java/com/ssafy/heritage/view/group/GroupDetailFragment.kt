@@ -110,7 +110,7 @@ class GroupDetailFragment :
         }
     }
 
-    private fun initClickListener() {
+    private fun initClickListener() = with(binding) {
 
         // 설정
 //        binding.btnSetting.setOnClickListener{
@@ -124,7 +124,7 @@ class GroupDetailFragment :
 
         // 가입 요청
         binding.btnSubscription.setOnClickListener {
-            val dialog = ApplyGroupJoinDialog(requireContext(), this)
+            val dialog = ApplyGroupJoinDialog(requireContext(), this@GroupDetailFragment)
             dialog.show()
             it.visibility = View.GONE
             binding.btnCancellation.visibility = View.VISIBLE
@@ -175,10 +175,37 @@ class GroupDetailFragment :
         }
 
         // 모임시작
+        btnGroupStart.setOnClickListener {
+            val map = HashMap<String, String>()
+            map.put("groupActive", "Y")
+            map.put("groupStatus", "O")
+            groupViewModel.setGroupStatus(map)
+
+            makeToast("모임이 시작되었습니다")
+            findNavController().popBackStack()
+        }
 
         // 모임종료
+        btnGroupStop.setOnClickListener {
+            val map = HashMap<String, String>()
+            map.put("groupActive", "Y")
+            map.put("groupStatus", "F")
+            groupViewModel.setGroupStatus(map)
+
+            makeToast("모임이 완료되었습니다")
+            findNavController().popBackStack()
+        }
 
         // 모임삭제
+        btnGroupRemove.setOnClickListener {
+            val map = HashMap<String, String>()
+            map.put("groupActive", "N")
+            map.put("groupStatus", "F")
+            groupViewModel.setGroupStatus(map)
+
+            makeToast("모임이 삭제되었습니다")
+            findNavController().popBackStack()
+        }
     }
 
     override fun onOkBtnClicked(appeal: String) {
@@ -207,5 +234,9 @@ class GroupDetailFragment :
         groupViewModel.outGroupJoin(groupInfo.groupSeq, userSeq)
         Toast.makeText(requireActivity(), "${userSeq}를 강제 퇴장시켰습니다", Toast.LENGTH_SHORT).show()
         // 그 회원에게 알림 전송
+    }
+
+    private fun makeToast(msg: String) {
+        Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
     }
 }
