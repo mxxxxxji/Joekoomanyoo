@@ -97,12 +97,12 @@ public class ARController {
 
     @ApiOperation(value = "내 위치 받아와서 나와 가까운 스탬프 목록 반환하기", response = String.class)
     @PostMapping("/location")
-    public ResponseEntity<String> myLocationStampList(@RequestBody MyLocationDto myLocationDto) {
+    public ResponseEntity<?> myLocationStampList(@RequestBody MyLocationDto myLocationDto) {
         if(myLocationDto == null){
             return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
         }
-        arService.myLocationStampList(myLocationDto);
-        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        List<StampDto> list = arService.myLocationStampList(myLocationDto);
+        return new ResponseEntity<List<StampDto>>(list, HttpStatus.OK);
     }
 
 

@@ -160,8 +160,8 @@ public class ARService {
     }
     
     // 내 위치 따라 근처에 있는 AR 알림
-    public void myLocationStampList(MyLocationDto myLocationDto) {
-        // 사용자 위도 경도 뒷자리 없애기
+    public List<StampDto> myLocationStampList(MyLocationDto myLocationDto) {
+        // 사용자 위도 경도
         int userSeq = myLocationDto.getUserSeq();
         // 위도
         double lat = Double.parseDouble(myLocationDto.getLat());
@@ -207,6 +207,9 @@ public class ARService {
             }
         }
 
+
+        List<StampDto> listDto = new ArrayList<>();
+
         // 일정 거리 이내에 있는 것들 리스트 반환 ( 거리계산 )
         // 100m 이내 있으면 알림!
         for(StampEntity stampEntity : listStamp){
@@ -220,6 +223,8 @@ public class ARService {
                 if(arRepositoryCustom.findByUserSeqAndStampSeq(userSeq, stampEntity.getStampSeq()) != null){
                     continue;
                 }
+
+                listDto.add(StampMapper.MAPPER.toDto(stampEntity));
 
                 UserEntity userEntity = userRepository.findByUserSeq(userSeq);
                 
@@ -243,6 +248,8 @@ public class ARService {
                 fcmTokenController.createHistory(fcmHistoryDto);
             }
         }
+
+        return listDto;
     }
 
     // 거리계산 메서드
