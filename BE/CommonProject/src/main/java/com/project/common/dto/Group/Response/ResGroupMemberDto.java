@@ -26,6 +26,7 @@ public class ResGroupMemberDto {
 	private int eval3;
 	private int eval4;
 	private int eval5;
+	private String memberImgUrl;
 	//private int mystamp;
 	
 	@Builder
@@ -39,6 +40,7 @@ public class ResGroupMemberDto {
 		this.memberNickname=user.getUserNickname();
 		this.userId=user.getUserId();
 		this.memberGender=user.getUserGender();
+		this.memberImgUrl=user.getProfileImgUrl();
 		this.eval1=user.getEvalList1();
 		this.eval2=user.getEvalList2();
 		this.eval3=user.getEvalList3();
