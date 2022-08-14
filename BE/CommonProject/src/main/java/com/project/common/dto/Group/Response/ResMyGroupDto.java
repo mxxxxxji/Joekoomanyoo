@@ -22,6 +22,8 @@ public class ResMyGroupDto {
     private int groupMaxCount;
    	private String groupRegion;
    	
+   	private String groupImgUrl;
+   	
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
    	private Date groupStartDate;
@@ -58,5 +60,6 @@ public class ResMyGroupDto {
 		this.groupStatus = member.getGroup().getGroupStatus();
 		this.memberStatus=member.getMemberStatus();
 		this.memberIsEvaluated = member.getMemberIsEvaluated();
+		this.groupImgUrl=member.getGroup().getGroupImgUrl();
 	}
 }
