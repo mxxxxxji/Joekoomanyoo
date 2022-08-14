@@ -11,6 +11,7 @@ private const val TAG = "ARFragment___"
 
 class ARFragment : BaseFragment<FragmentARBinding>(R.layout.fragment_a_r) {
 
+
     override fun init() {
         initClickListener()
     }

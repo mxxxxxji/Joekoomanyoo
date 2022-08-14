@@ -207,4 +207,6 @@ dependencies {
     // gif 재생
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
+    // work manager
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
 }

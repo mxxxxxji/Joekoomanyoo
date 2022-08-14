@@ -15,6 +15,7 @@
  */
 package com.ssafy.heritage
 
+import android.location.Location
 import android.opengl.Matrix
 import android.util.Log
 import android.view.View
@@ -197,28 +198,37 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
 
   var earthAnchor: Anchor? = null
 
-  fun onMapClick(latLng: LatLng) {
-    val earth = session?.earth ?: return
-    // 객체가 추적 중인지 확인
-    if (earth.trackingState != TrackingState.TRACKING) {
-      return
-    }
-    // earthAnchor가 있으면 분리
-    earthAnchor?.detach()
+  fun onMapInit() {
+    // 주변 유물 스탬프 위치
+    if(activity.stampInfo != null){
+      Log.d(TAG, "onMapInit: ${activity.stampInfo.heritageLat}, ${activity.stampInfo.heritageLng}")
+      val lat = activity.stampInfo.heritageLat.toDouble()
+      val lng = activity.stampInfo.heritageLng.toDouble()
 
-    // (임시) 어스 앵커를 카메라와 같은 높이데 둔다
-    val altitude = earth.cameraGeospatialPose.altitude - 1
-    // 좌표계에서 앵커의 회전 방향
-    val qx = 0f
-    val qy = 0f
-    val qz = 0f
-    val qw = 1f
-    earthAnchor =
-      earth.createAnchor(latLng.latitude, latLng.longitude, altitude, qx, qy, qz, qw)
+      val earth = session?.earth ?: return
+      // 객체가 추적 중인지 확인
+      if (earth.trackingState != TrackingState.TRACKING) {
+        return
+      }
+      // earthAnchor가 있으면 분리
+      earthAnchor?.detach()
 
-    activity.view.mapView?.earthMarker?.apply {
-      position = latLng
-      isVisible = true
+      // (임시) 어스 앵커를 카메라와 같은 높이데 둔다
+      val altitude = earth.cameraGeospatialPose.altitude - 1
+      // 좌표계에서 앵커의 회전 방향
+      val qx = 0f
+      val qy = 0f
+      val qz = 0f
+      val qw = 1f
+      earthAnchor =
+        earth.createAnchor(lat, lng, altitude, qx, qy, qz, qw)
+
+      activity.view.mapView?.earthMarker?.apply {
+        position = LatLng(lat, lng)
+        isVisible = true
+      }
+    }else{
+      Log.d(TAG, "onMapInit: STAMP IS NULL")
     }
   }
 

@@ -19,33 +19,31 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.commit
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
+import com.ssafy.heritage.RequestWorker
 import com.ssafy.heritage.base.BaseActivity
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.databinding.ActivityHomeBinding
 import com.ssafy.heritage.listener.BackPressedListener
 import com.ssafy.heritage.util.Channel.CHANNEL_ID
 import com.ssafy.heritage.util.Channel.CHANNEL_NAME
-import com.ssafy.heritage.view.ar.ARFragment
-import com.ssafy.heritage.viewmodel.FeedViewModel
-import com.ssafy.heritage.viewmodel.GroupViewModel
-import com.ssafy.heritage.viewmodel.HeritageViewModel
-import com.ssafy.heritage.viewmodel.UserViewModel
+import com.ssafy.heritage.viewmodel.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.util.concurrent.TimeUnit
 
 
 private const val TAG = "HomeActivity___"
@@ -73,8 +71,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     lateinit var fab: FloatingActionButton
 
     override fun init() {
+
         CoroutineScope(Dispatchers.Main).launch {
             intent?.getParcelableExtra<User>("user")?.let { userViewModel.setUser(it) }
+
+            userViewModel.getMyStamp()
 
             requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
 
@@ -88,9 +89,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
             getFCMToken()
 
+            periodicWorkRequest()
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 createNotificationChannel(CHANNEL_ID, CHANNEL_NAME)
             }
+
         }
     }
 
@@ -299,6 +303,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             }
 
         heritageViewModel.setLocation(lat.toString(), lng.toString())
+    }
+
+    private fun periodicWorkRequest() {
+        //파라미터와 지연 시간 설정
+        val workRequest = PeriodicWorkRequestBuilder<RequestWorker>(15, TimeUnit.MINUTES).build()
+        //워크매니저 생성
+        val workManager = WorkManager.getInstance(applicationContext)
+        //워크매니저 실행
+        workManager.enqueue(workRequest)
     }
 
     private fun makeToast(msg: String) {
