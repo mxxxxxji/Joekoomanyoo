@@ -10,11 +10,13 @@ import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.HeritageListAdapter
 import com.ssafy.heritage.base.BaseFragment
@@ -22,6 +24,7 @@ import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.databinding.FragmentHeritageListBinding
 import com.ssafy.heritage.databinding.PopupHeritageSortBinding
 import com.ssafy.heritage.listener.HeritageListClickListener
+import com.ssafy.heritage.util.CategoryConverter
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
@@ -59,11 +62,16 @@ class HeritageListFragment :
 
     private fun setChip() = with(binding) {
         chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
-            if (checkedIds[0] in 1..10) {
-                heritageViewModel.setCategory(checkedIds[0])
-            } else {
-                heritageViewModel.setCategory(0)
-            }
+            val chip = chipGroup.children.find { (it as Chip).isChecked }
+            val text = (chip as Chip).text
+            val num = CategoryConverter.categoryMap[text] ?: 0
+            heritageViewModel.setCategory(num)
+            Log.d(TAG, "setChip: ${num}")
+//            if (checkedIds[0] in 1..10) {
+//                heritageViewModel.setCategory(checkedIds[0])
+//            } else {
+//                heritageViewModel.setCategory(0)
+//            }
         }
 
         chipGroup.check(R.id.chip_all)
@@ -132,7 +140,7 @@ class HeritageListFragment :
                         //&& 마지막 아이템일 경우(lastVisibleItemPosition==totalCount-)
                         Log.d(TAG, "onScrolled: $page")
                         val addList =
-                            heritageViewModel.heritageList.value!!.subList(0, (page + 1) * 20)
+                            heritageViewModel.heritageList.value!!.subList(0, (page + 1) * 10)
                         page++
                         heritageAdapter.submitList(addList)
                     }
@@ -145,7 +153,7 @@ class HeritageListFragment :
         heritageViewModel.heritageList.observe(viewLifecycleOwner) {
 
             page = 0
-            val list = it.subList(page * 20, (page + 1) * 20)
+            val list = it.subList(page * 10, (page + 1) * 10)
             page++
             heritageAdapter.submitList(list)
             binding.recyclerview.smoothScrollToPosition(0)

@@ -13,7 +13,7 @@
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/link_water"
+            android:background="@drawable/background_heritage_top"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,8 +33,8 @@
                     android:id="@+id/header_heritage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:text="문화유산 찾기"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:background="@color/white"
             android:scrollbarSize="1dp"
             android:scrollbarStyle="insideOverlay"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +62,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/header_heritage"
-                app:selectionRequired="true"
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
@@ -135,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/chip_background_tint_color"
-                    android:text="완릉"
+                    android:text="왕릉"
                     android:textColor="@color/chip_text_color"
                     android:textSize="16sp" />
 
@@ -176,12 +174,13 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/background_search_view"
-            android:elevation="4dp"
-            android:translationZ="2dp"
+            android:elevation="8dp"
+            android:translationZ="4dp"
             app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scrollview"
+            app:queryBackground="@null"
             app:queryHint="검색어를 입력해주세요" />
 
         <androidx.recyclerview.widget.RecyclerView

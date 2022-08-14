@@ -34,8 +34,6 @@ class ScrapListFragment : BaseFragment<FragmentScrapListBinding>(R.layout.fragme
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = heritageAdapter
 
-            addItemDecoration(DividerItemDecoration(5F, resources.getColor(R.color.link_water)))
-
             heritageAdapter.heritageListClickListener = object : HeritageListClickListener {
                 override fun onClick(position: Int, heritage: Heritage, view: View) {
 
