@@ -234,7 +234,7 @@ class GroupViewModel : ViewModel() {
     }
 
     // 모임 목적지 조회
-    fun getGroupDestination(){
+    fun getGroupDestination() {
         viewModelScope.launch(Dispatchers.Main) {
             Log.d(TAG, "getGroupDestination: ${_detailInfo.value?.groupSeq!!}")
             repository.getGroupDestination(_detailInfo.value?.groupSeq!!).let { response ->
@@ -369,6 +369,25 @@ class GroupViewModel : ViewModel() {
                 _chatList.postValue(it.body() as MutableList<Chat>?)
             } else {
                 Log.d(TAG, "getChatList response: ${it.errorBody()}")
+
+            }
+        }
+    }
+
+    // 모임 상태 변경
+    fun setGroupStatus(map: HashMap<String, String>) = viewModelScope.launch {
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.modifyStatus(_detailInfo.value?.groupSeq!!, map)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "setGroupStatus response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "setGroupStatus Success: ${it.body()}")
+            } else {
+                Log.d(TAG, "setGroupStatus error: ${it.errorBody()}")
 
             }
         }

@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_homeFragment_to_notiFragment"
             app:destination="@id/notiFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_groupInfoFragment"
+            app:destination="@id/groupInfoFragment" />
     </fragment>
 
     <!--group-->
@@ -247,7 +250,11 @@
     <fragment
         android:id="@+id/myGroupListFragment"
         android:name="com.ssafy.heritage.view.group.MyGroupListFragment"
-        android:label="MyGroupListFragment" />
+        android:label="MyGroupListFragment" >
+        <action
+            android:id="@+id/action_myGroupListFragment_to_groupInfoFragment"
+            app:destination="@id/groupInfoFragment" />
+    </fragment>
 
     <!-- ar -->
     <fragment

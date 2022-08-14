@@ -48,6 +48,9 @@ class Repository constructor(context: Context) {
     suspend fun outGroupJoin(groupSeq:Int, userSeq: Int): Response<Boolean> =
         groupApi.outGroupJoin(groupSeq, userSeq)
 
+    suspend fun modifyStatus(groupSeq: Int, body: HashMap<String, String>): Response<String> = groupApi.modifyStatus(groupSeq, body)
+
+
     // group - 내 그룹 조회
     suspend fun selectMyGroups(): Response<List<MyGroupResponse>> =
         groupApi.selectMyGroups()

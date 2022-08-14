@@ -7,14 +7,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afdhal_fa.imageslider.model.SlideUIModel
 import com.ssafy.heritage.R
+import com.ssafy.heritage.adpter.GroupMyListAdapter
 import com.ssafy.heritage.adpter.HomeFeedAdapter
 import com.ssafy.heritage.adpter.HomeHeritageAdapter
-import com.ssafy.heritage.adpter.MyGroupListAdapter
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.remote.response.FeedListResponse
+import com.ssafy.heritage.data.remote.response.GroupListResponse
+import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import com.ssafy.heritage.databinding.FragmentHomeBinding
 import com.ssafy.heritage.listener.FeedListClickListener
+import com.ssafy.heritage.listener.GroupMyListClickListener
 import com.ssafy.heritage.listener.HeritageListClickListener
 import com.ssafy.heritage.view.feed.FeedDetailFragment
 import com.ssafy.heritage.view.heritage.HeritageDetailFragment
@@ -28,7 +31,7 @@ private const val TAG = "HomeFragment__"
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
-    private val myGroupListAdapter: MyGroupListAdapter by lazy { MyGroupListAdapter() }
+    private val myGroupListAdapter: GroupMyListAdapter by lazy { GroupMyListAdapter() }
     private val homeHeritageAdapter: HomeHeritageAdapter by lazy { HomeHeritageAdapter() }
     private val homeFeedAdapter: HomeFeedAdapter by lazy { HomeFeedAdapter() }
 
@@ -87,7 +90,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
 
         groupViewModel.myGroupList.observe(viewLifecycleOwner) {
-            myGroupListAdapter.submitList(it)
+            myGroupListAdapter.submitList(it.filter { it.groupActive == 'Y' && it.groupStatus != 'F' && it.memberStatus != 0 })
         }
 
         feedViewModel.feedListAll.observe(viewLifecycleOwner) {
@@ -102,6 +105,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             adapter = myGroupListAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+            myGroupListAdapter.groupMyListClickListener = object : GroupMyListClickListener {
+                override fun onClick(position: Int, group: MyGroupResponse) {
+                    val data = GroupListResponse(
+                        group.groupSeq,
+                        group.groupName,
+                        group.groupImgUrl,
+                        group.groupMaster,
+                        group.groupDescription,
+                        group.groupAccessType,
+                        group.groupPassword,
+                        group.groupMaxCount,
+                        group.groupRegion,
+                        group.groupStartDate,
+                        group.groupEndDate,
+                        group.groupAgeRange,
+                        group.groupWithChild,
+                        group.groupWithGlobal,
+                        group.groupActive,
+                        group.groupStatus
+                    )
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToGroupInfoFragment(data)
+                    findNavController().navigate(action)
+                }
+            }
         }
 
         // 추천 문화재 리스트

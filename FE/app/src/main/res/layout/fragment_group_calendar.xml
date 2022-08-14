@@ -88,6 +88,19 @@
 
         </FrameLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:textColor="@color/cornflower"
+            android:text="날짜를 선택한 후\n일정을 등록해 보세요!"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toTopOf="@id/constraint_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_et"
             android:layout_width="0dp"
