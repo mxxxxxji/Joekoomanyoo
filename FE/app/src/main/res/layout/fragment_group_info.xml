@@ -62,12 +62,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:src="@drawable/loop"
+                android:src="@{String.valueOf(groupVM.detailInfo.groupImgUrl)}"
                 android:tintMode="src_atop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="#80000000" />
+                app:tint="#80000000"
+                tools:src="@drawable/loop" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_setting"

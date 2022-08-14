@@ -16,6 +16,7 @@ import com.ssafy.heritage.adpter.ChatListAdapter
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.Chat
 import com.ssafy.heritage.databinding.FragmentGroupChatBinding
+import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
 import io.reactivex.disposables.Disposable
@@ -126,10 +127,18 @@ class GroupChatFragment : BaseFragment<FragmentGroupChatBinding>(R.layout.fragme
     }
 
     private fun initClickListener() = with(binding) {
-
+        tilChat.editText?.setOnClickListener {
+        }
     }
 
     private fun setTextChangedListener() = with(binding) {
+
+        tilChat.editText?.setOnFocusChangeListener { view, b ->
+            when (b) {
+                true -> (requireActivity() as HomeActivity).fab.hide()
+                else -> (requireActivity() as HomeActivity).fab.show()
+            }
+        }
 
         // 입력창 에러 비활성화
         tilChat.editText?.addTextChangedListener {
