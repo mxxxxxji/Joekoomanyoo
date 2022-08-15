@@ -209,4 +209,7 @@ dependencies {
 
     // work manager
     implementation "androidx.work:work-runtime-ktx:2.7.1"
+
+    // SlidingUpPanel
+    implementation 'com.github.hannesa2:AndroidSlidingUpPanel:4.2.1'
 }

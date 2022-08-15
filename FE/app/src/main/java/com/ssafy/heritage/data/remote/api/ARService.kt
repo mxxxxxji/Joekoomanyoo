@@ -36,7 +36,7 @@ interface ARService {
     @POST("api/ar/location")
     suspend fun selectNearStamp(@Body location: NearStampRequest): Response<List<Stamp>>
 
-
+    // 전체 사용자의 스탬프 순위를 가져온다
     @GET("/api/ar/stamp/rank")
     suspend fun selectStampRank():Response<List<StampRankResponse>>
 }

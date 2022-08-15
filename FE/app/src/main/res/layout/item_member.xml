@@ -27,7 +27,6 @@
             android:src="@drawable/monster"
             android:translationZ="2dp"
             app:civ_border_color="@color/white"
-            app:civ_border_overlay="true"
             app:civ_border_width="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

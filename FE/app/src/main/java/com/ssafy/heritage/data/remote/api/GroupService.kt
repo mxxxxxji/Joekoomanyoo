@@ -7,6 +7,7 @@ import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupBasic
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.request.GroupSchedule
+import com.ssafy.heritage.data.remote.response.EvaluationProfileResponse
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import retrofit2.Response
@@ -68,13 +69,14 @@ interface GroupService {
     @GET("/api/group/{groupSeq}/member/list")
     suspend fun selectGroupMembers(@Path("groupSeq") groupSeq: Int): Response<List<Member>>
 
-    // 회원 프로필을 조회한다
-
-    // 회원 평가를 조회한다
-
-    // 회원을 평가한다
 
 
+    // 그룹별로 상호평가 가져오기
+    @GET("/api/mypage/eval/{userSeq}/{groupSeq}")
+    suspend fun selectGroupEvaluation(@Path("groupSeq") groupSeq: Int, @Path("userSeq") userSeq: Int): Response<List<EvaluationProfileResponse>>
+
+    @POST("/api/mypage/eval")
+    suspend fun insertGroupEvaluation()
 
     // 모임 일정을 등록한다
     @POST("/api/group/{groupSeq}/schedule/add")
