@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:src="@{String.valueOf(groupVM.detailInfo.groupImgUrl)}"
+                glide="@{String.valueOf(groupVM.detailInfo.groupImgUrl)}"
                 android:tintMode="src_atop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
