@@ -1,7 +1,9 @@
 package com.project.common.service;
 
 import com.project.common.controller.FcmTokenController;
+import com.project.common.dto.Group.Response.ResGroupEvalDto;
 import com.project.common.dto.My.MyDailyMemoDto;
+import com.project.common.entity.Group.GroupEntity;
 import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.mapper.My.MyDailyMemoMapper;
 import com.project.common.dto.My.MyScheduleDto;
@@ -16,6 +18,7 @@ import com.project.common.entity.User.UserEntity;
 import com.project.common.entity.User.UserKeywordEntity;
 import com.project.common.repository.Group.GroupMemberRepository;
 import com.project.common.repository.Group.GroupMemberRepositoryCustom;
+import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.My.MyDailyMemoRepository;
 import com.project.common.repository.My.MyDailyMemoRepositoryCustom;
 import com.project.common.repository.My.MyScheduleRepository;
@@ -46,6 +49,7 @@ public class MyPageService {
     private final UserRepository userRepository;
     private final GroupMemberRepositoryCustom groupMemberRepositoryCustom;
     private final GroupMemberRepository groupMemberRepository;
+    private final GroupRepository groupRepository;
 
 
 
@@ -293,5 +297,40 @@ public class MyPageService {
                     .evalList4(userEntity.getEvalList4() * 100 / cnt)
                     .evalList5(userEntity.getEvalList5() * 100 / cnt).build();
         }
+    }
+
+    public List<ResGroupEvalDto> groupEvalInfo(int userSeq, int groupSeq) {
+        // 반환할 리스트
+        List<ResGroupEvalDto> listDto = new ArrayList<>();
+
+        GroupMemberEntity groupMemberEntity = groupMemberRepositoryCustom.findByUserSeqAndGroupSeq(userSeq, groupSeq);
+        if(groupMemberEntity == null){
+            return null;
+        }
+        GroupEntity groupEntity = groupRepository.findByGroupSeq(groupSeq);
+
+        // 그룹 원들 정보 가져오기
+        List<GroupMemberEntity> list = groupMemberRepository.findByGroup(groupEntity);
+        for(GroupMemberEntity groupMemberEntity1 : list){
+            int groupUserSeq = groupMemberEntity1.getUserSeq();
+            // 본인인 경우 통과
+            if(userSeq == groupUserSeq) continue;
+
+            // 유저 정보 찾기
+            UserEntity userEntity = userRepository.findByUserSeq(groupUserSeq);
+            String userNickname = userEntity.getUserNickname();
+            String profileImgUrl = userEntity.getProfileImgUrl();
+
+            ResGroupEvalDto resGroupEvalDto = ResGroupEvalDto.builder()
+                    .userSeq(groupUserSeq)
+                    .groupSeq(groupSeq)
+                    .userNickname(userNickname)
+                    .profileImgUrl(profileImgUrl)
+                    .build();
+
+            listDto.add(resGroupEvalDto);
+        }
+
+        return listDto;
     }
 }

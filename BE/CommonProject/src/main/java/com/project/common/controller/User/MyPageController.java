@@ -1,6 +1,7 @@
 package com.project.common.controller.User;
 import java.util.List;
 
+import com.project.common.dto.Group.Response.ResGroupEvalDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -289,13 +290,23 @@ public class MyPageController {
     @GetMapping("/eval/{userSeq}")
     public ResponseEntity<?> evalMutualInfo(@PathVariable("userSeq") int userSeq) {
         UserResponseEvalDto userResponseEvalDto = myPageService.evalMutualInfo(userSeq);
-
-        if (userResponseEvalDto == null) {
-            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<UserResponseEvalDto>(userResponseEvalDto, HttpStatus.OK);
-        }
+        return new ResponseEntity<UserResponseEvalDto>(userResponseEvalDto, HttpStatus.OK);
     }
+
+    /**
+     * 그룹별로 상호 평가 가져오기
+     *
+     * @param userSeq, groupSeq
+     * @return List
+     */
+
+    @ApiOperation(value = "그룹별로 상호 평가 가져오기", response = List.class)
+    @GetMapping("/eval/{userSeq}/{groupSeq}")
+    public ResponseEntity<List<ResGroupEvalDto>> evalMutualInfo(@PathVariable("userSeq") int userSeq, @PathVariable("groupSeq") int groupSeq) {
+        List<ResGroupEvalDto> list = myPageService.groupEvalInfo(userSeq, groupSeq);
+        return new ResponseEntity<List<ResGroupEvalDto>>(list, HttpStatus.OK);
+    }
+
 
     /**
      * 내가 보유한 스탬프 리스트 보여주기
