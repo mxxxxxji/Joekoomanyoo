@@ -283,7 +283,7 @@ public class MyPageController {
      * 상호 평가 가져오기
      *
      * @param userSeq
-     * @return UserResponseEvalDto
+     * @return userResponseEvalDto
      */
 
     @ApiOperation(value = "상호 평가 가져오기", response = Object.class)
