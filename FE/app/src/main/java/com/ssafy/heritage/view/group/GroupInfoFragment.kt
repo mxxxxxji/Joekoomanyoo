@@ -1,6 +1,14 @@
 package com.ssafy.heritage.view.group
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -13,13 +21,19 @@ import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupInfoBinding
+import com.ssafy.heritage.util.FileUtil
+import com.ssafy.heritage.util.FormDataUtil
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 
 
 private const val TAG = "GroupInfoFragment___"
+private val PERMISSIONS_REQUIRED = arrayOf(
+    Manifest.permission.READ_EXTERNAL_STORAGE
+)
 
 class GroupInfoFragment :
     BaseFragment<FragmentGroupInfoBinding>(com.ssafy.heritage.R.layout.fragment_group_info),
@@ -33,6 +47,9 @@ class GroupInfoFragment :
     private lateinit var calenderFragment: GroupCalenderFragment
     private lateinit var mapFragment: GroupMapFragment
     private lateinit var groupInfo: GroupListResponse
+
+    var img_multipart: MultipartBody.Part? = null
+
     override fun init() {
 
         getGroupData()
@@ -64,24 +81,31 @@ class GroupInfoFragment :
         }
         initObserver()
     }
+
     private fun initObserver() = with(binding) {
         groupViewModel.detailInfo.observe(viewLifecycleOwner) {
             groupDetailInfo = it
             groupInfo = it
         }
     }
+
     private fun initClickListener() = with(binding) {
-        btnBack.setOnClickListener{
+        btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
         // 설정
-        binding.btnSetting.setOnClickListener{
-            val action = GroupInfoFragmentDirections.actionGroupInfoFragmentToGroupModifyFragment(groupInfo)
+        binding.btnSetting.setOnClickListener {
+            val action =
+                GroupInfoFragmentDirections.actionGroupInfoFragmentToGroupModifyFragment(groupInfo)
             findNavController().navigate(action)
         }
 
         binding.btnChangeImage.setOnClickListener {
-
+            if (!hasPermissions()) {
+                requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            } else {
+                pick()
+            }
         }
         btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -148,6 +172,53 @@ class GroupInfoFragment :
     override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
     override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+    // 권한 있는지 체크
+    fun hasPermissions() = PERMISSIONS_REQUIRED.all {
+        ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    // 사진 선택
+    private fun pick() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        filterActivityLauncher.launch(intent)
+    }
+
+    // 사진 골라서 가져온 결과
+    private val filterActivityLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+
+                val imagePath = it.data!!.data
+                Log.d(TAG, "imagePath: $imagePath")
+                val file = FileUtil.toFile(requireContext(), imagePath!!)
+                img_multipart = FormDataUtil.getImageBody("file", file)
+
+                groupViewModel.updateGroupimage(img_multipart!!)
+
+            } else if (it.resultCode == Activity.RESULT_CANCELED) {
+                makeToast("사진 선택 취소")
+            } else {
+                Log.d("ActivityResult", "something wrong")
+            }
+        }
+
+    val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            // PERMISSION GRANTED
+            pick()
+        } else {
+            // PERMISSION NOT GRANTED
+            makeToast("권한이 거부됨")
+        }
+    }
+
+    private fun makeToast(msg: String) {
+        Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+    }
 }
 
 

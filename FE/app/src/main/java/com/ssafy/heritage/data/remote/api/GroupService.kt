@@ -109,4 +109,8 @@ interface GroupService {
     // 전체 채팅을 불러온다
     @GET("/chat/message/{groupSeq}")
     suspend fun selectAllChat(@Path("groupSeq") groupSeq: Int) : Response<List<Chat>>
+
+    // 그룹 사진 변경
+    @PUT("/api/group/{groupSeq}/modify/image")
+    suspend fun updateGroupimage(@Path("groupSeq") groupSeq: Int, @Query("groupImgUrl") groupImgUrl: String) : Response<String>
 }

@@ -2,6 +2,7 @@ package com.ssafy.heritage.view.group
 
 import android.util.Log
 import android.view.animation.OvershootInterpolator
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.heritage.ApplicationClass
@@ -21,7 +22,7 @@ class GroupListFragment :
     BaseFragment<FragmentGroupListBinding>(R.layout.fragment_group_list), OnItemClickListener {
 
     private lateinit var groupListAdapter: GroupListAdapter
-    private val groupViewModel by viewModels<GroupViewModel>()
+    private val groupViewModel by activityViewModels<GroupViewModel>()
     val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
 
     private val alphaInAnimationAdapter: ScaleInAnimationAdapter by lazy {

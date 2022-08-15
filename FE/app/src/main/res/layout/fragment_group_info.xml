@@ -59,10 +59,10 @@
 
             <ImageView
                 android:id="@+id/iv_group_img"
+                glide="@{String.valueOf(groupVM.detailInfo.groupImgUrl)}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                glide="@{String.valueOf(groupVM.detailInfo.groupImgUrl)}"
                 android:tintMode="src_atop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,21 +72,24 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="20dp"
                 android:background="@drawable/ic_baseline_settings_24"
                 android:backgroundTint="@color/white"
+                android:visibility="@{(groupVM.groupPermission == 2? View.VISIBLE :View.GONE)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_change_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_image_white"
                 android:text="사진변경"
-                android:textColor="@color/white"
+                android:visibility="@{((groupVM.groupPermission == 3) || (groupVM.groupPermission == 0)? View.GONE :View.VISIBLE)}"
                 app:layout_constraintEnd_toStartOf="@id/btn_setting"
                 app:layout_constraintTop_toTopOf="parent" />
 
