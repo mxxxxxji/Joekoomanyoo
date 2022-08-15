@@ -215,4 +215,7 @@ dependencies {
 
     // MPChart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // RxAnimatio
+    implementation 'com.mikhaellopez:rxanimation:2.1.0'
 }

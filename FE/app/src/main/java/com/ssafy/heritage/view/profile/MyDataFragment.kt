@@ -2,14 +2,18 @@ package com.ssafy.heritage.view.profile
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.GroupDestinationMap
 import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.databinding.FragmentMyDataBinding
+import com.ssafy.heritage.databinding.ItemHeritageBinding
 import com.ssafy.heritage.view.ar.ARFoundFragment
 import com.ssafy.heritage.viewmodel.UserViewModel
 import net.daum.mf.map.api.MapPOIItem
@@ -34,10 +38,13 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
         initObserver()
 
         initClickListener()
+
     }
 
     private fun initClickListener() = with(binding) {
         btnOpenMap.setOnClickListener {
+            frame.removeAllViews()
+
             it.isSelected = !it.isSelected
             btnOpenStamp.isSelected = false
             btnOpenGraph.isSelected = false
@@ -54,6 +61,8 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
         }
 
         btnOpenStamp.setOnClickListener {
+            frame.removeAllViews()
+
             it.isSelected = !it.isSelected
             btnOpenMap.isSelected = false
             btnOpenGraph.isSelected = false
@@ -70,6 +79,8 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
         }
 
         btnOpenGraph.setOnClickListener {
+            frame.removeAllViews()
+
             it.isSelected = !it.isSelected
             btnOpenMap.isSelected = false
             btnOpenStamp.isSelected = false
@@ -93,7 +104,8 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
         childFragmentManager.beginTransaction().replace(R.id.frame_stamp, stampFragment).commit()
 
         val statisticFragment = StatisticFragment()
-        childFragmentManager.beginTransaction().replace(R.id.frame_graph, statisticFragment).commit()
+        childFragmentManager.beginTransaction().replace(R.id.frame_graph, statisticFragment)
+            .commit()
     }
 
     override fun onStart() {
@@ -150,7 +162,7 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
                 customSelectedImageBitmap = marker
 
                 showAnimationType = MapPOIItem.ShowAnimationType.SpringFromGround
-                tag = index
+                tag = index + 100
 
                 mapView.addPOIItem(this)
             }
@@ -197,6 +209,21 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
                 poiItem?.mapPoint?.mapPointGeoCoord?.longitude!!
             ), 1, true
         )
+
+        binding.frame.removeAllViews()
+
+        if (poiItem?.tag > 99) {
+            val data = poiItem?.tag?.let { userViewModel.myDestinationList.value?.get(it - 100) }
+
+            val inflater = LayoutInflater.from(context)
+            val cardBinding: ItemHeritageBinding =
+                DataBindingUtil.inflate(inflater, R.layout.item_heritage, binding.frame, true)
+            cardBinding.root.background =
+                resources.getDrawable(R.drawable.background_heritage_map_item, null)
+            cardBinding.heritage = data?.heritage
+
+            ViewCompat.setTransitionName(cardBinding.ivHeritage, "heritage${data?.heritageSeq}")
+        }
     }
 
     override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {

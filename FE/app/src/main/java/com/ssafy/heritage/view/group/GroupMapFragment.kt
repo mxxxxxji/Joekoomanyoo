@@ -2,14 +2,26 @@ package com.ssafy.heritage.view.group
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import com.mikhaellopez.rxanimation.RxAnimation
+import com.mikhaellopez.rxanimation.alpha
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.GroupDestinationMap
 import com.ssafy.heritage.databinding.FragmentGroupMapBinding
+import com.ssafy.heritage.databinding.ItemHeritageBinding
+import com.ssafy.heritage.view.heritage.HeritageDetailFragment
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import com.ssafy.heritage.viewmodel.HeritageViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -20,14 +32,29 @@ class GroupMapFragment : BaseFragment<FragmentGroupMapBinding>(R.layout.fragment
     MapView.POIItemEventListener {
 
     private val groupViewModel by activityViewModels<GroupViewModel>()
+    private val heritageViewModel by activityViewModels<HeritageViewModel>()
 
     private lateinit var mapView: MapView
 
     override fun init() {
+        CoroutineScope(Main).launch {
+            delay(500)
 
-        initMap()
+            initMap()
 
-        initObserver()
+            initObserver()
+
+            initView()
+        }
+    }
+
+    private fun initView() = with(binding) {
+        CoroutineScope(Main).launch {
+            delay(5000)
+            RxAnimation.from(tvAlert)
+                .alpha(0f, duration = 3000L, reverse = false)
+                .subscribe()
+        }
     }
 
     override fun onStart() {
@@ -99,6 +126,35 @@ class GroupMapFragment : BaseFragment<FragmentGroupMapBinding>(R.layout.fragment
                 poiItem?.mapPoint?.mapPointGeoCoord?.longitude!!
             ), 1, true
         )
+
+        val data = poiItem?.tag?.let { groupViewModel.groupDestination.value?.get(it) }
+
+        binding.frame.removeAllViews()
+        val inflater = LayoutInflater.from(context)
+        val cardBinding: ItemHeritageBinding =
+            DataBindingUtil.inflate(inflater, R.layout.item_heritage, binding.frame, true)
+        cardBinding.root.background =
+            resources.getDrawable(R.drawable.background_heritage_map_item, null)
+        cardBinding.heritage = data?.heritage
+
+        ViewCompat.setTransitionName(cardBinding.ivHeritage, "heritage${data?.heritageSeq}")
+
+        cardBinding.root.setOnClickListener {
+
+            heritageViewModel.setHeritage(data?.heritage!!)
+
+            binding.map.removeAllViews()
+
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .addSharedElement(cardBinding.ivHeritage, "heritage")
+                .addToBackStack(null)
+                .replace(
+                    R.id.fragment_container_main,
+                    HeritageDetailFragment.newInstance(data?.heritage!!)
+                )
+                .commit()
+        }
     }
 
     override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
@@ -113,5 +169,4 @@ class GroupMapFragment : BaseFragment<FragmentGroupMapBinding>(R.layout.fragment
 
     override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
     }
-
 }
