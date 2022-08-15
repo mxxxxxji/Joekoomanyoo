@@ -11,7 +11,7 @@ import com.ssafy.heritage.databinding.ItemGroupBinding
 class GroupListAdapter(private val listener: OnItemClickListener) :
     RecyclerView.Adapter<GroupListAdapter.GroupListViewHolder>() {
 
-    private var groupList = mutableListOf<GroupListResponse>()
+    var groupList = mutableListOf<GroupListResponse>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupListViewHolder {
         val binding = ItemGroupBinding.inflate(LayoutInflater.from(parent.context), parent, false)

@@ -1,12 +1,6 @@
 package com.ssafy.heritage.view.group
 
-import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.heritage.ApplicationClass
@@ -16,8 +10,8 @@ import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupListBinding
+import com.ssafy.heritage.view.dialog.SelectCategoryDialog
 import com.ssafy.heritage.viewmodel.GroupViewModel
-import kotlin.properties.Delegates
 
 private const val TAG = "GroupListFragment___"
 
@@ -45,8 +39,8 @@ class GroupListFragment :
         groupViewModel.groupList.observe(viewLifecycleOwner) {
             // 진행
             var list = mutableListOf<GroupListResponse>()
-            for(i in it){
-                if(i.groupStatus == 'R'){
+            for (i in it) {
+                if (i.groupStatus == 'R') {
                     list.add(i)
                 }
             }
@@ -65,12 +59,21 @@ class GroupListFragment :
             btnBack.setOnClickListener {
                 findNavController().popBackStack()
             }
+            btnSort.setOnClickListener {
+                val selectCategoryDialog = SelectCategoryDialog()
+                selectCategoryDialog.show(childFragmentManager, "selectCategoryDialog")
+                selectCategoryDialog.adapter = groupListAdapter
+                selectCategoryDialog.list =
+                    groupViewModel.groupList.value!!.filter { it.groupStatus == 'R' } as MutableList<GroupListResponse>
+            }
         }
     }
 
     override fun onItemClick(position: Int) {
         Log.d(TAG, "onItemClick: ${position}")
-        val action = GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(groupListAdapter.getItem(position))
+        val action = GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(
+            groupListAdapter.getItem(position)
+        )
         findNavController().navigate(action)
     }
 
