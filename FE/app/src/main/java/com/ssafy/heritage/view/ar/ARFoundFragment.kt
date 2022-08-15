@@ -15,7 +15,7 @@ import com.ssafy.heritage.viewmodel.UserViewModel
 
 private const val TAG = "ARFoundFragment___"
 
-class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a_r_found) {
+class ARFoundFragment :BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a_r_found) {
 
     private val userSeq = ApplicationClass.sharedPreferencesUtil.getUser()
     private val stampCategoryListAdapter: StampCategoryListAdapter by lazy { StampCategoryListAdapter() }
@@ -35,7 +35,7 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
     }
 
     private fun initAdapter() = with(binding) {
-        recyclerView.apply {
+        recyclerViewBookitem.apply {
             layoutManager =
                 GridLayoutManager(requireContext(), 3)
             adapter = stampCategoryListAdapter
