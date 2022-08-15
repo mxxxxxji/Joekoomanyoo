@@ -50,16 +50,16 @@ class HeritageReviewFragment :
     // 로그인 한 유저만 리뷰쓰기 영역이 보여야함!
 
     override fun init() {
-        Log.d("review","can you see review??")
-        heritageViewModel.getHeritageReviewList()
-
-        initAdapter()
-        initObserver()
-        initClickListener()
+//        Log.d("review","can you see review??")
+//        heritageViewModel.getHeritageReviewList()
+//
+//        initAdapter()
+//        initObserver()
+//        initClickListener()
     }
 
     private fun initAdapter() {
-        heritageReviewAdapter = HeritageReviewAdapter(this)
+//        heritageReviewAdapter = HeritageReviewAdapter(this)
         binding.recyclerviewReviewList.adapter = heritageReviewAdapter
     }
 

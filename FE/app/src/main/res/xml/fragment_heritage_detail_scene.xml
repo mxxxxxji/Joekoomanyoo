@@ -19,13 +19,13 @@
             motion:layout_constraintStart_toStartOf="parent" />
         <Constraint
             android:id="@+id/constraint_content"
-            android:translationZ="1dp"
+            android:translationZ="20dp"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="@id/gl_hori_80" />
         <Constraint
             android:id="@+id/constraint_scroll"
-            android:translationZ="2dp"
+            android:translationZ="22dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"

@@ -209,4 +209,7 @@ dependencies {
 
     // work manager
     implementation "androidx.work:work-runtime-ktx:2.7.1"
+
+    // ReadMoreTextView
+    implementation 'kr.co.prnd:readmore-textview:1.0.0'
 }
