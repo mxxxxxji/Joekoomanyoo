@@ -3,6 +3,7 @@ package com.ssafy.heritage.data.remote.api
 import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.data.dto.StampCategory
 import com.ssafy.heritage.data.remote.request.NearStampRequest
+import com.ssafy.heritage.data.remote.response.StampRankResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -35,4 +36,7 @@ interface ARService {
     @POST("api/ar/location")
     suspend fun selectNearStamp(@Body location: NearStampRequest): Response<List<Stamp>>
 
+
+    @GET("/api/ar/stamp/rank")
+    suspend fun selectStampRank():Response<List<StampRankResponse>>
 }

@@ -9,6 +9,7 @@ import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.data.dto.StampCategory
 import com.ssafy.heritage.data.dto.User
 import com.ssafy.heritage.data.remote.request.NearStampRequest
+import com.ssafy.heritage.data.remote.response.StampRankResponse
 import com.ssafy.heritage.data.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -43,6 +44,10 @@ class ARViewModel : ViewModel() {
     private val _myCategoryList = MutableLiveData<List<StampCategory>>()
     val myCategoryList: LiveData<List<StampCategory>>
         get() = _myCategoryList
+
+    private val _stampRankList = MutableLiveData<MutableList<StampRankResponse>>()
+    val stampRankList: LiveData<MutableList<StampRankResponse>>
+        get() = _stampRankList
 
     // 전체 스탬프 목록 불러오기
     fun getAllStamp() = viewModelScope.launch {
@@ -155,6 +160,25 @@ class ARViewModel : ViewModel() {
                 _myCategoryList.postValue(newList!!)
             } else {
                 Log.d(TAG, "getMyStampCategory error: ${it.errorBody()}")
+
+            }
+        }
+    }
+
+    fun selectStampRank() =viewModelScope.launch {
+        var response: Response<List<StampRankResponse>>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.selectStampRank()
+        }
+        job?.join()
+        response?.let {
+            Log.d(TAG, "selectStampRank response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "selectStampRank Success: ${it.body()}")
+                val list = it.body() as MutableList<StampRankResponse>
+                _stampRankList.postValue(list)
+            } else {
+                Log.d(TAG, "selectStampRank error: ${it.errorBody()}")
 
             }
         }

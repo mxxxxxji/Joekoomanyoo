@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="rankInfo"
+            type="com.ssafy.heritage.data.remote.response.StampRankResponse" />
+    </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/apple_sd_gothic_neo_b"
-                    android:text=""
+                    android:text="@{rankInfo.userNickname}"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_m"
-                    android:text=""
+                    android:text="@{String.valueOf(rankInfo.myStampCnt)}"
                     android:textColor="#8e8e93"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_lank_count_all"
@@ -117,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_b"
-                    android:text=""
+                    android:text="@{String.valueOf(rankInfo.userRank)}"
                     android:textColor="#aeaeb2"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toStartOf="@id/tv_lank_unit"
