@@ -13,4 +13,5 @@ public class UserStampRankDto {
     private String userNickname;
     private int myStampCnt;
     private int userRank;
+    private String profileImgUrl;
 }

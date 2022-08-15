@@ -367,6 +367,7 @@ public class ARService {
                     .userNickname(userList.get(i).getUserNickname())
                     .myStampCnt(cnt)
                     .userRank(idx)
+                    .profileImgUrl(userList.get(i).getProfileImgUrl())
                     .build();
             list.add(userStampRankDto);
         }
