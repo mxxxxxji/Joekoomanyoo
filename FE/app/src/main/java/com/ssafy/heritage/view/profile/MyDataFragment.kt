@@ -2,6 +2,7 @@ package com.ssafy.heritage.view.profile
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import com.ssafy.heritage.R
@@ -9,6 +10,7 @@ import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.dto.GroupDestinationMap
 import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.databinding.FragmentMyDataBinding
+import com.ssafy.heritage.view.ar.ARFoundFragment
 import com.ssafy.heritage.viewmodel.UserViewModel
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -27,12 +29,77 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
 
         initMap()
 
+        initView()
+
         initObserver()
+
+        initClickListener()
+    }
+
+    private fun initClickListener() = with(binding) {
+        btnOpenMap.setOnClickListener {
+            it.isSelected = !it.isSelected
+            btnOpenStamp.isSelected = false
+            btnOpenGraph.isSelected = false
+
+            if (it.isSelected) {
+                map.visibility = View.VISIBLE
+                frameStamp.visibility = View.GONE
+                frameGraph.visibility = View.GONE
+            } else {
+                map.visibility = View.GONE
+                frameStamp.visibility = View.GONE
+                frameGraph.visibility = View.GONE
+            }
+        }
+
+        btnOpenStamp.setOnClickListener {
+            it.isSelected = !it.isSelected
+            btnOpenMap.isSelected = false
+            btnOpenGraph.isSelected = false
+
+            if (it.isSelected) {
+                map.visibility = View.GONE
+                frameStamp.visibility = View.VISIBLE
+                frameGraph.visibility = View.GONE
+            } else {
+                map.visibility = View.GONE
+                frameStamp.visibility = View.GONE
+                frameGraph.visibility = View.GONE
+            }
+        }
+
+        btnOpenGraph.setOnClickListener {
+            it.isSelected = !it.isSelected
+            btnOpenMap.isSelected = false
+            btnOpenStamp.isSelected = false
+
+            if (it.isSelected) {
+                map.visibility = View.GONE
+                frameStamp.visibility = View.GONE
+                frameGraph.visibility = View.VISIBLE
+            } else {
+                map.visibility = View.GONE
+                frameStamp.visibility = View.GONE
+                frameGraph.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun initView() = with(binding) {
+        btnOpenMap.isSelected = true
+
+        val stampFragment = ARFoundFragment()
+        childFragmentManager.beginTransaction().replace(R.id.frame_stamp, stampFragment).commit()
+
+        val statisticFragment = StatisticFragment()
+        childFragmentManager.beginTransaction().replace(R.id.frame_graph, statisticFragment).commit()
     }
 
     override fun onStart() {
         super.onStart()
         userViewModel.getMydestination()
+        userViewModel.getMyStamp()
     }
 
     private fun initMap() = with(binding) {
@@ -71,7 +138,7 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
 
                 val bitmapdraw: BitmapDrawable = ResourcesCompat.getDrawable(
                     resources,
-                    R.drawable.ic_gorup_location,
+                    R.drawable.ic_group_location,
                     null
                 ) as BitmapDrawable
                 val b: Bitmap = bitmapdraw.bitmap

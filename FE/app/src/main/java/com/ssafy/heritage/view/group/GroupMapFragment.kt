@@ -68,7 +68,7 @@ class GroupMapFragment : BaseFragment<FragmentGroupMapBinding>(R.layout.fragment
 
                 val bitmapdraw: BitmapDrawable = ResourcesCompat.getDrawable(
                     resources,
-                    R.drawable.ic_gorup_location,
+                    R.drawable.ic_group_location,
                     null
                 ) as BitmapDrawable
                 val b: Bitmap = bitmapdraw.bitmap
