@@ -3,7 +3,10 @@ package com.ssafy.heritage.adpter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import com.ssafy.heritage.databinding.ItemSharedMyGroupBinding
 
@@ -57,7 +60,8 @@ class SharedMyGroupListAdapter() :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(position: Int) = with(binding) {
                 val item = myGroupList[position]
-//                ivGroupImg.text = item.groupImgUrl
+//                ivGroupImg.setImageDrawable(ContextCompat.getDrawable(context, item.groupImgUrl)
+                Glide.with(itemView.getContext()).load(item.groupImgUrl).into(ivGroupImg)
                 tvGroupStartDate.text = item.groupStartDate.toString()
                 tvGroupEndDate.text = item.groupEndDate.toString()
                 tvGroupName.text = item.groupName

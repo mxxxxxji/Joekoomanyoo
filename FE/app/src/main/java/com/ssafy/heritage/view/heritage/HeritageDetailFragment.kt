@@ -276,7 +276,7 @@ class HeritageDetailFragment :
     private fun initClickListener() = with(binding) {
 
         // 스크랩 버튼
-        // 포함 여부 확인은 여기서 (any!!)
+        // 스크랩 포함 여부 확인은 여기서 (any!!)
         var scrapCheck = userViewModel.scrapList.value?.any {
             it.heritageSeq == heritage?.heritageSeq
         }
@@ -296,11 +296,13 @@ class HeritageDetailFragment :
                 userViewModel.deleteHeritageScrap(heritage?.heritageSeq!!)
                 makeToast("스크랩이 취소되었습니다")
                 scrapCheck = false
+                binding.btnScrap.isSelected = false
             } else {
                 // 없으면 스크랩 할 수 있는 동작
                 userViewModel.insertHeritageScrap(heritageScrap)
                 makeToast("스크랩 되었습니다")
                 scrapCheck = true
+                binding.btnScrap.isSelected = true
             }
         }
 

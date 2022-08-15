@@ -57,10 +57,10 @@
             tools:text="22.7.29" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:src="@drawable/ic_delete"
+            android:src="@drawable/ic_trash"
             android:id="@+id/imagebtn_heritage_review_delete"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_heritage_review_user_id"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_heritage_review_user_id" />
