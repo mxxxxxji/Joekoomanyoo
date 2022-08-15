@@ -27,15 +27,6 @@ class ARInfoFragment :
     private lateinit var arListFragment: ARListFragment
     private lateinit var arFoundFragment: ARFoundFragment
 
-    private fun replaceView(tab: Fragment) {
-        // 탭한 화면 변경
-        var selectedFragment: Fragment? = null
-        selectedFragment = tab
-        selectedFragment?.let {
-            childFragmentManager?.beginTransaction()?.replace(R.id.viewpager, it)?.commit()
-        }
-    }
-
     override fun init() {
         initAdapter()
         initObserver()
@@ -58,17 +49,7 @@ class ARInfoFragment :
 
             viewpager.adapter = adapter
             viewpagertab.setViewPager(viewpager)
-            viewpager.setOnTouchListener { view, motionEvent ->
-                true
-            }
 
-            viewpagertab.setOnTabClickListener {
-                if (it > 0) {
-                    binding.motionlayout.transitionToEnd()
-                } else {
-                    binding.motionlayout.transitionToStart()
-                }
-            }
         }
     }
 
@@ -95,4 +76,13 @@ class ARInfoFragment :
     override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
     override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+    private fun replaceView(tab: Fragment) {
+        // 탭한 화면 변경
+        var selectedFragment: Fragment? = null
+        selectedFragment = tab
+        selectedFragment?.let {
+            childFragmentManager?.beginTransaction()?.replace(R.id.viewpager, it)?.commit()
+        }
+    }
 }
