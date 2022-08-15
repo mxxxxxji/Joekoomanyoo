@@ -12,13 +12,15 @@ import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import com.ssafy.heritage.databinding.FragmentMyGroupListBinding
+import com.ssafy.heritage.listener.EvaluationClickListener
 import com.ssafy.heritage.listener.GroupMyListClickListener
 import com.ssafy.heritage.viewmodel.GroupViewModel
 
 private const val TAG = "MyGroupListFragment___"
 
 class MyGroupListFragment :
-    BaseFragment<FragmentMyGroupListBinding>(R.layout.fragment_my_group_list) {
+    BaseFragment<FragmentMyGroupListBinding>(R.layout.fragment_my_group_list),
+    EvaluationClickListener {
 
     private val groupViewModel by activityViewModels<GroupViewModel>()
 
@@ -156,5 +158,9 @@ class MyGroupListFragment :
 
     private fun makeToast(msg: String) {
         Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onClickEvaluationBtn(position: Int, myGroupResponse: MyGroupResponse) {
+        TODO("Not yet implemented")
     }
 }
