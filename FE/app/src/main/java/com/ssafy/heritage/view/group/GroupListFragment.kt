@@ -1,6 +1,7 @@
 package com.ssafy.heritage.view.group
 
 import android.util.Log
+import android.view.animation.OvershootInterpolator
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.heritage.ApplicationClass
@@ -12,6 +13,7 @@ import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupListBinding
 import com.ssafy.heritage.view.dialog.SelectCategoryDialog
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
 private const val TAG = "GroupListFragment___"
 
@@ -21,6 +23,14 @@ class GroupListFragment :
     private lateinit var groupListAdapter: GroupListAdapter
     private val groupViewModel by viewModels<GroupViewModel>()
     val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
+
+    private val alphaInAnimationAdapter: ScaleInAnimationAdapter by lazy {
+        ScaleInAnimationAdapter(groupListAdapter).apply {
+            setDuration(300)
+            setInterpolator(OvershootInterpolator())
+            setFirstOnly(false)
+        }
+    }
 
     override fun init() {
 
@@ -32,7 +42,7 @@ class GroupListFragment :
 
     private fun initAdapter() {
         groupListAdapter = GroupListAdapter(this)
-        binding.recyclerviewGroupList.adapter = groupListAdapter
+        binding.recyclerviewGroupList.adapter = alphaInAnimationAdapter
     }
 
     private fun initObserver() {

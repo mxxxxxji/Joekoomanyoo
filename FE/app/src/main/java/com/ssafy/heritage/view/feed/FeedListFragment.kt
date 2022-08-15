@@ -1,12 +1,11 @@
 package com.ssafy.heritage.view.feed
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
+import android.view.animation.OvershootInterpolator
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
@@ -17,14 +16,12 @@ import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.FeedListAdapter
 import com.ssafy.heritage.base.BaseFragment
-import com.ssafy.heritage.data.dto.Feed
-import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.databinding.FragmentFeedListBinding
 import com.ssafy.heritage.listener.FeedListClickListener
-import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.FeedViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
 private const val TAG = "FeedListFragment___"
 
@@ -38,6 +35,14 @@ class FeedListFragment :
     private var clickMyList: Int = 0
     private var selectedChip: Int = 0
     private var dataList: List<FeedListResponse> = arrayListOf()
+
+    private val alphaInAnimationAdapter: ScaleInAnimationAdapter by lazy {
+        ScaleInAnimationAdapter(feedAdapter).apply {
+            setDuration(300)
+            setInterpolator(OvershootInterpolator())
+            setFirstOnly(false)
+        }
+    }
 
     override fun init() {
 
@@ -87,7 +92,7 @@ class FeedListFragment :
     }
 
     private fun initAdapter() {
-        binding.recyclerviewFeedList.adapter = feedAdapter
+        binding.recyclerviewFeedList.adapter = alphaInAnimationAdapter
         binding.recyclerviewFeedList.layoutManager = GridLayoutManager(requireContext(), 3)
         feedAdapter.feedListClickListener = object : FeedListClickListener {
             override fun onClick(position: Int, feed: FeedListResponse, view: View) {
