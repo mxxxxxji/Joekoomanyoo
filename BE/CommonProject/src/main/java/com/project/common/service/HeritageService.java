@@ -107,7 +107,7 @@ public class HeritageService {
     @Transactional
     public boolean createScrap(HeritageScrapDto heritageScrapDto){
         HeritageScrapEntity heritageScrapEntity = HeritageScrapMapper.MAPPER.toEntity(heritageScrapDto);
-
+        
         heritageScrapEntity.setHeritageScrapSeq(0);
         heritageScrapEntity.setHeritageScrapRegistedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));        // 초기값 입력
 

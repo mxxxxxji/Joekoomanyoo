@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserEvalDto {
     private int userSeq;
+    private int userReceivedSeq;
+    private int groupSeq;
     private int evalCnt;
     private int evalList1;
     private int evalList2;

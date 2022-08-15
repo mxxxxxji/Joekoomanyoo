@@ -262,18 +262,19 @@ public class MyPageController {
     /**
      * 상호 평가 하기
      *
-     * @param userEvalDto
+     * @param userEvalDtoList
      * @return String
      */
 
     @ApiOperation(value = "상호 평가 하기", response = String.class)
     @PostMapping("/eval")
-    public ResponseEntity<String> evalMutual(@RequestBody UserEvalDto userEvalDto) {
-        if (myPageService.evalMutual(userEvalDto)) {
-            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> evalMutual(@RequestBody List<UserEvalDto> userEvalDtoList) {
+        System.out.println("리스트 사이즈 : " + userEvalDtoList.size());
+        if(userEvalDtoList.size()==0){
+            return new ResponseEntity<String>("size 0", HttpStatus.OK);
         }
+        myPageService.evalMutual(userEvalDtoList);
+        return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     }
 
 

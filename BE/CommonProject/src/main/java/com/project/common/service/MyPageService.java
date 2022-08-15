@@ -2,6 +2,7 @@ package com.project.common.service;
 
 import com.project.common.controller.FcmTokenController;
 import com.project.common.dto.My.MyDailyMemoDto;
+import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.mapper.My.MyDailyMemoMapper;
 import com.project.common.dto.My.MyScheduleDto;
 import com.project.common.mapper.My.MyScheduleMapper;
@@ -13,6 +14,8 @@ import com.project.common.entity.My.MyDailyMemoEntity;
 import com.project.common.entity.My.MyScheduleEntity;
 import com.project.common.entity.User.UserEntity;
 import com.project.common.entity.User.UserKeywordEntity;
+import com.project.common.repository.Group.GroupMemberRepository;
+import com.project.common.repository.Group.GroupMemberRepositoryCustom;
 import com.project.common.repository.My.MyDailyMemoRepository;
 import com.project.common.repository.My.MyDailyMemoRepositoryCustom;
 import com.project.common.repository.My.MyScheduleRepository;
@@ -41,8 +44,9 @@ public class MyPageService {
     private final MyScheduleRepositoryCustom myScheduleRepositoryCustom;
 
     private final UserRepository userRepository;
+    private final GroupMemberRepositoryCustom groupMemberRepositoryCustom;
+    private final GroupMemberRepository groupMemberRepository;
 
-    private final FcmTokenController fcmTokenController;
 
 
 
@@ -215,17 +219,34 @@ public class MyPageService {
     }
 
     // 상호평가
-    public boolean evalMutual(UserEvalDto userEvalDto) {
-        // 만약 평가가 안들어왔다면 false
-        if(userEvalDto == null){
-            return false;
-        }else{
-            // 먼저 사용자 Entity 가져오기 ( 사용자 번호로 )
-            UserEntity userEntity = userEvalRepository.getByUserSeq(userEvalDto.getUserSeq());
+    public boolean evalMutual(List<UserEvalDto> userEvalDtoList) {
+        // 만약 한명도 상호평가 안했을 경우
+        if(userEvalDtoList.size() == 0){
+            return true;
+        }
+
+        // 상호평가 한 사람
+        int userSeq = userEvalDtoList.get(0).getUserSeq();
+
+        // 상호평가 한 그룹
+        int groupSeq = userEvalDtoList.get(0).getGroupSeq();
+
+
+        for(UserEvalDto userEvalDto : userEvalDtoList) {
+            // 상호평가 받은 사람
+            int userReceivedSeq = userEvalDto.getUserReceivedSeq();
+            System.out.println("평가 받은 사람 : " + userReceivedSeq);
+            System.out.println("평가 하는 사람 : " + userSeq);
+            System.out.println("평가 그룹 : " + groupSeq);
+
+
+            // 상호 평가 받은 사람 먼저 사용자 Entity 가져오기 ( 사용자 번호로 )
+            UserEntity userEntity = userEvalRepository.getByUserSeq(userReceivedSeq);
+            System.out.println("상호평가 받ㅇ느 살마 이름 : " + userEntity.getUserNickname());
 
             // Entity에 상호평가 값 넣기
             // 먼저 총 횟수 카운팅
-            int cnt = userEntity.getEvalCnt()+1;
+            int cnt = userEntity.getEvalCnt() + 1;
             userEntity.setEvalCnt(cnt);
 
             // 리스트 값들 카운팅 해주기
@@ -239,9 +260,17 @@ public class MyPageService {
             // 시간 등록
             userEntity.setEvalUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-            return true;
+            userRepository.save(userEntity);
         }
-    }
+
+        // 상호평가 했다고 표시해주기
+        GroupMemberEntity groupMemberEntity = groupMemberRepositoryCustom.findByUserSeqAndGroupSeq(userSeq, groupSeq);
+        groupMemberEntity.setMemberIsEvaluated('Y');
+
+        groupMemberRepository.save(groupMemberEntity);
+
+        return true;
+        }
 
     // 상호평가 가져오기
     public UserResponseEvalDto evalMutualInfo(int userSeq) {
