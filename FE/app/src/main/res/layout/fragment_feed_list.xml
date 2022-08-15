@@ -90,24 +90,6 @@
                 android:textSize="14sp" />
         </com.google.android.material.chip.ChipGroup>
 
-        <View
-            android:id="@+id/stroke_feed_all"
-            android:layout_width="50dp"
-            android:layout_height="2dp"
-            android:background="@color/main_color"
-            android:layout_marginStart="100dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chip_group"/>
-
-        <View
-            android:id="@+id/stroke_feed_my"
-            android:layout_width="50dp"
-            android:layout_height="2dp"
-            android:background="@color/main_color"
-            android:layout_marginEnd="87dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chip_group"/>
-
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view"
             android:layout_width="0dp"
