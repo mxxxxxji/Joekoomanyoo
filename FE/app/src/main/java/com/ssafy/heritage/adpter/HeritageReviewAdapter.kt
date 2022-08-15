@@ -6,18 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.heritage.data.dto.HeritageReview
-import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.HeritageReviewListResponse
-import com.ssafy.heritage.databinding.ItemGroupBinding
 import com.ssafy.heritage.databinding.ItemReviewBinding
-import com.ssafy.heritage.view.heritage.HeritageReviewFragment
 
-class HeritageReviewAdapter(private val listener: OnItemClickListener) : ListAdapter<HeritageReviewListResponse, HeritageReviewAdapter.ViewHolder>(
-    DiffCallback()
-){
+class HeritageReviewAdapter(private val listener: OnItemClickListener, val userSeq: Int) :
+    ListAdapter<HeritageReviewListResponse, HeritageReviewAdapter.ViewHolder>(
+        DiffCallback()
+    ) {
     inner class ViewHolder(private val binding: ItemReviewBinding) :
-        RecyclerView.ViewHolder(binding.root){
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.imagebtnHeritageReviewDelete.setOnClickListener {
@@ -34,12 +31,24 @@ class HeritageReviewAdapter(private val listener: OnItemClickListener) : ListAda
                 } else {
                     binding.ivHeritageReviewImg.visibility = View.VISIBLE
                 }
+
+                if (userSeq != data.userSeq) {
+                    imagebtnHeritageReviewDelete.visibility = View.GONE
+                } else {
+                    imagebtnHeritageReviewDelete.visibility = View.VISIBLE
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(
+            ItemReviewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

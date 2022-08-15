@@ -40,8 +40,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val groupViewModel by activityViewModels<GroupViewModel>()
     private val feedViewModel by activityViewModels<FeedViewModel>()
 
-    private val scaleInAnimationAdapter: ScaleInAnimationAdapter by lazy {
+    private val homeHeritageAnimationAdapter: ScaleInAnimationAdapter by lazy {
         ScaleInAnimationAdapter(homeHeritageAdapter).apply {
+            setDuration(2000)
+            setInterpolator(OvershootInterpolator())
+            setFirstOnly(false)
+        }
+    }
+
+    private val homeFeedAnimationAdapter: ScaleInAnimationAdapter by lazy {
+        ScaleInAnimationAdapter(homeFeedAdapter).apply {
+            setDuration(2000)
+            setInterpolator(OvershootInterpolator())
+            setFirstOnly(false)
+        }
+    }
+
+    private val myGroupAnimationAdapter: ScaleInAnimationAdapter by lazy {
+        ScaleInAnimationAdapter(myGroupListAdapter).apply {
             setDuration(2000)
             setInterpolator(OvershootInterpolator())
             setFirstOnly(false)
@@ -102,7 +118,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         // 나의 모임 리스트
         recyclerviewMyGroup.apply {
-            adapter = myGroupListAdapter
+            adapter = myGroupAnimationAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
@@ -135,7 +151,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         // 추천 문화재 리스트
         recyclerviewHeritage.apply {
-            adapter = scaleInAnimationAdapter
+            adapter = homeHeritageAnimationAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
@@ -160,7 +176,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         // 추천 사진 리스트
         recyclerviewFeed.apply {
-            adapter = homeFeedAdapter
+            adapter = homeFeedAnimationAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 

@@ -177,7 +177,7 @@ class FeedDetailFragment :
 
         // 뒤로가기
         btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            requireActivity().onBackPressed()
         }
     }
 

@@ -322,6 +322,7 @@ class UserViewModel : ViewModel() {
             repository.insertHeritageScrap(heritageScrap).let { response ->
                 if (response.isSuccessful) {
                     Log.d(TAG, "success scrap")
+                    getScrapLIst()
                 } else {
                     Log.d(TAG, "${response.code()}")
                 }
@@ -334,6 +335,7 @@ class UserViewModel : ViewModel() {
             repository.deleteHeritageScrap(user.value!!.userSeq!!, heritageSeq).let {
                 if (it.isSuccessful) {
                     Log.d(TAG, "삭제 성공?")
+                    getScrapLIst()
                 } else {
                     Log.d(TAG, "${it.code()}")
                 }

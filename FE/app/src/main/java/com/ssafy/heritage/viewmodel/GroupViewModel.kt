@@ -20,6 +20,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import org.json.JSONObject
 import retrofit2.Response
 
 private const val TAG = "GroupViewModel___"
@@ -389,6 +391,55 @@ class GroupViewModel : ViewModel() {
             } else {
                 Log.d(TAG, "setGroupStatus error: ${it.errorBody()}")
 
+            }
+        }
+    }
+
+    // 모임 사진 업데이트
+    fun updateGroupimage(img: MultipartBody.Part) = viewModelScope.launch {
+
+        val url = sendImage(img)
+
+        if (url != null) {
+            var response: Response<String>? = null
+            job = launch(Dispatchers.Main) {
+                response = repository.updateGroupimage(_detailInfo.value?.groupSeq!!, url)
+            }
+            job?.join()
+
+            response?.let {
+                Log.d(TAG, "updateGroupimage response: $it")
+                if (it.isSuccessful) {
+                    Log.d(TAG, "updateGroupimage Success: ${it.body()}")
+                    getGroupList()
+                    selectGroupDetail(_detailInfo.value?.groupSeq!!)
+                    true
+                } else {
+                    Log.d(TAG, "updateGroupimage error: ${it.errorBody()}")
+                    false
+                }
+            }
+        }
+    }
+
+    // 사진 전송하기
+    suspend fun sendImage(img: MultipartBody.Part) = withContext(Dispatchers.Main) {
+        Log.d(TAG, "sendImage: $img")
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.sendImage(img)
+        }
+        job?.join()
+
+        response?.let {
+            Log.d(TAG, "sendImage response: $it")
+            if (it.isSuccessful) {
+                val body = JSONObject(it.body())
+                val url = body.get("fileDownloadUri")
+                Log.d(TAG, "sendImage body: ${url}")
+                url as String
+            } else {
+                null
             }
         }
     }

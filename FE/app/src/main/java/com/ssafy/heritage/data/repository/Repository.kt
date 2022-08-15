@@ -14,6 +14,7 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 class Repository constructor(context: Context) {
 
@@ -76,6 +77,8 @@ class Repository constructor(context: Context) {
 
     suspend fun selectAllChat(groupSeq: Int): Response<List<Chat>> =
         groupApi.selectAllChat(groupSeq)
+
+    suspend fun updateGroupimage(groupSeq: Int, groupImgUrl: String) : Response<String> = groupApi.updateGroupimage(groupSeq, groupImgUrl)
 
 
     // user

@@ -7,8 +7,8 @@ data class Stamp(
     val stampText: String = "",
     val heritageSeq: Int = 0,
     val heritageLocal: String = "",
-    val heritageLng: String = "",
-    val heritageLat: String = "",
+    var heritageLng: String = "",
+    var heritageLat: String = "",
     val stampCategory: String = "",
     var found: Char = 'N'
 )

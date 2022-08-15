@@ -13,8 +13,6 @@ import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.provider.MediaStore
-import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
@@ -132,6 +130,8 @@ class HeritageDetailFragment :
 //            heritageReviewListResponse.reviewImgUrl = userViewModel.user.value?.profileImgUrl.toString()
 //        }
 
+        initView()
+
         initMap()
 
         initAdapter()
@@ -141,6 +141,11 @@ class HeritageDetailFragment :
         initClickListener()
 
         setMotion()
+    }
+
+    private fun initView() = with(binding) {
+        val flag = userViewModel.scrapList.value?.any { it.heritageSeq == heritage?.heritageSeq }
+        btnScrap.isSelected = flag == true
     }
 
     @SuppressLint("LongLogTag")
@@ -180,7 +185,8 @@ class HeritageDetailFragment :
     }
 
     private fun initAdapter() = with(binding) {
-        heritageReviewAdapter = HeritageReviewAdapter(this@HeritageDetailFragment)
+        heritageReviewAdapter =
+            HeritageReviewAdapter(this@HeritageDetailFragment, userViewModel.user.value?.userSeq!!)
         binding.recyclerviewReviewList.adapter = heritageReviewAdapter
     }
 
@@ -189,7 +195,7 @@ class HeritageDetailFragment :
             heritageReviewAdapter.submitList(it)
         }
 
-        groupViewModel.message.observe(viewLifecycleOwner){
+        groupViewModel.message.observe(viewLifecycleOwner) {
             // viewModel에서 Toast메시지 Event 발생시
             it.getContentIfNotHandled()?.let {
                 makeToast(it)
@@ -275,13 +281,13 @@ class HeritageDetailFragment :
     @SuppressLint("LongLogTag")
     private fun initClickListener() = with(binding) {
 
-        // 스크랩 버튼
-        // 스크랩 포함 여부 확인은 여기서 (any!!)
-        var scrapCheck = userViewModel.scrapList.value?.any {
-            it.heritageSeq == heritage?.heritageSeq
-        }
-
         btnScrap.setOnClickListener {
+
+            // 스크랩 버튼
+            // 포함 여부 확인은 여기서 (any!!)
+            var scrapCheck = userViewModel.scrapList.value?.any {
+                it.heritageSeq == heritage?.heritageSeq
+            }
 
             heritageScrap = HeritageScrap(
                 heritageSeq = heritage?.heritageSeq!!,
@@ -295,12 +301,14 @@ class HeritageDetailFragment :
                 // 포함되어 있으면 스크랩 된 것 => 스크랩 삭제할 수 있는 동작
                 userViewModel.deleteHeritageScrap(heritage?.heritageSeq!!)
                 makeToast("스크랩이 취소되었습니다")
+                btnScrap.isSelected = false
                 scrapCheck = false
                 binding.btnScrap.isSelected = false
             } else {
                 // 없으면 스크랩 할 수 있는 동작
                 userViewModel.insertHeritageScrap(heritageScrap)
                 makeToast("스크랩 되었습니다")
+                btnScrap.isSelected = true
                 scrapCheck = true
                 binding.btnScrap.isSelected = true
             }
@@ -460,6 +468,26 @@ class HeritageDetailFragment :
                 tag = -1
 
                 mapView.addPOIItem(this)
+            }
+        }
+
+        // 창 엵기
+        btnUp.setOnClickListener {
+            motionlayout1.transitionToEnd()
+        }
+
+        // 창 닫기
+        btnDown.setOnClickListener {
+            motionlayout1.transitionToStart()
+        }
+
+        // 리뷰 열고 닫기
+        btnReviewShow.setOnClickListener {
+            it.isSelected = !it.isSelected
+            if (it.isSelected) {
+                recyclerviewReviewList.visibility = android.view.View.VISIBLE
+            } else {
+                recyclerviewReviewList.visibility = android.view.View.GONE
             }
         }
     }
