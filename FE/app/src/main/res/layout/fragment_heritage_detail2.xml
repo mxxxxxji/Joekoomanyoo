@@ -182,24 +182,50 @@
                             android:id="@+id/btn_scrap"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="15dp"
                             android:background="@android:color/transparent"
-                            android:src="@drawable/ic_paperclip"
+                            android:src="@drawable/scrap_change"
                             app:layout_constraintBottom_toBottomOf="@id/tv_heritage_name_scroll"
                             app:layout_constraintEnd_toStartOf="@id/btn_link"
                             app:layout_constraintTop_toTopOf="@id/tv_heritage_name_scroll" />
 
+                        <TextView
+                            android:id="@+id/tv_scrap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/apple_sd_gothic_neo_l"
+                            android:text="스크랩"
+                            android:textSize="10dp"
+                            android:textColor="#88bbde"
+                            app:layout_constraintEnd_toEndOf="@+id/btn_scrap"
+                            app:layout_constraintStart_toStartOf="@+id/btn_scrap"
+                            app:layout_constraintTop_toBottomOf="@id/btn_scrap" />
+
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/btn_link"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginEnd="24dp"
                             android:background="@android:color/transparent"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_link"
+                            android:src="@drawable/ic_share"
                             app:layout_constraintBottom_toBottomOf="@id/tv_heritage_name_scroll"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/tv_heritage_name_scroll" />
+
+                        <TextView
+                            android:id="@+id/tv_link"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/apple_sd_gothic_neo_l"
+                            android:text="공유"
+                            android:textSize="10dp"
+                            android:textColor="#88bbde"
+                            app:layout_constraintEnd_toEndOf="@+id/btn_link"
+                            app:layout_constraintStart_toStartOf="@+id/btn_link"
+                            app:layout_constraintTop_toBottomOf="@id/btn_link" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
