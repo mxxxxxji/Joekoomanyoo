@@ -25,12 +25,12 @@ class ARFragment : BaseFragment<FragmentARBinding>(R.layout.fragment_a_r) {
 
         // 도감보기
         btnFound.setOnClickListener {
-            findNavController().navigate(R.id.action_ARFragment_to_ARFoundFragment)
+            findNavController().navigate(R.id.action_ARFragment_to_ARPlayFragment)
         }
 
         // 순위보기
         btnList.setOnClickListener {
-            findNavController().navigate(R.id.action_ARFragment_to_ARListFragment)
+            findNavController().navigate(R.id.action_ARFragment_to_ARPlayFragment)
         }
 
         // 유물 찾기(카메라)

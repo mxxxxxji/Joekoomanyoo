@@ -1,7 +1,6 @@
 
 package com.ssafy.heritage
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -11,16 +10,13 @@ import com.google.ar.core.Config
 import com.google.ar.core.Session
 import com.google.ar.core.exceptions.*
 import com.ssafy.heritage.data.dto.Stamp
-import com.ssafy.heritage.data.remote.request.NearStampRequest
 import com.ssafy.heritage.helpers.ARCoreSessionLifecycleHelper
 import com.ssafy.heritage.helpers.FullScreenHelper
 import com.ssafy.heritage.helpers.GeoPermissionsHelper
 import com.ssafy.heritage.samplerender.SampleRender
-import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.view.dialog.ARCheckDialog
 import com.ssafy.heritage.view.dialog.ARCheckDialogInterface
 import com.ssafy.heritage.viewmodel.ARViewModel
-import com.ssafy.heritage.viewmodel.FeedViewModel
 
 private const val TAG = "HelloGeoActivity"
 class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{

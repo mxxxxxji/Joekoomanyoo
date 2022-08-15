@@ -8,6 +8,6 @@ private const val TAG = "ARListFragment___"
 
 class ARListFragment : BaseFragment<FragmentARListBinding>(R.layout.fragment_a_r_list) {
     override fun init() {
-        TODO("Not yet implemented")
+
     }
 }
