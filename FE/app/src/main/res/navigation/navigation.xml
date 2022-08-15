@@ -262,6 +262,9 @@
         android:name="com.ssafy.heritage.view.ar.ARFragment"
         android:label="ARFragment">
         <action
+            android:id="@+id/action_ARFragment_to_ARInfoFragment"
+            app:destination="@id/ARFoundFragment" />
+        <action
             android:id="@+id/action_ARFragment_to_ARFoundFragment"
             app:destination="@id/ARFoundFragment" />
         <action
@@ -269,6 +272,23 @@
             app:destination="@id/ARListFragment" />
         <action
             android:id="@+id/action_ARFragment_to_ARPlayFragment"
+            app:destination="@id/ARPlayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ARInfoFragment"
+        android:name="com.ssafy.heritage.view.ar.ARInfoFragment"
+        android:label="ARFragment">
+        <action
+            android:id="@+id/action_ARInfoFragment_to_ARInfoFragment"
+            app:destination="@id/ARFoundFragment" />
+        <action
+            android:id="@+id/action_ARInfoFragment_to_ARFoundFragment"
+            app:destination="@id/ARFoundFragment" />
+        <action
+            android:id="@+id/action_ARInfoFragment_to_ARListFragment"
+            app:destination="@id/ARListFragment" />
+        <action
+            android:id="@+id/action_ARInfoFragment_to_ARPlayFragment"
             app:destination="@id/ARPlayFragment" />
     </fragment>
     <fragment
