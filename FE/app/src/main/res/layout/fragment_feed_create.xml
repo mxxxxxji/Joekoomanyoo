@@ -16,7 +16,7 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:background="@color/main_color"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,12 +39,10 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         android:id="@+id/header_feed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_gravity="center"
                         android:text="사진 피드"
                         android:fontFamily="@font/apple_sd_gothic_neo_b"
                         android:textColor="@color/white"
@@ -57,14 +55,13 @@
                         android:id="@+id/tv_group_insert"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="312dp"
-                        android:text="등록하기"
                         android:fontFamily="@font/apple_sd_gothic_neo_m"
+                        android:text="등록하기"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/btn_back"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/btn_back" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

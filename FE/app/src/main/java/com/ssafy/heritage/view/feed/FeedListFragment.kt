@@ -1,6 +1,7 @@
 package com.ssafy.heritage.view.feed
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -57,12 +58,20 @@ class FeedListFragment :
 //                    val newList = dataList.filter { it.userSeq == userSeq }
 //                    feedAdapter.submitList(newList)
                     feedViewModel.getMyFeedList()
+                    strokeFeedAll.visibility = View.GONE
+                    strokeFeedMy.visibility = View.VISIBLE
+                    tvFeedAll.setTextColor(Color.parseColor("#8e8e93"))
+                    tvFeedMy.setTextColor(Color.parseColor("@color/main_color"))
                     Log.d(TAG, "setChip: 나의 피드")
                 }
                 else -> {
 //                    val newList = dataList.filter { true }
 //                    feedAdapter.submitList(newList)
                     feedViewModel.getFeedListAll()
+                    strokeFeedAll.visibility = View.VISIBLE
+                    strokeFeedMy.visibility = View.GONE
+                    tvFeedAll.setTextColor(Color.parseColor("@color/main_color"))
+                    tvFeedMy.setTextColor(Color.parseColor("#8e8e93"))
                     Log.d(TAG, "setChip: 모두의 피드")
                 }
             }
