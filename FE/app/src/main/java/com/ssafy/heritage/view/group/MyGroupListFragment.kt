@@ -63,7 +63,7 @@ class MyGroupListFragment :
                         group.groupStatus
                     )
                     val action =
-                        MyGroupListFragmentDirections.actionMyGroupListFragmentToGroupInfoFragment(
+                        GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(
                             data
                         )
                     findNavController().navigate(action)
@@ -96,7 +96,7 @@ class MyGroupListFragment :
                         group.groupStatus
                     )
                     val action =
-                        MyGroupListFragmentDirections.actionMyGroupListFragmentToGroupInfoFragment(
+                        GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(
                             data
                         )
                     findNavController().navigate(action)
@@ -129,7 +129,7 @@ class MyGroupListFragment :
                         group.groupStatus
                     )
                     val action =
-                        MyGroupListFragmentDirections.actionMyGroupListFragmentToGroupInfoFragment(
+                        GroupListFragmentDirections.actionGroupListFragmentToGroupInfoFragment(
                             data
                         )
                     findNavController().navigate(action)

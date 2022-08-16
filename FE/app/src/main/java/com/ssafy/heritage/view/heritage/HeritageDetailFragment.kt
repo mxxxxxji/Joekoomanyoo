@@ -141,6 +141,17 @@ class HeritageDetailFragment :
         initClickListener()
 
         setMotion()
+
+        setFocusListener()
+    }
+
+    private fun setFocusListener() = with(binding) {
+        etReviewContent.setOnFocusChangeListener { view, b ->
+            when (b) {
+                true -> (requireActivity() as HomeActivity).fab.hide()
+                else -> (requireActivity() as HomeActivity).fab.show()
+            }
+        }
     }
 
     private fun initView() = with(binding) {

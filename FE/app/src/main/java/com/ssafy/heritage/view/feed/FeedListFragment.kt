@@ -15,45 +15,21 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ssafy.heritage.ApplicationClass
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import com.ssafy.heritage.R
-import com.ssafy.heritage.adpter.FeedListAdapter
 import com.ssafy.heritage.base.BaseFragment
-import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.databinding.FragmentFeedListBinding
-import com.ssafy.heritage.listener.FeedListClickListener
-import com.ssafy.heritage.viewmodel.FeedViewModel
-import com.ssafy.heritage.viewmodel.UserViewModel
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
 private const val TAG = "FeedListFragment___"
 
 class FeedListFragment :
     BaseFragment<FragmentFeedListBinding>(R.layout.fragment_feed_list) {
 
-    private val feedAdapter by lazy { FeedListAdapter() }
-    private val feedViewModel by activityViewModels<FeedViewModel>()
-    private val userViewModel by activityViewModels<UserViewModel>()
-    val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
-    private var clickMyList: Int = 0
-    private var selectedChip: Int = 0
-    private var dataList: List<FeedListResponse> = arrayListOf()
-
-    private val alphaInAnimationAdapter: ScaleInAnimationAdapter by lazy {
-        ScaleInAnimationAdapter(feedAdapter).apply {
-            setDuration(300)
-            setInterpolator(OvershootInterpolator())
-            setFirstOnly(false)
-        }
-    }
-
     override fun init() {
 
-        feedViewModel.getFeedListAll()
         initAdapter()
-        initObserver()
-        initClickListener()
-        setChip()
-        setSearchView()
+
     }
 
     private fun setChip() = with(binding) {
@@ -82,87 +58,18 @@ class FeedListFragment :
                 }
             }
         }
-
-        chipGroup.check(R.id.chip_all)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private fun initAdapter() = with(binding) {
 
-        // transition 효과 일단 멈춤
-        postponeEnterTransition()
+        val adapter = FragmentPagerItemAdapter(
+            childFragmentManager, FragmentPagerItems.with(requireContext())
+                .add("모두의 피드", FeedListAllFragment()::class.java)
+                .add("나의 피드", FeedMyListFragment()::class.java)
+                .create()
+        )
 
-        initObserver()
-
-        _binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
-        return binding.root
-    }
-
-    private fun initAdapter() {
-        binding.recyclerviewFeedList.adapter = alphaInAnimationAdapter
-        binding.recyclerviewFeedList.layoutManager = GridLayoutManager(requireContext(), 3)
-        feedAdapter.feedListClickListener = object : FeedListClickListener {
-            override fun onClick(position: Int, feed: FeedListResponse, view: View) {
-                parentFragmentManager
-                    .beginTransaction()
-                    .addSharedElement(view, "feed")
-                    .addToBackStack(null)
-                    .replace(
-                        R.id.fragment_container_main,
-                        FeedDetailFragment.newInstance(feed)
-                    )
-                    .commit()
-            }
-        }
-    }
-
-    private fun initObserver() {
-        feedViewModel.feedListAll.observe(viewLifecycleOwner) {
-            Log.d(TAG, "initObserver feedListAll: $it")
-            feedAdapter.submitList(it)
-
-            // 뷰 다 불러오고나서 transition 효과 시작
-            (view?.parent as ViewGroup)?.doOnPreDraw {
-                startPostponedEnterTransition()
-            }
-        }
-    }
-
-    private fun initClickListener() = with(binding) {
-        binding.apply {
-            fabCreateFeed.setOnClickListener {
-                findNavController().navigate(R.id.action_feedListFragment_to_feedCreateFragment)
-            }
-            // 뒤로가기
-            btnBack.setOnClickListener {
-                findNavController().popBackStack()
-            }
-        }
-    }
-
-    private fun setSearchView() {
-
-        // 검색 했을 때
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if (!query.isNullOrBlank()) {
-                    Log.d(TAG, "onQueryTextSubmit: 쿼리 $query")
-                    feedViewModel.getFeedListByHashTag(query)
-                    feedAdapter.submitList(dataList)
-                }
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText.isNullOrBlank()) {
-//                    searchedList = arrayListOf()
-                    feedAdapter.submitList(dataList)
-                }
-                return false
-            }
-        })
+        viewpager.adapter = adapter
+        viewpagertab.setViewPager(viewpager)
     }
 }

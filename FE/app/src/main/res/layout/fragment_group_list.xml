@@ -9,106 +9,100 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@drawable/background_group_list"
         android:layout_height="match_parent"
+        android:background="@color/main_color"
         tools:context=".view.group.GroupListFragment">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_transparent"
-            android:elevation="10dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/heritage_list_menu">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_top"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="20dp">
+                android:layout_height="wrap_content"
+                android:paddingVertical="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-                <ImageButton
-                    android:id="@+id/btn_back"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_baseline_arrow_back_24"
-                    android:backgroundTint="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/header_create_group"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/header_heritage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/apple_sd_gothic_neo_b"
+                    android:layout_marginStart="16dp"
                     android:text="모임 둘러보기"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/btn_my_group"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:background="@drawable/ic_mypage"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_sort"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageButton
-                    android:id="@+id/btn_sort"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="16dp"
-                    android:background="@drawable/ic_sort"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_group_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:listitem="@layout/item_group" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_create_group"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="18dp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:elevation="4dp"
-            android:outlineAmbientShadowColor="@color/main_color"
-            android:outlineSpotShadowColor="@color/main_color"
-            android:padding="10dp"
-            android:shadowColor="@color/main_color"
-            android:tintMode="@color/white"
-            android:translationZ="2dp"
-            app:backgroundTint="@color/main_color"
-            app:borderWidth="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_tab"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/background_home_content"
+            android:elevation="20dp"
+            android:translationZ="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:rippleColor="@color/main_color"
-            app:srcCompat="@drawable/ic_add_feed" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gl_toolbar">
 
+            <com.ogaclejapan.smarttablayout.SmartTabLayout
+                android:id="@+id/viewpagertab"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/background_transparent"
+                android:clipToPadding="false"
+                android:fontFamily="@font/apple_sd_gothic_neo_l"
+                android:paddingHorizontal="20dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:stl_customTabTextLayoutId="@layout/tab_text"
+                app:stl_customTabTextViewId="@id/tab_text"
+                app:stl_defaultTabTextHorizontalPadding="18dp"
+                app:stl_distributeEvenly="true"
+                app:stl_dividerColor="@color/float_transparent"
+                app:stl_dividerThickness="0dp"
+                app:stl_indicatorColor="@color/main_color"
+                app:stl_indicatorCornerRadius="18dp"
+                app:stl_indicatorGravity="bottom"
+                app:stl_indicatorInterpolation="smart"
+                app:stl_indicatorThickness="2dp"
+                app:stl_indicatorWidth="48dp"
+                app:stl_underlineColor="@color/main_color"
+                app:stl_underlineThickness="0dp" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewpagertab" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
