@@ -8,6 +8,20 @@
 
     <ConstraintSet android:id="@+id/end">
 
+        <Constraint
+            android:id="@+id/scrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            motion:layout_constraintBottom_toBottomOf="@id/gl_hori_20"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/gl_hori_20"
+            motion:layout_constraintGuide_percent="0" />
+
     </ConstraintSet>
 
     <Transition
@@ -17,7 +31,7 @@
         motion:duration="1000">
         <OnSwipe
             motion:dragDirection="dragUp"
-            motion:touchAnchorId="@id/scrollView"
+            motion:touchAnchorId="@+id/gl_hori_20"
             motion:touchAnchorSide="bottom" />
     </Transition>
 </MotionScene>

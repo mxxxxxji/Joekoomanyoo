@@ -3,6 +3,7 @@ package com.ssafy.heritage.view
 import android.os.Bundle
 import android.view.View
 import android.view.animation.OvershootInterpolator
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -62,30 +63,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     val imageList = ArrayList<SlideUIModel>().apply {
-        add(
-            SlideUIModel(
-                "data:image/png;base64,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",
-                "Blackpink - Jennie"
-            )
-        )
-        add(
-            SlideUIModel(
-                "data:image/png;base64,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",
-                "Blackpink - Lisa"
-            )
-        )
-        add(
-            SlideUIModel(
-                "data:image/png;base64,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",
-                "Blackpink - Rose"
-            )
-        )
-        add(
-            SlideUIModel(
-                "data:image/png;base64,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",
-                "Blackpink - Jisoo"
-            )
-        )
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1155.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1155.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1155.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1155.png"))
     }
 
 
@@ -244,6 +225,34 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         // 추천 사진 더보기 클릭시
         tvGoFeed.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_feedListFragment)
+        }
+
+        // 모션레이아웃 설정
+        motionlayout.addTransitionListener(object : MotionLayout.TransitionListener {
+            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {}
+
+            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {}
+
+            override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                if (p0?.progress == 1.0F) {
+                    btnArrow.tag = "down"
+                    btnArrow.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
+                } else if (p0?.progress == 0.0F) {
+                    btnArrow.tag = "up"
+                    btnArrow.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24)
+                }
+            }
+
+            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {}
+
+        })
+
+        // 코멘트 열고 닫기 버튼
+        btnArrow.setOnClickListener {
+            when (it.tag) {
+                "down" -> motionlayout.transitionToStart()
+                "up" -> motionlayout.transitionToEnd()
+            }
         }
     }
 

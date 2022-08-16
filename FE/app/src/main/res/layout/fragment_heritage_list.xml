@@ -51,17 +51,25 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.1" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.motion.widget.MotionLayout
             android:id="@+id/constraint_tab"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/background_home_content"
             android:elevation="20dp"
             android:translationZ="10dp"
+            app:layoutDescription="@xml/fragment_heritage_list_scene"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gl_toolbar">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_hori_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.16" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/scrollview"
@@ -72,18 +80,18 @@
                 android:scrollbarSize="1dp"
                 android:scrollbarStyle="insideOverlay"
                 android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="@id/gl_hori_20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chip_group"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:chipSpacingHorizontal="0dp"
                     app:chipSpacingVertical="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:selectionRequired="true"
@@ -202,35 +210,44 @@
                 </com.google.android.material.chip.ChipGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_search_view"
-                android:elevation="4dp"
-                android:translationZ="2dp"
-                app:iconifiedByDefault="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scrollview"
-                app:queryBackground="@null"
-                app:queryHint="검색어를 입력해주세요" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_content"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_view"
-                app:layout_constraintVertical_bias="0.0"
-                tools:listitem="@layout/item_heritage" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@id/gl_hori_20">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/background_search_view"
+                    android:elevation="4dp"
+                    android:translationZ="2dp"
+                    app:iconifiedByDefault="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:queryBackground="@null"
+                    app:queryHint="검색어를 입력해주세요" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="20dp"
+                    android:splitMotionEvents="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/search_view"
+                    tools:listitem="@layout/item_heritage" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
