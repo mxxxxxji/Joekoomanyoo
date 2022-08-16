@@ -83,7 +83,7 @@ interface GroupService {
 
     // 모임 일정을 삭제한다
     @DELETE("/api/group/{groupSeq}/schedule/delete")
-    suspend fun deleteGroupSchedule(@Path("groupSeq") groupSeq: Int, @Query("gsDateTime") gsDateTime: String): Response<String>
+    suspend fun deleteGroupSchedule(@Path("groupSeq") groupSeq: Int, @Query("gsSeq") gsSeq: Int): Response<String>
 
     // 모임 일정을 조회한다
     @GET("/api/group/{groupSeq}/schedule/list")

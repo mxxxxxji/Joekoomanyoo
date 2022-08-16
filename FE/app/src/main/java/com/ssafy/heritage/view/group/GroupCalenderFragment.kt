@@ -131,6 +131,8 @@ class GroupCalenderFragment :
                     gsDateTime = getCurrentDate()
                 )
 
+                Log.d(TAG, "initClickListener: ${groupViewModel.detailInfo.value?.groupSeq!!}")
+
                 groupViewModel.insertGroupSchedule(
                     groupViewModel.detailInfo.value?.groupSeq!!,
                     schedule
@@ -189,8 +191,9 @@ class GroupCalenderFragment :
 
             scheduleAdapter.groupScheduleListClickListener = object :
                 GroupScheduleListClickListener {
-                override fun onClick(position: Int, groupSeq: Int, gsDateTime: String) {
-                    groupViewModel.deleteGroupSchedule(groupSeq, gsDateTime)
+                override fun onClick(position: Int, gsSeq: Int) {
+                    Log.d(TAG, "onClick: ${gsSeq}")
+                    groupViewModel.deleteGroupSchedule(gsSeq)
                 }
             }
         }

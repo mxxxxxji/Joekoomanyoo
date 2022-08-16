@@ -329,9 +329,9 @@ class GroupViewModel : ViewModel() {
     }
 
     // 그룹 일정 삭제
-    fun deleteGroupSchedule(groupSeq: Int, date: String) {
+    fun deleteGroupSchedule(gsSeq: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteGroupSchedule(groupSeq, date).let { response ->
+            repository.deleteGroupSchedule(_detailInfo.value?.groupSeq!!, gsSeq).let { response ->
                 Log.d(TAG, "deleteGroupSchedule response: $response")
                 if (response.isSuccessful) {
                     Log.d(TAG, "deleteGroupSchedule body: ${response.body()}")
@@ -473,22 +473,22 @@ class GroupViewModel : ViewModel() {
 
     // 상호평가 결과 전송
     fun insertGroupEvaluation(evalList: List<EvaluationRequest>) = viewModelScope.launch {
-            var response: Response<String>? = null
-            job = launch(Dispatchers.Main) {
-                response = repository.insertGroupEvaluation(evalList)
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main) {
+            response = repository.insertGroupEvaluation(evalList)
 
-            }
-            job?.join()
+        }
+        job?.join()
 
-            response?.let {
+        response?.let {
 
-                Log.d(TAG, "insertGroupEvaluation response: $it")
-                if (it.isSuccessful) {
-                    Log.d(TAG, "insertGroupEvaluation Success: ${it.body()}")
-                } else {
-                    Log.d(TAG, "insertGroupEvaluation error: ${it.errorBody()}")
+            Log.d(TAG, "insertGroupEvaluation response: $it")
+            if (it.isSuccessful) {
+                Log.d(TAG, "insertGroupEvaluation Success: ${it.body()}")
+            } else {
+                Log.d(TAG, "insertGroupEvaluation error: ${it.errorBody()}")
 
-                }
             }
         }
+    }
 }
