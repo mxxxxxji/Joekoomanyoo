@@ -63,7 +63,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gl_toolbar">
 
-            <HorizontalScrollView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/scrollview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -80,9 +80,12 @@
                     android:id="@+id/chip_group"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    app:chipSpacingHorizontal="0dp"
+                    app:chipSpacingVertical="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/header_heritage"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:selectionRequired="true"
                     app:singleSelection="true">
 
@@ -94,7 +97,7 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="전체"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_1"
@@ -104,7 +107,7 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="탑"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_2"
@@ -114,7 +117,7 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="비"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_3"
@@ -124,7 +127,7 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="불교"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_4"
@@ -134,7 +137,7 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="공예품"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_5"
@@ -144,7 +147,7 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="궁궐"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_6"
@@ -154,7 +157,7 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="기록유산"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_7"
@@ -164,7 +167,7 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="왕릉"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_8"
@@ -174,7 +177,7 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="건축"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_9"
@@ -184,7 +187,7 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="종"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_10"
@@ -194,10 +197,10 @@
                         android:backgroundTint="@color/chip_background_tint_color"
                         android:text="기타"
                         android:textColor="@color/chip_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </com.google.android.material.chip.ChipGroup>
-            </HorizontalScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_view"
@@ -228,5 +231,6 @@
                 app:layout_constraintVertical_bias="0.0"
                 tools:listitem="@layout/item_heritage" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

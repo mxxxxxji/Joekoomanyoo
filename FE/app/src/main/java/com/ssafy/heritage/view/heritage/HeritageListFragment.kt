@@ -154,6 +154,19 @@ class HeritageListFragment :
                         page++
                         heritageAdapter.submitList(addList)
                     }
+
+                    // Scrolling up
+                    if (dy > 0) {
+                        if (binding.constraintTab.getTransition(R.id.transition).isEnabled) {
+                            binding.constraintTab.transitionToStart()
+                        }
+                    }
+                    // Scrolling down
+                    else if (dy < 0) {
+                        if (binding.constraintTab.getTransition(R.id.transition).isEnabled) {
+                            binding.constraintTab.transitionToEnd()
+                        }
+                    }
                 }
             })
         }
