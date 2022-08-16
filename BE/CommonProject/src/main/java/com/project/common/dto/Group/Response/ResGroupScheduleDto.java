@@ -16,6 +16,7 @@ import lombok.ToString;
 @ToString
 public class ResGroupScheduleDto {
 
+	private int groupSeq;
 	private int gsSeq;
     private String gsContent;
 
@@ -30,6 +31,7 @@ public class ResGroupScheduleDto {
 	
 	
 	public ResGroupScheduleDto(GroupScheduleEntity schedule) {
+		this.groupSeq=schedule.getGroup().getGroupSeq();
 		this.gsSeq = schedule.getGsSeq();
 		this.gsContent = schedule.getGsContent();
 		this.gsDateTime = schedule.getGsDateTime();
