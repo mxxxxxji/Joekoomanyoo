@@ -173,7 +173,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
                     // 일반로그인 아이디이거나 실패한 경우
                     else if (result == "fail") {
-                        // 홈 화면 진입
+
                     }
 
                     // 소셜로그인 아이디인 경우
