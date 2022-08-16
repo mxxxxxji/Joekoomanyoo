@@ -121,12 +121,12 @@ public class UserSocialController {
         
         // 아이디가 없는 경우 나 이미 탈퇴한 경우
         if(userEntity == null || userEntity.getIsDeleted()=='Y'){
-            return new ResponseEntity<String>(FAIL+" id", HttpStatus.OK);
+            return new ResponseEntity<String>(FAIL+" id", HttpStatus.BAD_REQUEST);
         }
 
         // 소셜 사용자가 아닌 경우
         if(!userEntity.getSocialLoginType().equals("social")){
-            return new ResponseEntity<String>(FAIL+" noneUser", HttpStatus.OK);
+            return new ResponseEntity<String>(FAIL+" noneUser", HttpStatus.BAD_REQUEST);
         }
 
 
@@ -135,7 +135,7 @@ public class UserSocialController {
         if(token != null){
             return new ResponseEntity<String>(token, HttpStatus.OK);
         }else{
-            return new ResponseEntity<String>(FAIL+" token", HttpStatus.OK);
+            return new ResponseEntity<String>(FAIL+" token", HttpStatus.BAD_REQUEST);
         }
     }
 }
