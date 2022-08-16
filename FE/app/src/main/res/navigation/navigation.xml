@@ -254,6 +254,9 @@
         <action
             android:id="@+id/action_myGroupListFragment_to_groupInfoFragment"
             app:destination="@id/groupInfoFragment" />
+        <action
+            android:id="@+id/action_myGroupListFragment_to_evaluationListFragment"
+            app:destination="@id/evaluationListFragment" />
     </fragment>
 
     <!-- ar -->
@@ -304,5 +307,14 @@
             android:id="@+id/action_groupCreateFragment_to_groupInfoFragment"
             app:destination="@id/groupInfoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/evaluationListFragment"
+        android:name="com.ssafy.heritage.view.group.EvaluationListFragment"
+        android:label="EvaluationListFragment">
+        <argument
+            android:name="evalInfo"
+            app:argType="com.ssafy.heritage.data.remote.response.MyGroupResponse" />
+    </fragment>
+
 
 </navigation>

@@ -77,6 +77,14 @@ class Repository constructor(context: Context) {
     suspend fun selectAllChat(groupSeq: Int): Response<List<Chat>> =
         groupApi.selectAllChat(groupSeq)
 
+    // group - 상호평가
+    suspend fun selectGroupEvaluation(groupSeq: Int, userSeq: Int): Response<List<EvaluationProfileResponse>> =
+        groupApi.selectGroupEvaluation(groupSeq, userSeq)
+
+    suspend fun insertGroupEvaluation(body :List<EvaluationRequest>): Response<String> =
+        groupApi.insertGroupEvaluation(body)
+
+
 
     // user
     suspend fun checkEmail(userId: String): Response<String> = userApi.checkEmail(userId)

@@ -10,7 +10,7 @@ data class EvaluationRequest(
     @SerializedName("userReceivedSeq") val userReceivedSeq : Int,       // 평가 받는 유저 번호
     @SerializedName("groupSeq") val groupSeq: Int,                      // 그룹 번호
     @SerializedName("evalCnt") val evalCnt: Int = 0,                    // 상호평가 횟수
-    @SerializedName("evalList1") val evalList1: Int,                    // 1번 상호평과 결과
+    @SerializedName("evalList1") var evalList1: Int,                    // 1번 상호평과 결과
     @SerializedName("evalList2") val evalList2: Int,                    // 2번 상호평과 결과
     @SerializedName("evalList3") val evalList3: Int,                    // 3번 상호평과 결과
     @SerializedName("evalList4") val evalList4: Int,                    // 4번 상호평과 결과

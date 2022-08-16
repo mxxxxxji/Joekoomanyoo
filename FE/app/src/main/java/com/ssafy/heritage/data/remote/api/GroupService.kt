@@ -3,10 +3,7 @@ package com.ssafy.heritage.data.remote.api
 import com.ssafy.heritage.data.dto.Chat
 import com.ssafy.heritage.data.dto.GroupDestinationMap
 import com.ssafy.heritage.data.dto.Member
-import com.ssafy.heritage.data.remote.request.GroupAddRequest
-import com.ssafy.heritage.data.remote.request.GroupBasic
-import com.ssafy.heritage.data.remote.request.GroupJoin
-import com.ssafy.heritage.data.remote.request.GroupSchedule
+import com.ssafy.heritage.data.remote.request.*
 import com.ssafy.heritage.data.remote.response.EvaluationProfileResponse
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
@@ -75,8 +72,10 @@ interface GroupService {
     @GET("/api/mypage/eval/{userSeq}/{groupSeq}")
     suspend fun selectGroupEvaluation(@Path("groupSeq") groupSeq: Int, @Path("userSeq") userSeq: Int): Response<List<EvaluationProfileResponse>>
 
+    // 상호평가 결과 전송
     @POST("/api/mypage/eval")
-    suspend fun insertGroupEvaluation()
+    suspend fun insertGroupEvaluation(@Body body :List<EvaluationRequest>): Response<String>
+
 
     // 모임 일정을 등록한다
     @POST("/api/group/{groupSeq}/schedule/add")

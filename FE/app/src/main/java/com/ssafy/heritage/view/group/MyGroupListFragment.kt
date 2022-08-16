@@ -19,8 +19,7 @@ import com.ssafy.heritage.viewmodel.GroupViewModel
 private const val TAG = "MyGroupListFragment___"
 
 class MyGroupListFragment :
-    BaseFragment<FragmentMyGroupListBinding>(R.layout.fragment_my_group_list),
-    EvaluationClickListener {
+    BaseFragment<FragmentMyGroupListBinding>(R.layout.fragment_my_group_list){
 
     private val groupViewModel by activityViewModels<GroupViewModel>()
 
@@ -42,6 +41,13 @@ class MyGroupListFragment :
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+            lastGroupListAdapter.evaluationClickListener = object : EvaluationClickListener{
+                override fun onClickEvaluationBtn(position: Int, myGroupResponse: MyGroupResponse) {
+                    Log.d(TAG, "onClickEvaluationBtn:${myGroupResponse.groupSeq} ")
+                    val action = MyGroupListFragmentDirections.actionMyGroupListFragmentToEvaluationListFragment(myGroupResponse)
+                    findNavController().navigate(action)
+                }
+            }
             lastGroupListAdapter.groupMyListClickListener = object : GroupMyListClickListener {
                 override fun onClick(position: Int, group: MyGroupResponse) {
                     val data = GroupListResponse(
@@ -160,7 +166,4 @@ class MyGroupListFragment :
         Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onClickEvaluationBtn(position: Int, myGroupResponse: MyGroupResponse) {
-        TODO("Not yet implemented")
-    }
 }

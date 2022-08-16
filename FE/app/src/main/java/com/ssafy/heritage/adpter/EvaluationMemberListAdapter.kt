@@ -1,19 +1,22 @@
 package com.ssafy.heritage.adpter
 
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.heritage.data.dto.Member
+import com.ssafy.heritage.data.remote.response.EvaluationProfileResponse
 import com.ssafy.heritage.databinding.ItemEvaluationListBinding
 
 class EvaluationMemberListAdapter(private val listener: OnItemClickListener):
     RecyclerView.Adapter<EvaluationMemberListAdapter.EvaluationMemberListViewHolder>(){
 
-    val memberList = mutableListOf<Member>()
+    var memberList = mutableListOf<EvaluationProfileResponse>()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): EvaluationMemberListAdapter.EvaluationMemberListViewHolder {
-        TODO("Not yet implemented")
+        val binding = ItemEvaluationListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return EvaluationMemberListViewHolder(binding)
     }
 
     override fun onBindViewHolder(
@@ -24,16 +27,28 @@ class EvaluationMemberListAdapter(private val listener: OnItemClickListener):
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return memberList.size
+    }
+    fun submitList(list: MutableList<EvaluationProfileResponse>) {
+        memberList = list
+        notifyDataSetChanged()
+    }
+
+    fun getItem(position: Int): EvaluationProfileResponse {
+        return memberList[position]
     }
 
     inner class EvaluationMemberListViewHolder(private val binding: ItemEvaluationListBinding):
         RecyclerView.ViewHolder(binding.root){
         init {
-
+            binding.root.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+                binding.ivCheck.visibility = View.VISIBLE
+            }
         }
         fun bind(position: Int){
-
+            val item = memberList[position]
+            binding.profile = item
         }
     }
 }
