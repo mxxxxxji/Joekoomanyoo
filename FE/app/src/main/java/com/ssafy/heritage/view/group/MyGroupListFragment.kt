@@ -47,8 +47,6 @@ class MyGroupListFragment :
 
                     val action = GroupListFragmentDirections.actionGroupListFragmentToEvaluationListFragment(myGroupResponse)
                     findNavController().navigate(action)
-//                    val action = MyGroupListFragmentDirections.actionMyGroupListFragmentToEvaluationListFragment(myGroupResponse)
-//                    findNavController().navigate(action)
                 }
             }
             lastGroupListAdapter.groupMyListClickListener = object : GroupMyListClickListener {
