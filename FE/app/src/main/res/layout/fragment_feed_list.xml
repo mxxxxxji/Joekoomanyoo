@@ -41,7 +41,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.MaterialToolbar>
-        
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_toolbar"
             android:layout_width="wrap_content"
