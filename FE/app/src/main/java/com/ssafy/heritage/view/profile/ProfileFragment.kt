@@ -69,7 +69,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             addItemDecoration(
                 com.ssafy.heritage.util.DividerItemDecoration(
                     5F,
-                    resources.getColor(R.color.link_water)
+                    resources.getColor(R.color.athens_gray)
                 )
             )
 
