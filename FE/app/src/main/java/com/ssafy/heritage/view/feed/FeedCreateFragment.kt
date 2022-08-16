@@ -10,8 +10,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.activity.result.ActivityResultLauncher
@@ -63,6 +68,7 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
         binding.layoutImgStorke.isSelected = true
         initObserver()
         initClickListener()
+//        setToolbar()
     }
 
     private fun initObserver() = with(binding) {
@@ -107,7 +113,6 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
 //            }
 //        }
 
-        // 해시태그랑 같이 post할 수 있게 바뀌어야 함
         // 피드 등록하기 클릭 시
         tvGroupInsert.setOnClickListener {
 
@@ -199,6 +204,28 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
             makeToast("권한이 거부됨")
         }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.toolbar.inflateMenu(R.menu.feed_create_menu)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.feed_create_menu, menu)
+    }
+
+//    private fun setToolbar() = with(binding) {
+//        toolbar.setOnMenuItemClickListener {
+//            when (it.itemId) {
+//                R.id.action_write_feed -> {
+//                } else -> {
+//                    tvGroupInsert.setOnClickListener()
+//                    false
+//                }
+//            }
+//        }
+//    }
+
 
     private fun getHashTags(text: String): Sequence<MatchResult> {
         val pattern = """#([^#\s]+)""" // 태그 추출 정규식
