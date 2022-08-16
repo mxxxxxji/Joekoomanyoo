@@ -31,7 +31,7 @@
             app:rangeSelectionStartColor="@color/blue"
             app:secondaryTextColor="#666666"
             app:selectedTextColor="@color/black"
-            app:selectionColor="@color/blue"
+            app:selectionColor="@color/athens_gray"
             app:weekHeaderColor="#c6c6c6"
             app:weekHeaderTextSize="16sp" />
 

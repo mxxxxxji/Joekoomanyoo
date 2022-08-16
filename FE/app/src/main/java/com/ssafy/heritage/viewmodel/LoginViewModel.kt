@@ -90,7 +90,7 @@ class LoginViewModel : ViewModel() {
 
             } else {
                 Log.d(TAG, "socialCheckId response: ${it.errorBody()}")
-                makeToast("소셜로그인 오류")
+                makeToast("탈퇴한 아이디로는 재가입이 불가능합니다")
                 "fail"
             }
         }

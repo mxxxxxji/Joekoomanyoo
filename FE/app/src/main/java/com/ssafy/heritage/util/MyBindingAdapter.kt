@@ -1,13 +1,11 @@
 package com.ssafy.heritage.util
 
-import android.content.res.Resources
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.ssafy.heritage.R
 import com.ssafy.heritage.util.DateFormatter.formatChatDate
-import kotlin.coroutines.coroutineContext
 
 @BindingAdapter("glide")
 fun setImage(v: ImageView, url: String) {
@@ -25,4 +23,9 @@ fun setImage(v: ImageView, url: String) {
 @BindingAdapter("setTime")
 fun setTime(v: TextView, s: String) {
     v.text = s.formatChatDate()
+}
+
+@BindingAdapter("setDrawable")
+fun setDrawable(v: ImageView, s: Int) {
+    v.setImageResource(s)
 }

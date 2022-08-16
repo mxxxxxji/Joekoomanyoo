@@ -66,7 +66,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
             addItemDecoration(
                 com.ssafy.heritage.util.DividerItemDecoration(
                     5F,
-                    resources.getColor(R.color.link_water)
+                    resources.getColor(R.color.athens_gray)
                 )
             )
 

@@ -47,7 +47,15 @@ class HeritageListFragment :
 
     private lateinit var popupWindow: PopupWindow
 
+    var chipId = 0
+    var chipCheck = R.id.chip_0
+
     override fun init() {
+
+        arguments?.let {
+            chipId = (arguments?.get("id") as Int)
+            chipCheck = CategoryConverter.chipMap["$chipId"] ?: R.id.chip_0
+        }
 
         initAdapter()
 
@@ -74,7 +82,9 @@ class HeritageListFragment :
 //            }
         }
 
-        chipGroup.check(R.id.chip_all)
+//        chipGroup.check(R.id.chip_0)
+        chipGroup.check(chipCheck)
+        Log.d(TAG, "init: ${chipGroup.checkedChipId}")
     }
 
     override fun onCreateView(
