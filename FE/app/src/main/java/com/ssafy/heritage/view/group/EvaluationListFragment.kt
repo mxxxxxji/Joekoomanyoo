@@ -30,8 +30,8 @@ class EvaluationListFragment :
     private var receivedSeq by Delegates.notNull<Int>()
     override fun init() {
         Log.d(TAG, "init: ${args}")
-        binding.mainFrame.addPanelSlideListener(PanelEventListener())  // 이벤트 리스너 추가
         groupViewModel.selectGroupEvaluation(args.evalInfo.groupSeq, userSeq)
+        binding.mainFrame.addPanelSlideListener(PanelEventListener())  // 이벤트 리스너 추가
         initAdapter()
         initObserver()
         initClickListener()
@@ -51,6 +51,7 @@ class EvaluationListFragment :
 
     private fun initClickListener() {
         binding.btnRequest.setOnClickListener {
+            Log.d(TAG, "initClickListener: ${evaluationRequest}")
             groupViewModel.insertGroupEvaluation(evaluationRequest)
         }
     }
@@ -101,24 +102,24 @@ class EvaluationListFragment :
             if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
                 binding.tvText.text = "열기"
             } else if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
-                val erCheck = EvaluationRequest(
-                    userSeq,
-                    receivedSeq,
-                    args.evalInfo.groupSeq,
-                    0,
-                    if (binding.btnEval1.isChecked == true) 1 else 0,
-                    if (binding.btnEval2.isChecked == true) 1 else 0,
-                    if (binding.btnEval3.isChecked == true) 1 else 0,
-                    if (binding.btnEval4.isChecked == true) 1 else 0,
-                    if (binding.btnEval5.isChecked == true) 1 else 0
-                )
-                evaluationRequest.add(erCheck)
 
 //                binding.btnCompletion.setOnClickListener {
 //                    groupViewModel.insertGroupEvaluation(erCheck)
 //                }
                 binding.tvText.text = "닫기"
                 binding.btnCompletion.setOnClickListener {
+                    val erCheck = EvaluationRequest(
+                        userSeq,
+                        receivedSeq,
+                        args.evalInfo.groupSeq,
+                        0,
+                        if (binding.btnEval1.isChecked) 1 else 0,
+                        if (binding.btnEval2.isChecked) 1 else 0,
+                        if (binding.btnEval3.isChecked) 1 else 0,
+                        if (binding.btnEval4.isChecked) 1 else 0,
+                        if (binding.btnEval5.isChecked) 1 else 0
+                    )
+                    Log.d(TAG, "onPanelStateChanged: ${erCheck}")
                     evaluationRequest.add(erCheck)
                     binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
                 }
@@ -140,9 +141,9 @@ class EvaluationListFragment :
 
                     binding.btnEval1.isChecked = false
                     binding.btnEval2.isChecked = false
-                    binding.btnEval3.isChecked =false
+                    binding.btnEval3.isChecked = false
                     binding.btnEval4.isChecked = false
-                    binding.btnEval5.isChecked == false
+                    binding.btnEval5.isChecked = false
                 }
 
             }

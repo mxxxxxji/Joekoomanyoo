@@ -44,8 +44,11 @@ class MyGroupListFragment :
             lastGroupListAdapter.evaluationClickListener = object : EvaluationClickListener{
                 override fun onClickEvaluationBtn(position: Int, myGroupResponse: MyGroupResponse) {
                     Log.d(TAG, "onClickEvaluationBtn:${myGroupResponse.groupSeq} ")
-                    val action = MyGroupListFragmentDirections.actionMyGroupListFragmentToEvaluationListFragment(myGroupResponse)
+
+                    val action = GroupListFragmentDirections.actionGroupListFragmentToEvaluationListFragment(myGroupResponse)
                     findNavController().navigate(action)
+//                    val action = MyGroupListFragmentDirections.actionMyGroupListFragmentToEvaluationListFragment(myGroupResponse)
+//                    findNavController().navigate(action)
                 }
             }
             lastGroupListAdapter.groupMyListClickListener = object : GroupMyListClickListener {
