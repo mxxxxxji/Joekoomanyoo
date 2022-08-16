@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
@@ -42,10 +43,10 @@ class GroupInfoFragment :
     private val args by navArgs<GroupInfoFragmentArgs>()
     private val groupViewModel by activityViewModels<GroupViewModel>()
 
-    private lateinit var detailFragment: GroupDetailFragment
-    private lateinit var chatFragment: GroupChatFragment
-    private lateinit var calenderFragment: GroupCalenderFragment
-    private lateinit var mapFragment: GroupMapFragment
+    //    private lateinit var detailFragment: GroupDetailFragment
+//    private lateinit var chatFragment: GroupChatFragment
+//    private lateinit var calenderFragment: GroupCalenderFragment
+//    private lateinit var mapFragment: GroupMapFragment
     private lateinit var groupInfo: GroupListResponse
 
     var img_multipart: MultipartBody.Part? = null
@@ -116,10 +117,10 @@ class GroupInfoFragment :
         binding.apply {
 //
             // 각 탭에 들어갈 프래그먼트 객체화
-            detailFragment = GroupDetailFragment()
-            chatFragment = GroupChatFragment()
-            calenderFragment = GroupCalenderFragment()
-            mapFragment = GroupMapFragment()
+//            detailFragment = GroupDetailFragment()
+//            chatFragment = GroupChatFragment()
+//            calenderFragment = GroupCalenderFragment()
+//            mapFragment = GroupMapFragment()
 
 
             val adapter = FragmentPagerItemAdapter(
@@ -140,13 +141,27 @@ class GroupInfoFragment :
                 }
             }
 
-            viewpagertab.setOnTabClickListener {
-                if (it > 0) {
-                    binding.motionlayout.transitionToEnd()
-                } else {
-                    binding.motionlayout.transitionToStart()
+            viewpagertab.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
                 }
-            }
+
+                override fun onPageSelected(position: Int) {
+                    if (position > 0) {
+                        binding.motionlayout.transitionToEnd()
+                    } else {
+                        binding.motionlayout.transitionToStart()
+                    }
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                }
+
+            })
+
         }
     }
 
@@ -161,12 +176,12 @@ class GroupInfoFragment :
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
-        when (tab!!.position) {
-            0 -> replaceView(detailFragment)
-            1 -> replaceView(chatFragment)
-            2 -> replaceView(calenderFragment)
-            3 -> replaceView(mapFragment)
-        }
+//        when (tab!!.position) {
+//            0 -> replaceView(detailFragment)
+//            1 -> replaceView(chatFragment)
+//            2 -> replaceView(calenderFragment)
+//            3 -> replaceView(mapFragment)
+//        }
     }
 
     override fun onTabUnselected(tab: TabLayout.Tab?) {}
