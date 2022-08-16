@@ -69,7 +69,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             addItemDecoration(
                 com.ssafy.heritage.util.DividerItemDecoration(
                     5F,
-                    resources.getColor(R.color.link_water)
+                    resources.getColor(R.color.athens_gray)
                 )
             )
 
@@ -182,6 +182,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             if (userViewModel.withdrawal() == true) {
                 makeToast("회원 탈퇴가 완료되었습니다")
                 ApplicationClass.sharedPreferencesUtil.deleteToken()
+                Intent(requireContext(), LoginActivity::class.java).apply {
+                    startActivity(this)
+                }
+                requireActivity().finish()
             } else {
                 makeToast("탈퇴에 실패하였습니다")
             }

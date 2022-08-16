@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:textColor="@color/cornflower"
+            android:textColor="@color/main_color_light"
             android:text="삭제"
             app:layout_constraintBottom_toBottomOf="@id/tv_schedule"
             app:layout_constraintEnd_toEndOf="parent"

@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_heritage_top"
+            android:background="@color/main_color"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,6 @@
                 android:id="@+id/constraint_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -34,7 +33,6 @@
                     android:id="@+id/header_heritage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:text="일정 관리"
                     android:textColor="@color/white"
                     android:textSize="20sp"
@@ -67,7 +65,7 @@
             app:rangeSelectionStartColor="@color/blue"
             app:secondaryTextColor="#666666"
             app:selectedTextColor="@color/black"
-            app:selectionColor="@color/blue"
+            app:selectionColor="@color/athens_gray"
             app:weekHeaderColor="#c6c6c6"
             app:weekHeaderTextSize="16sp" />
 
@@ -131,7 +129,7 @@
             android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="날짜를 선택한 후\n일정을 등록해 보세요!"
-            android:textColor="@color/cornflower"
+            android:textColor="@color/main_color_light"
             android:textSize="24dp"
             app:layout_constraintBottom_toTopOf="@id/constraint_et"
             app:layout_constraintEnd_toEndOf="parent"
@@ -181,8 +179,8 @@
                 android:id="@+id/btn_add_schedule"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                app:button_color="@color/link_water"
-                app:button_colorPressed="@color/cornflower"
+                app:button_color="@color/main_color_light"
+                app:button_colorPressed="@color/main_color_dark"
                 app:hide_animation="@anim/fab_roll_to_down"
                 app:image="@drawable/ic_add"
                 app:image_size="20dp"

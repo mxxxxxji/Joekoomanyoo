@@ -64,7 +64,7 @@ class FeedMyListFragment : BaseFragment<FragmentFeedMyListBinding>(R.layout.frag
 
             val list = it.filter { it.userSeq == userViewModel.user.value?.userSeq!! }
 
-            feedAdapter.submitList(list)
+            feedAdapter.submitList(list.sortedBy { it.createdTime }.reversed())
 
             // 뷰 다 불러오고나서 transition 효과 시작
             (view?.parent as ViewGroup)?.doOnPreDraw {

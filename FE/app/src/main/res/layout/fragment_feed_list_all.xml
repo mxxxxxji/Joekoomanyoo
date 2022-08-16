@@ -14,11 +14,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:background="@drawable/background_search_view_white"
+            android:elevation="4dp"
             android:fontFamily="@font/apple_sd_gothic_neo_b"
+            android:translationZ="2dp"
             app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:queryBackground="@null"
             app:queryHint="검색어를 입력해주세요" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -42,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="96dp"
+            android:layout_marginBottom="76dp"
             android:backgroundTint="@color/white"
             android:clickable="true"
             android:elevation="12dp"

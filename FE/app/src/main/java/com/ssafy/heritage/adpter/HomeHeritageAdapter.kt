@@ -2,29 +2,25 @@ package com.ssafy.heritage.adpter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.heritage.data.dto.Heritage
-import com.ssafy.heritage.databinding.ItemHeritageBinding
 import com.ssafy.heritage.databinding.ItemHomeBinding
-import com.ssafy.heritage.listener.HeritageListClickListener
+import com.ssafy.heritage.listener.HomeCategoryListClickListener
+import com.ssafy.heritage.util.CategoryConverter
 
-class HomeHeritageAdapter : ListAdapter<Heritage, HomeHeritageAdapter.ViewHolder>(DiffCallback()) {
+class HomeHeritageAdapter : ListAdapter<String, HomeHeritageAdapter.ViewHolder>(DiffCallback()) {
 
-    lateinit var heritageListClickListener: HeritageListClickListener
+    lateinit var homeCategoryListClickListener: HomeCategoryListClickListener
 
     inner class ViewHolder(private val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Heritage) = with(binding) {
-            heritage = data
-
-            // transitionName 중복 방지
-            ViewCompat.setTransitionName(ivHeritage, "heritage$bindingAdapterPosition")
+        fun bind(data: String) = with(binding) {
+            src = CategoryConverter.imageMap[data]
+            name = data
 
             itemView.setOnClickListener {
-                heritageListClickListener.onClick(bindingAdapterPosition, data, ivHeritage)
+                homeCategoryListClickListener.onClick(bindingAdapterPosition)
             }
         }
     }
@@ -43,12 +39,12 @@ class HomeHeritageAdapter : ListAdapter<Heritage, HomeHeritageAdapter.ViewHolder
         holder.bind(getItem(position))
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<Heritage>() {
-        override fun areItemsTheSame(oldItem: Heritage, newItem: Heritage): Boolean {
+    class DiffCallback : DiffUtil.ItemCallback<String>() {
+        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
-        override fun areContentsTheSame(oldItem: Heritage, newItem: Heritage): Boolean {
+        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
             return oldItem == newItem
         }
     }
