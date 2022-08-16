@@ -56,8 +56,8 @@ public class GroupScheduleController {
     
    	@ApiOperation(value = "모임 일정 삭제")
    	@DeleteMapping("/{groupSeq}/schedule/delete")
-   	public ResponseEntity<String> deleteGroupSchedule(@PathVariable int groupSeq, @RequestParam("gsDateTime") Date gsDateTime){
-   		return new ResponseEntity<>(groupScheduleService.deleteGroupSchedule(groupSeq,gsDateTime),HttpStatus.OK);
+   	public ResponseEntity<String> deleteGroupSchedule(@PathVariable int groupSeq, @RequestParam("gsSeq") int gsSeq){
+   		return new ResponseEntity<>(groupScheduleService.deleteGroupSchedule(groupSeq,gsSeq),HttpStatus.OK);
    	}
    	
 	//-------------------------------------유기된 기능----------------------------------------//

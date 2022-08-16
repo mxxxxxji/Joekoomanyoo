@@ -108,12 +108,12 @@ public class GroupScheduleService{
 	
 	//일정 삭제
 	@Transactional
-	public String deleteGroupSchedule(int groupSeq, Date gsDateTime) {
+	public String deleteGroupSchedule(int groupSeq,int gsSeq ) {
 		GroupEntity group = groupRepository.findByGroupSeq(groupSeq);
 		if(group==null)
 			return "Fail - No group";
 		for(int i=0;i<group.getSchedules().size();i++) {
-			if(group.getSchedules().get(i).getGsDateTime().equals(gsDateTime)) {
+			if(group.getSchedules().get(i).getGsSeq()==gsSeq) {
 				groupScheduleRepository.deleteByGsSeq(group.getSchedules().get(i).getGsSeq());
 				group.removeGroupSchedule(group.getSchedules().get(i).getGsSeq());
 			}
