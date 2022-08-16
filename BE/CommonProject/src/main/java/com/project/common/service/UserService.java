@@ -1,5 +1,7 @@
 package com.project.common.service;
 
+import com.project.common.controller.FcmTokenController;
+import com.project.common.dto.Push.FcmHistoryDto;
 import com.project.common.dto.User.UserDto;
 import com.project.common.mapper.User.UserMapper;
 import com.project.common.entity.Feed.FeedEntity;
@@ -21,6 +23,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,13 +40,14 @@ public class UserService{
     private final HeritageScrapRepository heritageScrapRepository;
     private final UserKeywordRepository userKeywordRepository;
     private final MyScheduleRepository myScheduleRepository;
-    private final MyDailyMemoRepository myDailyMemoRepository;
     private final FeedService feedService;
     private final FeedRepository feedRepository;
 
     private final GroupRepository groupRepository;
     private final GroupMemberService groupMemberService;
     private final GroupMemberRepository groupMemberRepository;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
+    private final FcmTokenController fcmTokenController;
 
     // 회원가입
     @Transactional
@@ -93,10 +99,28 @@ public class UserService{
             		}
             		groupMemberService.leaveGroup(entity.getGroup().getGroupSeq(), userId);
             	}
+
+                //탈퇴된 인원
+                UserEntity user = userRepository.findByUserSeq(entity.getUserSeq());
+                String fcmToken = user.getFcmToken();
+                String title = "모임 삭제 알림";
+                String body =  user.getUserNickname() + " 님의 "+ entity.getGroup().getGroupName() + " 모임장의 탈퇴로 인해 모임이 비활성화되었습니다.";
+                try {
+                    firebaseCloudMessageService.sendMessageTo(fcmToken, title, body);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // 모임 기록하기
+                FcmHistoryDto fcmHistoryDto = FcmHistoryDto.builder()
+                        .pushSeq(0)
+                        .userSeq(user.getUserSeq())
+                        .pushTitle(title)
+                        .pushContent(body)
+                        .pushCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                        .build();
+                fcmTokenController.createHistory(fcmHistoryDto);
             }
-            
-        
-            
             
             int userSeq = userEntity.getUserSeq();
             // 탈퇴 처리 되면서 같이 바뀌는 것들
