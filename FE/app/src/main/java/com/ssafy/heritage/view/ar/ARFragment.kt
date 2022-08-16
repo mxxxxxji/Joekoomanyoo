@@ -2,10 +2,13 @@ package com.ssafy.heritage.view.ar
 
 import android.content.Intent
 import androidx.navigation.fragment.findNavController
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.HelloGeoActivity
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
+import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.databinding.FragmentARBinding
+import com.ssafy.heritage.view.dialog.ReconfirmDialog
 
 private const val TAG = "ARFragment___"
 
@@ -35,9 +38,16 @@ class ARFragment : BaseFragment<FragmentARBinding>(R.layout.fragment_a_r) {
 
         // 유물 찾기(카메라)
         btnPlay.setOnClickListener {
-            val intent = Intent(activity, HelloGeoActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            startActivity(intent)
+            val stampInfo: Stamp = ApplicationClass.sharedPreferencesUtil.getStamp()
+            if(stampInfo.heritageLat == "null" || stampInfo.heritageLng == "null"){
+                val dialog = ReconfirmDialog(requireContext())
+                dialog.show()
+            }else{
+                val intent = Intent(activity, HelloGeoActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                startActivity(intent)
+            }
+
         }
     }
 }

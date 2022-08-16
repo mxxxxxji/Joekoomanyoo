@@ -15,10 +15,8 @@
  */
 package com.ssafy.heritage
 
-import android.location.Location
 import android.opengl.Matrix
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.maps.model.LatLng
@@ -29,7 +27,6 @@ import com.ssafy.heritage.helpers.DisplayRotationHelper
 import com.ssafy.heritage.helpers.TrackingStateHelper
 import com.ssafy.heritage.samplerender.*
 import com.ssafy.heritage.samplerender.arcore.BackgroundRenderer
-import com.ssafy.heritage.view.dialog.ARCheckDialog
 import java.io.IOException
 
 
@@ -199,11 +196,13 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
   var earthAnchor: Anchor? = null
 
   fun onMapInit() {
+    Log.d(TAG, "onMapInit: ${activity.stampInfo}")
+    Log.d(TAG, "onMapInit___: ${activity?.stampInfo?.heritageLng}, ${activity?.stampInfo?.heritageLat}")
     // 주변 유물 스탬프 위치
-    if(activity.stampInfo != null){
-      Log.d(TAG, "onMapInit: ${activity.stampInfo.heritageLat}, ${activity.stampInfo.heritageLng}")
-      val lat = activity.stampInfo.heritageLat.toDouble()
-      val lng = activity.stampInfo.heritageLng.toDouble()
+    if(activity?.stampInfo?.heritageLng != "null" && activity?.stampInfo?.heritageLat != "null"){
+      Log.d(TAG, "onMapInit: ${activity?.stampInfo?.heritageLng}, ${activity?.stampInfo?.heritageLat}")
+      val lat = activity?.stampInfo?.heritageLat.toDouble()
+      val lng = activity?.stampInfo?.heritageLng.toDouble()
 
       val earth = session?.earth ?: return
       // 객체가 추적 중인지 확인
@@ -229,6 +228,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
       }
     }else{
       Log.d(TAG, "onMapInit: STAMP IS NULL")
+
     }
   }
 
