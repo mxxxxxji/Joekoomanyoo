@@ -25,7 +25,7 @@ class ARFoundFragment :BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a_
     override fun init() {
 
         arViewModel.getAllStamp()
-        arViewModel.getMyStamp(userSeq)
+        userViewModel.getMyStamp()
        // arViewModel.selectMyStampCategory(userSeq, categorySeq = )
         arViewModel.getStampCategory()
 

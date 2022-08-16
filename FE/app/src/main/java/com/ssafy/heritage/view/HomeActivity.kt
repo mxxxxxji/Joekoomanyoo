@@ -6,8 +6,10 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationManager
 import android.os.Build
+import android.os.Looper
 import android.util.Base64
 import android.util.Log
 import android.view.MotionEvent
@@ -24,6 +26,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
+import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.FirebaseApp
@@ -43,6 +46,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -67,11 +72,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private val locationManager by lazy {
         getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
+    private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
+    lateinit var mLastLocation: Location // 위치 값을 가지고 있는 객체
+    internal lateinit var mLocationRequest: LocationRequest // 위치 정보 요청의 매개변수를 저장하는
+    private val REQUEST_PERMISSION_LOCATION = 10
 
     lateinit var fab: FloatingActionButton
 
     override fun init() {
-
+        // LocationRequest() deprecated 되서 아래 방식으로 LocationRequest 객체 생성
+        // mLocationRequest = LocationRequest() is deprecated
+        mLocationRequest =  LocationRequest.create().apply {
+            interval = 100000 // 업데이트 간격 단위(밀리초)
+            fastestInterval = 100000 // 가장 빠른 업데이트 간격 단위(밀리초)
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY // 정확성
+            maxWaitTime= 200000 // 위치 갱신 요청 최대 대기 시간 (밀리초)
+        }
+        startLocationUpdates()
         CoroutineScope(Dispatchers.Main).launch {
             intent?.getParcelableExtra<User>("user")?.let { userViewModel.setUser(it) }
 
@@ -302,7 +319,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun periodicWorkRequest() {
         //파라미터와 지연 시간 설정
-        val workRequest = PeriodicWorkRequestBuilder<RequestWorker>(15, TimeUnit.MINUTES).build()
+        val workRequest = PeriodicWorkRequestBuilder<RequestWorker>(5, TimeUnit.MINUTES).build()
         //워크매니저 생성
         val workManager = WorkManager.getInstance(applicationContext)
         //워크매니저 실행
@@ -311,5 +328,99 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun makeToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+
+    protected fun startLocationUpdates() {
+        Log.d(TAG, "startLocationUpdates()")
+
+        //FusedLocationProviderClient의 인스턴스를 생성.
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.d(TAG, "startLocationUpdates() 두 위치 권한중 하나라도 없는 경우 ")
+            return
+        }
+        Log.d(TAG, "startLocationUpdates() 위치 권한이 하나라도 존재하는 경우")
+        // 기기의 위치에 관한 정기 업데이트를 요청하는 메서드 실행
+        // 지정한 루퍼 스레드(Looper.myLooper())에서 콜백(mLocationCallback)으로 위치 업데이트를 요청합니다.
+        mFusedLocationProviderClient!!.requestLocationUpdates(
+            mLocationRequest, mLocationCallback,
+            Looper.myLooper()!!
+        )
+    }
+    // 시스템으로 부터 위치 정보를 콜백으로 받음
+    private val mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            Log.d(TAG, "onLocationResult()")
+            // 시스템에서 받은 location 정보를 onLocationChanged()에 전달
+            locationResult.lastLocation
+            onLocationChanged(locationResult.lastLocation)
+        }
+    }
+
+    // 시스템으로 부터 받은 위치정보를 화면에 갱신해주는 메소드
+    fun onLocationChanged(location: Location) {
+        Log.d(TAG, "onLocationChanged()")
+        mLastLocation = location
+        val date: Date = Calendar.getInstance().time
+        val simpleDateFormat = SimpleDateFormat("hh:mm:ss a")
+        Log.d(TAG, "onLocationChanged: ${mLastLocation.latitude}, ${mLastLocation.longitude}, ${simpleDateFormat.format(date)}")
+        //txtTime.text = "Updated at : " +  // 갱신된 날짜
+//        txtLat.text = "LATITUDE : " + mLastLocation.latitude // 갱신 된 위도
+//        txtLong.text = "LONGITUDE : " + mLastLocation.longitude // 갱신 된 경도
+    }
+
+    // 위치 업데이터를 제거 하는 메서드
+    private fun stoplocationUpdates() {
+        Log.d(TAG, "stoplocationUpdates()")
+        // 지정된 위치 결과 리스너에 대한 모든 위치 업데이트를 제거
+        mFusedLocationProviderClient!!.removeLocationUpdates(mLocationCallback)
+    }
+
+    // 위치 권한이 있는지 확인하는 메서드
+    fun checkPermissionForLocation(context: Context): Boolean
+    {
+        Log.d(TAG, "checkPermissionForLocation()")
+        // Android 6.0 Marshmallow 이상에서는 지리 확보(위치) 권한에 추가 런타임 권한이 필요합니다.
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "checkPermissionForLocation() 권한 상태 : O")
+                true
+            } else {
+                // 권한이 없으므로 권한 요청 알림 보내기
+                Log.d(TAG, "checkPermissionForLocation() 권한 상태 : X")
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
+                false
+            }
+        } else {
+            true
+        }
+    }
+
+    // 사용자에게 권한 요청 후 결과에 대한 처리 로직
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.d(TAG, "onRequestPermissionsResult()")
+        if (requestCode == REQUEST_PERMISSION_LOCATION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "onRequestPermissionsResult() _ 권한 허용 클릭")
+                startLocationUpdates()
+                // View Button 활성화 상태 변경
+//                btnStartupdate.isEnabled = false
+//                btnStopUpdates.isEnabled = true
+            } else {
+                Log.d(TAG, "onRequestPermissionsResult() _ 권한 허용 거부")
+                Toast.makeText(this@HomeActivity, "권한이 없어 해당 기능을 실행할 수 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

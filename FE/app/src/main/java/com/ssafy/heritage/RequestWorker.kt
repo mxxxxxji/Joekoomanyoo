@@ -46,6 +46,7 @@ class RequestWorker(context: Context, params: WorkerParameters) : Worker(context
                                 if (response.isSuccessful) {
                                     val list = response.body() as MutableList<Stamp>
                                     _nearMyStampList.postValue(list)
+                                    Log.d(TAG,"내 현재 위치 : ${aLocation.latitude}, ${aLocation.longitude}" )
                                     Log.d(TAG, "selectNearStamp: ${response.code()} ${response.body()}")
                                     if(list.size != 0){
                                         ApplicationClass.sharedPreferencesUtil.saveStamp(list.get(0))

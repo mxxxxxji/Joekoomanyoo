@@ -50,14 +50,14 @@ class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
         view.snackbarHelper.showError(this, message)
       }
 
-    // Configure session features.
+    // 세션기능 구성
     arCoreSessionHelper.beforeSessionResume = ::configureSession
     lifecycle.addObserver(arCoreSessionHelper)
 
-    // Set up the Hello AR renderer.
+    // renderer 설정
     renderer = HelloGeoRenderer(this)
     lifecycle.addObserver(renderer)
-    // 지도에 유물 위치 표시
+
 
 
     // Set up Hello AR UI.
@@ -71,6 +71,7 @@ class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
     view.btnCheck.setOnClickListener{
       // 획득한 스탬프 전송
       arViewModel.addStamp(userSeq, stampInfo.stampSeq)
+      ApplicationClass.sharedPreferencesUtil.deleteStamp()
       val dialog = ARCheckDialog(it.context, this)
       dialog.show()
     }

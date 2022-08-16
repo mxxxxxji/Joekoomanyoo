@@ -41,7 +41,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
   lateinit var virtualSceneFramebuffer: Framebuffer
   var hasSetTextureNames = false
 
-  // Virtual object (ARCore pawn)
+  // 가상 객체
   lateinit var virtualObjectMesh: Mesh
   lateinit var virtualObjectShader: Shader
   lateinit var virtualObjectTexture: Texture
@@ -70,13 +70,13 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
   }
 
   override fun onSurfaceCreated(render: SampleRender) {
-    // Prepare the rendering objects.
+    // 랜더링 객체 준비
     // This involves reading shaders and 3D model files, so may throw an IOException.
     try {
       backgroundRenderer = BackgroundRenderer(render)
       virtualSceneFramebuffer = Framebuffer(render, /*width=*/ 1, /*height=*/ 1)
 
-      // Virtual object to render (Geospatial Marker)
+      // 렌더링할 가상 객체 (Geospatial Marker)
       virtualObjectTexture =
         Texture.createFromAsset(
           render,
@@ -122,13 +122,13 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
 
     // -- Update per-frame state
 
-    // Notify ARCore session that the view size changed so that the perspective matrix and
-    // the video background can be properly adjusted.
+    // ARCore 세션에 뷰 크기가 변경되었음을 알립니다.
+    // 비디오 배경을 적절하게 조정할 수 있습니다.
     displayRotationHelper.updateSessionIfNeeded(session)
 
-    // Obtain the current frame from ARSession. When the configuration is set to
-    // UpdateMode.BLOCKING (it is by default), this will throttle the rendering to the
-    // camera framerate.
+     // Obtain the current frame from ARSession. When the configuration is set to
+     // UpdateMode.BLOCKING (it is by default), this will throttle the rendering to the
+     // camera framerate.
     val frame =
       try {
         session.update()
@@ -140,8 +140,8 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
 
     val camera = frame.camera
 
-    // BackgroundRenderer.updateDisplayGeometry must be called every frame to update the coordinates
-    // used to draw the background camera image.
+    // BackgroundRenderer.updateDisplayGeometry 는 좌표를 업데이트하기 위해 매 프레임마다 호출되어야 합니다.
+    // 배경 카메라 이미지를 그리는 데 사용됩니다.
     backgroundRenderer.updateDisplayGeometry(frame)
 
     // Keep the screen unlocked while tracking, but allow it to lock when tracking stops.
@@ -189,7 +189,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
     }
 
 
-    // Compose the virtual scene with the background.
+    // 배경으로 가상 장면을 구성합니다.
     backgroundRenderer.drawVirtualScene(render, virtualSceneFramebuffer, Z_NEAR, Z_FAR)
   }
 

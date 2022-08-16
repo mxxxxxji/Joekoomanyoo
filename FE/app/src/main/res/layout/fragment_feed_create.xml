@@ -132,8 +132,8 @@
 
                 <ImageView
                     android:id="@+id/iv_feed_image"
-                    android:layout_width="362dp"
-                    android:layout_height="362dp"
+                    android:layout_width="350dp"
+                    android:layout_height="350dp"
                     android:scaleType="centerCrop"
                     tools:srcCompat="@drawable/feed_img_2" />
             </LinearLayout>

@@ -76,4 +76,17 @@ class SharedPreferencesUtil(context: Context) {
         )
         return result
     }
+    fun deleteStamp() {
+        val editor = preferences.edit()
+        editor.remove("stampSeq")
+        editor.remove("stampImgUrl")
+        editor.remove("stampTitle")
+        editor.remove("heritageSeq")
+        editor.remove("heritageLocal")
+        editor.remove("heritageLng")
+        editor.remove("heritageLat")
+        editor.remove("stampCategory")
+
+        editor.apply()
+    }
 }
