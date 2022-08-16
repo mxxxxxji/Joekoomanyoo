@@ -109,9 +109,11 @@ class FeedListAllFragment :
     }
 
     private fun initObserver() {
-        feedViewModel.feedListAll.observe(viewLifecycleOwner) {
+        feedViewModel.feedListAll.observe(viewLifecycleOwner) { it ->
             Log.d(TAG, "initObserver feedListAll: $it")
-            feedAdapter.submitList(it)
+            feedAdapter.submitList(
+                it.sortedBy { it.createdTime }.reversed()
+            )
 
             // 뷰 다 불러오고나서 transition 효과 시작
             (view?.parent as ViewGroup)?.doOnPreDraw {
