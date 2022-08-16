@@ -2,17 +2,27 @@ package com.project.common.service;
 
 import com.project.common.dto.User.UserDto;
 import com.project.common.mapper.User.UserMapper;
+import com.project.common.entity.Feed.FeedEntity;
+import com.project.common.entity.Group.GroupMemberEntity;
 import com.project.common.entity.User.UserEntity;
+import com.project.common.repository.Feed.FeedRepository;
+import com.project.common.repository.Group.GroupMemberRepository;
+import com.project.common.repository.Group.GroupRepository;
 import com.project.common.repository.Heritage.HeritageScrapRepository;
 import com.project.common.repository.My.MyDailyMemoRepository;
 import com.project.common.repository.My.MyScheduleRepository;
 import com.project.common.repository.User.UserKeywordRepository;
 import com.project.common.repository.User.UserRepository;
+import com.project.common.service.Feed.FeedService;
+import com.project.common.service.Group.GroupMemberService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,7 +36,12 @@ public class UserService{
     private final UserKeywordRepository userKeywordRepository;
     private final MyScheduleRepository myScheduleRepository;
     private final MyDailyMemoRepository myDailyMemoRepository;
+    private final FeedService feedService;
+    private final FeedRepository feedRepository;
 
+    private final GroupRepository groupRepository;
+    private final GroupMemberService groupMemberService;
+    private final GroupMemberRepository groupMemberRepository;
 
     // 회원가입
     @Transactional
@@ -55,7 +70,34 @@ public class UserService{
             // 사용자가 존재하면 삭제표시
             userEntity.setIsDeleted('Y');
             userRepository.save(userEntity);
-
+            
+            //피드 삭제
+            List<FeedEntity> feeds =new ArrayList<>();
+            for(FeedEntity entity : feedRepository.findAll()) 
+            	if(entity.getUser().getUserSeq()==userEntity.getUserSeq()) 
+            		feeds.add(entity);
+            	        
+            for(int i=0; i<feeds.size();i++) 
+            	feedService.deleteFeed(userId, feeds.get(i).getFeedSeq());
+            
+            
+            // 그륩 삭제
+            
+            for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
+            	if(entity.getUserSeq()==userEntity.getUserSeq()) {
+            		if(entity.getMemberStatus()==2) {
+            			entity.getGroup().setGroupActive('N');
+            			entity.getGroup().setGroupStatus('F');
+            			entity.setMemberStatus(1);
+            			groupRepository.save(entity.getGroup());
+            		}
+            		groupMemberService.leaveGroup(entity.getGroup().getGroupSeq(), userId);
+            	}
+            }
+            
+        
+            
+            
             int userSeq = userEntity.getUserSeq();
             // 탈퇴 처리 되면서 같이 바뀌는 것들
             // 문화유산 스크랩 목록 삭제
