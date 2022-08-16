@@ -115,7 +115,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
 
         feedViewModel.feedListAll.observe(viewLifecycleOwner) {
-            homeFeedAdapter.submitList(it)
+            homeFeedAdapter.submitList(it.sortedBy { it.createdTime }.reversed())
         }
     }
 
