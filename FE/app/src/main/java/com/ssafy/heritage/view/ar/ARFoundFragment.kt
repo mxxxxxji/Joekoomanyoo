@@ -15,7 +15,7 @@ import com.ssafy.heritage.viewmodel.UserViewModel
 
 private const val TAG = "ARFoundFragment___"
 
-class ARFoundFragment :BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a_r_found) {
+class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a_r_found) {
 
     private val userSeq = ApplicationClass.sharedPreferencesUtil.getUser()
     private val stampCategoryListAdapter: StampCategoryListAdapter by lazy { StampCategoryListAdapter() }
@@ -26,7 +26,7 @@ class ARFoundFragment :BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a_
 
         arViewModel.getAllStamp()
         arViewModel.getMyStamp(userSeq)
-       // arViewModel.selectMyStampCategory(userSeq, categorySeq = )
+        // arViewModel.selectMyStampCategory(userSeq, categorySeq = )
         arViewModel.getStampCategory()
 
         initAdapter()
@@ -43,7 +43,17 @@ class ARFoundFragment :BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a_
             stampCategoryListAdapter.categoryListClickListener =
                 object : CategoryListClickListener {
                     override fun onClick(position: Int, stampCategory: StampCategory) {
+                        val data =
+                            arViewModel.stampList?.value!!.filter { it.stampCategory == stampCategory.categoryName }
+                        val cnt = "${stampCategory.myCnt} / ${stampCategory.categoryCnt}"
 
+                        // 내가 찾은 것들 필터링
+                        userViewModel.myStampList.value?.forEach { myStamp ->
+                            data.find { it.stampSeq == myStamp.stampSeq }?.found = 'Y'
+                        }
+
+                        val sheet = ARFoundDetail(data, cnt, stampCategory.categoryName)
+                        sheet.show(parentFragmentManager, "ARFoundDetail")
                     }
                 }
         }
@@ -60,15 +70,13 @@ class ARFoundFragment :BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a_
             stampCategoryListAdapter.submitList(list)
         }
 
-        arViewModel.stampList.observe(viewLifecycleOwner) {
-
-
-            // 내가 찾은 것들 필터링
+//        arViewModel.stampList.observe(viewLifecycleOwner) {
+//            // 내가 찾은 것들 필터링
 //            userViewModel.myStampList.value?.forEach { myStamp ->
 //                it.find { it.stampSeq == myStamp.stampSeq }?.found = 'Y'
 //            }
 //            bookListAdapter.submitList(it)
-        }
+//        }
 //        userViewModel
 //        userViewModel.myStampList.observe(viewLifecycleOwner) {
 //            userViewModel.myStampList.value?.forEach { myStamp ->
@@ -79,6 +87,7 @@ class ARFoundFragment :BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a_
 //            Log.d(TAG, "initObserver: $list")
 //            stampCategoryListAdapter.submitList(list)
 //        }
+
         userViewModel.myStampList.observe(viewLifecycleOwner) {
             val list = arViewModel.categoryList.value
             it.forEach { myStamp ->
