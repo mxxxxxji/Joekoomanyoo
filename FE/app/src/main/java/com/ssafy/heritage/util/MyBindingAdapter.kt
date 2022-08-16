@@ -13,7 +13,7 @@ fun setImage(v: ImageView, url: String) {
         Glide.with(v.context)
             .load(url)
             .into(v)
-    } else{
+    } else {
         Glide.with(v.context)
             .load(R.drawable.image_ready)
             .into(v)
@@ -28,4 +28,16 @@ fun setTime(v: TextView, s: String) {
 @BindingAdapter("setDrawable")
 fun setDrawable(v: ImageView, s: Int) {
     v.setImageResource(s)
+}
+
+@BindingAdapter("calAge")
+fun calAge(v: TextView, s: String) {
+    var age = 2023 - s.toInt()
+
+    age /= age
+
+    age *= 10
+
+    v.text = if (age < 10) "어린이" else "${age}대"
+
 }

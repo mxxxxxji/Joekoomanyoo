@@ -56,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/background_profile_box"
             android:elevation="4dp"
             android:translationZ="2dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +67,7 @@
                 glide="@{String.valueOf(user.profileImgUrl)}"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="20dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_foreground"
@@ -77,44 +76,99 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/header_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="@{user.userNickname}"
-                android:textSize="16sp"
+                android:text="아이디"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/header_age"
+                app:layout_constraintStart_toEndOf="@id/iv_profile_img"
+                app:layout_constraintTop_toTopOf="@id/iv_profile_img" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:text="@{user.userId}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/header_id"
+                app:layout_constraintTop_toTopOf="@id/header_id"
+                tools:text="아이디" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/header_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="나이대"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/iv_profile_img"
                 app:layout_constraintStart_toEndOf="@id/iv_profile_img"
-                app:layout_constraintTop_toTopOf="@id/iv_profile_img"
+                app:layout_constraintTop_toBottomOf="@id/header_id" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_age"
+                calAge="@{String.valueOf(user.userBirth)}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/header_age"
+                app:layout_constraintTop_toTopOf="@id/header_age"
+                tools:text="1살" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{user.userNickname}"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/iv_profile_img"
+                app:layout_constraintStart_toStartOf="@id/iv_profile_img"
+                app:layout_constraintTop_toBottomOf="@id/iv_profile_img"
                 tools:text="김문화" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/header_keyword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="저는 이런사람 입니다"
-                android:textSize="16sp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="24dp"
+                android:text="나를 소개하는 태그 등록하기"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_profile_img" />
+                app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="꾹 눌러서 삭제할 수 있어요!"
+                android:textSize="9sp"
+                app:layout_constraintBottom_toBottomOf="@id/header_keyword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/header_keyword" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_add_keyword"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_marginStart="4dp"
                 android:src="@drawable/ic_baseline_add_24"
                 app:layout_constraintBottom_toBottomOf="@id/header_keyword"
                 app:layout_constraintStart_toEndOf="@id/header_keyword"
                 app:layout_constraintTop_toTopOf="@id/header_keyword" />
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_keyword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginVertical="4dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -122,6 +176,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/header_keyword"
+                app:layout_constraintVertical_bias="0.0"
                 tools:listitem="@layout/item_keyword" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

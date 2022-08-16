@@ -64,9 +64,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     val imageList = ArrayList<SlideUIModel>().apply {
         add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1155.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1155.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1155.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1155.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1162.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1161.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1160.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1159.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1158.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1157.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1156.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1165.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1164.png"))
+        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1163.png"))
     }
 
 
