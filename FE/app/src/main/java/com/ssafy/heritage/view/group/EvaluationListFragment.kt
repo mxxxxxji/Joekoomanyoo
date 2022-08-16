@@ -3,6 +3,7 @@ package com.ssafy.heritage.view.group
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -53,6 +54,7 @@ class EvaluationListFragment :
         binding.btnRequest.setOnClickListener {
             Log.d(TAG, "initClickListener: ${evaluationRequest}")
             groupViewModel.insertGroupEvaluation(evaluationRequest)
+            findNavController().popBackStack()
         }
     }
     override fun onItemClick(position: Int) = with(binding) {
