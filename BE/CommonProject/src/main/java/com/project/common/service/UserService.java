@@ -77,6 +77,7 @@ public class UserService{
             userEntity.setIsDeleted('Y');
             userRepository.save(userEntity);
             
+          
             //피드 삭제
             List<FeedEntity> feeds =new ArrayList<>();
             for(FeedEntity entity : feedRepository.findAll()) 
@@ -85,10 +86,8 @@ public class UserService{
             	        
             for(int i=0; i<feeds.size();i++) 
             	feedService.deleteFeed(userId, feeds.get(i).getFeedSeq());
-            
-            
+                    
             // 그륩 삭제
-            
             for(GroupMemberEntity entity : groupMemberRepository.findAll()) {
             	if(entity.getUserSeq()==userEntity.getUserSeq()) {
             		if(entity.getMemberStatus()==2) {
