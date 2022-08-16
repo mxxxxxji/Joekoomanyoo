@@ -80,6 +80,13 @@ class Repository constructor(context: Context) {
 
     suspend fun updateGroupimage(groupSeq: Int, groupImgUrl: String) : Response<String> = groupApi.updateGroupimage(groupSeq, groupImgUrl)
 
+    // group - 상호평가
+    suspend fun selectGroupEvaluation(groupSeq: Int, userSeq: Int): Response<List<EvaluationProfileResponse>> =
+        groupApi.selectGroupEvaluation(groupSeq, userSeq)
+
+    suspend fun insertGroupEvaluation(body :List<EvaluationRequest>): Response<String> =
+        groupApi.insertGroupEvaluation(body)
+
 
     // user
     suspend fun checkEmail(userId: String): Response<String> = userApi.checkEmail(userId)

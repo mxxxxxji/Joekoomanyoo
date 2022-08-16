@@ -8,5 +8,6 @@ import kotlinx.parcelize.Parcelize
 data class StampRankResponse(
     @SerializedName("myStampCnt") val myStampCnt : Int,
     @SerializedName("userNickname") val userNickname : String,
-    @SerializedName("userRank") val userRank: Int
+    @SerializedName("userRank") val userRank: Int,
+    @SerializedName("profileImgUrl") val profileImgUrl: String
 ) : Parcelable

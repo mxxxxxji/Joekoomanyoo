@@ -8,9 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.heritage.data.dto.Chat
 import com.ssafy.heritage.data.dto.GroupDestinationMap
 import com.ssafy.heritage.data.dto.Member
+import com.ssafy.heritage.data.remote.request.EvaluationRequest
 import com.ssafy.heritage.data.remote.request.GroupAddRequest
 import com.ssafy.heritage.data.remote.request.GroupJoin
 import com.ssafy.heritage.data.remote.request.GroupSchedule
+import com.ssafy.heritage.data.remote.response.EvaluationProfileResponse
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.data.remote.response.MyGroupResponse
 import com.ssafy.heritage.data.repository.Repository
@@ -75,6 +77,13 @@ class GroupViewModel : ViewModel() {
 
     private val _chatList = MutableLiveData<MutableList<Chat>>().apply { value = arrayListOf() }
     val chatList: LiveData<MutableList<Chat>> get() = _chatList
+
+    private val _evalList =
+        MutableLiveData<MutableList<EvaluationRequest>>().apply { value = arrayListOf() }
+    val evalList: LiveData<MutableList<EvaluationRequest>> get() = _evalList
+
+    private val _evalProfileList = MutableLiveData<MutableList<EvaluationProfileResponse>>()
+    val evalProfileList: LiveData<MutableList<EvaluationProfileResponse>> get() = _evalProfileList
 
     var sharedcheck = false
 
@@ -388,12 +397,14 @@ class GroupViewModel : ViewModel() {
             Log.d(TAG, "setGroupStatus response: $it")
             if (it.isSuccessful) {
                 Log.d(TAG, "setGroupStatus Success: ${it.body()}")
+
             } else {
                 Log.d(TAG, "setGroupStatus error: ${it.errorBody()}")
 
             }
         }
     }
+
 
     // 모임 사진 업데이트
     fun updateGroupimage(img: MultipartBody.Part) = viewModelScope.launch {
@@ -422,6 +433,22 @@ class GroupViewModel : ViewModel() {
         }
     }
 
+    // 상호평가 프로필(멤버) 조회
+    fun selectGroupEvaluation(groupSeq: Int, userSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.selectGroupEvaluation(groupSeq, userSeq).let {
+                if (it.isSuccessful) {
+                    Log.d(TAG, "selectGroupEvaluation Success: ${it.body()}")
+                    _evalProfileList.postValue(it.body() as MutableList<EvaluationProfileResponse>)
+                } else {
+                    Log.d(TAG, "selectGroupEvaluation error: ${it.errorBody()}")
+
+
+                }
+            }
+        }
+    }
+
     // 사진 전송하기
     suspend fun sendImage(img: MultipartBody.Part) = withContext(Dispatchers.Main) {
         Log.d(TAG, "sendImage: $img")
@@ -430,7 +457,6 @@ class GroupViewModel : ViewModel() {
             response = repository.sendImage(img)
         }
         job?.join()
-
         response?.let {
             Log.d(TAG, "sendImage response: $it")
             if (it.isSuccessful) {
@@ -443,4 +469,26 @@ class GroupViewModel : ViewModel() {
             }
         }
     }
+
+
+    // 상호평가 결과 전송
+    fun insertGroupEvaluation(evalList: List<EvaluationRequest>) = viewModelScope.launch {
+            var response: Response<String>? = null
+            job = launch(Dispatchers.Main) {
+                response = repository.insertGroupEvaluation(evalList)
+
+            }
+            job?.join()
+
+            response?.let {
+
+                Log.d(TAG, "insertGroupEvaluation response: $it")
+                if (it.isSuccessful) {
+                    Log.d(TAG, "insertGroupEvaluation Success: ${it.body()}")
+                } else {
+                    Log.d(TAG, "insertGroupEvaluation error: ${it.errorBody()}")
+
+                }
+            }
+        }
 }

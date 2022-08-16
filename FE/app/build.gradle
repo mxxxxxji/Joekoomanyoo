@@ -218,4 +218,8 @@ dependencies {
 
     // RxAnimatio
     implementation 'com.mikhaellopez:rxanimation:2.1.0'
+
+    // SlidingUpPanel
+    implementation 'com.github.hannesa2:AndroidSlidingUpPanel:4.2.1'
+
 }
