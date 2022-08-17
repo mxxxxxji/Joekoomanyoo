@@ -19,6 +19,7 @@ public class ResGroupScheduleDto {
 	private int groupSeq;
 	private int gsSeq;
     private String gsContent;
+    private int groupSeq;
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date gsDateTime;
