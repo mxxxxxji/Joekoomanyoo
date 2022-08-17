@@ -113,7 +113,7 @@ class MapView(val activity: HelloGeoActivity, val googleMap: GoogleMap) {
     val opt = BitmapFactory.Options()
     opt.inMutable = true
     val navigationIcon =
-      BitmapFactory.decodeResource(activity.resources, R.drawable.ic_navigation_white_48dp, opt)
+      decodeSampledBitmapFromResource(activity.resources, R.drawable.ic_navigation_white_48dp,20,20)
     val p = Paint()
     p.colorFilter = LightingColorFilter(color,  /* add= */1)
     val canvas = Canvas(navigationIcon)

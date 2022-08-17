@@ -1,8 +1,7 @@
 package com.ssafy.heritage
 
-import com.ssafy.heritage.helpers.MapTouchWrapper
-import com.ssafy.heritage.helpers.SnackbarHelper
 import android.opengl.GLSurfaceView
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -12,9 +11,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.ar.core.Earth
 import com.google.ar.core.GeospatialPose
+import com.ssafy.heritage.helpers.MapTouchWrapper
 import com.ssafy.heritage.helpers.MapView
-import com.ssafy.heritage.view.dialog.ARCheckDialog
+import com.ssafy.heritage.helpers.SnackbarHelper
 
+private const val TAG = "HelloGeoView___"
 
 class HelloGeoView(val activity: HelloGeoActivity) : DefaultLifecycleObserver {
     val root = View.inflate(activity, R.layout.activity_hello_geo, null)
@@ -53,6 +54,21 @@ class HelloGeoView(val activity: HelloGeoActivity) : DefaultLifecycleObserver {
                 earth.trackingState.toString(),
                 poseText
             )
+        }
+    }
+
+    override fun onCreate(owner: LifecycleOwner) {
+        super.onCreate(owner)
+        val stampInfo = activity.stampInfo
+
+        Log.d(TAG, "onCreate: ${stampInfo.heritageLat}")
+        if (stampInfo.heritageLat != "null") {
+            Log.d(TAG, "onCreate: ${stampInfo.heritageLat}, ${stampInfo.heritageLng}")
+            mapView?.earthMarker?.apply {
+                position =
+                    LatLng(stampInfo.heritageLat.toDouble(), stampInfo.heritageLng.toDouble())
+                isVisible = true
+            }
         }
     }
 
