@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.group.GroupModifyFragment">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,8 +24,8 @@
                     android:id="@+id/btn_back"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:backgroundTint="@color/white"
-                    android:background="@drawable/ic_baseline_arrow_back_24"/>
+                    android:background="@drawable/ic_baseline_arrow_back_24"
+                    android:backgroundTint="@color/white" />
 
                 <TextView
                     android:id="@+id/header_create_group"
@@ -39,6 +40,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </com.google.android.material.appbar.MaterialToolbar>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -47,34 +49,35 @@
                     android:id="@+id/constraint_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.core.widget.NestedScrollView
                         android:id="@+id/scrollView"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:fillViewport="true"
+                        app:layout_constraintBottom_toTopOf="@id/btn_create_group"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/btn_create_group"
                         app:layout_constraintVertical_bias="1.0">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginHorizontal="20dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
-                            android:layout_marginHorizontal="20dp">
+                            android:clipToOutline="false">
 
                             <TextView
                                 android:id="@+id/header_group_name"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_width="378dp"
+                                android:layout_height="14dp"
                                 android:layout_marginTop="20dp"
                                 android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:text="모임 이름"
@@ -87,14 +90,16 @@
                                 android:id="@+id/et_group_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
+                                android:layout_marginHorizontal="4dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/background_search_view"
-                                android:fontFamily="@font/apple_sd_gothic_neo_l"
-                                android:textSize="12sp"
+                                android:clipToOutline="false"
                                 android:elevation="10dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 android:hint="모임 이름"
                                 android:paddingStart="20dp"
                                 android:textColorHint="@color/gray"
+                                android:textSize="12sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/header_group_name" />
@@ -116,14 +121,16 @@
                                 android:id="@+id/et_group_content"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
+                                android:layout_marginHorizontal="4dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/background_search_view"
+                                android:clipToOutline="false"
                                 android:elevation="10dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 android:hint="스터디 설명"
                                 android:paddingStart="20dp"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 android:textColorHint="@color/gray"
+                                android:textSize="12sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/header_group_content" />
@@ -146,14 +153,15 @@
                                 android:layout_width="150dp"
                                 android:layout_height="45dp"
                                 android:layout_marginTop="8dp"
-                                android:inputType="date"
-                                android:focusable="false"
                                 android:background="@drawable/background_search_view"
+                                android:focusable="false"
                                 android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 android:hint="시작일"
+                                android:inputType="date"
                                 android:paddingStart="20dp"
                                 android:textColorHint="@color/gray"
                                 android:textSize="12sp"
+                                app:layout_constraintEnd_toStartOf="@id/header_from"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/header_group_term" />
 
@@ -176,14 +184,13 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/background_search_view"
-                                android:elevation="10dp"
-                                android:inputType="date"
                                 android:focusable="false"
-                                android:hint="종료일"
-                                android:paddingStart="20dp"
-                                android:textSize="12sp"
-                                android:textColorHint="@color/gray"
                                 android:fontFamily="@font/apple_sd_gothic_neo_l"
+                                android:hint="종료일"
+                                android:inputType="date"
+                                android:paddingStart="20dp"
+                                android:textColorHint="@color/gray"
+                                android:textSize="12sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/header_from"
                                 app:layout_constraintTop_toBottomOf="@id/header_group_term" />
@@ -193,10 +200,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="30dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:text="최대 인원"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
-                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 app:layout_constraintEnd_toStartOf="@id/header_age"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/et_group_start_date" />
@@ -207,6 +214,7 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="12dp"
                                 android:background="@drawable/button_vertify"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:foreground="?attr/selectableItemBackground"
                                 android:gravity="center"
                                 android:hint="선택"
@@ -214,7 +222,6 @@
                                 android:textColor="@color/bombay"
                                 android:textColorHint="@color/bombay"
                                 android:textSize="12sp"
-                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 app:layout_constraintStart_toStartOf="@id/header_maximum"
                                 app:layout_constraintTop_toBottomOf="@id/header_maximum"
                                 app:spinner_arrow_gravity="end"
@@ -229,14 +236,15 @@
                                 app:spinner_popup_background="@drawable/background_spinner"
                                 app:spinner_popup_elevation="14dp"
                                 tools:ignore="HardcodedText,UnusedAttribute" />
+
                             <TextView
                                 android:id="@+id/header_age"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="130dp"
                                 android:layout_marginTop="30dp"
-                                android:text="나이대"
                                 android:fontFamily="@font/apple_sd_gothic_neo_m"
+                                android:text="나이대"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
                                 app:layout_constraintStart_toEndOf="@id/header_maximum"
@@ -248,6 +256,7 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="12dp"
                                 android:background="@drawable/button_vertify"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:foreground="?attr/selectableItemBackground"
                                 android:gravity="center"
                                 android:hint="선택"
@@ -255,7 +264,6 @@
                                 android:textColor="@color/bombay"
                                 android:textColorHint="@color/bombay"
                                 android:textSize="12sp"
-                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 app:layout_constraintStart_toStartOf="@id/header_age"
                                 app:layout_constraintTop_toBottomOf="@id/header_age"
                                 app:spinner_arrow_gravity="end"
@@ -270,15 +278,16 @@
                                 app:spinner_popup_background="@drawable/background_spinner"
                                 app:spinner_popup_elevation="14dp"
                                 tools:ignore="HardcodedText,UnusedAttribute" />
+
                             <TextView
                                 android:id="@+id/header_region"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="30dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 android:text="지역"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
-                                android:fontFamily="@font/apple_sd_gothic_neo_m"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/spinner_age" />
 
@@ -288,6 +297,7 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="12dp"
                                 android:background="@drawable/button_vertify"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 android:foreground="?attr/selectableItemBackground"
                                 android:gravity="center"
                                 android:hint="선택"
@@ -295,7 +305,6 @@
                                 android:textColor="@color/bombay"
                                 android:textColorHint="@color/bombay"
                                 android:textSize="12sp"
-                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 app:layout_constraintStart_toStartOf="@id/header_region"
                                 app:layout_constraintTop_toBottomOf="@id/header_region"
                                 app:spinner_arrow_gravity="end"
@@ -318,10 +327,10 @@
                                 android:layout_marginStart="165dp"
                                 android:layout_marginTop="30dp"
                                 android:layout_marginEnd="20dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 android:text="비밀번호"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
-                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 app:layout_constraintStart_toEndOf="@id/header_region"
                                 app:layout_constraintTop_toBottomOf="@id/spinner_age" />
 
@@ -332,13 +341,13 @@
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/background_search_view"
                                 android:elevation="10dp"
+                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 android:hint="비밀번호"
                                 android:paddingStart="20dp"
                                 android:textColorHint="@color/gray"
                                 android:textSize="12sp"
-                                android:fontFamily="@font/apple_sd_gothic_neo_l"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/spinner_region"
+                                app:layout_constraintStart_toStartOf="@id/header_password"
                                 app:layout_constraintTop_toBottomOf="@id/header_password" />
 
                             <CheckBox
@@ -356,34 +365,34 @@
                                 android:id="@+id/cb_global"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
                                 android:buttonTint="#000000"
-                                android:text="글로벌 여부"
                                 android:fontFamily="@font/apple_sd_gothic_neo_m"
+                                android:text="글로벌 여부"
                                 android:textColor="@color/black"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/cb_kids" />
+                                app:layout_constraintStart_toStartOf="@id/et_group_password"
+                                app:layout_constraintTop_toTopOf="@id/cb_kids" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.core.widget.NestedScrollView>
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_create_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="20dp"
                         android:layout_marginHorizontal="80dp"
+                        android:layout_marginVertical="20dp"
                         android:layout_weight="1"
                         android:background="@drawable/button_login"
                         android:text="모임 만들기"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/scrollView"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/scrollView" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

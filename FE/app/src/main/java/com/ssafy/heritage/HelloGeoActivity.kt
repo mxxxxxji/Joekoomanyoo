@@ -3,11 +3,14 @@ package com.ssafy.heritage
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.model.LatLng
 import com.google.ar.core.Config
 import com.google.ar.core.Session
+import com.google.ar.core.dependencies.e
 import com.google.ar.core.exceptions.*
 import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.helpers.ARCoreSessionLifecycleHelper
@@ -58,8 +61,6 @@ class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
     renderer = HelloGeoRenderer(this)
     lifecycle.addObserver(renderer)
 
-
-
     // Set up Hello AR UI.
     view = HelloGeoView(this)
     lifecycle.addObserver(view)
@@ -67,7 +68,18 @@ class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
 
     // Sets up an example renderer using our HelloGeoRenderer.
     SampleRender(view.surfaceView, renderer, assets)
+
+
+
+    if(stampInfo.heritageLat!="null" && stampInfo.found != 'N'){
+      Log.d(TAG, "onCreate: ${stampInfo.heritageLat}, ${stampInfo.heritageLng}")
+      view.mapView?.earthMarker?.apply {
+        position = LatLng(stampInfo.heritageLat.toDouble(), stampInfo.heritageLng.toDouble())
+        isVisible = true
+      }
+    }
     renderer.onMapInit()
+
     view.btnCheck.setOnClickListener{
       // 획득한 스탬프 전송
       arViewModel.addStamp(userSeq, stampInfo.stampSeq)
@@ -116,5 +128,26 @@ class HelloGeoActivity : AppCompatActivity() , ARCheckDialogInterface{
 
   override fun onARListBtnClicked() {
     finish()
+  }
+  private var previousX: Float = 0f
+  private var previousY: Float = 0f
+  override fun onTouchEvent(e: MotionEvent?): Boolean {
+    val x: Float = e!!.x
+    val y: Float = e!!.y
+
+    when (e.action) {
+      MotionEvent.ACTION_MOVE -> {
+
+        var dx: Float = x - previousX
+        var dy: Float = y - previousY
+
+        Log.d(TAG, "onTouchEvent: ${x}, ${y}")
+
+      }
+    }
+
+    previousX = x
+    previousY = y
+    return true
   }
 }

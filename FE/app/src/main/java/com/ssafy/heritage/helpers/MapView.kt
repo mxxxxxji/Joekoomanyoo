@@ -18,30 +18,24 @@ package com.ssafy.heritage.helpers
 
 import android.content.res.Resources
 import android.graphics.*
-import android.media.AudioRecord.MetricsConstants.SOURCE
-import android.util.Log
 import androidx.annotation.ColorInt
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.cache.DiskCache
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
-import com.google.ar.core.dependencies.h
 import com.ssafy.heritage.HelloGeoActivity
 import com.ssafy.heritage.R
 
 class MapView(val activity: HelloGeoActivity, val googleMap: GoogleMap) {
 
   private val CAMERA_MARKER_COLOR: Int = Color.argb(255, 0, 255, 0)
- // private val EARTH_MARKER_COLOR: Int = Color.argb(255, 125, 125, 125)
+  private val EARTH_MARKER_COLOR: Int = Color.argb(255, 125, 125, 125)
 
   var setInitialCameraPosition = false
   val cameraMarker = createMarker(CAMERA_MARKER_COLOR)
   var cameraIdle = true
 
 
-  val earthMarker = createMarker2()
+  val earthMarker =  createMarker(EARTH_MARKER_COLOR)
 
 
   init {
@@ -77,7 +71,7 @@ class MapView(val activity: HelloGeoActivity, val googleMap: GoogleMap) {
         // Set the camera position with an initial default zoom level.
         setInitialCameraPosition = true
 
-        CameraPosition.Builder().zoom(30f).target(position)
+        CameraPosition.Builder().zoom(21f).target(position)
 
       } else {
         // Set the camera position and keep the same zoom level.
@@ -116,7 +110,10 @@ class MapView(val activity: HelloGeoActivity, val googleMap: GoogleMap) {
   }
 
   private fun createColoredMarkerBitmap(@ColorInt color: Int): Bitmap {
-    val navigationIcon = decodeSampledBitmapFromResource(activity.resources, R.drawable.ic_navigation_white_48dp, 20, 20)
+    val opt = BitmapFactory.Options()
+    opt.inMutable = true
+    val navigationIcon =
+      BitmapFactory.decodeResource(activity.resources, R.drawable.ic_navigation_white_48dp, opt)
     val p = Paint()
     p.colorFilter = LightingColorFilter(color,  /* add= */1)
     val canvas = Canvas(navigationIcon)

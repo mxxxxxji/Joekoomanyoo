@@ -14,21 +14,24 @@
             type="com.ssafy.heritage.data.remote.response.MyGroupResponse" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="16dp"
-        android:translationZ="6dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="3dp">
+        android:background="@drawable/background_gorup_my_list"
+        app:cardCornerRadius="20dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="8dp">
+            android:layout_marginVertical="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_member_img"
@@ -168,10 +171,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#80808080"
-            android:visibility="@{myGroupResponse.groupStatus == 'F' ? View.VISIBLE : View.GONE}" />
-    </androidx.cardview.widget.CardView>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/background_gorup_my_list_completed"
+            android:clipToOutline="true"
+            android:visibility="@{myGroupResponse.groupStatus == 'F' ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

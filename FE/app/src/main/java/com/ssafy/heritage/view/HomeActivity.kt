@@ -423,4 +423,5 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             }
         }
     }
+
 }

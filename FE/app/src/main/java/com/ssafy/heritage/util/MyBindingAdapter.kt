@@ -22,7 +22,7 @@ fun setImage(v: ImageView, url: String) {
 
 @BindingAdapter("setTime")
 fun setTime(v: TextView, s: String) {
-    v.text = s.formatChatDate()
+    v.text = s.formatChatDate().substring(5)
 }
 
 @BindingAdapter("setDrawable")

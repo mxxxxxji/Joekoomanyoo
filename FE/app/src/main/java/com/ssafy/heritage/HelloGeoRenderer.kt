@@ -209,8 +209,6 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
       if (earth.trackingState != TrackingState.TRACKING) {
         return
       }
-      // earthAnchor가 있으면 분리
-      earthAnchor?.detach()
 
       // (임시) 어스 앵커를 카메라와 같은 높이데 둔다
       val altitude = earth.cameraGeospatialPose.altitude - 1
@@ -221,14 +219,16 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
       val qw = 1f
       earthAnchor =
         earth.createAnchor(lat, lng, altitude, qx, qy, qz, qw)
+      // earthAnchor가 있으면 분리
+      earthAnchor?.detach()
 
-      activity.view.mapView?.earthMarker?.apply {
-        position = LatLng(lat, lng)
-        isVisible = true
-      }
+//      activity.view.mapView?.earthMarker?.apply {
+//        position = LatLng(lat, lng)
+//        isVisible = true
+//      }
     }else{
       Log.d(TAG, "onMapInit: STAMP IS NULL")
-
+      Log.d(TAG, "onMapInit: ${activity?.stampInfo?.heritageLng}, ${activity?.stampInfo?.heritageLat}")
     }
   }
 
@@ -248,4 +248,5 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer, 
 
   private fun showError(errorMessage: String) =
     activity.view.snackbarHelper.showError(activity, errorMessage)
+
 }

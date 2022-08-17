@@ -1,10 +1,6 @@
 package com.ssafy.heritage.view.ar
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
@@ -13,7 +9,6 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentARInfoBinding
-import com.ssafy.heritage.view.group.*
 import com.ssafy.heritage.viewmodel.ARViewModel
 
 private const val TAG = "ARInfoFragment___"
@@ -27,7 +22,13 @@ class ARInfoFragment :
     private lateinit var arListFragment: ARListFragment
     private lateinit var arFoundFragment: ARFoundFragment
 
+    var position = 0
+
     override fun init() {
+
+        arguments?.let { position = it.get("position") as Int }
+
+
         initAdapter()
         initObserver()
         initClickListener()
@@ -50,6 +51,7 @@ class ARInfoFragment :
             viewpager.adapter = adapter
             viewpagertab.setViewPager(viewpager)
 
+            viewpager.setCurrentItem(position, true)
         }
     }
 
@@ -57,7 +59,7 @@ class ARInfoFragment :
     }
 
     private fun initClickListener() = with(binding) {
-        btnBack.setOnClickListener{
+        btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
