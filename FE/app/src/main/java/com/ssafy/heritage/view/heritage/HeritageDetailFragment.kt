@@ -433,13 +433,13 @@ class HeritageDetailFragment :
             }
         }
 
-        // 정보 탭 클릭시
-        constraintContent1.setOnClickListener {
-            motionlayout1.transitionToEnd()
-        }
-        constraintContent2.setOnClickListener {
-            motionlayout1.transitionToStart()
-        }
+//        // 정보 탭 클릭시
+//        constraintContent1.setOnClickListener {
+//            motionlayout1.transitionToEnd()
+//        }
+//        constraintContent2.setOnClickListener {
+//            motionlayout1.transitionToStart()
+//        }
 
         // 내 위치 클릭시
         btnMyLocation.setOnClickListener {

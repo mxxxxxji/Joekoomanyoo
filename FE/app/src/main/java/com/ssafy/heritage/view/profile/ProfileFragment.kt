@@ -43,6 +43,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     override fun init() {
 
+        binding.user = userViewModel.user?.value!!
+
         initAdapter()
 
         initObserver()
@@ -133,6 +135,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     private fun initObserver() {
 
         userViewModel.user.observe(viewLifecycleOwner) {
+            Log.d(TAG, "initObserver asd: $it")
             binding.user = it
         }
         userViewModel.keywordList.observe(viewLifecycleOwner) {

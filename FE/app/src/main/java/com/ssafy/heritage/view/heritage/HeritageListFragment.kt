@@ -143,16 +143,26 @@ class HeritageListFragment :
                         (recyclerView.layoutManager as LinearLayoutManager)
                             .findLastCompletelyVisibleItemPosition()
                     val totalCount = recyclerView.adapter!!.itemCount - 1
-                    Log.d(TAG, "onScrolled1: ${recyclerView.canScrollVertically(1)}")
-                    Log.d(TAG, "onScrolled2: ${lastVisibleItemPosition == totalCount - 1}")
+//                    Log.d(TAG, "onScrolled1: ${recyclerView.canScrollVertically(1)}")
+//                    Log.d(TAG, "onScrolled2: ${lastVisibleItemPosition == totalCount - 1}")
                     if (recyclerView.canScrollVertically(1) && lastVisibleItemPosition == totalCount - 1) {
                         //스크롤이 끝에 도달할 경우[canScrollVertically(최하단:1 or 최상단:-1)]
                         //&& 마지막 아이템일 경우(lastVisibleItemPosition==totalCount-)
-                        Log.d(TAG, "onScrolled: $page")
+//                        Log.d(TAG, "onScrolled: $page")
                         val addList =
                             heritageViewModel.heritageList.value!!.subList(0, (page + 1) * 10)
                         page++
                         heritageAdapter.submitList(addList)
+                    }
+
+                    Log.d(TAG, "onScrolled: $dy")
+                    // Scrolling up
+                    if (dy > 100) {
+                        constraintTab.transitionToEnd()
+                    }
+                    // Scrolling down
+                    else if (dy < -100) {
+                        constraintTab.transitionToStart()
                     }
                 }
             })

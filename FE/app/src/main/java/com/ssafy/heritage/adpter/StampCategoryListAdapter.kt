@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.gun0912.tedpermission.provider.TedPermissionProvider.context
+import com.ssafy.heritage.R
 import com.ssafy.heritage.data.dto.StampCategory
 import com.ssafy.heritage.databinding.ItemBookBinding
 import com.ssafy.heritage.listener.CategoryListClickListener
@@ -18,7 +21,12 @@ class StampCategoryListAdapter() :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: StampCategory) = with(binding) {
             stamp = data
-
+            val resName = "@drawable/category_"+data.categorySeq.toString()
+            val packName = context.packageName
+            val resId = context.resources.getIdentifier(resName, "drawable", packName)
+            Glide.with(ivHeritage.context)
+                .load(resId)
+                .into(ivHeritage)
             itemView.setOnClickListener {
                 categoryListClickListener.onClick(bindingAdapterPosition, data)
             }

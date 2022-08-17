@@ -1,7 +1,11 @@
 package com.ssafy.heritage.view.login
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -75,5 +79,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             //Navigation의 스택에서 pop 됨(원래 동작)
             super.onBackPressed()
         }
+    }
+
+    // EditText가 아닌 다른 곳 터치시 키보드 숨기기
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val view = currentFocus
+
+        if (view != null && view is EditText) {
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            view.clearFocus()
+        }
+
+        return super.dispatchTouchEvent(ev)
     }
 }

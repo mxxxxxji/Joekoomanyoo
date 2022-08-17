@@ -8,10 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import com.ssafy.heritage.R
 import com.ssafy.heritage.databinding.DialogArCheckBinding
-import com.ssafy.heritage.viewmodel.GroupViewModel
 
 private const val TAG = "ARCheckDialog___"
 class ARCheckDialog(context: Context, arCheckDialogInterface: ARCheckDialogInterface) : Dialog(context) {

@@ -22,8 +22,7 @@ class GroupScheduleListAdapter :
             btnDelete.setOnClickListener {
                 groupScheduleListClickListener.onClick(
                     bindingAdapterPosition,
-                    data.gsSeq,
-                    data.gsDateTime
+                    data.gsSeq
                 )
             }
         }
