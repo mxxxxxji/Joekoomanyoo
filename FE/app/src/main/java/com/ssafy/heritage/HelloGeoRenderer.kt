@@ -183,7 +183,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer,
                 longitude = cameraGeospatialPose.longitude,
                 heading = cameraGeospatialPose.heading
             )
-            activity.view.updateStatusText(earth, cameraGeospatialPose)
+//            activity.view.updateStatusText(earth, cameraGeospatialPose)
         }
 
         // Draw the placed anchor, if it exists.
@@ -237,6 +237,8 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer,
                 position = LatLng(lat, lng)
                 isVisible = true
             }
+
+            activity.view.updateStatusText(stamp = activity?.stampInfo!!)
         } else {
             Log.d(TAG, "onMapInit: STAMP IS NULL")
             Log.d(
