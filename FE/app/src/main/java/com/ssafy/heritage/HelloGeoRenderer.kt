@@ -82,12 +82,12 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer,
             virtualObjectTexture =
                 Texture.createFromAsset(
                     render,
-                    "models/spatial_marker_baked.png",
+                    "models/ceramic.png",
                     Texture.WrapMode.CLAMP_TO_EDGE,
                     Texture.ColorFormat.SRGB
                 )
 
-            virtualObjectMesh = Mesh.createFromAsset(render, "models/geospatial_marker.obj");
+            virtualObjectMesh = Mesh.createFromAsset(render, "models/ceramic_quarter.obj");
             virtualObjectShader =
                 Shader.createFromAssets(
                     render,
@@ -222,7 +222,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer,
             }
 
             // (임시) 어스 앵커를 카메라와 같은 높이데 둔다
-            val altitude = earth.cameraGeospatialPose.altitude - 1
+            val altitude = earth.cameraGeospatialPose.altitude - 4
             // 좌표계에서 앵커의 회전 방향
             val qx = 0f
             val qy = 0f
