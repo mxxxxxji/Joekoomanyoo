@@ -188,7 +188,7 @@ class GroupDetailFragment :
         // 모임종료
         btnGroupStop.setOnClickListener {
             val map = HashMap<String, String>()
-            map.put("groupActive", "Y")
+            map.put("groupActive", "N")
             map.put("groupStatus", "F")
             groupViewModel.setGroupStatus(map)
 

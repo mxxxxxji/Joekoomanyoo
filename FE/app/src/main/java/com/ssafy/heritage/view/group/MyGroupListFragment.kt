@@ -147,19 +147,24 @@ class MyGroupListFragment :
 
     private fun initObserver() {
         groupViewModel.myGroupList.observe(viewLifecycleOwner) {
-            val lastGroupList = it.filter { it.groupActive == 'Y' && it.groupStatus == 'F' }
+            // 지난 모임
+            val lastGroupList =
+                it.filter { it.groupActive == 'N' && it.groupStatus == 'F' && it.memberStatus != 0 }
+            // 신청한 모임
             val applyGroupList =
-                it.filter { it.groupActive == 'Y' && it.groupStatus != 'F' && it.memberStatus == 0 }
+                it.filter { it.groupActive == 'Y' && it.groupStatus == 'R' && it.memberStatus == 0 }
+            // 진행중 모임
             val joinGroupList =
-                it.filter { it.groupActive == 'Y' && it.groupStatus != 'F' && it.memberStatus != 0 }
+                it.filter { it.groupActive == 'Y' && it.groupStatus == 'O' && it.memberStatus != 0 }
 
             Log.d(TAG, lastGroupList.size.toString())
             Log.d(TAG, applyGroupList.size.toString())
-            Log.d(TAG, joinGroupList.size.toString())
+            Log.d(TAG, "joinGroupList:${joinGroupList}")
 
             lastGroupListAdapter.submitList(lastGroupList)
             applyGroupListAdapter.submitList(applyGroupList)
             joinGroupListAdapter.submitList(joinGroupList)
+            groupViewModel.selectMyGroups()
         }
     }
 
