@@ -104,9 +104,9 @@ class ProfileFragment :
                             // 유저가 소셜로그인인 경우 구글 로그아웃도 해주셈
                             ApplicationClass.sharedPreferencesUtil.deleteToken()
 
-                            if (userViewModel.user.value?.socialLoginType == "social") {
-                                signOutGoogle()
-                            }
+//                            if (userViewModel.user.value?.socialLoginType == "social") {
+//                                signOutGoogle()
+//                            }
 
                             Intent(requireContext(), LoginActivity::class.java).apply {
                                 startActivity(this)

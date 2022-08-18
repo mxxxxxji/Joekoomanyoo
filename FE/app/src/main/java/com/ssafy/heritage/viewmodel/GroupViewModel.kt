@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.data.dto.Chat
 import com.ssafy.heritage.data.dto.GroupDestinationMap
 import com.ssafy.heritage.data.dto.Member
@@ -179,6 +180,10 @@ class GroupViewModel : ViewModel() {
                     val result = response.body()!! as Boolean
                     Log.d(TAG, "approveGroupJoin: $result")
                     _approveState.postValue(result)
+                    selectGroupMembers(
+                        ApplicationClass.sharedPreferencesUtil.getUser(),
+                        detailInfo.value?.groupSeq!!
+                    )
                 } else {
                     Log.d(TAG, "approveGroupJoin: ${response.code()}")
                 }
@@ -223,6 +228,10 @@ class GroupViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     Log.d(TAG, "outGroupJoin: ${response.code()},  ${response.body()}")
                     _groupPermission.postValue(3)
+                    selectGroupMembers(
+                        ApplicationClass.sharedPreferencesUtil.getUser(),
+                        detailInfo.value?.groupSeq!!
+                    )
                 } else {
                     Log.d(TAG, "outGroupJoin: ${response.code()}")
                 }

@@ -89,6 +89,7 @@ class GroupDetailFragment :
 //            recyclerviewApplicant.visibility = View.GONE
         }
         groupViewModel.groupMemberList.observe(viewLifecycleOwner) {
+            Log.d(TAG, "initObserver groupMemberList: $it")
             var applicantList = mutableListOf<Member>()
             var memberList = mutableListOf<Member>()
             for (i in it) {

@@ -5,9 +5,11 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
+import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -135,11 +137,11 @@ class GroupInfoFragment :
             viewpagertab.setViewPager(viewpager)
 
             val permission = groupViewModel.groupPermission?.value!!
-            if (permission == 3 || permission == 0) {
-                viewpager.setOnTouchListener { view, motionEvent ->
-                    true
-                }
-            }
+//            if (permission == 3 || permission == 0) {
+//                viewpager.setOnTouchListener { view, motionEvent ->
+//                    true
+//                }
+//            }
 
             viewpagertab.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrolled(

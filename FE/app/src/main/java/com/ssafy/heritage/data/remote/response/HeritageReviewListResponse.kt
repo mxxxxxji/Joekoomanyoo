@@ -20,7 +20,7 @@ data class HeritageReviewListResponse(
     override fun hashCode(): Int {
         var result = heritageReviewSeq.hashCode()
         if (reviewImgUrl.isNullOrEmpty()) {
-            result = 31 * result + reviewImgUrl.hashCode()
+            result = 31 * result + "0".hashCode()
         }
         return result
     }

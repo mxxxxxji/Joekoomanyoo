@@ -31,7 +31,7 @@
 
             <ImageView
                 android:id="@+id/iv_member_img"
-                glide="@{String.valueOf(groupListResponse.groupImgUrl)}"
+                glide_group="@{String.valueOf(groupListResponse.groupImgUrl)}"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/image_radius"

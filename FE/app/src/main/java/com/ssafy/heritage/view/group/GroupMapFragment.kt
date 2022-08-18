@@ -8,6 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.mikhaellopez.rxanimation.RxAnimation
 import com.mikhaellopez.rxanimation.alpha
 import com.ssafy.heritage.R
@@ -45,16 +46,24 @@ class GroupMapFragment : BaseFragment<FragmentGroupMapBinding>(R.layout.fragment
             initObserver()
 
             initView()
+
+            initClickListener()
+        }
+    }
+
+    private fun initClickListener()= with(binding) {
+        tvAlert.setOnClickListener {
+            findNavController().navigate(R.id.action_groupInfoFragment_to_heritageListFragment)
         }
     }
 
     private fun initView() = with(binding) {
-        CoroutineScope(Main).launch {
-            delay(5000)
-            RxAnimation.from(tvAlert)
-                .alpha(0f, duration = 3000L, reverse = false)
-                .subscribe()
-        }
+//        CoroutineScope(Main).launch {
+//            delay(5000)
+//            RxAnimation.from(tvAlert)
+//                .alpha(0f, duration = 3000L, reverse = false)
+//                .subscribe()
+//        }
     }
 
     override fun onStart() {

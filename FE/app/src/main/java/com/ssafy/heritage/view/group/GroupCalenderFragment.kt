@@ -182,7 +182,7 @@ class GroupCalenderFragment :
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-            addItemDecoration(DividerItemDecoration(5F, resources.getColor(R.color.link_water)))
+            addItemDecoration(DividerItemDecoration(5F, resources.getColor(R.color.athens_gray)))
 
             // 선택한 날짜와 리스트에 있는 날짜가 같은 리스트만 뿌려줌
             val list =

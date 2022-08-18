@@ -20,6 +20,19 @@ fun setImage(v: ImageView, url: String) {
     }
 }
 
+@BindingAdapter("glide_group")
+fun setImageGroup(v: ImageView, url: String) {
+    if (!url.isNullOrEmpty() && url != "0" && url != "null") {
+        Glide.with(v.context)
+            .load(url)
+            .into(v)
+    } else {
+        Glide.with(v.context)
+            .load(R.drawable.bong)
+            .into(v)
+    }
+}
+
 @BindingAdapter("setTime")
 fun setTime(v: TextView, s: String) {
     v.text = s.formatChatDate().substring(5)

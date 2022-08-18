@@ -26,7 +26,7 @@ data class Heritage(
     override fun hashCode(): Int {
         var result = heritageSeq.hashCode()
         if (heritageImgUrl.isNullOrEmpty()) {
-            result = 31 * result + heritageImgUrl.hashCode()
+            result = 31 * result + "0".hashCode()
         }
         return result
     }

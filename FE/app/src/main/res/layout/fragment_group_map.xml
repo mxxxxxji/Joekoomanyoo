@@ -19,7 +19,7 @@
             android:gravity="center"
             android:paddingHorizontal="28dp"
             android:paddingVertical="8dp"
-            android:text="모임에서 설정한 목적지를 확인할 수 있습니다\n문화유산 목록에서 목적지를 추가해보세요!"
+            android:text="모임에서 설정한 목적지를 확인할 수 있습니다\n문화유산 목록에서 목적지를 추가해보세요!  ➡"
             android:textColor="@color/cornflower"
             android:translationZ="2dp"
             app:layout_constraintEnd_toEndOf="parent"

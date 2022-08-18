@@ -87,6 +87,9 @@
         <action
             android:id="@+id/action_groupInfoFragment_to_groupModifyFragment"
             app:destination="@id/groupModifyFragment" />
+        <action
+            android:id="@+id/action_groupInfoFragment_to_heritageListFragment"
+            app:destination="@id/heritageListFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupModifyFragment"
