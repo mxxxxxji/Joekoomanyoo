@@ -14,21 +14,22 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:padding="3dp"
-        android:layout_height="wrap_content">
-<!--        height만 match_parent하면 한 아이템이 recycleview를 가득 채운다 -->
-
+        android:layout_height="wrap_content"
+        android:padding="3dp">
+        <!--        height만 match_parent하면 한 아이템이 recycleview를 가득 채운다 -->
 
 
         <ImageView
             android:id="@+id/iv_feed"
+            glide="@{String.valueOf(feedListResponse.feedImgUrl)}"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            glide="@{String.valueOf(feedListResponse.feedImgUrl)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/image_radius"
+            android:clipToOutline="true"
             android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
     </androidx.constraintlayout.widget.ConstraintLayout>

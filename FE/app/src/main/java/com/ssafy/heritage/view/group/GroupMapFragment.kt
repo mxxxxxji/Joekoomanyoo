@@ -99,7 +99,7 @@ class GroupMapFragment : BaseFragment<FragmentGroupMapBinding>(R.layout.fragment
                     null
                 ) as BitmapDrawable
                 val b: Bitmap = bitmapdraw.bitmap
-                val marker: Bitmap = Bitmap.createScaledBitmap(b, 50, 50, false)
+                val marker: Bitmap = Bitmap.createScaledBitmap(b, 100, 100, false)
 
                 markerType = MapPOIItem.MarkerType.CustomImage          // 마커 모양 (커스텀)
                 selectedMarkerType = MapPOIItem.MarkerType.CustomImage  // 클릭 시 마커 모양 (커스텀)
