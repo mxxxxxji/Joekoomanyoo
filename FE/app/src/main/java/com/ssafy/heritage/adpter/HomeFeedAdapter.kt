@@ -1,5 +1,7 @@
 package com.ssafy.heritage.adpter
 
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
@@ -22,9 +24,11 @@ class HomeFeedAdapter : ListAdapter<FeedListResponse, HomeFeedAdapter.ViewHolder
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: FeedListResponse) = with(binding) {
             feed = data
-
+            if(data.hashtag.isNotEmpty()){
+                binding.tvHashtag1.text = "# " + data.hashtag[0]
+                binding.tvHashtag2.text = "# " + data.hashtag[1]
+            }
             ViewCompat.setTransitionName(ivFeed, "feed$bindingAdapterPosition")
-
             binding.root.setOnClickListener {
                 feedListClickListener.onClick(bindingAdapterPosition, data, ivFeed)
             }

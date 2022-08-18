@@ -9,66 +9,95 @@
             type="com.ssafy.heritage.data.remote.response.FeedListResponse" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/background_home_feed"
-        android:clipToOutline="false">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_feed"
-            glide="@{feed.feedImgUrl}"
-            android:layout_width="150dp"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/image_home_feed_radius"
-            android:clipToOutline="true"
-            android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="4dp"
+        android:layout_marginBottom="8dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/feed_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/bong" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
-            android:fontFamily="@font/apple_sd_gothic_neo_b"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="@{feed.feedTitle}"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/iv_feed"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@id/iv_feed"
-            app:layout_constraintTop_toBottomOf="@id/iv_feed"
-            tools:text="이름" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_feed"
+                glide="@{feed.feedImgUrl}"
+                android:layout_width="130dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/image_home_feed_radius"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                app:tint="#50000000"
+                android:tintMode="src_atop"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/bong"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/apple_sd_gothic_neo_l"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="@{feed.feedContent}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/iv_feed"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@id/iv_feed"
-            app:layout_constraintTop_toBottomOf="@id/tv_name"
-            tools:text="내용" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_hashtag_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/apple_sd_gothic_neo_l"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_name"
+                tools:text="이름"/>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_hashtag_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/apple_sd_gothic_neo_l"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/tv_hashtag_1"
+                app:layout_constraintBottom_toTopOf="@id/tv_name"
+                tools:text="이름"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/apple_sd_gothic_neo_b"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:text="@{feed.feedTitle}"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="내용"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>
