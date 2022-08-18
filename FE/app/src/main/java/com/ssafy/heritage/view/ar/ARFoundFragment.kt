@@ -56,7 +56,8 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
                 object : CategoryListClickListener {
                     override fun onClick(position: Int, stampCategory: StampCategory) {
                         val data =
-                            arViewModel.stampList?.value!!.filter { it.stampCategory == stampCategory.categoryName }
+                            userViewModel.myStampList?.value!!.filter { it.stampCategory == stampCategory.categoryName }
+                        Log.d(TAG, "sssss: ${userViewModel.myStampList?.value!!}")
                         val cnt = "${stampCategory.myCnt} / ${stampCategory.categoryCnt}"
 
                         // 내가 찾은 것들 필터링
@@ -107,7 +108,7 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
                     it.categoryName == myStamp.stampCategory
                 }?.add()
             }
-            Log.d(TAG, "initObserver: $list")
+            Log.d(TAG, "initObserver: $it")
             stampCategoryListAdapter.submitList(list)
         }
     }

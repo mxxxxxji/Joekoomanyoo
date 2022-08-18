@@ -16,7 +16,11 @@ class FeedListFragment :
 
     override fun init() {
 
-        arguments?.let { position = it.get("position") as Int }
+        arguments?.let {
+            if (it.get("position") != null) {
+                position = it.get("position") as Int
+            }
+        }
 
         (requireActivity() as HomeActivity).setStatusbarColor("main")
 

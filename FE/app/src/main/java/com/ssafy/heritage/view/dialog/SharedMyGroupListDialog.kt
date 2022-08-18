@@ -46,7 +46,8 @@ class SharedMyGroupListDialog(heritageSeq: Int) : DialogFragment() {
 
     private fun initOpserver() {
         groupViewModel.myGroupList.observe(viewLifecycleOwner) {
-            sharedMyGroupListAdapter.submitList(it)
+            val list = it.filter { it.memberStatus != 0 && it.groupStatus != 'F' }
+            sharedMyGroupListAdapter.submitList(list as MutableList<MyGroupResponse>)
         }
     }
 

@@ -46,13 +46,16 @@ class RequestWorker(context: Context, params: WorkerParameters) : Worker(context
 
                         GlobalScope.launch {
                             repository.selectNearStamp(NearStampRequest(userSeq, aLocation.latitude.toString(), aLocation.longitude.toString())).let { response ->
+                                Log.d(TAG, "doWork: ${response}")
                                 if (response.isSuccessful) {
                                     val list = response.body() as MutableList<Stamp>
                                     _nearMyStampList.postValue(list)
-                                    Log.d(TAG,"내 현재 위치 : ${aLocation.latitude}, ${aLocation.longitude}" )
+                                    Log.d(TAG,"doWork내 현재 위치 : ${aLocation.latitude}, ${aLocation.longitude}" )
                                     Log.d(TAG, "selectNearStamp: ${response.code()} ${response.body()}")
                                     if(list.size != 0){
+                                        Log.d(TAG, "doWork__: $list")
                                         ApplicationClass.sharedPreferencesUtil.saveStamp(list.get(0))
+                                        Log.d(TAG, "doWork___: ${ApplicationClass.sharedPreferencesUtil.getStamp()}")
                                     }
                                 }else{
                                     Log.d(TAG, "selectNearStamp: ${response.code()}")

@@ -70,7 +70,7 @@ class UserViewModel : ViewModel() {
         Log.d(TAG, "setUser: ${_user.value}")
         getSchedule()
         getNotiList()
-        getMyStamp()
+//        getMyStamp()
         true
     }
 
