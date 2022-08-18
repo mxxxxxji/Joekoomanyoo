@@ -56,35 +56,43 @@ class EvaluationListFragment :
             groupViewModel.insertGroupEvaluation(evaluationRequest)
             findNavController().popBackStack()
         }
-        if(binding.btnEval1.isSelected){
-            binding.ivCheckEval1.visibility = View.VISIBLE
-        }else{
-            binding.ivCheckEval1.visibility = View.INVISIBLE
-        }
-        if(binding.btnEval2.isSelected){
-            binding.ivCheckEval2.visibility = View.VISIBLE
-        }else{
-            binding.ivCheckEval2.visibility = View.INVISIBLE
-        }
-        if(binding.btnEval3.isSelected){
-            binding.ivCheckEval3.visibility = View.VISIBLE
-        }else{
-            binding.ivCheckEval3.visibility = View.INVISIBLE
-        }
-        if(binding.btnEval4.isSelected){
-            binding.ivCheckEval4.visibility = View.VISIBLE
-        }else{
-            binding.ivCheckEval4.visibility = View.INVISIBLE
-        }
-        if(binding.btnEval5.isSelected){
-            binding.ivCheckEval5.visibility = View.VISIBLE
-        }else{
-            binding.ivCheckEval5.visibility = View.INVISIBLE
-        }
+//        if(binding.btnEval1.isSelected){
+//            binding.ivCheckEval1.visibility = View.VISIBLE
+//        }else{
+//            binding.ivCheckEval1.visibility = View.INVISIBLE
+//        }
+//        if(binding.btnEval2.isSelected){
+//            binding.ivCheckEval2.visibility = View.VISIBLE
+//        }else{
+//            binding.ivCheckEval2.visibility = View.INVISIBLE
+//        }
+//        if(binding.btnEval3.isSelected){
+//            binding.ivCheckEval3.visibility = View.VISIBLE
+//        }else{
+//            binding.ivCheckEval3.visibility = View.INVISIBLE
+//        }
+//        if(binding.btnEval4.isSelected){
+//            binding.ivCheckEval4.visibility = View.VISIBLE
+//        }else{
+//            binding.ivCheckEval4.visibility = View.INVISIBLE
+//        }
+//        if(binding.btnEval5.isSelected){
+//            binding.ivCheckEval5.visibility = View.VISIBLE
+//        }else{
+//            binding.ivCheckEval5.visibility = View.INVISIBLE
+//        }
 
     }
     override fun onItemClick(position: Int) = with(binding) {
 
+        val state = mainFrame.panelState
+        mainFrame.isTouchEnabled = false
+
+        if (btnEval1.isChecked) btnEval1.isChecked = false
+        if (btnEval2.isChecked) btnEval2.isChecked = false
+        if (btnEval3.isChecked) btnEval3.isChecked = false
+        if (btnEval4.isChecked) btnEval4.isChecked = false
+        if (btnEval5.isChecked) btnEval5.isChecked = false
         val item = evaluationMemberListAdapter.getItem(position)
 
         Log.d(TAG, "onItemClick: ${item.userNickname}")
@@ -97,8 +105,7 @@ class EvaluationListFragment :
             .load(item.profileImgUrl)
             .into(ivHeritageReviewUserImg)
 
-        val state = mainFrame.panelState
-        mainFrame.isTouchEnabled = true
+
 
         // 닫힌 상태일 경우 열기
         if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {

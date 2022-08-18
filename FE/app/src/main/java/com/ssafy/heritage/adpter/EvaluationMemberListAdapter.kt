@@ -3,6 +3,7 @@ package com.ssafy.heritage.adpter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.heritage.data.remote.response.EvaluationProfileResponse
 import com.ssafy.heritage.databinding.ItemEvaluationListBinding
@@ -42,8 +43,10 @@ class EvaluationMemberListAdapter(private val listener: OnItemClickListener):
         RecyclerView.ViewHolder(binding.root){
         init {
             binding.root.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-                binding.ivCheck.visibility = View.VISIBLE
+                if(!binding.ivCheck.isVisible){
+                    listener.onItemClick(adapterPosition)
+                    binding.ivCheck.visibility = View.VISIBLE
+                }
             }
         }
         fun bind(position: Int){
