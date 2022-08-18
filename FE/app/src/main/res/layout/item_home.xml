@@ -58,8 +58,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/apple_sd_gothic_neo_b"
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_m"
             android:gravity="center"
             android:text="@{name}"
             android:textColor="@color/main_color"

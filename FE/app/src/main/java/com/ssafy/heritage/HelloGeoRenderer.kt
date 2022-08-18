@@ -82,12 +82,12 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer,
             virtualObjectTexture =
                 Texture.createFromAsset(
                     render,
-                    "models/ceramic.png",
+                    "models/scale.png",
                     Texture.WrapMode.CLAMP_TO_EDGE,
                     Texture.ColorFormat.SRGB
                 )
 
-            virtualObjectMesh = Mesh.createFromAsset(render, "models/ceramic_quarter.obj");
+            virtualObjectMesh = Mesh.createFromAsset(render, "models/scale.obj");
             virtualObjectShader =
                 Shader.createFromAssets(
                     render,
