@@ -39,9 +39,9 @@ class ARCheckDialog(context: Context, arCheckDialogInterface: ARCheckDialogInter
             arCheckDialogInterface.onHomeBtnClicked()
             dismiss()
         }
-        btnArList.setOnClickListener {
-            arCheckDialogInterface.onARListBtnClicked()
-            dismiss()
-        }
+//        btnArList.setOnClickListener {
+//            arCheckDialogInterface.onARListBtnClicked()
+//            dismiss()
+//        }
     }
 }

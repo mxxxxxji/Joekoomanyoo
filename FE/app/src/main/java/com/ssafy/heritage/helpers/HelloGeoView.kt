@@ -41,23 +41,23 @@ class HelloGeoView(val activity: HelloGeoActivity) : DefaultLifecycleObserver {
     fun updateStatusText(stamp: Stamp, earth: Earth?, cameraGeospatialPose: GeospatialPose?) {
         activity.runOnUiThread {
             statusTitle.text = "목표 스탬프 : ${stamp.stampTitle}"
-            val poseText = if (cameraGeospatialPose == null) "" else
-                activity.getString(
-                    R.string.geospatial_pose,
-                    cameraGeospatialPose.latitude,
-                    cameraGeospatialPose.longitude,
-                    cameraGeospatialPose.horizontalAccuracy,
-                    cameraGeospatialPose.altitude,
-                    cameraGeospatialPose.verticalAccuracy,
-                    cameraGeospatialPose.heading,
-                    cameraGeospatialPose.headingAccuracy
-                )
-            statusText.text = activity.resources.getString(
-                R.string.earth_state,
-                earth?.earthState.toString(),
-                earth?.trackingState.toString(),
-                poseText
-            )
+//            val poseText = if (cameraGeospatialPose == null) "" else
+//                activity.getString(
+//                    R.string.geospatial_pose,
+//                    cameraGeospatialPose.latitude,
+//                    cameraGeospatialPose.longitude,
+//                    cameraGeospatialPose.horizontalAccuracy,
+//                    cameraGeospatialPose.altitude,
+//                    cameraGeospatialPose.verticalAccuracy,
+//                    cameraGeospatialPose.heading,
+//                    cameraGeospatialPose.headingAccuracy
+//                )
+//            statusText.text = activity.resources.getString(
+//                R.string.earth_state,
+//                earth?.earthState.toString(),
+//                earth?.trackingState.toString(),
+//                poseText
+//            )
         }
     }
 

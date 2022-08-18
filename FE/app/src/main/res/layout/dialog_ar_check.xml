@@ -44,23 +44,23 @@
             android:fontFamily="@font/apple_sd_gothic_neo_l"
             android:background="@drawable/button_login"
             app:layout_constraintTop_toBottomOf="@id/animation_view"
-            app:layout_constraintEnd_toStartOf="@id/btn_ar_list"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
-            android:id="@+id/btn_ar_list"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/apple_sd_gothic_neo_l"
-            android:text="도감보기"
-            android:textSize="14sp"
-            android:background="@drawable/button_login"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_home"
-            app:layout_constraintTop_toBottomOf="@id/animation_view"
-            app:layout_constraintVertical_bias="0.0" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_ar_list"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="42dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:fontFamily="@font/apple_sd_gothic_neo_l"-->
+<!--            android:text="도감보기"-->
+<!--            android:textSize="14sp"-->
+<!--            android:background="@drawable/button_login"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@id/btn_home"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/animation_view"-->
+<!--            app:layout_constraintVertical_bias="0.0" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

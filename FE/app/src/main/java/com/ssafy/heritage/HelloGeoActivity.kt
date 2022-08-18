@@ -74,6 +74,7 @@ class HelloGeoActivity : AppCompatActivity(), ARCheckDialogInterface {
         Log.d(TAG, "onCreate: ${stampInfo.heritageLat}")
 
         view.btnCheck.setOnClickListener {
+            Log.d(TAG,"btnCheck")
             // 획득한 스탬프 전송
             arViewModel.addStamp(userSeq, stampInfo.stampSeq)
             ApplicationClass.sharedPreferencesUtil.deleteStamp()
@@ -123,9 +124,9 @@ class HelloGeoActivity : AppCompatActivity(), ARCheckDialogInterface {
         finish()
     }
 
-    override fun onARListBtnClicked() {
-        finish()
-    }
+//    override fun onARListBtnClicked() {
+//        finish()
+//    }
 
     suspend fun set() = coroutineScope {
         delay(7000)
