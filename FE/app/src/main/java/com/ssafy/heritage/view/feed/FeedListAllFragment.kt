@@ -18,6 +18,7 @@ import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.remote.response.FeedListResponse
 import com.ssafy.heritage.databinding.FragmentFeedListAllBinding
 import com.ssafy.heritage.listener.FeedListClickListener
+import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.FeedViewModel
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
@@ -37,7 +38,7 @@ class FeedListAllFragment :
 
     private val alphaInAnimationAdapter: ScaleInAnimationAdapter by lazy {
         ScaleInAnimationAdapter(feedAdapter).apply {
-            setDuration(300)
+            setDuration(500)
             setInterpolator(OvershootInterpolator())
             setFirstOnly(false)
         }

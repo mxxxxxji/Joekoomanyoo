@@ -124,7 +124,7 @@ class MyDataFragment : BaseFragment<FragmentMyDataBinding>(R.layout.fragment_my_
 
         map.addView(mapView)
 
-        mapView.setZoomLevel(12, true)
+        mapView.setZoomLevel(11, true)
     }
 
     private fun initObserver() {

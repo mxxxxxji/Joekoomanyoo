@@ -39,6 +39,7 @@ import com.ssafy.heritage.util.FileUtil
 import com.ssafy.heritage.util.FormDataUtil
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.view.dialog.SharedMyGroupListDialog
+import com.ssafy.heritage.view.login.LoginActivity
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
@@ -114,6 +115,8 @@ class HeritageDetailFragment :
 
     @SuppressLint("LongLogTag")
     override fun init() {
+
+        (requireActivity() as HomeActivity).setStatusbarColor("trans")
 
         // 전달 받은 문화유산 데이터 받기
         CoroutineScope(Dispatchers.Main).launch {

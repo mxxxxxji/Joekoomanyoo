@@ -2,8 +2,12 @@ package com.ssafy.heritage.view.login
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.MotionEvent
+import android.view.Window
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -93,5 +97,36 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         }
 
         return super.dispatchTouchEvent(ev)
+    }
+
+    fun setStatusbarColor(color: String){
+        when(color){
+            "white" -> {
+                if (Build.VERSION.SDK_INT >= 21) {
+                    val window: Window = this.window
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        window.insetsController?.setSystemBarsAppearance(
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                        )
+                    }
+                    window.statusBarColor = this.resources.getColor(com.ssafy.heritage.R.color.white)
+                }
+            }
+            "main" -> {
+                if (Build.VERSION.SDK_INT >= 21) {
+                    val window: Window = this.window
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        window.insetsController?.setSystemBarsAppearance(
+                            0,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                        )
+                    }
+                    window.statusBarColor = this.resources.getColor(com.ssafy.heritage.R.color.main_color)
+                }
+            }
+        }
     }
 }

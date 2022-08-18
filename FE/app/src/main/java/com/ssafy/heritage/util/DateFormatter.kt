@@ -1,6 +1,5 @@
 package com.ssafy.heritage.util
 
-import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,6 +15,16 @@ object DateFormatter {
 
 
         val format = SimpleDateFormat("yyyy M월 d일(E) aa h시 m분", Locale.KOREAN)
+        format.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        return format.format(date.time)
+    }
+
+    fun String.formatShareDate(): String {
+        val dt = SimpleDateFormat("yyyyy-MM-d")
+        val date = dt.parse(this)
+
+
+        val format = SimpleDateFormat("yy년 M월 d일(E)", Locale.KOREAN)
         format.timeZone = TimeZone.getTimeZone("Asia/Seoul")
         return format.format(date.time)
     }

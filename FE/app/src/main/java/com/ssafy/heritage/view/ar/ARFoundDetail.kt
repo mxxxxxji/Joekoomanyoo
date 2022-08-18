@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
@@ -12,12 +13,21 @@ import com.ssafy.heritage.adpter.StampDetailListAdapter
 import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.databinding.FragmentARFoundDetailBinding
 import com.ssafy.heritage.util.CategoryConverter
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
 class ARFoundDetail(val stampList: List<Stamp>, val cnt: String, val name: String) :
     SuperBottomSheetFragment() {
 
     lateinit var binding: FragmentARFoundDetailBinding
     val stampDetailListAdapter by lazy { StampDetailListAdapter() }
+
+    private val alphaInAnimationAdapter: ScaleInAnimationAdapter by lazy {
+        ScaleInAnimationAdapter(stampDetailListAdapter).apply {
+            setDuration(500)
+            setInterpolator(OvershootInterpolator())
+            setFirstOnly(false)
+        }
+    }
 
 
     override fun onCreateView(
@@ -43,7 +53,7 @@ class ARFoundDetail(val stampList: List<Stamp>, val cnt: String, val name: Strin
             src = CategoryConverter.imageMap[this@ARFoundDetail.name]
 
             recyclerView.apply {
-                adapter = stampDetailListAdapter
+                adapter = alphaInAnimationAdapter
                 layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 

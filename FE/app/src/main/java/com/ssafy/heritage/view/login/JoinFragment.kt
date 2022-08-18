@@ -29,6 +29,9 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     private val type by lazy { arguments?.getString("type") ?: "" }
 
     override fun init(): Unit = with(binding) {
+
+        (requireActivity() as LoginActivity).setStatusbarColor("main")
+
         joinVM = joinViewModel
 
         initObserver()

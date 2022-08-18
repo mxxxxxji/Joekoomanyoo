@@ -25,6 +25,7 @@ import com.ssafy.heritage.databinding.FragmentHeritageListBinding
 import com.ssafy.heritage.databinding.PopupHeritageSortBinding
 import com.ssafy.heritage.listener.HeritageListClickListener
 import com.ssafy.heritage.util.CategoryConverter
+import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.HeritageViewModel
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
@@ -51,6 +52,8 @@ class HeritageListFragment :
     var chipCheck = R.id.chip_0
 
     override fun init() {
+
+        (requireActivity() as HomeActivity).setStatusbarColor("main")
 
         arguments?.let {
             chipId = (arguments?.get("id") as Int)
@@ -125,7 +128,7 @@ class HeritageListFragment :
 //                        }
                     parentFragmentManager
                         .beginTransaction()
-                        .addSharedElement(view, "heritage")
+//                        .addSharedElement(view, "heritage")
                         .addToBackStack(null)
                         .replace(
                             R.id.fragment_container_main,

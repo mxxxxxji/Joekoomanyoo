@@ -1,32 +1,24 @@
 package com.ssafy.heritage.view.feed
 
-import android.content.Context
-import android.graphics.Color
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.animation.OvershootInterpolator
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.doOnPreDraw
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import com.ssafy.heritage.ApplicationClass
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentFeedListBinding
+import com.ssafy.heritage.view.HomeActivity
 
 private const val TAG = "FeedListFragment___"
 
 class FeedListFragment :
     BaseFragment<FragmentFeedListBinding>(R.layout.fragment_feed_list) {
 
+    var position = 0
+
     override fun init() {
+
+        arguments?.let { position = it.get("position") as Int }
+
+        (requireActivity() as HomeActivity).setStatusbarColor("main")
 
         initAdapter()
 
@@ -71,5 +63,7 @@ class FeedListFragment :
 
         viewpager.adapter = adapter
         viewpagertab.setViewPager(viewpager)
+
+        viewpager.setCurrentItem(position, true)
     }
 }

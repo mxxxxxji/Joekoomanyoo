@@ -35,6 +35,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     override fun init() = with(binding) {
+
+        (requireActivity() as LoginActivity).setStatusbarColor("main")
+
         loginVM = loginViewModel
 
         initObserve()
