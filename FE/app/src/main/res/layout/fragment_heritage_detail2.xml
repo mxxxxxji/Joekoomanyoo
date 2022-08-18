@@ -218,8 +218,8 @@
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/apple_sd_gothic_neo_l"
                             android:text="스크랩"
-                            android:textSize="10dp"
                             android:textColor="#88bbde"
+                            android:textSize="10dp"
                             app:layout_constraintEnd_toEndOf="@+id/btn_scrap"
                             app:layout_constraintStart_toStartOf="@+id/btn_scrap"
                             app:layout_constraintTop_toBottomOf="@id/btn_scrap" />
@@ -243,8 +243,8 @@
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/apple_sd_gothic_neo_l"
                             android:text="공유"
-                            android:textSize="10dp"
                             android:textColor="#88bbde"
+                            android:textSize="10dp"
                             app:layout_constraintEnd_toEndOf="@+id/btn_link"
                             app:layout_constraintStart_toStartOf="@+id/btn_link"
                             app:layout_constraintTop_toBottomOf="@id/btn_link" />
@@ -357,6 +357,23 @@
                         app:layout_constraintStart_toStartOf="@id/gl_verti_20"
                         app:layout_constraintTop_toBottomOf="@+id/tv_heritage_age_title" />
 
+                    <ImageView
+                        android:id="@+id/iv_heritage"
+                        glide="@{String.valueOf(heritage.heritageImgUrl)}"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginHorizontal="52dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/image_radius"
+                        android:clipToOutline="true"
+                        android:scaleType="centerCrop"
+                        android:transitionName="heritage"
+                        app:layout_constraintDimensionRatio="1.5:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider4"
+                        tools:src="@drawable/bong" />
+
                     <View
                         android:id="@+id/divider5"
                         android:layout_width="0dp"
@@ -365,7 +382,7 @@
                         android:background="@color/athens_gray"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+                        app:layout_constraintTop_toBottomOf="@+id/iv_heritage" />
 
                     <TextView
                         android:id="@+id/tv_heritage_description_title"

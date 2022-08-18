@@ -1,6 +1,7 @@
 package com.ssafy.heritage.view.ar
 
 import android.util.Log
+import android.view.animation.OvershootInterpolator
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ssafy.heritage.ApplicationClass
@@ -12,6 +13,7 @@ import com.ssafy.heritage.databinding.FragmentARFoundBinding
 import com.ssafy.heritage.listener.CategoryListClickListener
 import com.ssafy.heritage.viewmodel.ARViewModel
 import com.ssafy.heritage.viewmodel.UserViewModel
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
 private const val TAG = "ARFoundFragment___"
 
@@ -22,10 +24,18 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
     private val userViewModel by activityViewModels<UserViewModel>()
     private val arViewModel by activityViewModels<ARViewModel>()
 
+    private val alphaInAnimationAdapter: ScaleInAnimationAdapter by lazy {
+        ScaleInAnimationAdapter(stampCategoryListAdapter).apply {
+            setDuration(500)
+            setInterpolator(OvershootInterpolator())
+            setFirstOnly(false)
+        }
+    }
+
     override fun init() {
 
         arViewModel.getAllStamp()
-        arViewModel.getMyStamp(userSeq)
+        userViewModel.getMyStamp()
         // arViewModel.selectMyStampCategory(userSeq, categorySeq = )
         arViewModel.getStampCategory()
 
@@ -38,7 +48,7 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
         recyclerViewBookitem.apply {
             layoutManager =
                 GridLayoutManager(requireContext(), 3)
-            adapter = stampCategoryListAdapter
+            adapter = alphaInAnimationAdapter
 
             stampCategoryListAdapter.categoryListClickListener =
                 object : CategoryListClickListener {

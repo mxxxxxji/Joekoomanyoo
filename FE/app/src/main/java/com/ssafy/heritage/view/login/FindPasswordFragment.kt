@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.databinding.FragmentFindPasswordBinding
+import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.viewmodel.FindPasswordViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,9 @@ class FindPasswordFragment :
     private val findPasswordViewModel by viewModels<FindPasswordViewModel>()
 
     override fun init() {
+
+        (requireActivity() as LoginActivity).setStatusbarColor("main")
+
         binding.findVM = findPasswordViewModel
 
         initObserve()

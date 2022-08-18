@@ -11,6 +11,9 @@ import android.os.Build
 import android.util.Base64
 import android.util.Log
 import android.view.MotionEvent
+import android.view.Window
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -18,12 +21,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.*
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.FirebaseApp
@@ -37,7 +40,10 @@ import com.ssafy.heritage.databinding.ActivityHomeBinding
 import com.ssafy.heritage.listener.BackPressedListener
 import com.ssafy.heritage.util.Channel.CHANNEL_ID
 import com.ssafy.heritage.util.Channel.CHANNEL_NAME
-import com.ssafy.heritage.viewmodel.*
+import com.ssafy.heritage.viewmodel.FeedViewModel
+import com.ssafy.heritage.viewmodel.GroupViewModel
+import com.ssafy.heritage.viewmodel.HeritageViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -307,6 +313,50 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         val workManager = WorkManager.getInstance(applicationContext)
         //워크매니저 실행
         workManager.enqueue(workRequest)
+    }
+
+    fun setStatusbarColor(color: String){
+        when(color){
+            "white" -> {
+                if (Build.VERSION.SDK_INT >= 21) {
+                    val window: Window = this.window
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        window.insetsController?.setSystemBarsAppearance(
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                        )
+                    }
+                    window.statusBarColor = this.resources.getColor(com.ssafy.heritage.R.color.white)
+                }
+            }
+            "main" -> {
+                if (Build.VERSION.SDK_INT >= 21) {
+                    val window: Window = this.window
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        window.insetsController?.setSystemBarsAppearance(
+                            0,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                        )
+                    }
+                    window.statusBarColor = this.resources.getColor(com.ssafy.heritage.R.color.main_color)
+                }
+            }
+            "trans" -> {
+                if (Build.VERSION.SDK_INT >= 21) {
+                    val window: Window = this.window
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        window.insetsController?.setSystemBarsAppearance(
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                        )
+                    }
+                    window.statusBarColor = this.resources.getColor(com.ssafy.heritage.R.color.white_100)
+                }
+            }
+        }
     }
 
     private fun makeToast(msg: String) {

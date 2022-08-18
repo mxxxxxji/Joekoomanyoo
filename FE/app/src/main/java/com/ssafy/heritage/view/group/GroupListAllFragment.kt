@@ -11,6 +11,7 @@ import com.ssafy.heritage.adpter.OnItemClickListener
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.remote.response.GroupListResponse
 import com.ssafy.heritage.databinding.FragmentGroupListAllBinding
+import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.view.dialog.SelectCategoryDialog
 import com.ssafy.heritage.viewmodel.GroupViewModel
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
