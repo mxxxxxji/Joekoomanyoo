@@ -133,6 +133,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
             groupViewModel.selectMyGroups()
 
+            groupViewModel.getGroupList()
+
             feedViewModel.getFeedListAll()
 
             ApplicationClass.sharedPreferencesUtil.saveUser(it)

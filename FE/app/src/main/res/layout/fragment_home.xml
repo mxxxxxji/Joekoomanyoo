@@ -216,7 +216,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="문화 유산"
+                            android:text="문화 유산 둘러보기"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
@@ -226,7 +226,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_nav_heritage"
+                            android:src="@drawable/ic_heritage_bean"
                             app:layout_constraintBottom_toBottomOf="@id/header_heritage"
                             app:layout_constraintStart_toEndOf="@id/header_heritage"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -278,7 +278,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_nav_feed"
+                            android:src="@drawable/ic_feed_bean"
                             app:layout_constraintBottom_toBottomOf="@id/header_feed"
                             app:layout_constraintStart_toEndOf="@id/header_feed"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -304,57 +304,58 @@
                             tools:listitem="@layout/item_home_feed" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraint_group"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
-                        android:paddingHorizontal="20dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/constraint_heritage">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/header_group"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="모임 둘러보기"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                        android:id="@+id/constraint_group"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="40dp"-->
+<!--                        android:paddingHorizontal="20dp"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/constraint_feed">-->
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_nav_feed"
-                            app:layout_constraintBottom_toBottomOf="@id/header_group"
-                            app:layout_constraintStart_toEndOf="@id/header_group"
-                            app:layout_constraintTop_toTopOf="parent" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:id="@+id/header_group"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="8dp"-->
+<!--                            android:text="마감 임박 모임"-->
+<!--                            android:textSize="16sp"-->
+<!--                            android:textStyle="bold"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_go_group"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="더보기 >"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+<!--                        <androidx.appcompat.widget.AppCompatImageView-->
+<!--                            android:layout_width="20dp"-->
+<!--                            android:layout_height="20dp"-->
+<!--                            android:layout_marginStart="8dp"-->
+<!--                            android:src="@drawable/ic_group_bean"-->
+<!--                            app:layout_constraintBottom_toBottomOf="@id/header_group"-->
+<!--                            app:layout_constraintStart_toEndOf="@id/header_group"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerview_group"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/header_group"
-                            tools:listitem="@layout/item_home_feed" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:id="@+id/tv_go_group"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="더보기 >"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                        <androidx.recyclerview.widget.RecyclerView-->
+<!--                            android:id="@+id/recyclerview_group"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="12dp"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toBottomOf="@id/header_group"-->
+<!--                            tools:listitem="@layout/item_home_group" />-->
+
+<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>

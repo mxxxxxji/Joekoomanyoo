@@ -1,20 +1,14 @@
 package com.ssafy.heritage.adpter
 
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.heritage.data.dto.Heritage
 import com.ssafy.heritage.data.remote.response.FeedListResponse
-import com.ssafy.heritage.databinding.ItemHeritageBinding
-import com.ssafy.heritage.databinding.ItemHomeBinding
 import com.ssafy.heritage.databinding.ItemHomeFeedBinding
 import com.ssafy.heritage.listener.FeedListClickListener
-import com.ssafy.heritage.listener.HeritageListClickListener
 
 class HomeFeedAdapter : ListAdapter<FeedListResponse, HomeFeedAdapter.ViewHolder>(DiffCallback()) {
 
@@ -24,9 +18,16 @@ class HomeFeedAdapter : ListAdapter<FeedListResponse, HomeFeedAdapter.ViewHolder
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: FeedListResponse) = with(binding) {
             feed = data
-            if(data.hashtag.isNotEmpty()){
+            if (data.hashtag.isNotEmpty()) {
                 binding.tvHashtag1.text = "# " + data.hashtag[0]
-                binding.tvHashtag2.text = "# " + data.hashtag[1]
+                if (data.hashtag.size > 1) {
+                    binding.tvHashtag2.text = "# " + data.hashtag[1]
+                } else {
+                    binding.tvHashtag2.text = ""
+                }
+            } else {
+                binding.tvHashtag1.text = ""
+                binding.tvHashtag2.text = ""
             }
             ViewCompat.setTransitionName(ivFeed, "feed$bindingAdapterPosition")
             binding.root.setOnClickListener {
@@ -50,11 +51,17 @@ class HomeFeedAdapter : ListAdapter<FeedListResponse, HomeFeedAdapter.ViewHolder
     }
 
     class DiffCallback : DiffUtil.ItemCallback<FeedListResponse>() {
-        override fun areItemsTheSame(oldItem: FeedListResponse, newItem: FeedListResponse): Boolean {
+        override fun areItemsTheSame(
+            oldItem: FeedListResponse,
+            newItem: FeedListResponse
+        ): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
-        override fun areContentsTheSame(oldItem: FeedListResponse, newItem: FeedListResponse): Boolean {
+        override fun areContentsTheSame(
+            oldItem: FeedListResponse,
+            newItem: FeedListResponse
+        ): Boolean {
             return oldItem == newItem
         }
     }

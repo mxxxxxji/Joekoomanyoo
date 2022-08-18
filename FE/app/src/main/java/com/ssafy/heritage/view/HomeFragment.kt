@@ -12,6 +12,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.GroupMyListAdapter
 import com.ssafy.heritage.adpter.HomeFeedAdapter
+import com.ssafy.heritage.adpter.HomeGroupAdapter
 import com.ssafy.heritage.adpter.HomeHeritageAdapter
 import com.ssafy.heritage.base.BaseFragment
 import com.ssafy.heritage.data.remote.response.FeedListResponse
@@ -32,6 +33,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val myGroupListAdapter: GroupMyListAdapter by lazy { GroupMyListAdapter() }
     private val homeHeritageAdapter: HomeHeritageAdapter by lazy { HomeHeritageAdapter() }
     private val homeFeedAdapter: HomeFeedAdapter by lazy { HomeFeedAdapter() }
+    private val homeGroupAdapter: HomeGroupAdapter by lazy { HomeGroupAdapter() }
 
     private val heritageViewModel by activityViewModels<HeritageViewModel>()
     private val userViewModel by activityViewModels<UserViewModel>()
@@ -111,8 +113,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             binding.user = it
         }
 
-        groupViewModel.myGroupList.observe(viewLifecycleOwner) {
-            myGroupListAdapter.submitList(it.filter { it.groupActive == 'Y' && it.groupStatus != 'F' && it.memberStatus != 0 })
+//        groupViewModel.myGroupList.observe(viewLifecycleOwner) {
+//            myGroupListAdapter.submitList(it.filter { it.groupActive == 'Y' && it.groupStatus != 'F' && it.memberStatus != 0 })
+//        }
+
+        groupViewModel.groupList.observe(viewLifecycleOwner) {
+            homeGroupAdapter.submitList(it)
         }
 
         feedViewModel.feedListAll.observe(viewLifecycleOwner) {
@@ -216,6 +222,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 }
             }
         }
+
+        // 마감임박 모임
+//        recyclerviewGroup.apply {
+//            adapter = homeGroupAdapter
+//            layoutManager =
+//                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//
+////            homeFeedAdapter.feedListClickListener = object : FeedListClickListener {
+////                override fun onClick(position: Int, feed: FeedListResponse, view: View) {
+////                    parentFragmentManager
+////                        .beginTransaction()
+////                        .addSharedElement(view, "feed")
+////                        .addToBackStack(null)
+////                        .replace(
+////                            R.id.fragment_container_main,
+////                            FeedDetailFragment.newInstance(feed)
+////                        )
+////                        .commit()
+////                }
+////            }
+//        }
     }
 
     private fun initClickListener() = with(binding) {

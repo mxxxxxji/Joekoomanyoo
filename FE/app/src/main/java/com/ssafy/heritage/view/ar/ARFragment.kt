@@ -3,6 +3,7 @@ package com.ssafy.heritage.view.ar
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.denzcoskun.imageslider.models.SlideModel
 import com.ssafy.heritage.ApplicationClass
@@ -13,11 +14,13 @@ import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.databinding.FragmentARBinding
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.view.dialog.ReconfirmDialog
+import com.ssafy.heritage.viewmodel.ARViewModel
 
 private const val TAG = "ARFragment___"
 
 class ARFragment : BaseFragment<FragmentARBinding>(R.layout.fragment_a_r) {
 
+    private val arViewModel by activityViewModels<ARViewModel>()
 
     override fun init() {
 
@@ -25,7 +28,13 @@ class ARFragment : BaseFragment<FragmentARBinding>(R.layout.fragment_a_r) {
 
         initClickListener()
 
+        initObserver()
+
         initView()
+    }
+
+    private fun initObserver() {
+        arViewModel.getStampCategory()
     }
 
     private fun initView() = with(binding) {

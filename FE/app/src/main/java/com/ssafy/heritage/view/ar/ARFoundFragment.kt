@@ -39,7 +39,7 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
         userViewModel.getMyStamp()
        // arViewModel.selectMyStampCategory(userSeq, categorySeq = )
 
-        arViewModel.getStampCategory()
+//        arViewModel.getStampCategory()
 
         initAdapter()
 
@@ -72,15 +72,15 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
     }
 
     private fun initObserver() {
-        arViewModel.categoryList.observe(viewLifecycleOwner) { list ->
-            userViewModel.myStampList.value?.forEach { myStamp ->
-                list.find {
-                    it.categoryName == myStamp.stampCategory
-                }?.add()
-            }
-            Log.d(TAG, "initObserver: $list")
-            stampCategoryListAdapter.submitList(list)
-        }
+//        arViewModel.categoryList.observe(viewLifecycleOwner) { list ->
+//            userViewModel.myStampList.value?.forEach { myStamp ->
+//                list.find {
+//                    it.categoryName == myStamp.stampCategory
+//                }?.add()
+//            }
+//            Log.d(TAG, "initObserver: $list")
+//            stampCategoryListAdapter.submitList(list)
+//        }
 
 //        arViewModel.stampList.observe(viewLifecycleOwner) {
 //            // 내가 찾은 것들 필터링
