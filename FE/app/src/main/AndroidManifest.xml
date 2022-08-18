@@ -28,7 +28,9 @@
         android:theme="@style/Theme.Heritage"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true">
         <activity
             android:name=".TestActivity"
             android:exported="true"

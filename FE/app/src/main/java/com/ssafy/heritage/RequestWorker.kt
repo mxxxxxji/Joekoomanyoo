@@ -3,6 +3,7 @@ package com.ssafy.heritage
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.location.Location
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +12,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.ar.core.dependencies.e
 import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.data.remote.request.NearStampRequest
 import com.ssafy.heritage.data.repository.Repository
@@ -25,8 +27,8 @@ class RequestWorker(context: Context, params: WorkerParameters) : Worker(context
     private val _nearMyStampList = MutableLiveData<MutableList<Stamp>>()
     val nearMyStampList: LiveData<MutableList<Stamp>>
         get() = _nearMyStampList
-    private var lat = 0.0    // 위도
-    private var lng = 0.0    // 경도
+    private var lat = 0.0    // 이전 위도
+    private var lng = 0.0    // 이전 경도
     private val mContext = context
     private val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
 
@@ -41,6 +43,7 @@ class RequestWorker(context: Context, params: WorkerParameters) : Worker(context
             mFusedLocationClient.lastLocation.addOnCompleteListener { task ->
                 if( task.isSuccessful){
                     task.result?.let{ aLocation ->
+
                         GlobalScope.launch {
                             repository.selectNearStamp(NearStampRequest(userSeq, aLocation.latitude.toString(), aLocation.longitude.toString())).let { response ->
                                 if (response.isSuccessful) {

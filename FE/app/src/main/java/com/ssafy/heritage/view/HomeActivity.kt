@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Build
+import android.os.Bundle
 import android.os.Looper
 import android.util.Base64
 import android.util.Log
@@ -89,13 +90,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     override fun init() {
         // LocationRequest() deprecated 되서 아래 방식으로 LocationRequest 객체 생성
         // mLocationRequest = LocationRequest() is deprecated
-        mLocationRequest =  LocationRequest.create().apply {
-            interval = 100000 // 업데이트 간격 단위(밀리초)
-            fastestInterval = 100000 // 가장 빠른 업데이트 간격 단위(밀리초)
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY // 정확성
-            maxWaitTime= 200000 // 위치 갱신 요청 최대 대기 시간 (밀리초)
-        }
-        startLocationUpdates()
+//        mLocationRequest =  LocationRequest.create().apply {
+//            interval = 100000 // 업데이트 간격 단위(밀리초)
+//            fastestInterval = 100000 // 가장 빠른 업데이트 간격 단위(밀리초)
+//            priority = LocationRequest.PRIORITY_HIGH_ACCURACY // 정확성
+//            maxWaitTime= 200000 // 위치 갱신 요청 최대 대기 시간 (밀리초)
+//        }
+        //startLocationUpdates()
         CoroutineScope(Dispatchers.Main).launch {
             intent?.getParcelableExtra<User>("user")?.let { userViewModel.setUser(it) }
 
@@ -474,5 +475,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             }
         }
     }
+//    override fun onPause() {
+//        super.onPause()
+//        stoplocationUpdates()
+//    }
 
 }

@@ -72,14 +72,6 @@ class HelloGeoActivity : AppCompatActivity(), ARCheckDialogInterface {
             set()
         }
         Log.d(TAG, "onCreate: ${stampInfo.heritageLat}")
-//    if(stampInfo.heritageLat!="null" && stampInfo.found != 'N'){
-//      Log.d(TAG, "onCreate: ${stampInfo.heritageLat}, ${stampInfo.heritageLng}")
-//      view.mapView?.earthMarker?.apply {
-//        position = LatLng(stampInfo.heritageLat.toDouble(), stampInfo.heritageLng.toDouble())
-//        isVisible = true
-//      }
-//    }
-//    renderer.onMapInit()
 
         view.btnCheck.setOnClickListener {
             // 획득한 스탬프 전송
@@ -133,28 +125,6 @@ class HelloGeoActivity : AppCompatActivity(), ARCheckDialogInterface {
 
     override fun onARListBtnClicked() {
         finish()
-    }
-
-    private var previousX: Float = 0f
-    private var previousY: Float = 0f
-    override fun onTouchEvent(e: MotionEvent?): Boolean {
-        val x: Float = e!!.x
-        val y: Float = e!!.y
-
-        when (e.action) {
-            MotionEvent.ACTION_MOVE -> {
-
-                var dx: Float = x - previousX
-                var dy: Float = y - previousY
-
-                Log.d(TAG, "onTouchEvent: ${x}, ${y}")
-
-            }
-        }
-
-        previousX = x
-        previousY = y
-        return true
     }
 
     suspend fun set() = coroutineScope {

@@ -2,6 +2,7 @@ package com.ssafy.heritage.view.group
 
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -56,6 +57,32 @@ class EvaluationListFragment :
             groupViewModel.insertGroupEvaluation(evaluationRequest)
             findNavController().popBackStack()
         }
+        if(binding.btnEval1.isSelected){
+            binding.ivCheckEval1.visibility = View.VISIBLE
+        }else{
+            binding.ivCheckEval1.visibility = View.INVISIBLE
+        }
+        if(binding.btnEval2.isSelected){
+            binding.ivCheckEval2.visibility = View.VISIBLE
+        }else{
+            binding.ivCheckEval2.visibility = View.INVISIBLE
+        }
+        if(binding.btnEval3.isSelected){
+            binding.ivCheckEval3.visibility = View.VISIBLE
+        }else{
+            binding.ivCheckEval3.visibility = View.INVISIBLE
+        }
+        if(binding.btnEval4.isSelected){
+            binding.ivCheckEval4.visibility = View.VISIBLE
+        }else{
+            binding.ivCheckEval4.visibility = View.INVISIBLE
+        }
+        if(binding.btnEval5.isSelected){
+            binding.ivCheckEval5.visibility = View.VISIBLE
+        }else{
+            binding.ivCheckEval5.visibility = View.INVISIBLE
+        }
+
     }
     override fun onItemClick(position: Int) = with(binding) {
 
@@ -90,7 +117,6 @@ class EvaluationListFragment :
     inner class PanelEventListener : SlidingUpPanelLayout.PanelSlideListener {
         // 패널이 슬라이드 중일 때
         override fun onPanelSlide(panel: View?, slideOffset: Float) {
-            binding.tvText.text = slideOffset.toString()
 
         }
 
@@ -102,13 +128,13 @@ class EvaluationListFragment :
         ) {
 
             if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-                binding.tvText.text = "열기"
+
             } else if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
 
 //                binding.btnCompletion.setOnClickListener {
 //                    groupViewModel.insertGroupEvaluation(erCheck)
 //                }
-                binding.tvText.text = "닫기"
+
                 binding.btnCompletion.setOnClickListener {
                     val erCheck = EvaluationRequest(
                         userSeq,
