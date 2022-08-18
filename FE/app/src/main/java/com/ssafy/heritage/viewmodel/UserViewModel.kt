@@ -558,7 +558,7 @@ class UserViewModel : ViewModel() {
             response = repository.getMyStamp(_user.value?.userSeq!!)
         }
         job?.join()
-
+        Log.d(TAG, "getMyStamp: StampStamp")
         response?.let {
             Log.d(TAG, "getMyStamp response: $it")
             if (it.isSuccessful) {

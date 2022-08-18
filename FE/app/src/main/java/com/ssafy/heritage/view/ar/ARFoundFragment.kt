@@ -1,5 +1,6 @@
 package com.ssafy.heritage.view.ar
 
+import android.content.Context
 import android.util.Log
 import android.view.animation.OvershootInterpolator
 import androidx.fragment.app.activityViewModels
@@ -36,8 +37,9 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
 
         arViewModel.getAllStamp()
 
-        userViewModel.getMyStamp()
-       // arViewModel.selectMyStampCategory(userSeq, categorySeq = )
+//        userViewModel.getMyStamp()
+
+        // arViewModel.selectMyStampCategory(userSeq, categorySeq = )
 
 //        arViewModel.getStampCategory()
 
@@ -56,8 +58,10 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
                 object : CategoryListClickListener {
                     override fun onClick(position: Int, stampCategory: StampCategory) {
                         val data =
-                            userViewModel.myStampList?.value!!.filter { it.stampCategory == stampCategory.categoryName }
+                            arViewModel.stampList?.value!!.filter { it.stampCategory == stampCategory.categoryName }
+                        Log.d(TAG, "sssss: ${stampCategory}")
                         Log.d(TAG, "sssss: ${userViewModel.myStampList?.value!!}")
+                        Log.d(TAG, "sssss: $data")
                         val cnt = "${stampCategory.myCnt} / ${stampCategory.categoryCnt}"
 
                         // 내가 찾은 것들 필터링
@@ -108,7 +112,7 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
                     it.categoryName == myStamp.stampCategory
                 }?.add()
             }
-            Log.d(TAG, "initObserver: $it")
+            Log.d(TAG, "StampStamp: $it")
             stampCategoryListAdapter.submitList(list)
         }
     }

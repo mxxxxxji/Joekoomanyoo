@@ -15,12 +15,14 @@ import com.ssafy.heritage.databinding.FragmentARBinding
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.view.dialog.ReconfirmDialog
 import com.ssafy.heritage.viewmodel.ARViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 
 private const val TAG = "ARFragment___"
 
 class ARFragment : BaseFragment<FragmentARBinding>(R.layout.fragment_a_r) {
 
     private val arViewModel by activityViewModels<ARViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
 
     override fun init() {
 
@@ -33,8 +35,13 @@ class ARFragment : BaseFragment<FragmentARBinding>(R.layout.fragment_a_r) {
         initView()
     }
 
-    private fun initObserver() {
+    override fun onStart() {
+        super.onStart()
         arViewModel.getStampCategory()
+        userViewModel.getMyStamp()
+    }
+
+    private fun initObserver() {
     }
 
     private fun initView() = with(binding) {
