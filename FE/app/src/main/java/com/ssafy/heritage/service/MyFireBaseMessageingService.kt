@@ -10,6 +10,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ssafy.heritage.ApplicationClass
+import com.ssafy.heritage.R
 import com.ssafy.heritage.data.dto.FCMToken
 import com.ssafy.heritage.data.repository.Repository
 import com.ssafy.heritage.util.Channel.CHANNEL_ID
@@ -65,7 +66,7 @@ class MyFireBaseMessageingService : FirebaseMessagingService() {
                 PendingIntent.getActivity(this, 0, mainIntent, FLAG_MUTABLE)
 
             val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setSmallIcon(R.mipmap.ic_launcher_w)
                 .setContentTitle(messageTitle)
                 .setContentText(messageContent)
                 .setAutoCancel(true)

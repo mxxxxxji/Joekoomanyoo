@@ -8,7 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afdhal_fa.imageslider.model.SlideUIModel
+import com.denzcoskun.imageslider.models.SlideModel
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.GroupMyListAdapter
 import com.ssafy.heritage.adpter.HomeFeedAdapter
@@ -62,18 +62,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
     }
 
-    val imageList = ArrayList<SlideUIModel>().apply {
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1155.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1162.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1161.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1160.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1159.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1158.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1157.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1156.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1165.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1164.png"))
-        add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1163.png"))
+    val imageList = ArrayList<SlideModel>().apply {
+        add(SlideModel(R.drawable.ad1))
+        add(SlideModel(R.drawable.ad2))
+        add(SlideModel(R.drawable.ad3))
+        add(SlideModel(R.drawable.ad4))
+        add(SlideModel(R.drawable.ad5))
+        add(SlideModel(R.drawable.ad6))
+        add(SlideModel(R.drawable.ad7))
+        add(SlideModel(R.drawable.ad8))
+        add(SlideModel(R.drawable.ad9))
+        add(SlideModel(R.drawable.ad10))
     }
 
 

@@ -1,10 +1,10 @@
 package com.ssafy.heritage.view.ar
 
 import android.content.Intent
-import android.util.Log
 import android.os.Bundle
+import android.util.Log
 import androidx.navigation.fragment.findNavController
-import com.afdhal_fa.imageslider.model.SlideUIModel
+import com.denzcoskun.imageslider.models.SlideModel
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.HelloGeoActivity
 import com.ssafy.heritage.R
@@ -29,9 +29,9 @@ class ARFragment : BaseFragment<FragmentARBinding>(R.layout.fragment_a_r) {
     }
 
     private fun initView() = with(binding) {
-        val imageList = ArrayList<SlideUIModel>().apply {
-            add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1155.png"))
-            add(SlideUIModel("https://i7d102.p.ssafy.io/image/downloadFile/image%253A1162.png"))
+        val imageList = ArrayList<SlideModel>().apply {
+            add(SlideModel(R.drawable.ad8))
+            add(SlideModel(R.drawable.ad9))
         }
         imageSlide.setImageList(imageList)
     }
@@ -63,7 +63,7 @@ class ARFragment : BaseFragment<FragmentARBinding>(R.layout.fragment_a_r) {
         btnPlay.setOnClickListener {
             val stampInfo: Stamp = ApplicationClass.sharedPreferencesUtil.getStamp()
             Log.d(TAG, "initClickListener: ${stampInfo}")
-            if(stampInfo.heritageLat == "null" || stampInfo.heritageLng == "null" || stampInfo.found == 'Y'){
+            if (stampInfo.heritageLat == "null" || stampInfo.heritageLng == "null" || stampInfo.found == 'Y') {
                 val dialog = ReconfirmDialog(requireContext())
                 dialog.show()
             } else {

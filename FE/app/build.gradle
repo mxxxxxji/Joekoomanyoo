@@ -199,7 +199,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // Auto Image Slider
-    implementation 'com.github.Fuadafdhal:Auto-Image-Slider:1.0'
+//    implementation 'com.github.Fuadafdhal:Auto-Image-Slider:1.0'
 
     // lottie
     implementation 'com.airbnb.android:lottie:3.0.7'
@@ -227,4 +227,7 @@ dependencies {
 
     // Super Bottom Sheet
     implementation 'com.github.andrefrsousa:SuperBottomSheet:2.0.0'
+
+    // Android Image Slide
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 }

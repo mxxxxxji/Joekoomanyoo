@@ -95,7 +95,7 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <com.afdhal_fa.imageslider.ImageSlider
+        <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/imageSlide"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -105,8 +105,9 @@
             app:iss_delay="0"
             app:iss_period="3000"
             app:iss_title_background="@drawable/background_transparent"
-            app:iss_with_background="false"
-            app:iss_with_title="false"
+            app:iss_error_image="@drawable/error"
+            app:iss_selected_dot="@drawable/default_selected_dot"
+            app:iss_unselected_dot="@drawable/default_unselected_dot"
             app:layout_constraintBottom_toBottomOf="@id/gl_hori_20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

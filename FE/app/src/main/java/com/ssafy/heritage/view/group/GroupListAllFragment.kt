@@ -14,6 +14,7 @@ import com.ssafy.heritage.databinding.FragmentGroupListAllBinding
 import com.ssafy.heritage.view.HomeActivity
 import com.ssafy.heritage.view.dialog.SelectCategoryDialog
 import com.ssafy.heritage.viewmodel.GroupViewModel
+import com.ssafy.heritage.viewmodel.UserViewModel
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
 private const val TAG = "GroupListAllFragment___"
@@ -23,6 +24,7 @@ class GroupListAllFragment :
     OnItemClickListener {
     private lateinit var groupListAdapter: GroupListAdapter
     private val groupViewModel by activityViewModels<GroupViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
     val userSeq: Int = ApplicationClass.sharedPreferencesUtil.getUser()
 
     private val alphaInAnimationAdapter: ScaleInAnimationAdapter by lazy {
@@ -50,13 +52,15 @@ class GroupListAllFragment :
     private fun initObserver() {
         groupViewModel.groupList.observe(viewLifecycleOwner) {
             // 진행
-            var list = mutableListOf<GroupListResponse>()
-            for (i in it) {
-                if (i.groupStatus == 'R') {
-                    list.add(i)
-                }
-            }
-            groupListAdapter.submitList(list)
+//            var list = mutableListOf<GroupListResponse>()
+//            for (i in it) {
+//                if (i.groupStatus == 'R') {
+//                    list.add(i)
+//                }
+//            }
+
+            val list = it.filter { it.groupStatus == 'R' && it.groupMaster != userViewModel.user.value?.userNickname!!}
+            groupListAdapter.submitList(list as MutableList<GroupListResponse>)
         }
     }
 

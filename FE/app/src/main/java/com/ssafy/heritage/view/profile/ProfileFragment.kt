@@ -261,7 +261,7 @@ class ProfileFragment :
     }
 
     // 알림 설정, 로그아웃, 회원탈퇴, 버전 정보, 이용약관, 오픈소스 라이선스
-    val settingList = arrayListOf<String>(LOGOUT, SIGNOUT, VERSION_INFO, TERMS, LICENSE)
+    val settingList = arrayListOf<String>(VERSION_INFO, TERMS, LICENSE, LOGOUT, SIGNOUT)
 
 
     // 소셜 로그아웃

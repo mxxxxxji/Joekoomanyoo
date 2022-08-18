@@ -65,7 +65,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <com.afdhal_fa.imageslider.ImageSlider
+            <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/imageSlide"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -75,8 +75,6 @@
                 app:iss_delay="0"
                 app:iss_period="3000"
                 app:iss_title_background="@drawable/background_transparent"
-                app:iss_with_background="false"
-                app:iss_with_title="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
