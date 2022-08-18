@@ -52,12 +52,17 @@ public class HeritageService {
         heritageReviewEntity.setUserNickname(nickname);
         heritageReviewEntity.setProfileImgUrl(userEntity.getProfileImgUrl());
 
-        // 리뷰 개수 하나 늘리기
-        int cnt = heritageReviewEntity.getHeritageReviewSeq() + 1;
-        // 개수 entity에 세팅하기
-        heritageReviewEntity.setHeritageReviewSeq(cnt);
+        // 문화유산 번호로 찾기
+        HeritageEntity heritageEntity = heritageRepository.findByHeritageSeq(heritageReivewDto.getHeritageSeq());
 
-        heritageReviewRepository.save(heritageReviewEntity);
+        // 리뷰 개수 하나 늘리기
+        int cnt = heritageEntity.getHeritageReviewCnt() + 1;
+        // 개수 entity에 세팅하기
+        heritageEntity.setHeritageReviewCnt(cnt);
+
+        // 저장
+        heritageRepository.save(heritageEntity);
+
         if (heritageReviewEntity == null) {
             return false;
         } else {

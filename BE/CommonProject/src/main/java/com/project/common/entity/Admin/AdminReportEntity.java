@@ -27,5 +27,6 @@ public class AdminReportEntity {
     private char isSolved;
     @Column(nullable = false)
     private String userId;
+    private String reportDate;
 
 }

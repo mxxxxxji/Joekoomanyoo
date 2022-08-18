@@ -49,6 +49,7 @@ public class AdminService {
 
         AdminReportEntity adminReportEntity = AdminReportMapper.MAPPER.toEntity(adminReportDto);
         adminReportEntity.setIsSolved('N');
+        adminReportEntity.setReportDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         switch (type) {
             // 리뷰 신고

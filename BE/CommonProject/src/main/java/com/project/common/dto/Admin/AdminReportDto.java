@@ -16,4 +16,5 @@ public class AdminReportDto {
     private String reportText;
     private char isSolved;
     private String userId;
+    private String reportDate;
 }

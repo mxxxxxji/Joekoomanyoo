@@ -19,8 +19,9 @@ public interface AdminReportMapper extends StructMapper<AdminReportDto, AdminRep
     AdminReportDto toDto(final AdminReportEntity adminReportEntity);
 
     @Override
-    List<AdminReportDto> toDtoList(List<AdminReportEntity> entityList);
+    List<AdminReportEntity> toEntityList(List<AdminReportDto> dtoList);
 
     @Override
-    List<AdminReportEntity> toEntityList(List<AdminReportDto> dtoList);
+    List<AdminReportDto> toDtoList(List<AdminReportEntity> entityList);
+
 }
