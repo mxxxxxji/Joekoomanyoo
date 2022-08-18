@@ -108,7 +108,9 @@ class ARFoundFragment : BaseFragment<FragmentARFoundBinding>(R.layout.fragment_a
                     it.categoryName == myStamp.stampCategory
                 }?.add()
             }
-            Log.d(TAG, "initObserver: $it")
+
+            Log.d(TAG, "initObserver!!!!!!!!!!!!!!: $list")
+
             stampCategoryListAdapter.submitList(list)
         }
     }

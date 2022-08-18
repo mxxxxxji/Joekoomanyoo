@@ -47,7 +47,6 @@ class EvaluationListFragment :
     private fun initObserver() {
         groupViewModel.evalProfileList.observe(viewLifecycleOwner) {
             evaluationMemberListAdapter.submitList(it)
-
         }
     }
 

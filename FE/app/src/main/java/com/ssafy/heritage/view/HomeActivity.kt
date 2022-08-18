@@ -100,7 +100,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         CoroutineScope(Dispatchers.Main).launch {
             intent?.getParcelableExtra<User>("user")?.let { userViewModel.setUser(it) }
 
-//            userViewModel.getMyStamp()
+
 
             requestPermissionLancher.launch(PERMISSIONS_REQUIRED)
 
