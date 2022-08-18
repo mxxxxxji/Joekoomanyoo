@@ -63,8 +63,8 @@
             android:gravity="center"
             android:text="@{name}"
             android:textColor="@color/main_color"
-            app:layout_constraintEnd_toEndOf="@id/constraint_iv"
-            app:layout_constraintStart_toStartOf="@id/constraint_iv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/constraint_iv"
             tools:text="카테고리" />
     </androidx.constraintlayout.widget.ConstraintLayout>

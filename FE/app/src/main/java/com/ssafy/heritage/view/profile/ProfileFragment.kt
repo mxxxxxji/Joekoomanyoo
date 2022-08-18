@@ -210,7 +210,7 @@ class ProfileFragment :
         }
 
         btnEdit.setOnClickListener {
-            findNavController().navigate(com.ssafy.heritage.R.id.action_profileFragment_to_settingFragment)
+            findNavController().navigate(com.ssafy.heritage.R.id.action_profileFragment_to_passwordRequestFragment)
         }
 
         constraintMyScrap.setOnClickListener {

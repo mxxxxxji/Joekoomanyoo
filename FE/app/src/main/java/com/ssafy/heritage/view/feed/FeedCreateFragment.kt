@@ -1,36 +1,22 @@
 package com.ssafy.heritage.view.feed
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import android.widget.Toast.makeText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.google.android.gms.auth.api.signin.GoogleSignIn.hasPermissions
-import com.google.android.material.textfield.TextInputLayout
-import com.google.ar.core.dependencies.e
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.heritage.ApplicationClass
 import com.ssafy.heritage.R
 import com.ssafy.heritage.base.BaseFragment
@@ -42,10 +28,7 @@ import com.ssafy.heritage.viewmodel.FeedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.File
 
 private const val TAG = "FeedCreateFragment___"
 private val PERMISSIONS_REQUIRED = arrayOf(
@@ -151,9 +134,17 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
                         binding.layoutImgStorke.isSelected = false
                     } else {
                         binding.layoutImgStorke.isSelected = true
-                        feedInfo = FeedAddRequest( userSeq, feedViewModel.insertFeedInfo.value!!, title, content, feedOpen, tagResult )
+                        feedInfo = FeedAddRequest(
+                            userSeq,
+                            feedViewModel.insertFeedInfo.value!!,
+                            title,
+                            content,
+                            feedOpen,
+                            tagResult
+                        )
                         feedViewModel.insertFeed(feedInfo)
-                        val action = FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedListFragment()
+                        val action =
+                            FeedCreateFragmentDirections.actionFeedCreateFragmentToFeedListFragment()
                         findNavController().navigate(action)
                         Log.d(TAG, "initClickListener: ${feedInfo}")
                         makeToast("피드가 등록되었습니다")
@@ -180,6 +171,8 @@ class FeedCreateFragment : BaseFragment<FragmentFeedCreateBinding>(R.layout.frag
     private val filterActivityLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK && it.data != null) {
+
+                binding.tvEx.visibility = View.GONE
 
                 val imagePath = it.data!!.data
                 binding.ivFeedImage.setImageURI(imagePath)
