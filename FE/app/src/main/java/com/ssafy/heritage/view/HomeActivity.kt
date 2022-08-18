@@ -383,59 +383,59 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
 
-    protected fun startLocationUpdates() {
-        Log.d(TAG, "startLocationUpdates()")
-
-        //FusedLocationProviderClient의 인스턴스를 생성.
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            Log.d(TAG, "startLocationUpdates() 두 위치 권한중 하나라도 없는 경우 ")
-            return
-        }
-        Log.d(TAG, "startLocationUpdates() 위치 권한이 하나라도 존재하는 경우")
-        // 기기의 위치에 관한 정기 업데이트를 요청하는 메서드 실행
-        // 지정한 루퍼 스레드(Looper.myLooper())에서 콜백(mLocationCallback)으로 위치 업데이트를 요청합니다.
-        mFusedLocationProviderClient!!.requestLocationUpdates(
-            mLocationRequest, mLocationCallback,
-            Looper.myLooper()!!
-        )
-    }
+//    protected fun startLocationUpdates() {
+//        Log.d(TAG, "startLocationUpdates()")
+//
+//        //FusedLocationProviderClient의 인스턴스를 생성.
+//        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+//        if (ActivityCompat.checkSelfPermission(
+//                this,
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            ) != PackageManager.PERMISSION_GRANTED
+//            && ActivityCompat.checkSelfPermission(
+//                this,
+//                Manifest.permission.ACCESS_COARSE_LOCATION
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            Log.d(TAG, "startLocationUpdates() 두 위치 권한중 하나라도 없는 경우 ")
+//            return
+//        }
+//        Log.d(TAG, "startLocationUpdates() 위치 권한이 하나라도 존재하는 경우")
+//        // 기기의 위치에 관한 정기 업데이트를 요청하는 메서드 실행
+//        // 지정한 루퍼 스레드(Looper.myLooper())에서 콜백(mLocationCallback)으로 위치 업데이트를 요청합니다.
+//        mFusedLocationProviderClient!!.requestLocationUpdates(
+//            mLocationRequest, mLocationCallback,
+//            Looper.myLooper()!!
+//        )
+//    }
     // 시스템으로 부터 위치 정보를 콜백으로 받음
-    private val mLocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            Log.d(TAG, "onLocationResult()")
-            // 시스템에서 받은 location 정보를 onLocationChanged()에 전달
-            locationResult.lastLocation
-            onLocationChanged(locationResult.lastLocation)
-        }
-    }
+//    private val mLocationCallback = object : LocationCallback() {
+//        override fun onLocationResult(locationResult: LocationResult) {
+//            Log.d(TAG, "onLocationResult()")
+//            // 시스템에서 받은 location 정보를 onLocationChanged()에 전달
+//            locationResult.lastLocation
+//            onLocationChanged(locationResult.lastLocation)
+//        }
+//    }
 
     // 시스템으로 부터 받은 위치정보를 화면에 갱신해주는 메소드
-    fun onLocationChanged(location: Location) {
-        Log.d(TAG, "onLocationChanged()")
-        mLastLocation = location
-        val date: Date = Calendar.getInstance().time
-        val simpleDateFormat = SimpleDateFormat("hh:mm:ss a")
-        Log.d(TAG, "onLocationChanged: ${mLastLocation.latitude}, ${mLastLocation.longitude}, ${simpleDateFormat.format(date)}")
-        //txtTime.text = "Updated at : " +  // 갱신된 날짜
-//        txtLat.text = "LATITUDE : " + mLastLocation.latitude // 갱신 된 위도
-//        txtLong.text = "LONGITUDE : " + mLastLocation.longitude // 갱신 된 경도
-    }
+//    fun onLocationChanged(location: Location) {
+//        Log.d(TAG, "onLocationChanged()")
+//        mLastLocation = location
+//        val date: Date = Calendar.getInstance().time
+//        val simpleDateFormat = SimpleDateFormat("hh:mm:ss a")
+//        Log.d(TAG, "onLocationChanged: ${mLastLocation.latitude}, ${mLastLocation.longitude}, ${simpleDateFormat.format(date)}")
+//        //txtTime.text = "Updated at : " +  // 갱신된 날짜
+////        txtLat.text = "LATITUDE : " + mLastLocation.latitude // 갱신 된 위도
+////        txtLong.text = "LONGITUDE : " + mLastLocation.longitude // 갱신 된 경도
+//    }
 
     // 위치 업데이터를 제거 하는 메서드
-    private fun stoplocationUpdates() {
-        Log.d(TAG, "stoplocationUpdates()")
-        // 지정된 위치 결과 리스너에 대한 모든 위치 업데이트를 제거
-        mFusedLocationProviderClient!!.removeLocationUpdates(mLocationCallback)
-    }
+//    private fun stoplocationUpdates() {
+//        Log.d(TAG, "stoplocationUpdates()")
+//        // 지정된 위치 결과 리스너에 대한 모든 위치 업데이트를 제거
+//        mFusedLocationProviderClient!!.removeLocationUpdates(mLocationCallback)
+//    }
 
     // 위치 권한이 있는지 확인하는 메서드
     fun checkPermissionForLocation(context: Context): Boolean
@@ -465,7 +465,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         if (requestCode == REQUEST_PERMISSION_LOCATION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "onRequestPermissionsResult() _ 권한 허용 클릭")
-                startLocationUpdates()
+              // startLocationUpdates()
                 // View Button 활성화 상태 변경
 //                btnStartupdate.isEnabled = false
 //                btnStopUpdates.isEnabled = true
