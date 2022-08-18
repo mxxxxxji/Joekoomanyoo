@@ -27,10 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Heritage"
         android:usesCleartextTraffic="true"
-        tools:replace="android:icon"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:hardwareAccelerated="false"
-        android:largeHeap="true">
+        tools:replace="android:icon">
         <activity
             android:name=".TestActivity"
             android:exported="true"
