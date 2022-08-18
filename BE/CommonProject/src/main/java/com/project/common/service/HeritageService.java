@@ -66,6 +66,8 @@ public class HeritageService {
         if (heritageReviewEntity == null) {
             return false;
         } else {
+            // 리뷰 저장하기
+            heritageReviewRepository.save(heritageReviewEntity);
             return true;
         }
     }
