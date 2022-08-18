@@ -48,5 +48,13 @@
             android:padding="8dp"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+        <TextView
+            android:id="@+id/statusTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#AAFFFFFF"
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
     </com.ssafy.heritage.helpers.MapTouchWrapper>
 </androidx.constraintlayout.widget.ConstraintLayout>

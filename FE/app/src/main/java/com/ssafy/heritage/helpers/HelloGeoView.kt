@@ -9,6 +9,9 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.ar.core.Earth
+import com.google.ar.core.GeospatialPose
+import com.google.ar.core.Pose
 import com.ssafy.heritage.data.dto.Stamp
 import com.ssafy.heritage.helpers.MapTouchWrapper
 import com.ssafy.heritage.helpers.MapView
@@ -34,26 +37,27 @@ class HelloGeoView(val activity: HelloGeoActivity) : DefaultLifecycleObserver {
         }
 
     val statusText = root.findViewById<TextView>(R.id.statusText)
-    fun updateStatusText(stamp: Stamp) {
+    val statusTitle = root.findViewById<TextView>(R.id.statusTitle)
+    fun updateStatusText(stamp: Stamp, earth: Earth?, cameraGeospatialPose: GeospatialPose?) {
         activity.runOnUiThread {
-            statusText.text = "목표 스탬프 : ${stamp.stampTitle}"
-//            val poseText = if (cameraGeospatialPose == null) "" else
-//                activity.getString(
-//                    R.string.geospatial_pose,
-//                    cameraGeospatialPose.latitude,
-//                    cameraGeospatialPose.longitude,
-//                    cameraGeospatialPose.horizontalAccuracy,
-//                    cameraGeospatialPose.altitude,
-//                    cameraGeospatialPose.verticalAccuracy,
-//                    cameraGeospatialPose.heading,
-//                    cameraGeospatialPose.headingAccuracy
-//                )
-//            statusText.text = activity.resources.getString(
-//                R.string.earth_state,
-//                earth.earthState.toString(),
-//                earth.trackingState.toString(),
-//                poseText
-//            )
+            statusTitle.text = "목표 스탬프 : ${stamp.stampTitle}"
+            val poseText = if (cameraGeospatialPose == null) "" else
+                activity.getString(
+                    R.string.geospatial_pose,
+                    cameraGeospatialPose.latitude,
+                    cameraGeospatialPose.longitude,
+                    cameraGeospatialPose.horizontalAccuracy,
+                    cameraGeospatialPose.altitude,
+                    cameraGeospatialPose.verticalAccuracy,
+                    cameraGeospatialPose.heading,
+                    cameraGeospatialPose.headingAccuracy
+                )
+            statusText.text = activity.resources.getString(
+                R.string.earth_state,
+                earth?.earthState.toString(),
+                earth?.trackingState.toString(),
+                poseText
+            )
         }
     }
 

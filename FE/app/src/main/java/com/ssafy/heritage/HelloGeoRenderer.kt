@@ -183,7 +183,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer,
                 longitude = cameraGeospatialPose.longitude,
                 heading = cameraGeospatialPose.heading
             )
-//            activity.view.updateStatusText(earth, cameraGeospatialPose)
+            activity.view.updateStatusText(stamp = activity?.stampInfo!!, earth, cameraGeospatialPose)
         }
 
         // Draw the placed anchor, if it exists.
@@ -204,6 +204,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer,
             TAG,
             "onMapInit___: ${activity?.stampInfo?.heritageLng}, ${activity?.stampInfo?.heritageLat}"
         )
+
         // 주변 유물 스탬프 위치
         if (activity?.stampInfo?.heritageLng != "null" && activity?.stampInfo?.heritageLat != "null") {
             Log.d(
@@ -212,9 +213,9 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer,
             )
             val lat = activity?.stampInfo?.heritageLat!!.toDouble()
             val lng = activity?.stampInfo?.heritageLng!!.toDouble()
-
-            Log.d(TAG, "onMapInit: ${session?.earth}")
             val earth = session?.earth ?: return
+            Log.d(TAG, "onMapInit: ${session?.earth}")
+
             // 객체가 추적 중인지 확인
             Log.d(TAG, "onMapInit: ${earth.trackingState != TrackingState.TRACKING}")
             if (earth.trackingState != TrackingState.TRACKING) {
@@ -238,7 +239,7 @@ class HelloGeoRenderer(val activity: HelloGeoActivity) : SampleRender.Renderer,
                 isVisible = true
             }
 
-            activity.view.updateStatusText(stamp = activity?.stampInfo!!)
+
         } else {
             Log.d(TAG, "onMapInit: STAMP IS NULL")
             Log.d(

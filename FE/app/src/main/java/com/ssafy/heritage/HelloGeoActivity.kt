@@ -128,7 +128,7 @@ class HelloGeoActivity : AppCompatActivity(), ARCheckDialogInterface {
     }
 
     suspend fun set() = coroutineScope {
-        delay(3000)
+        delay(7000)
         renderer.onMapInit()
     }
 }
