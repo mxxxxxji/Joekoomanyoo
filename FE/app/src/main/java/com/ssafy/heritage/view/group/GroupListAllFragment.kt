@@ -59,7 +59,7 @@ class GroupListAllFragment :
 //                }
 //            }
 
-            val list = it.filter { it.groupStatus == 'R' && it.groupMaster != userViewModel.user.value?.userNickname!!}
+            val list = it.filter { it.groupActive == 'Y' && it.groupStatus == 'R' && it.groupMaster != userViewModel.user.value?.userNickname!!}
             groupListAdapter.submitList(list as MutableList<GroupListResponse>)
         }
     }

@@ -133,6 +133,7 @@ class GroupInfoFragment :
                     .add("지도", GroupMapFragment()::class.java)
                     .create()
             )
+            viewpager.offscreenPageLimit = 1
             viewpager.adapter = adapter
             viewpagertab.setViewPager(viewpager)
 

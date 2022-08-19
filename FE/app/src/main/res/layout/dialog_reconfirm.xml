@@ -26,7 +26,7 @@
             android:id="@+id/header_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아직 주변에 유물이 없어요"
+            android:text="아직 주변에 스탬프가 없어요"
             android:textColor="@color/main_color"
             android:textSize="16sp"
             android:fontFamily="@font/apple_sd_gothic_neo_m"

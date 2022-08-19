@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.events.calendar.utils.EventsCalendarUtil.selectedDate
 import com.events.calendar.views.EventsCalendar
 import com.google.android.material.textfield.TextInputLayout
+import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import com.ssafy.heritage.R
 import com.ssafy.heritage.adpter.GroupScheduleListAdapter
 import com.ssafy.heritage.base.BaseFragment
@@ -149,6 +151,12 @@ class GroupCalenderFragment :
         constraintBackground.setOnClickListener {
             if (!binding.etSchedule.isFocused) {
                 binding.motionlayout.transitionToStart()
+            }
+        }
+
+        tilSchedule.editText?.setOnFocusChangeListener { view, b ->
+            if (motionlayout.progress == 0F){
+                motionlayout.transitionToStart()
             }
         }
     }

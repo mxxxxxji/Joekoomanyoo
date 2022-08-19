@@ -147,6 +147,7 @@ class FeedListAllFragment :
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrBlank()) {
 //                    searchedList = arrayListOf()
+                    feedViewModel.getFeedListAll()
                     feedAdapter.submitList(dataList)
                 }
                 return false

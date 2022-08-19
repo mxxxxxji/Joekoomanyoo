@@ -44,7 +44,7 @@ class HeritageListFragment :
             setFirstOnly(false)
         }
     }
-    private var page = 0
+//    private var page = 0
 
     private lateinit var popupWindow: PopupWindow
 
@@ -138,47 +138,48 @@ class HeritageListFragment :
                 }
             }
 
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                    val lastVisibleItemPosition =
-                        (recyclerView.layoutManager as LinearLayoutManager)
-                            .findLastCompletelyVisibleItemPosition()
-                    val totalCount = recyclerView.adapter!!.itemCount - 1
-//                    Log.d(TAG, "onScrolled1: ${recyclerView.canScrollVertically(1)}")
-//                    Log.d(TAG, "onScrolled2: ${lastVisibleItemPosition == totalCount - 1}")
-                    if (recyclerView.canScrollVertically(1) && lastVisibleItemPosition == totalCount - 1) {
-                        //스크롤이 끝에 도달할 경우[canScrollVertically(최하단:1 or 최상단:-1)]
-                        //&& 마지막 아이템일 경우(lastVisibleItemPosition==totalCount-)
-//                        Log.d(TAG, "onScrolled: $page")
-                        val addList =
-                            heritageViewModel.heritageList.value!!.subList(0, (page + 1) * 10)
-                        page++
-                        heritageAdapter.submitList(addList)
-                    }
-
-                    Log.d(TAG, "onScrolled: $dy")
-                    // Scrolling up
-                    if (dy > 100) {
-                        constraintTab.transitionToEnd()
-                    }
-                    // Scrolling down
-                    else if (dy < -100) {
-                        constraintTab.transitionToStart()
-                    }
-                }
-            })
+//            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                    super.onScrolled(recyclerView, dx, dy)
+//
+//                    val lastVisibleItemPosition =
+//                        (recyclerView.layoutManager as LinearLayoutManager)
+//                            .findLastCompletelyVisibleItemPosition()
+//                    val totalCount = recyclerView.adapter!!.itemCount - 1
+////                    Log.d(TAG, "onScrolled1: ${recyclerView.canScrollVertically(1)}")
+////                    Log.d(TAG, "onScrolled2: ${lastVisibleItemPosition == totalCount - 1}")
+//                    if (recyclerView.canScrollVertically(1) && lastVisibleItemPosition == totalCount - 1) {
+//                        //스크롤이 끝에 도달할 경우[canScrollVertically(최하단:1 or 최상단:-1)]
+//                        //&& 마지막 아이템일 경우(lastVisibleItemPosition==totalCount-)
+////                        Log.d(TAG, "onScrolled: $page")
+//                        val addList =
+//                            heritageViewModel.heritageList.value!!.subList(0, (page + 1) * 10)
+//                        page++
+//                        heritageAdapter.submitList(addList)
+//                    }
+//
+//                    Log.d(TAG, "onScrolled: $dy")
+//                    // Scrolling up
+//                    if (dy > 100) {
+//                        constraintTab.transitionToEnd()
+//                    }
+//                    // Scrolling down
+//                    else if (dy < -100) {
+//                        constraintTab.transitionToStart()
+//                    }
+//                }
+//            })
         }
     }
 
     private fun initObserver() {
         heritageViewModel.heritageList.observe(viewLifecycleOwner) {
 
-            page = 0
-            val list = it.subList(page * 10, (page + 1) * 10)
-            page++
-            heritageAdapter.submitList(list)
+//            page = 0
+//            val list = it.subList(page * 10, (page + 1) * 10)
+//            page++
+            heritageAdapter.submitList(arrayListOf())
+            heritageAdapter.submitList(it)
             binding.recyclerview.smoothScrollToPosition(0)
 
             // 뷰 다 불러오고나서 transition 효과 시작
