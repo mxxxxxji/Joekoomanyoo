@@ -30,8 +30,8 @@
     - IntelliJ IDEA 2022.1.4
 <br />
 
-**DataBase**
-    - MySQL 8.0.29
+**DataBase** <br />
+    - MySQL 8.0.29 <br />
 <br />
 
 ## 3. 외부 서비스
