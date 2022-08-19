@@ -88,60 +88,60 @@
     ```
     <br />
 
-    * **nginx** <br />
-    ```bash
-        ubuntu@ip-172-26-10-27:/etc/nginx/sites-enabled$ sudo vi default
-                    proxy_pass http://localhost:8081;
-                    proxy_set_header X-Real-IP $remote_addr;
-                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                    proxy_set_header Host $http_host;
-                    proxy_set_header X-NginX-Proxy true;
-            }
-        location /stomp/chat {
-                    proxy_pass http://localhost:8081/stomp/chat;
-                    proxy_http_version 1.1;
-                    proxy_set_header Upgrade $http_upgrade;
-                    proxy_set_header Connection "upgrade";
-                    proxy_set_header Host $host;
-            }
+* **nginx** <br />
+```bash
+ubuntu@ip-172-26-10-27:/etc/nginx/sites-enabled$ sudo vi default
+            proxy_pass http://localhost:8081;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-NginX-Proxy true;
+    }
+location /stomp/chat {
+            proxy_pass http://localhost:8081/stomp/chat;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+    }
 
-            location /api {
-                    proxy_pass http://localhost:8081/api;
-                    proxy_set_header X-Real-IP $remote_addr;
-                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                    proxy_set_header Host $http_host;
-                    proxy_set_header X-NginX-Proxy true;
-            }
-
-            location /image {
-                    proxy_pass http://localhost:8082/image;
-                    proxy_set_header X-Real-IP $remote_addr;
-                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                    proxy_set_header Host $http_host;
-                    proxy_set_header X-NginX-Proxy true;
-            }
+    location /api {
+            proxy_pass http://localhost:8081/api;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-NginX-Proxy true;
         }
-    ```
-    <br />
 
-    * **Docker, Docker-Compose 설치** <br />
-    ```bash
+        location /image {
+                proxy_pass http://localhost:8082/image;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-NginX-Proxy true;
+        }
+    }
+```
+<br />
+
+* **Docker, Docker-Compose 설치** <br />
+```bash
         sudo apt get install docker 
         sudo apt get install docker-compose
-    ```
-    <br />
+```
+<br />
 
-    * **API 서버 배포** <br />
-    ```bash
-        https://lab.ssafy.com/s07-webmobile4-sub2/S07P12D102.git
-        docker build -t project
-        docker run -d --name server -p 8081:8080 project:latest
-    ```
-    <br />
+* **API 서버 배포** <br />
+```bash
+    https://lab.ssafy.com/s07-webmobile4-sub2/S07P12D102.git
+    docker build -t project
+    docker run -d --name server -p 8081:8080 project:latest
+ ```
+<br />
 
-    * **파일 서버, DB 서버 배포** <br />
-    ```bash
-        git clone https://github.com/Jaehwany/File-Server.git
-        docker-compose up -d
-    ```
-    <br />
+* **파일 서버, DB 서버 배포** <br />
+```bash
+    git clone https://github.com/Jaehwany/File-Server.git
+    docker-compose up -d
+```
+<br />
