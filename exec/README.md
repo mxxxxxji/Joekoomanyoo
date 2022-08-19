@@ -31,6 +31,7 @@
 
 **DataBase**
     - MySQL 8.0.29
+<br />
 
 
 ## 3. 외부 서비스
@@ -38,9 +39,10 @@
 - Firebase Realtime DB
 - KakaoMap API
 - KakaoLogin API
+<br />
 
 ## 4. 빌드
-1. 환경 변수
+** 1. 환경 변수 **
 ```bash
     .application.yml
 
@@ -77,3 +79,12 @@
         mail.smtp.auth: true
         mail.smtp.starttls.enable: true
 ```
+<br />
+
+**2. 빌드**
+    1. Front
+    2. Back
+        1. Gradle 실행
+        2. Bootjar 실행
+<br />
+
