@@ -29,10 +29,10 @@
 - IDE
     - IntelliJ IDEA 2022.1.4
 <br />
+
 **DataBase**
     - MySQL 8.0.29
 <br />
-
 
 ## 3. 외부 서비스
 - Google Cloud Storage
@@ -94,6 +94,7 @@
     sudo apt get install nginx
 ```
 <br />
+
 * **nginx** <br />
 ```bash
     ubuntu@ip-172-26-10-27:/etc/nginx/sites-enabled$ sudo vi default
@@ -129,12 +130,14 @@
     }
 ```
 <br />
+
 * **Docker, Docker-Compose 설치** <br />
 ```bash
     sudo apt get install docker 
     sudo apt get install docker-compose
 ```
 <br />
+
 * **API 서버 배포** <br />
 ```bash
     https://lab.ssafy.com/s07-webmobile4-sub2/S07P12D102.git
