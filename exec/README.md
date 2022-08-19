@@ -82,9 +82,49 @@
 <br />
 
 **2. 빌드** <br />
-    1. Front
-    2. Back
-        1. Gradle 실행
-        2. Bootjar 실행
+    1. Front <br />
+    2. Back <br />
+        1. Gradle 실행 <br />
+        2. Bootjar 실행 <br />
 <br />
 
+**3. 배포** <br />
+* **nginx** <br />
+```bash
+    sudo apt get install nginx
+```
+<br />
+* **nginx** <br />
+```bash
+    ubuntu@ip-172-26-10-27:/etc/nginx/sites-enabled$ sudo vi default
+                proxy_pass http://localhost:8081;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-NginX-Proxy true;
+        }
+    location /stomp/chat {
+                proxy_pass http://localhost:8081/stomp/chat;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+                proxy_set_header Host $host;
+        }
+
+        location /api {
+                proxy_pass http://localhost:8081/api;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-NginX-Proxy true;
+        }
+
+        location /image {
+                proxy_pass http://localhost:8082/image;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-NginX-Proxy true;
+        }
+    }
+```
