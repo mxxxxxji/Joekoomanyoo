@@ -31,7 +31,7 @@
 <br />
 
 **DataBase** <br />
-    - MySQL 8.0.29 <br />
+- MySQL 8.0.29 <br />
 <br />
 
 ## 3. 외부 서비스
