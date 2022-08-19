@@ -10,14 +10,14 @@
 <br />
 
 ## 2. 개발 환경
-** Android **
+**Android**
 * 언어
     - Kotlin 1.7.0
 - IDE
     - AndroidStudio
 <br />
 
-** BackEnd **
+**BackEnd**
 - 언어
     - Java 11
 - 프레임워크
@@ -42,7 +42,7 @@
 <br />
 
 ## 4. 빌드
-** 1. 환경 변수 **
+**1. 환경 변수**
 ```bash
     .application.yml
 
@@ -81,7 +81,7 @@
 ```
 <br />
 
-**2. 빌드**
+**2. 빌드** <br />
     1. Front
     2. Back
         1. Gradle 실행
