@@ -1,7 +1,8 @@
 # 좋구만유
-문화유산 동행 애플리케이션 </br>
-CULTURAL HERITAGE COMPANION APPLICATION </br>
+> 문화유산 동행 애플리케이션 </br>
+> CULTURAL HERITAGE COMPANION APPLICATION </br>
 
+### 애플리케이션 로고
 <img width="100px" src="https://user-images.githubusercontent.com/52437364/185876019-f544dd02-ab2e-4f10-af4e-43a5d970e4cd.png">   <img width="100px" src="https://user-images.githubusercontent.com/52437364/185876614-0a9a6ba9-c170-43de-a247-cfd8e8f299c1.png">
 </br></br>
 
