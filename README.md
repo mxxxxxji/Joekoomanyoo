@@ -6,7 +6,7 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 ### 팀원
 <table>
   <tr>
-    <td align="center"><a href=""><img src="" width="80px;" alt=""></td>
+    <td align="center"><a href="https://github.com/dttmm"><img src="https://avatars.githubusercontent.com/dttmm" width="80px;" alt=""></td>
     <td align="center"><a href="https://github.com/mxxxxxji"><img src="https://avatars.githubusercontent.com/mxxxxxji" width="80px;" alt=""></td>
     <td align="center"><a href=""><img src="" width="80px;" alt=""></td>
     <td align="center"><a href=""><img src="" width="80px;" alt=""></td>
