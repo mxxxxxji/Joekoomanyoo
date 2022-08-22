@@ -3,7 +3,7 @@
 CULTURAL HERITAGE COMPANION APPLICATION </br>
 
 
-## 팀원
+### 팀원
 <table>
   <tr>
     <td align="center"><a href=""><img src="" width="80px;" alt=""></td>
