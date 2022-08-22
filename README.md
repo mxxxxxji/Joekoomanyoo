@@ -6,10 +6,11 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 </br>
 
 > ### 애플리케이션 로고
-<img width="100px" src="https://user-images.githubusercontent.com/52437364/185876019-f544dd02-ab2e-4f10-af4e-43a5d970e4cd.png">   <img width="100px" src="https://user-images.githubusercontent.com/52437364/185876614-0a9a6ba9-c170-43de-a247-cfd8e8f299c1.png">
+<img width="100px" src="https://user-images.githubusercontent.com/52437364/185876019-f544dd02-ab2e-4f10-af4e-43a5d970e4cd.png">
+<img width="100px" src="https://user-images.githubusercontent.com/52437364/185876614-0a9a6ba9-c170-43de-a247-cfd8e8f299c1.png">
 </br></br>
 
-### 팀원
+> ### 팀원
 <table>
   <tr>
     <td align="center"><a href="https://github.com/dttmm"><img src="https://avatars.githubusercontent.com/dttmm" width="80px;" alt=""></td>
