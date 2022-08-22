@@ -12,9 +12,22 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 
 
 > ## 프로젝트 소개
-<font size="5" color="blue">**_좋구만요_**</font>
+<!-- <font size="5" color="blue">**_좋구만요_**</font> -->
+</br></br>
 
-> ## 팀원
+> ## 프로젝트 실행 방법
+</br></br>
+
+> ## 프로젝트 개발 환경 및 구조
+> </br></br>
+
+> ## 시연 시나리오
+> </br></br>
+
+> ## 시연 시나리오
+> </br></br>
+
+> ## 함께한 팀원
 <table>
   <tr>
     <td align="center"><a href="https://github.com/dttmm"><img src="https://avatars.githubusercontent.com/dttmm" width="80px;" alt=""></td>
