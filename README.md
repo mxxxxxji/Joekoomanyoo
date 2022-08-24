@@ -62,14 +62,15 @@ AR 방문 인증
 
 > ## 아키텍처
 
-<img src="https://user-images.githubusercontent.com/52437364/186411816-4e96bbe4-952b-40d9-a7e2-b90caadec223.png" align="left"> <br><br>
+<img src="https://user-images.githubusercontent.com/52437364/186411816-4e96bbe4-952b-40d9-a7e2-b90caadec223.png" align="left">
+<br><br>
 
 > ## ERD
 
-<img src="https://user-images.githubusercontent.com/97875998/186412162-df1c7e85-c347-4726-bded-a8fbf2ab1bce.png" align="left"> <br><br>
+<img src="https://user-images.githubusercontent.com/97875998/186412162-df1c7e85-c347-4726-bded-a8fbf2ab1bce.png" align="left"> 
+<br><br>
 
 
-</br></br></br></br></br></br></br></br>
   
 > ## 개발 환경
 
