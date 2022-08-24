@@ -135,4 +135,4 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 간단한 글과 움짤
 </br></br>
 
-
+<img src="https://user-images.githubusercontent.com/66373647/186418969-96825ca7-25be-449e-bee1-e360bb392e58.gif" height="480px;" alt="">
