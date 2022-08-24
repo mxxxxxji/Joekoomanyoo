@@ -12,6 +12,7 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 </br></br></br></br></br></br></br></br>
 
 > ## 주제
+**좋구만유**프로젝트는 사용자의 실시간 위치를 기반으로 문화유산 정보 제공 및 동행을 구할 수 있는
 </br></br>
 
 > ## 목표
@@ -26,7 +27,7 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 </br></br>
 
 > ## ERD
-<img src="https://user-images.githubusercontent.com/97875998/186412162-df1c7e85-c347-4726-bded-a8fbf2ab1bce.png" align="left">
+<img src="https://user-images.githubusercontent.com/97875998/186412162-df1c7e85-c347-4726-bded-a8fbf2ab1bce.png" align="left"> 
 </br></br>
 
 > ## 개발 환경
