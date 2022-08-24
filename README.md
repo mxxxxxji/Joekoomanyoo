@@ -34,7 +34,7 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
   <tr>
     <td align="center"><a href="https://github.com/dttmm"><img src="https://avatars.githubusercontent.com/dttmm" width="80px;" alt=""></td>
     <td align="center"><a href="https://github.com/mxxxxxji"><img src="https://avatars.githubusercontent.com/mxxxxxji" width="80px;" alt=""></td>
-    <td align="center"><a href="https://github.com/kettle4ot"><img src="https://avatars.githubusercontent.comkettle4ot/" width="80px;" alt=""></td>
+    <td align="center"><a href="https://github.com/kettle4ot"><img src="https://avatars.githubusercontent.comkettle4ot" width="80px;" alt=""></td>
     <td align="center"><a href="https://github.com/us13579"><img src="https://avatars.githubusercontent.com/us13579" width="80px;" alt=""></td>
     <td align="center"><a href="https://github.com/Jaehwany"><img src="https://avatars.githubusercontent.com/Jaehwany" width="80px;" alt=""></td>
   </tr>
