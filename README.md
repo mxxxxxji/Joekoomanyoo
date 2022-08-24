@@ -1,4 +1,3 @@
-</br>
 
 # 좋구만유
 문화유산 동행 애플리케이션 </br>
@@ -14,41 +13,28 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 
 > ## 주제
 </br></br>
+
 > ## 목표
 </br></br>
+
 > ## 주요기능
 글로 설명
 </br></br>
+
 > ## 아키텍처
 </br></br>
+
 > ## ERD
 </br></br>
+
 > ## 개발 환경
 </br></br>
-> ## 협업툴
+
+> ## 협업 환경
 </br></br>
+
 > ## 팀원
-</br></br>
-
-
-> ## 프로젝트 소개
-<!-- <font size="5" color="blue">**_좋구만요_**</font> -->
-</br></br>
-
-> ## 프로젝트 실행 방법
-</br></br>
-
-> ## 프로젝트 개발 환경 및 구조
-</br></br>
-
-> ## 시연 시나리오
-</br></br>
-
-> ## 시연 시나리오
-</br></br>
-
-> ## 함께한 팀원
-<table>
+ <table>
   <tr>
     <td align="center"><a href="https://github.com/dttmm"><img src="https://avatars.githubusercontent.com/dttmm" width="80px;" alt=""></td>
     <td align="center"><a href="https://github.com/mxxxxxji"><img src="https://avatars.githubusercontent.com/mxxxxxji" width="80px;" alt=""></td>
@@ -64,6 +50,10 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
     <td align="center"><a href="https://github.com/Jaehwany"><sub><b>이재환</b></td>
   </tr>
 </table>
+</br></br>
       
-</br>
+> ## 서비스화면
+간단한 글과 움짤
+</br></br>
+
 
