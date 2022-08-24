@@ -27,8 +27,7 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 
 > ## ERD
 <img src="https://user-images.githubusercontent.com/97875998/186412162-df1c7e85-c347-4726-bded-a8fbf2ab1bce.png" align="left">
-</br></br>
-</br></br>
+</br></br></br></br>
 
 > ## 개발 환경
 </br></br>
