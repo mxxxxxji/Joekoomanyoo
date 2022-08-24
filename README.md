@@ -61,7 +61,7 @@ AR 방문 인증
 - 순위를 통해 스탬프 수집 순위를 확인할 수 있습니다
 </br></br>
 
-> ## 아키텍처
+> ## 🔨 아키텍처
 
 <img src="https://user-images.githubusercontent.com/52437364/186411816-4e96bbe4-952b-40d9-a7e2-b90caadec223.png" align="left">
 <br><br>
