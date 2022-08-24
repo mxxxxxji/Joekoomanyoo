@@ -36,14 +36,14 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
     <td align="center"><a href="https://github.com/mxxxxxji"><img src="https://avatars.githubusercontent.com/mxxxxxji" width="80px;" alt=""></td>
     <td align="center"><a href="https://github.com/kettle4ot"><img src="https://avatars.githubusercontent.comkettle4ot/" width="80px;" alt=""></td>
     <td align="center"><a href="https://github.com/us13579"><img src="https://avatars.githubusercontent.com/us13579" width="80px;" alt=""></td>
-    <td align="center"><a href="https://github.com/"><img src="https://avatars.githubusercontent.com/" width="80px;" alt=""></td>
+    <td align="center"><a href="https://github.com/Jaehwany"><img src="https://avatars.githubusercontent.com/Jaehwany" width="80px;" alt=""></td>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/dttmm"><sub><b>강태웅</b></td>
     <td align="center"><a href="https://github.com/mxxxxxji"><sub><b>김명지</b></td>
     <td align="center"><a href="https://github.com/kettle4ot"><sub><b>김수빈</b></td>
     <td align="center"><a href="https://github.com/us13579"><sub><b>김지수</b></td>
-    <td align="center"><a href="https://github.com/"><sub><b>이재환</b></td>
+    <td align="center"><a href="https://github.com/Jaehwany"><sub><b>이재환</b></td>
   </tr>
 </table>
       
