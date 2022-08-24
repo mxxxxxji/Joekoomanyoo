@@ -199,3 +199,7 @@ AR 방문 인증
   <img src="https://user-images.githubusercontent.com/66373647/186419248-f0f013b0-5da6-4ba0-96bc-95bbc3aa4d44.gif" height="480px;" alt="">
 </div>
 
+<div>
+   <img src="https://user-images.githubusercontent.com/66373647/186428945-89fce42b-b23e-4bdd-aeb1-bd26a4ca94fc.gif" height="480px;" alt="">
+   <img src="https://user-images.githubusercontent.com/66373647/186429270-b222c4d2-eb58-48c0-8a9f-aefd92697348.gif" height="480px;" alt="">
+</div>
