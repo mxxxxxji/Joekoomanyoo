@@ -10,7 +10,7 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 <img src="https://user-images.githubusercontent.com/52437364/185876019-f544dd02-ab2e-4f10-af4e-43a5d970e4cd.png" align="left" width="100" height="100">
 <img src="https://user-images.githubusercontent.com/52437364/185876614-0a9a6ba9-c170-43de-a247-cfd8e8f299c1.png" align="left" height="100">
 
-</br></br></br></br></br></br></br></br>
+</br></br></br></br></br></br>
 
 > ## 주제
 **좋구만유**는 사용자의 실시간 위치를 기반으로 문화 유산 정보 및 동행 서비스를 제공하는 프로젝트 입니다.
