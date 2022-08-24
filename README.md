@@ -5,7 +5,7 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 
 </br>
 
-> ## 애플리케이션 로고
+> ## 애플리케이션 로고 📱
 <img src="https://user-images.githubusercontent.com/52437364/185876019-f544dd02-ab2e-4f10-af4e-43a5d970e4cd.png" align="left" width="100" height="100">
 <img src="https://user-images.githubusercontent.com/52437364/185876614-0a9a6ba9-c170-43de-a247-cfd8e8f299c1.png" align="left" height="100">
 
@@ -75,10 +75,9 @@ AR 방문 인증
 <br><br>
 <br><br>
 
-<br><br><br><br>
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-> ## 개발 환경
+> ## 개발 환경"
 
 - BackEnd
 
