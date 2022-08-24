@@ -12,6 +12,7 @@ CULTURAL HERITAGE COMPANION APPLICATION </br>
 </br></br></br></br></br></br></br></br>
 
 > ## 주제
+**좋구만유**는 사용자의 실시간 위치를 기반으로 문화 유산 정보 및 동행 서비스를 제공하는 프로젝트 입니다.
 </br></br>
 
 > ## 목표
